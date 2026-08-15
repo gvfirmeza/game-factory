@@ -1,0 +1,55 @@
+{
+  "gameId": "grove-odyssey",
+  "genre": "mini-metroidvania",
+  "budget": {
+    "rooms": { "required": 7, "implemented": 7 },
+    "npcs": { "required": 3, "implemented": 3 },
+    "abilities": { "required": 3, "implemented": 3 },
+    "collectibles": { "required": 8, "implemented": 8 },
+    "enemyTypes": { "required": 3, "implemented": 3 },
+    "checkpoints": { "required": 3, "implemented": 3 },
+    "secrets": { "required": 1, "implemented": 1 }
+  },
+  "rooms": [
+    { "id": "heart_grove", "name": "Heart Grove", "type": "hub" },
+    { "id": "mossy_caverns", "name": "Mossy Caverns", "type": "subterranean" },
+    { "id": "crystal_grotto", "name": "Crystal Grotto", "type": "subterranean" },
+    { "id": "sunlit_canopy", "name": "Sunlit Canopy", "type": "canopy" },
+    { "id": "sunken_roots", "name": "Forgotten Sunken Roots", "type": "subterranean" },
+    { "id": "windy_chasm", "name": "Windy Chasm", "type": "highlands" },
+    { "id": "secret_elder_shrine", "name": "Secret Elder Shrine", "type": "vault" }
+  ],
+  "npcs": [
+    { "id": "barnaby_snail", "name": "Barnaby the Snail", "role": "Guide", "zone": "heart_grove" },
+    { "id": "bramble_hedgehog", "name": "Bramble the Hedgehog", "role": "Miner", "zone": "mossy_caverns" },
+    { "id": "pip_owl", "name": "Pip the Owl", "role": "Sage", "zone": "sunlit_canopy" }
+  ],
+  "abilities": [
+    { "id": "feather_jump", "name": "Feather Jump", "type": "double_jump", "sourceZone": "mossy_caverns" },
+    { "id": "leaf_dash", "name": "Leaf Dash", "type": "horizontal_burst", "sourceZone": "crystal_grotto" },
+    { "id": "wind_glide", "name": "Wind Glide", "type": "slow_fall", "sourceZone": "sunlit_canopy" }
+  ],
+  "collectibles": [
+    { "id": "seed_1", "name": "Sprout Seed of the Grove", "zone": "heart_grove", "requirement": "none" },
+    { "id": "seed_2", "name": "Spore Seed of Caverns", "zone": "mossy_caverns", "requirement": "feather_jump" },
+    { "id": "seed_3", "name": "Glimmer Seed of Quartz", "zone": "crystal_grotto", "requirement": "platforming" },
+    { "id": "seed_4", "name": "Prism Seed of the Vault", "zone": "crystal_grotto", "requirement": "leaf_dash" },
+    { "id": "seed_5", "name": "Solar Seed of Canopy", "zone": "sunlit_canopy", "requirement": "feather_jump" },
+    { "id": "seed_6", "name": "Deep Seed of Ancient Roots", "zone": "sunken_roots", "requirement": "leaf_dash" },
+    { "id": "seed_7", "name": "Zephyr Seed of the Chasm", "zone": "windy_chasm", "requirement": "wind_glide" },
+    { "id": "seed_8", "name": "Dawn Seed of the Elder", "zone": "secret_elder_shrine", "requirement": "all_abilities" }
+  ],
+  "enemyTypes": [
+    { "id": "bramble_slime", "name": "Bramble Slime", "type": "patrol_ground" },
+    { "id": "shadow_wisp", "name": "Shadow Wisp", "type": "hover_aerial" },
+    { "id": "thorn_beetle", "name": "Thorn Beetle", "type": "charger" }
+  ],
+  "checkpoints": [
+    { "id": "waystone_1", "name": "Heart Tree Waystone", "zone": "heart_grove" },
+    { "id": "waystone_2", "name": "Luminescent Waystone", "zone": "crystal_grotto" },
+    { "id": "waystone_3", "name": "Zephyr Waystone", "zone": "windy_chasm" }
+  ],
+  "secrets": [
+    { "id": "secret_vault_wall", "name": "False Root Wall", "zone": "crystal_grotto", "requirement": "leaf_dash" }
+  ]
+}

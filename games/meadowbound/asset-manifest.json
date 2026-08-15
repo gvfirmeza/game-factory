@@ -1,0 +1,357 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "name": "meadowbound-asset-manifest",
+  "version": "1.0.0",
+  "gameId": "meadowbound",
+  "engineTarget": "html5_canvas_2d",
+  "renderingPipeline": "pure_procedural_vector",
+  "viewport": {
+    "width": 720,
+    "height": 450,
+    "aspectRatio": "16:9"
+  },
+  "palettes": {
+    "protagonist": {
+      "body": "#FFF4E0",
+      "cloakMain": "#2EC4B6",
+      "cloakDark": "#1B9AAA",
+      "beret": "#9C6644",
+      "beretDark": "#7F4F24",
+      "antenna": "#FFD166",
+      "bulb": "#FFE66D",
+      "blush": "rgba(255, 107, 129, 0.55)",
+      "outline": "#2D2013"
+    },
+    "biomes": {
+      "level_1_meadowlands": {
+        "skyTop": "#56B4D3",
+        "skyBottom": "#E4F5FC",
+        "grassTop": "#80D842",
+        "grassBase": "#58A825",
+        "soil": "#825027",
+        "flowerYellow": "#FFD166",
+        "flowerPink": "#FF99C8",
+        "cloud": "rgba(255, 255, 255, 0.85)"
+      },
+      "level_2_whispering_woods": {
+        "bgDark": "#112217",
+        "foliage": "#235E2F",
+        "moss": "#70A341",
+        "bark": "#4B2E1E",
+        "sunbeam": "rgba(255, 246, 190, 0.14)",
+        "pollen": "rgba(255, 230, 109, 0.60)"
+      },
+      "level_3_bioluminescent_caverns": {
+        "bgAbyss": "#14112E",
+        "rockStrata": "#241E47",
+        "crystalCyan": "#00F5D4",
+        "crystalPurple": "#C77DFF",
+        "shroomCap": "#FF5D8F",
+        "shroomStem": "#FFACC7",
+        "spikes": "#7209B7"
+      },
+      "level_4_gusty_highland_cliffs": {
+        "sky": "#3A86FF",
+        "cliffRock": "#C86428",
+        "cliffDark": "#873812",
+        "windStream": "rgba(180, 230, 255, 0.40)",
+        "cloudLedge": "rgba(255, 255, 255, 0.92)",
+        "sunMist": "#FFB703"
+      },
+      "level_5_elder_canopy": {
+        "skyTwilight": "#2B0938",
+        "sunburstGold": "#FFB703",
+        "ancientBark": "#5A3825",
+        "coliseumStone": "#4A3B32",
+        "amberGlow": "rgba(255, 170, 0, 0.45)",
+        "ember": "#FFE27A"
+      }
+    },
+    "ui": {
+      "heartFill": "#FF3366",
+      "heartEmpty": "rgba(20, 20, 30, 0.45)",
+      "heartOutline": "#990033",
+      "cardBg": "rgba(25, 18, 12, 0.92)",
+      "cardBorder": "#D4A373",
+      "textGold": "#FFD166",
+      "textBody": "#FFFFFF",
+      "buttonEmerald": "#2EC4B6",
+      "buttonAmber": "#FB8500"
+    }
+  },
+  "entities": {
+    "protagonist": {
+      "id": "pip",
+      "name": "Pip the Meadow Sprite",
+      "renderFunction": "drawPip",
+      "dimensions": { "width": 24, "height": 32 },
+      "hitbox": { "width": 18, "height": 26, "offsetX": 3, "offsetY": 6 },
+      "layer": "actor_player",
+      "states": ["idle", "run", "jump_rise", "jump_fall", "dash", "stomp_squish", "hurt_flicker"],
+      "particlesOnAction": {
+        "dash": "leaf_burst",
+        "land": "dust_puff",
+        "jump": "dust_puff"
+      }
+    },
+    "enemies": [
+      {
+        "id": "acorn_walker",
+        "name": "Acorn Walker",
+        "renderFunction": "drawAcornWalker",
+        "dimensions": { "width": 20, "height": 22 },
+        "hitbox": { "width": 20, "height": 22 },
+        "stompZoneHeight": 6,
+        "layer": "actor_enemy",
+        "states": ["walk", "turn", "defeated_pop"],
+        "deathParticles": "wood_shards"
+      },
+      {
+        "id": "spore_hopper",
+        "name": "Spore Hopper",
+        "renderFunction": "drawSporeHopper",
+        "dimensions": { "width": 22, "height": 24 },
+        "hitbox": { "width": 22, "height": 24 },
+        "stompZoneHeight": 8,
+        "layer": "actor_enemy",
+        "states": ["idle", "telegraph_crouch", "jump_apex", "fall"],
+        "deathParticles": "spore_puff"
+      },
+      {
+        "id": "glow_bat",
+        "name": "Glow Bat Flyer",
+        "renderFunction": "drawGlowBat",
+        "dimensions": { "width": 24, "height": 18 },
+        "hitbox": { "width": 24, "height": 18 },
+        "stompZoneHeight": 6,
+        "layer": "actor_enemy",
+        "states": ["fly_sine", "flap_up", "flap_down"],
+        "lightAuraRadius": 60,
+        "deathParticles": "cyan_sparkle"
+      },
+      {
+        "id": "bramble_charger",
+        "name": "Bramble Charger",
+        "renderFunction": "drawBrambleCharger",
+        "dimensions": { "width": 32, "height": 24 },
+        "hitbox": { "width": 32, "height": 24 },
+        "layer": "actor_enemy",
+        "states": ["patrol", "alert_windup", "charging", "wall_stunned", "defeated"],
+        "stompableState": "wall_stunned",
+        "deathParticles": "wood_shards"
+      }
+    ],
+    "boss": {
+      "id": "bramblethorn_golem",
+      "name": "The Bramblethorn Golem",
+      "renderFunction": "drawBramblethornGolem",
+      "dimensions": { "width": 64, "height": 74 },
+      "hitbox": { "width": 56, "height": 68 },
+      "coreHitbox": { "width": 24, "height": 24, "relativeY": -38 },
+      "layer": "actor_boss",
+      "phases": [
+        {
+          "phase": 1,
+          "hp": 3,
+          "attacks": ["ground_slam_shockwave", "heavy_stride"],
+          "eyeColor": "#00F5D4",
+          "vulnerableTime": 3.5
+        },
+        {
+          "phase": 2,
+          "hp": 2,
+          "attacks": ["rolling_briar_spores", "ground_slam_shockwave"],
+          "eyeColor": "#FF9E00",
+          "vulnerableTime": 2.6
+        },
+        {
+          "phase": 3,
+          "hp": 1,
+          "attacks": ["double_slam_shockwave", "falling_thorn_barrage", "wall_charge"],
+          "eyeColor": "#FF0054",
+          "vulnerableTime": 2.2
+        }
+      ],
+      "deathSequence": {
+        "freezeFrame": 0.5,
+        "particleCount": 60,
+        "particleType": "flower_petal_burst"
+      }
+    },
+    "npcs": [
+      {
+        "id": "barnaby_snail",
+        "name": "Barnaby Snail",
+        "renderFunction": "drawBarnabySnail",
+        "dimensions": { "width": 36, "height": 38 },
+        "layer": "actor_npc",
+        "avatarFrameSize": 64
+      },
+      {
+        "id": "willow_owl",
+        "name": "Willow Owl",
+        "renderFunction": "drawWillowOwl",
+        "dimensions": { "width": 32, "height": 52 },
+        "layer": "actor_npc",
+        "avatarFrameSize": 64
+      },
+      {
+        "id": "elder_root_spirit",
+        "name": "Elder Root Spirit",
+        "renderFunction": "drawElderRootSpirit",
+        "dimensions": { "width": 48, "height": 64 },
+        "layer": "actor_npc",
+        "avatarFrameSize": 64
+      }
+    ],
+    "collectibles": [
+      {
+        "id": "sun_berry",
+        "name": "Sun Berry",
+        "renderFunction": "drawSunBerry",
+        "dimensions": { "width": 18, "height": 22 },
+        "hitbox": { "width": 16, "height": 16 },
+        "layer": "collectible",
+        "animation": "float_bob_and_sparkle",
+        "points": 100
+      },
+      {
+        "id": "golden_acorn",
+        "name": "Golden Acorn",
+        "renderFunction": "drawGoldenAcorn",
+        "dimensions": { "width": 14, "height": 16 },
+        "hitbox": { "width": 12, "height": 14 },
+        "layer": "collectible",
+        "animation": "horizontal_spin_3d",
+        "points": 20
+      },
+      {
+        "id": "lore_medallion",
+        "name": "Ancient Lore Medallion",
+        "renderFunction": "drawLoreMedallion",
+        "dimensions": { "width": 28, "height": 28 },
+        "hitbox": { "width": 24, "height": 24 },
+        "layer": "collectible",
+        "animation": "radiant_glyph_bob",
+        "variants": [
+          "medallion_dawn",
+          "medallion_whispers",
+          "medallion_luminescence",
+          "medallion_zephyr",
+          "medallion_ancients"
+        ]
+      }
+    ],
+    "landmarks": [
+      {
+        "id": "waystone_checkpoint",
+        "name": "Runic Waystone",
+        "renderFunction": "drawWaystone",
+        "dimensions": { "width": 24, "height": 40 },
+        "layer": "interactive_world",
+        "states": ["dormant_cyan", "attuned_amber_pulse"]
+      },
+      {
+        "id": "springboard_mushroom",
+        "name": "Springboard Mushroom",
+        "renderFunction": "drawSpringboardMushroom",
+        "dimensions": { "width": 30, "height": 22 },
+        "layer": "interactive_world",
+        "bounceImpulse": -480
+      }
+    ]
+  },
+  "particles": {
+    "leaf_burst": {
+      "count": 6,
+      "colorPalette": ["#2EC4B6", "#80D842", "#FFD166"],
+      "life": 0.45,
+      "speedMin": 60,
+      "speedMax": 140,
+      "spin": true
+    },
+    "sun_sparkle": {
+      "count": 12,
+      "colorPalette": ["#FFFFFF", "#FFE169", "#FF9E00"],
+      "life": 0.60,
+      "speedMin": 40,
+      "speedMax": 180,
+      "shape": "4_point_star"
+    },
+    "wood_shards": {
+      "count": 6,
+      "colorPalette": ["#6F4E37", "#9C6644", "#C68B59"],
+      "life": 0.50,
+      "gravity": 800,
+      "shape": "triangle_splinter"
+    },
+    "spore_puff": {
+      "count": 8,
+      "colorPalette": ["#FFEA00", "#7209B7", "#FFACC7"],
+      "life": 0.40,
+      "speedMin": 30,
+      "speedMax": 90,
+      "shape": "soft_circle"
+    },
+    "dust_puff": {
+      "count": 4,
+      "color": "rgba(230, 220, 200, 0.6)",
+      "life": 0.30,
+      "shape": "expanding_circle"
+    },
+    "shockwave_ring": {
+      "count": 1,
+      "color": "#FFAA00",
+      "life": 0.35,
+      "shape": "expanding_hollow_ring"
+    }
+  },
+  "uiComponents": {
+    "hud": {
+      "heartContainer": {
+        "renderFunction": "drawHUDHeart",
+        "size": 24,
+        "spacing": 6,
+        "position": { "x": 20, "y": 24 }
+      },
+      "berryCounter": {
+        "icon": "sun_berry",
+        "position": { "x": "center", "y": 24 },
+        "badgeBg": "rgba(20, 16, 12, 0.75)",
+        "badgeBorder": "#D4A373"
+      },
+      "bossHealthBar": {
+        "width": 320,
+        "height": 18,
+        "position": { "x": "center", "y": 420 },
+        "segments": 3,
+        "colors": ["#00F5D4", "#FF9E00", "#FF0054"]
+      }
+    },
+    "dialogue": {
+      "boxWidth": 560,
+      "boxHeight": 100,
+      "renderFunction": "drawDialogueBox",
+      "position": { "x": "center", "y": 330 },
+      "avatarSize": 64
+    },
+    "mobileTouch": {
+      "renderFunction": "drawTouchControls",
+      "dpadRadius": 44,
+      "jumpButtonRadius": 26,
+      "dashButtonRadius": 22
+    }
+  },
+  "audioEventBindings": {
+    "player_jump": "synth_jump_sine_sweep",
+    "player_dash": "synth_dash_noise_burst",
+    "stomp_bounce": "synth_stomp_pop_square",
+    "berry_collect": "synth_arpeggio_chime_c_major",
+    "acorn_collect": "synth_acorn_ting",
+    "medallion_discover": "synth_lore_major_fanfare",
+    "checkpoint_attune": "synth_harmonic_resonance",
+    "boss_slam": "synth_sub_bass_boom",
+    "player_hurt": "synth_sawtooth_drop",
+    "boss_victory": "synth_orchestral_chime_crescendo"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "ai-game-factory",
+  "version": "2.0.0",
+  "description": "Autonomous AI Game Studio for Google Antigravity",
+  "type": "module",
+  "main": "studio/server.js",
+  "scripts": {
+    "dev": "node studio/server.js",
+    "start": "node studio/server.js",
+    "studio": "node studio/server.js",
+    "game:build": "node scripts/build-game.js",
+    "game:validate": "node scripts/validate-game.js",
+    "pipeline": "node scripts/run-pipeline.js"
+  },
+  "keywords": [
+    "antigravity",
+    "ai-game-factory",
+    "game-engine",
+    "html5-games",
+    "playgama",
+    "autonomous-agents"
+  ],
+  "author": "AI Game Factory Team",
+  "license": "MIT",
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}

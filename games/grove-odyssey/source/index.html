@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Grove Odyssey — Cozy Exploratory Mini Metroidvania</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- On-screen Audio Mute Button (Playgama UX Requirement) -->
+    <button id="btn-mute" class="hud-mute-btn" aria-label="Toggle Audio Mute" title="Toggle Sound">🔊</button>
+
+    <!-- Interactive HTML Title Screen Overlay -->
+    <div id="title-overlay" class="title-overlay">
+      <div class="title-card">
+        <div class="title-badge">🌿 METROIDVANIA ADVENTURE</div>
+        <h1 class="title-glow">GROVE ODYSSEY</h1>
+        <p class="title-subtitle">A Cozy Exploratory Forest Odyssey</p>
+
+        <div class="title-actions">
+          <button id="btn-play-game" class="btn-play-odyssey" autofocus>
+            ▶ PLAY ODYSSEY
+          </button>
+          <button id="btn-reset-save" class="btn-reset-save" title="Clear saved progress and start fresh">
+            🗑️ Reset Save
+          </button>
+        </div>
+
+        <div class="title-controls-hint">
+          <span class="hint-item"><kbd>A</kbd> <kbd>D</kbd> Move</span>
+          <span class="hint-item"><kbd>Space</kbd> / <kbd>W</kbd> Jump & Glide</span>
+          <span class="hint-item"><kbd>K</kbd> / <kbd>X</kbd> / <kbd>Click</kbd> Attack</span>
+          <span class="hint-item"><kbd>Shift</kbd> / <kbd>J</kbd> Dash</span>
+          <span class="hint-item"><kbd>E</kbd> Talk / Interact</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Virtual Touch Overlay -->
+    <div id="touch-controls" class="touch-controls">
+      <div class="touch-dpad">
+        <button id="btn-left" class="touch-btn touch-dir" aria-label="Move Left">◀</button>
+        <button id="btn-right" class="touch-btn touch-dir" aria-label="Move Right">▶</button>
+      </div>
+      <div class="touch-actions">
+        <button id="btn-interact" class="touch-btn btn-interact" aria-label="Interact / Talk">💬 Talk</button>
+        <button id="btn-attack" class="touch-btn btn-attack" aria-label="Attack">⚔️ Attack</button>
+        <button id="btn-dash" class="touch-btn btn-dash" aria-label="Leaf Dash">🍃 Dash</button>
+        <button id="btn-jump" class="touch-btn btn-jump" aria-label="Jump / Glide">🕊️ Jump</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>

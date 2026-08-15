@@ -1,0 +1,10 @@
+{
+  "name": "Grove Odyssey",
+  "short_name": "GroveOdyssey",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0D2818",
+  "theme_color": "#2ED573",
+  "description": "A cozy, non-violent mini Metroidvania exploring an enchanted woodland across 7 interconnected zones, unlocking magical abilities, and restoring the 8 Ancient Sun Seeds to the Great Elder Tree."
+}

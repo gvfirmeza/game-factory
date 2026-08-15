@@ -1,0 +1,535 @@
+{
+  "gameId": "grove-odyssey",
+  "title": "Grove Odyssey",
+  "version": "1.0.0",
+  "genre": "mini-metroidvania",
+  "viewport": {
+    "width": 800,
+    "height": 480,
+    "orientation": "landscape",
+    "safeArea": {
+      "top": 16,
+      "bottom": 16,
+      "left": 16,
+      "right": 16
+    }
+  },
+  "palette": {
+    "hero": {
+      "bodyTop": "#E0FAFF",
+      "bodyBottom": "#A7F3D0",
+      "outline": "#1E293B",
+      "eyes": "#1E293B",
+      "catchlight": "#FFFFFF",
+      "blush": "rgba(255, 120, 150, 0.45)",
+      "antenna": "#FDE047",
+      "antennaGlow": "#FACC15",
+      "cape": "#4ADE80",
+      "capeShadow": "#16A34A",
+      "aura": "rgba(167, 243, 208, 0.35)",
+      "glideCanopy": "#FEF08A"
+    },
+    "npcs": {
+      "barnaby": {
+        "shellTop": "#FDE68A",
+        "shellBase": "#D97706",
+        "shellShadow": "#92400E",
+        "moss": "#22C55E",
+        "sporeCyan": "#00F5D4",
+        "body": "#FFE8D6",
+        "scarf": "#38BDF8",
+        "clasp": "#4ADE80"
+      },
+      "bramble": {
+        "quillsDark": "#5C3D2E",
+        "quillsAccent": "#8B5E3C",
+        "body": "#FDE68A",
+        "gogglesFrame": "#D97706",
+        "gogglesLens": "#38BDF8",
+        "lanternFrame": "#374151",
+        "lanternCrystal": "#06B6D4"
+      },
+      "pip": {
+        "featherMantle": "#1E1B4B",
+        "mantleAccent": "#312E81",
+        "starSpeckles": "#FDE047",
+        "breastDown": "#F1F5F9",
+        "breastChevrons": "#CBD5E1",
+        "eyebrowTufts": "#D97706",
+        "spectacles": "#FACC15",
+        "beak": "#F59E0B"
+      }
+    },
+    "enemies": {
+      "brambleSlime": {
+        "jellyTop": "#4ADE80",
+        "jellyMid": "#22C55E",
+        "jellyBase": "#15803D",
+        "thornCore": "#EF4444",
+        "horns": "#166534"
+      },
+      "shadowWisp": {
+        "aura": "rgba(192, 132, 252, 0.6)",
+        "orbTop": "#F3E8FF",
+        "orbMid": "#9333EA",
+        "orbBase": "#581C87",
+        "wings": "rgba(216, 180, 254, 0.55)",
+        "eye": "#FDE047"
+      },
+      "thornBeetle": {
+        "carapaceTop": "#92400E",
+        "carapaceMid": "#78350F",
+        "carapaceBase": "#451A03",
+        "horn": "#78350F",
+        "spikes": "#B91C1C",
+        "eyeNormal": "#F97316",
+        "eyeCharge": "#EF4444"
+      }
+    },
+    "zones": [
+      {
+        "id": "heart_grove",
+        "name": "Heart Grove",
+        "type": "hub",
+        "skyTop": "#70A1FF",
+        "skyBottom": "#DDF3D8",
+        "terrainMain": "#4A3525",
+        "terrainTop": "#55B368",
+        "terrainAccent": "#88D49E",
+        "particleColor": "#FFB8C6",
+        "ambientGlow": "rgba(254, 240, 138, 0.25)"
+      },
+      {
+        "id": "mossy_caverns",
+        "name": "Mossy Caverns",
+        "type": "subterranean",
+        "skyTop": "#1A252C",
+        "skyBottom": "#163832",
+        "terrainMain": "#1F2937",
+        "terrainTop": "#2C4A3E",
+        "terrainAccent": "#00F5D4",
+        "particleColor": "#00F5D4",
+        "ambientGlow": "rgba(0, 245, 212, 0.3)"
+      },
+      {
+        "id": "crystal_grotto",
+        "name": "Crystal Grotto",
+        "type": "subterranean",
+        "skyTop": "#231942",
+        "skyBottom": "#38184C",
+        "terrainMain": "#2B2D42",
+        "terrainTop": "#4A4E69",
+        "terrainAccent": "#70D6FF",
+        "particleColor": "#70D6FF",
+        "ambientGlow": "rgba(112, 214, 255, 0.35)"
+      },
+      {
+        "id": "sunlit_canopy",
+        "name": "Sunlit Canopy",
+        "type": "canopy",
+        "skyTop": "#8ECAE6",
+        "skyBottom": "#FFB703",
+        "terrainMain": "#854D0E",
+        "terrainTop": "#38B000",
+        "terrainAccent": "#FB8500",
+        "particleColor": "#FFD166",
+        "ambientGlow": "rgba(251, 133, 0, 0.25)"
+      },
+      {
+        "id": "sunken_roots",
+        "name": "Forgotten Sunken Roots",
+        "type": "subterranean",
+        "skyTop": "#0F0E17",
+        "skyBottom": "#2E1C14",
+        "terrainMain": "#3F2B1D",
+        "terrainTop": "#28170D",
+        "terrainAccent": "#FF9F1C",
+        "particleColor": "#FF9F1C",
+        "ambientGlow": "rgba(255, 159, 28, 0.28)"
+      },
+      {
+        "id": "windy_chasm",
+        "name": "Windy Chasm",
+        "type": "highlands",
+        "skyTop": "#BAC8D3",
+        "skyBottom": "#4A4E69",
+        "terrainMain": "#4B5563",
+        "terrainTop": "#A3B18A",
+        "terrainAccent": "#E0E1DD",
+        "particleColor": "#FFFFFF",
+        "ambientGlow": "rgba(163, 177, 138, 0.2)"
+      },
+      {
+        "id": "secret_elder_shrine",
+        "name": "Secret Elder Shrine",
+        "type": "vault",
+        "skyTop": "#140826",
+        "skyBottom": "#3A0CA3",
+        "terrainMain": "#2B2D42",
+        "terrainTop": "#E9ECEF",
+        "terrainAccent": "#FFD700",
+        "particleColor": "#FFD700",
+        "ambientGlow": "rgba(255, 215, 0, 0.45)"
+      }
+    ],
+    "items": {
+      "sunSeed": {
+        "core": "#FFFFFF",
+        "petals": "#FEF08A",
+        "outline": "#F59E0B",
+        "halo": "rgba(253, 224, 71, 0.6)"
+      },
+      "waystone": {
+        "stele": "#1E293B",
+        "steleOutline": "#0F172A",
+        "activeRune": "#22D3EE",
+        "dormantRune": "#475569",
+        "healingAura": "rgba(34, 211, 238, 0.45)"
+      },
+      "shrines": {
+        "pedestal": "#334155",
+        "pedestalOutline": "#1E293B",
+        "featherBeam": "rgba(52, 211, 153, 0.4)",
+        "featherRune": "#10B981",
+        "leafBeam": "rgba(251, 191, 36, 0.4)",
+        "leafRune": "#F59E0B",
+        "glideBeam": "rgba(56, 189, 248, 0.4)",
+        "glideRune": "#38BDF8"
+      },
+      "gates": {
+        "sporeCap": "#00F5D4",
+        "sporeStem": "#D8F3DC",
+        "crystalWall": "#BE95C4",
+        "crystalFissure": "#00F0FF",
+        "thornVine": "#540D6E",
+        "thornSpike": "#9D0208",
+        "windUpdraft": "rgba(56, 189, 248, 0.35)"
+      }
+    },
+    "ui": {
+      "heartFull": "#F43F5E",
+      "heartEmpty": "#334155",
+      "heartGlow": "rgba(244, 63, 94, 0.5)",
+      "seedBadgeBg": "rgba(15, 23, 42, 0.75)",
+      "seedGold": "#FDE047",
+      "badgeLocked": "#475569",
+      "dialogueBg": "rgba(15, 23, 42, 0.92)",
+      "dialogueBorder": "#38BDF8",
+      "dialogueText": "#F8FAFC",
+      "dialogueNameBg": "#0284C7",
+      "dialogueNameText": "#FFFFFF",
+      "promptKey": "#38BDF8",
+      "modalBg": "#0F172A",
+      "btnPrimary": "linear-gradient(135deg, #10B981, #06B6D4)"
+    }
+  },
+  "proceduralSprites": [
+    {
+      "id": "hero_lumi",
+      "type": "hero",
+      "method": "drawLumi",
+      "params": {
+        "scaleX": 1.0,
+        "scaleY": 1.0,
+        "facingRight": true,
+        "action": "idle",
+        "animTimer": 0,
+        "iFrames": 0,
+        "hasFeatherJump": false,
+        "hasLeafDash": false,
+        "hasWindGlide": false
+      }
+    },
+    {
+      "id": "npc_barnaby",
+      "type": "npc",
+      "method": "drawBarnaby",
+      "params": { "animTimer": 0, "facingRight": true }
+    },
+    {
+      "id": "npc_bramble",
+      "type": "npc",
+      "method": "drawBramble",
+      "params": { "animTimer": 0, "facingRight": true }
+    },
+    {
+      "id": "npc_pip",
+      "type": "npc",
+      "method": "drawPip",
+      "params": { "animTimer": 0, "facingRight": true }
+    },
+    {
+      "id": "enemy_bramble_slime",
+      "type": "enemy_ground",
+      "method": "drawBrambleSlime",
+      "params": { "animTimer": 0, "facingRight": true, "squish": 1.0 }
+    },
+    {
+      "id": "enemy_shadow_wisp",
+      "type": "enemy_aerial",
+      "method": "drawShadowWisp",
+      "params": { "animTimer": 0 }
+    },
+    {
+      "id": "enemy_thorn_beetle",
+      "type": "enemy_charger",
+      "method": "drawThornBeetle",
+      "params": { "animTimer": 0, "facingRight": true, "isCharging": false }
+    },
+    {
+      "id": "shrine_feather_jump",
+      "type": "ability_shrine",
+      "method": "drawAbilityShrine",
+      "params": { "abilityType": "feather_jump", "isCollected": false }
+    },
+    {
+      "id": "shrine_leaf_dash",
+      "type": "ability_shrine",
+      "method": "drawAbilityShrine",
+      "params": { "abilityType": "leaf_dash", "isCollected": false }
+    },
+    {
+      "id": "shrine_wind_glide",
+      "type": "ability_shrine",
+      "method": "drawAbilityShrine",
+      "params": { "abilityType": "wind_glide", "isCollected": false }
+    },
+    {
+      "id": "obstacle_spore_bouncer",
+      "type": "interactable_jump_pad",
+      "method": "drawSporeBouncer",
+      "params": { "bounceTimer": 0 }
+    },
+    {
+      "id": "obstacle_crystal_barrier",
+      "type": "destructible_gate",
+      "method": "drawCrystalBarrier",
+      "params": { "width": 24, "height": 64, "isBroken": false }
+    },
+    {
+      "id": "checkpoint_waystone",
+      "type": "waystone_checkpoint",
+      "method": "drawWaystone",
+      "params": { "isActive": false, "animTimer": 0 }
+    },
+    {
+      "id": "collectible_sun_seed",
+      "type": "ancient_sun_seed",
+      "method": "drawSunSeed",
+      "params": { "animTimer": 0 }
+    }
+  ],
+  "dialogueAvatars": [
+    {
+      "id": "avatar_barnaby",
+      "speakerId": "barnaby_snail",
+      "displayName": "Barnaby the Snail",
+      "nameColor": "#38BDF8",
+      "frameBorder": "#0284C7"
+    },
+    {
+      "id": "avatar_bramble",
+      "speakerId": "bramble_hedgehog",
+      "displayName": "Bramble the Hedgehog",
+      "nameColor": "#F59E0B",
+      "frameBorder": "#D97706"
+    },
+    {
+      "id": "avatar_pip",
+      "speakerId": "pip_owl",
+      "displayName": "Pip the Owl",
+      "nameColor": "#A855F7",
+      "frameBorder": "#7C3AED"
+    },
+    {
+      "id": "avatar_lumi",
+      "speakerId": "lumi",
+      "displayName": "Lumi",
+      "nameColor": "#34D399",
+      "frameBorder": "#10B981"
+    }
+  ],
+  "particleSystems": [
+    {
+      "id": "particle_spore_burst",
+      "count": 12,
+      "colors": ["#00F5D4", "#A7F3D0", "#FFFFFF"],
+      "size": [3, 7],
+      "lifetime": 0.4,
+      "speed": [60, 120],
+      "gravity": 40
+    },
+    {
+      "id": "particle_crystal_shards",
+      "count": 16,
+      "colors": ["#70D6FF", "#BE95C4", "#FFFFFF", "#00F0FF"],
+      "size": [4, 9],
+      "lifetime": 0.5,
+      "speed": [80, 180],
+      "gravity": 120
+    },
+    {
+      "id": "particle_leaf_dash_trail",
+      "count": 8,
+      "colors": ["#4ADE80", "#22C55E", "#86EFAC"],
+      "size": [3, 6],
+      "lifetime": 0.3,
+      "speed": [20, 60],
+      "gravity": 0
+    },
+    {
+      "id": "particle_feather_jump_flurry",
+      "count": 8,
+      "colors": ["#34D399", "#ECFDF5", "#FFFFFF"],
+      "size": [3, 6],
+      "lifetime": 0.45,
+      "speed": [30, 80],
+      "gravity": 20
+    },
+    {
+      "id": "particle_sun_seed_sparkles",
+      "count": 24,
+      "colors": ["#FEF08A", "#F59E0B", "#FFFFFF", "#FDE047"],
+      "size": [2, 5],
+      "lifetime": 0.7,
+      "speed": [50, 140],
+      "gravity": -10
+    },
+    {
+      "id": "particle_thermal_wind_streak",
+      "count": 14,
+      "colors": ["rgba(56, 189, 248, 0.45)", "rgba(255, 255, 255, 0.6)"],
+      "size": [2, 8],
+      "lifetime": 1.2,
+      "speed": [10, 40],
+      "gravity": -180
+    },
+    {
+      "id": "particle_waystone_heal_ring",
+      "count": 18,
+      "colors": ["#22D3EE", "#67E8F9", "#FFFFFF"],
+      "size": [3, 6],
+      "lifetime": 0.6,
+      "speed": [40, 100],
+      "gravity": 0
+    },
+    {
+      "id": "particle_great_bloom_confetti",
+      "count": 48,
+      "colors": ["#FFB8C6", "#FEF08A", "#34D399", "#38BDF8", "#FDE047"],
+      "size": [4, 9],
+      "lifetime": 2.5,
+      "speed": [60, 220],
+      "gravity": 50
+    },
+    {
+      "id": "particle_ambient_fireflies",
+      "count": 20,
+      "colors": ["#FEF08A", "#A7F3D0", "#67E8F9"],
+      "size": [1.5, 3.5],
+      "lifetime": 3.0,
+      "speed": [5, 18],
+      "gravity": -5
+    }
+  ],
+  "audioSynthesizer": [
+    {
+      "id": "sfx_jump",
+      "type": "sine_sweep",
+      "freqStart": 420,
+      "freqEnd": 680,
+      "duration": 0.12,
+      "desc": "Crisp woodland jump chirp"
+    },
+    {
+      "id": "sfx_double_jump",
+      "type": "harmonic_triangle_flutter",
+      "freqStart": 580,
+      "freqEnd": 920,
+      "duration": 0.15,
+      "desc": "Feather double jump upward harmonic sweep"
+    },
+    {
+      "id": "sfx_leaf_dash",
+      "type": "filtered_noise_burst",
+      "filterStart": 900,
+      "filterEnd": 2600,
+      "duration": 0.22,
+      "desc": "Crisp wind speed slice with leaf flutter"
+    },
+    {
+      "id": "sfx_wind_glide",
+      "type": "filtered_triangle_drone",
+      "freq": 320,
+      "duration": 0.3,
+      "loop": true,
+      "desc": "Sustained gentle dandelion air hover hum"
+    },
+    {
+      "id": "sfx_sun_seed_collect",
+      "type": "arpeggio_major_chime",
+      "notes": [523.25, 659.25, 783.99, 1046.5],
+      "duration": 0.5,
+      "desc": "Ascending 4-note glorious Sun Seed pickup chord"
+    },
+    {
+      "id": "sfx_waystone_activate",
+      "type": "resonant_cathedral_chord",
+      "notes": [293.66, 369.99, 440.0, 587.33],
+      "duration": 1.8,
+      "desc": "Ancient standing waystone sacred healing chime"
+    },
+    {
+      "id": "sfx_spore_bounce",
+      "type": "fm_boing",
+      "freqStart": 220,
+      "freqEnd": 540,
+      "duration": 0.24,
+      "desc": "Juicy bouncy spring mushroom boing"
+    },
+    {
+      "id": "sfx_crystal_shatter",
+      "type": "glass_snap_crack",
+      "freqStart": 1800,
+      "freqEnd": 240,
+      "duration": 0.28,
+      "desc": "Brittle crystal barrier shattering on dash impact"
+    },
+    {
+      "id": "sfx_hazard_damage",
+      "type": "wooden_thud_crunch",
+      "freqStart": 140,
+      "freqEnd": 60,
+      "duration": 0.2,
+      "desc": "Soft thud damage collision with knockback"
+    },
+    {
+      "id": "sfx_dialogue_barnaby",
+      "type": "marimba_tone",
+      "freq": 200,
+      "duration": 0.06,
+      "desc": "Low warm resonant marimba blip for Barnaby"
+    },
+    {
+      "id": "sfx_dialogue_bramble",
+      "type": "woodblock_click",
+      "freq": 300,
+      "duration": 0.04,
+      "desc": "Raspy percussive woodblock click for Bramble"
+    },
+    {
+      "id": "sfx_dialogue_pip",
+      "type": "panflute_whistle",
+      "freq": 620,
+      "duration": 0.07,
+      "desc": "High melodic pan-flute chime for Pip"
+    },
+    {
+      "id": "sfx_great_bloom_fanfare",
+      "type": "victory_fanfare",
+      "notes": [392.0, 523.25, 659.25, 783.99, 1046.5, 1318.5],
+      "duration": 2.4,
+      "desc": "Orchestral triumphant finale chord for the Great Tree bloom"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "gameId": "meadowbound",
+  "title": "Meadowbound",
+  "tagline": "A cozy 2D action platform adventure about restoring the Great Sunburst Tree",
+  "description": "Embark on an enchanting woodland adventure with Pip, a spirited forest sprite, across 5 handcrafted biomes. Dash across verdant meadows, leap through foggy ancient woods, navigate bioluminescent caverns, ride gusting mountain updrafts, and restore the 25 lost Sun Berries to revive the Great Sunburst Tree and soothe the slumbering Bramblethorn Golem.",
+  "howToPlay": "Desktop Controls:\n- [A] / [D] or [Arrow Keys]: Move Left / Right\n- [Space] / [W] / [Up Arrow]: Variable-height Jump\n- [Shift] / [J] / [X]: Mid-air Meadow Dash (1 per jump, reset on landing or stomping)\n- [E] / [Enter]: Talk to NPCs, read lore medallions & attune Waystones\n- [Esc] / [P]: Pause / Resume Game\n- Stomp Enemies: Land on enemies from above to bounce skyward (+320px/s) and refresh Meadow Dash.\n\nMobile Controls:\n- Virtual D-Pad for responsive running & crouching\n- Dedicated on-screen touch buttons for Jump (🕊️), Meadow Dash (🍃), and Talk / Interact (💬)\n- On-screen Audio Mute toggle button (🔊 / 🔇) in the top-right HUD.",
+  "engine": "HTML5 / Plain JavaScript (Canvas 2D)",
+  "category": "Platformer / Action Adventure / Cozy",
+  "tags": [
+    "platformer",
+    "cozy",
+    "action",
+    "adventure",
+    "retro",
+    "casual",
+    "family-friendly"
+  ],
+  "orientation": "landscape",
+  "supportedDevices": [
+    "desktop",
+    "mobile",
+    "tablet"
+  ],
+  "languages": [
+    "en"
+  ],
+  "features": [
+    "5 Diverse Handcrafted Biomes (Sunny Meadowlands, Whispering Woods, Bioluminescent Caverns, Highland Cliffs, Elder Canopy)",
+    "Tight & Snappy Kinematics with Coyote Time (100ms), Jump Buffering (120ms), and 1x Mid-air Meadow Dash",
+    "Dynamic Enemy Archetypes (Acorn Walker, Spore Hopper, Glow Bat, Bramble Charger) & 3-Phase Bramblethorn Golem Boss Encounter",
+    "25 Collectible Sun Berries, 50 Golden Acorns, and 5 Secret Lore Medallions with NPC narrative integration",
+    "Procedural Web Audio Synthesizer with custom biome chiptune arpeggios, melodic NPC chirps, and dynamic sound effects",
+    "On-screen Audio Mute control and automated tab visibility pause/resume lifecycle handling",
+    "Persistent Save System (meadowbound_save_v1) with Playgama Cloud Storage sync and local fallback",
+    "Zero external broken CDN dependencies, tracking scripts, or analytics - 100% self-contained"
+  ],
+  "monetization": {
+    "interstitials": false,
+    "rewarded": false
+  },
+  "distribution": {
+    "archivePath": "games/meadowbound/build/meadowbound.zip",
+    "entryPoint": "index.html",
+    "aspectRatio": "16:9",
+    "virtualResolution": {
+      "width": 720,
+      "height": 450
+    }
+  },
+  "submissionStatus": "PLAYGAMA_READY",
+  "validatedAt": "2026-08-15T12:15:00.000Z"
+}

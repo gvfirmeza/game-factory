@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "checkJs": false,
+    "outDir": "./dist",
+    "rootDir": "./"
+  },
+  "include": [
+    "engine/**/*",
+    "templates/**/*",
+    "scripts/**/*",
+    "studio/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "games/**/build"
+  ]
+}

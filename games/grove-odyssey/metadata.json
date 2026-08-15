@@ -1,0 +1,28 @@
+{
+  "id": "grove-odyssey",
+  "title": "Grove Odyssey",
+  "description": "A rich, cozy mini Metroidvania where a tiny luminous forest spirit explores 7 interconnected enchanted forest zones, unlocks 3 movement abilities, meets 3 friendly woodland NPCs with full dialogue, dodges woodland creatures, and restores the Great Elder Grove with 8 Ancient Sun Seeds.",
+  "genre": "metroidvania",
+  "version": "1.0.0",
+  "status": "ready",
+  "orientation": "landscape",
+  "pipeline": {
+    "design": "completed",
+    "art": "completed",
+    "technical": "completed",
+    "implementation": "completed",
+    "playtest": "completed",
+    "content_review": "completed",
+    "polish": "completed",
+    "final_review": "completed",
+    "playgama_qa": "completed",
+    "build": "done",
+    "submission_manifest": "ready"
+  },
+  "build": {
+    "timestamp": "2026-08-15T01:34:16.637Z",
+    "zipFile": "build/grove-odyssey.zip",
+    "sizeBytes": 67989,
+    "success": true
+  }
+}

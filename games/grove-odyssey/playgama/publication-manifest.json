@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "gameId": "grove-odyssey",
+  "title": "Grove Odyssey",
+  "tagline": "A cozy mini metroidvania about a tiny spirit exploring an enchanted forest",
+  "description": "Step into the glowing woodland of Heart Grove as Lumi, a nimble forest spirit. A twilight tempest has scattered the eight Ancient Sun Seeds across 7 interconnected zones. Master ancient abilities—Feather Double Jump, Wind Glide, and Leaf Dash—overcome corrupted woodland creatures, meet quirky animal locals, unlock sealed crystal passages, and restore eternal dawn light to the Great Elder Tree.",
+  "howToPlay": "Desktop Controls:\n- [A] / [D] or [Arrow Keys]: Move Left / Right\n- [Space] / [W] / [Up Arrow]: Jump, Double Jump & Wind Glide\n- [K] / [X] / [C] / [Left Click]: Spirit Spark / Leaf Slash (Attack)\n- [Shift] / [J]: Leaf Dash (Shatter brittle crystal barriers & burst past thorns)\n- [E] / [Enter]: Talk to NPCs, Rest at Waystone sanctuaries & Bloom Elder Tree\n\nMobile Controls:\n- Virtual D-Pad for running\n- Dedicated on-screen touch buttons for Jump/Glide, Attack, Leaf Dash, and Talk.",
+  "engine": "HTML5 / Plain JavaScript (Canvas 2D)",
+  "category": "Metroidvania / Platformer / Adventure",
+  "tags": ["metroidvania", "cozy", "pixel-art", "adventure", "platformer", "exploration", "story"],
+  "orientation": "landscape",
+  "supportedDevices": ["desktop", "mobile", "tablet"],
+  "languages": ["en"],
+  "features": [
+    "7 Handcrafted Interconnected Zones (Heart Grove, Mossy Caverns, Crystal Grotto, Sunlit Canopy, Sunken Roots, Windy Chasm, Secret Elder Shrine)",
+    "3 Fluid Movement Abilities (Feather Double Jump, Wind Glide, Leaf Dash)",
+    "Tactile Combat System with 3 Enemy Archetypes (Bramble Slime, Shadow Wisp, Thorn Beetle) and Spirit Essence recovery",
+    "3 Voiced Woodland NPCs with sequential multi-page lore dialogues",
+    "8 Collectible Ancient Sun Seeds with environmental puzzle challenges",
+    "3 Restorative Waystone sanctuaries with persistent progress saving",
+    "100% Zero-Dependency Procedural Web Audio synthesizer and dynamic soundtrack",
+    "On-screen Audio Mute control and automatic tab visibility pausing",
+    "Full offline standalone package with zero CDN scripts"
+  ],
+  "monetization": {
+    "interstitials": false,
+    "rewarded": false
+  },
+  "distribution": {
+    "archivePath": "games/grove-odyssey/build/grove-odyssey.zip",
+    "entryPoint": "index.html",
+    "aspectRatio": "16:9",
+    "virtualResolution": {
+      "width": 720,
+      "height": 450
+    }
+  },
+  "submissionStatus": "PLAYGAMA_READY",
+  "validatedAt": "2026-08-15T00:00:00.000Z"
+}

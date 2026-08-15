@@ -1,0 +1,401 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #06110a;
+  font-family: 'Fredoka', 'Nunito', system-ui, -apple-system, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  background-color: #06110a;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+  border-radius: 6px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* On-screen Audio Mute Button */
+.hud-mute-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(18, 38, 28, 0.85);
+  border: 2px solid #2ec4b6;
+  color: #ffffff;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.hud-mute-btn:hover {
+  transform: scale(1.1);
+  background: rgba(46, 196, 182, 0.35);
+  border-color: #ffd166;
+}
+
+.hud-mute-btn:active {
+  transform: scale(0.95);
+}
+
+/* Interactive HTML Title Screen Overlay */
+.title-overlay, .modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 17, 10, 0.90);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.title-overlay.hidden, .modal-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.title-card {
+  text-align: center;
+  max-width: 540px;
+  width: 90%;
+  padding: 2.2rem 2.5rem;
+  background: rgba(13, 34, 22, 0.96);
+  border: 2px solid #2ec4b6;
+  border-radius: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(46, 196, 182, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  animation: floatCard 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatCard {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-6px); }
+}
+
+.title-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2ec4b6;
+  background: rgba(46, 196, 182, 0.15);
+  padding: 5px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(46, 196, 182, 0.35);
+}
+
+.title-glow {
+  font-family: 'Fredoka', cursive, sans-serif;
+  font-size: 3.0rem;
+  font-weight: 700;
+  color: #ffd166;
+  text-shadow: 0 4px 20px rgba(255, 209, 102, 0.45);
+  line-height: 1.1;
+  margin-top: 0.25rem;
+}
+
+.title-subtitle {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  color: #a7f3d0;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.title-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+.title-secondary-actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-play-game {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #06110a;
+  background: linear-gradient(135deg, #ffd166 0%, #2ec4b6 100%);
+  border: 2px solid #ffffff;
+  padding: 0.85rem 2.8rem;
+  border-radius: 35px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(46, 196, 182, 0.45);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.btn-play-game:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 12px 32px rgba(46, 196, 182, 0.6);
+  filter: brightness(1.08);
+}
+
+.btn-play-game:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-secondary {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e2ece9;
+  background: rgba(46, 196, 182, 0.15);
+  border: 1px solid rgba(46, 196, 182, 0.4);
+  padding: 0.45rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(46, 196, 182, 0.3);
+  color: #ffffff;
+  border-color: #2ec4b6;
+}
+
+.btn-reset-save {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.btn-reset-save:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+.title-controls-hint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.hint-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+kbd {
+  background: #182c22;
+  border: 1px solid #334e3f;
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #ffd166;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* How to Play Modal */
+.modal-card {
+  max-width: 620px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: rgba(13, 34, 22, 0.98);
+  border: 2px solid #2ec4b6;
+  border-radius: 24px;
+  padding: 1.8rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  color: #e2ece9;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(46, 196, 182, 0.3);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.modal-header h2 {
+  font-family: 'Fredoka', cursive, sans-serif;
+  color: #ffd166;
+  font-size: 1.6rem;
+}
+
+.btn-close-modal {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.btn-close-modal:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.guide-card {
+  background: rgba(18, 44, 30, 0.7);
+  border: 1px solid rgba(46, 196, 182, 0.25);
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+.guide-card h3 {
+  font-size: 1.05rem;
+  color: #ffd166;
+  margin-bottom: 0.4rem;
+}
+
+.guide-card p {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #cbd5e1;
+}
+
+.modal-footer {
+  text-align: center;
+  padding-top: 0.6rem;
+}
+
+/* Mobile Touch Controls */
+.touch-controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+  z-index: 40;
+}
+
+@media (pointer: coarse), (max-width: 900px) {
+  .touch-controls {
+    display: block;
+  }
+}
+
+.touch-dpad {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  display: flex;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.touch-actions {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  pointer-events: auto;
+}
+
+.touch-btn {
+  background: rgba(18, 38, 28, 0.8);
+  border: 2px solid rgba(46, 196, 182, 0.6);
+  color: #ffffff;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 24px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.08s ease, background 0.08s ease;
+}
+
+.touch-btn:active {
+  transform: scale(0.92);
+  background: rgba(46, 196, 182, 0.4);
+}
+
+.touch-dir {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border-radius: 50%;
+}
+
+.btn-jump {
+  background: rgba(46, 196, 182, 0.35);
+  border-color: #2ec4b6;
+  font-size: 1.05rem;
+  padding: 14px 22px;
+}
+
+.btn-dash {
+  background: rgba(255, 209, 102, 0.3);
+  border-color: #ffd166;
+  color: #ffd166;
+}
+
+.btn-interact {
+  background: rgba(128, 237, 153, 0.3);
+  border-color: #80ed99;
+}
