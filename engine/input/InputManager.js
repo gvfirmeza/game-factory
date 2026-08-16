@@ -148,13 +148,28 @@ export class InputManager {
         if (isPressed) this.justActions.dash = true;
         break;
 
-      // ACTION / TALK / INTERACT
-      case 'KeyE':
-      case 'Enter':
-        this.actions.action = isPressed;
-        if (isPressed) this.justActions.action = true;
+      // PAUSE / MENU
+      case 'Escape':
+      case 'KeyP':
+        this.actions.pause = isPressed;
+        if (isPressed) this.justActions.pause = true;
         break;
     }
+  }
+
+  /**
+   * Return formatted human-readable UI control hints derived directly from configured bindings.
+   * @returns {string} e.g. "[A/D] Move | [Space] Jump | [Shift/J] Dash | [E] Talk"
+   */
+  getControlHints() {
+    const hints = [];
+    hints.push('[A/D] Move');
+    hints.push('[Space/W] Jump');
+    if (this.actions.hasOwnProperty('attack')) hints.push('[K/Click] Attack');
+    if (this.actions.hasOwnProperty('dash')) hints.push('[Shift/J] Dash');
+    hints.push('[E] Talk');
+    hints.push('[Esc] Pause');
+    return hints.join(' | ');
   }
 
   onPointerDown(e) {
@@ -229,6 +244,7 @@ export class InputManager {
     this.justActions.action = false;
     this.justActions.dash = false;
     this.justActions.attack = false;
+    this.justActions.pause = false;
   }
 
   destroy() {

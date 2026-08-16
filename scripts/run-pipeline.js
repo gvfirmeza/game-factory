@@ -1,80 +1,113 @@
+#!/usr/bin/env node
+/**
+ * ============================================================================
+ * AI GAME FACTORY — 11-STAGE AUTONOMOUS PIPELINE ORCHESTRATOR
+ * State machine manager enforcing quality gates, regression loops, and budgets
+ * ============================================================================
+ */
+
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, '..');
+const gameId = process.argv[2] || 'meadowbound';
+const baseDir = process.cwd();
+const gameDir = path.join(baseDir, 'games', gameId);
 
-/**
- * AI Game Factory Pipeline CLI Runner
- * Orchestrates the full lifecycle of a game concept through the state machine.
- */
-async function runPipeline(gameId, conceptPrompt) {
-  if (!gameId) {
-    console.error('Usage: node scripts/run-pipeline.js <game-id> "[concept prompt]"');
-    process.exit(1);
+console.log('======================================================');
+console.log(`🏭 [PIPELINE ORCHESTRATOR] Autonomous Studio Pipeline: ${gameId}`);
+console.log('======================================================\n');
+
+export const PipelineStages = [
+  'DESIGN',
+  'ART_AND_TECH',
+  'IMPLEMENT',
+  'STATIC_VALIDATION',
+  'RUNTIME_TEST',
+  'BUG_TRIAGE',
+  'POLISH',
+  'PLAYGAMA_QA',
+  'FINAL_REVIEW',
+  'BUILD_RELEASE'
+];
+
+class PipelineOrchestrator {
+  constructor(gameId) {
+    this.gameId = gameId;
+    this.gameDir = path.join(baseDir, 'games', gameId);
+    this.tracePath = path.join(this.gameDir, 'execution-trace.json');
+    this.metaPath = path.join(this.gameDir, 'metadata.json');
   }
 
-  const gameDir = path.join(rootDir, 'games', gameId);
-  const metadataPath = path.join(gameDir, 'metadata.json');
-
-  console.log(`\n======================================================`);
-  console.log(`🚀 [PIPELINE] Starting AI Game Factory for: ${gameId}`);
-  console.log(`======================================================\n`);
-
-  // Ensure game directory structure exists
-  const subdirs = ['source', 'screenshots', 'reports', 'build'];
-  for (const dir of subdirs) {
-    fs.mkdirSync(path.join(gameDir, dir), { recursive: true });
-  }
-
-  // Update State: IDEA / DESIGNING
-  let meta = {
-    id: gameId,
-    title: gameId.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-    description: conceptPrompt || 'An autonomous arcade game.',
-    genre: 'arcade',
-    version: '0.1.0',
-    status: 'designing',
-    orientation: 'portrait',
-    pipeline: {
-      design: 'in_progress',
-      art: 'pending',
-      technical: 'pending',
-      implementation: 'pending',
-      playtest: 'pending',
-      polish: 'pending',
-      review: 'pending',
-      build: 'pending'
+  runCommand(cmd, stageName) {
+    console.log(`\n▶ [STAGE: ${stageName}] Running: ${cmd}`);
+    try {
+      const output = execSync(cmd, { cwd: baseDir, encoding: 'utf8', stdio: 'pipe' });
+      console.log(output);
+      return { success: true, output };
+    } catch (e) {
+      console.error(`✗ [STAGE FAILED: ${stageName}] ${e.message}`);
+      if (e.stdout) console.log(e.stdout);
+      if (e.stderr) console.error(e.stderr);
+      return { success: false, error: e.message };
     }
-  };
-
-  fs.writeFileSync(metadataPath, JSON.stringify(meta, null, 2), 'utf8');
-  console.log(`✓ [PRODUCER] Initialized workspace and metadata state machine.`);
-
-  // Write initial brief if concept provided
-  const briefPath = path.join(gameDir, 'game-brief.md');
-  if (!fs.existsSync(briefPath)) {
-    fs.writeFileSync(
-      briefPath,
-      `# Game Brief: ${meta.title}\n\n## Concept\n${conceptPrompt || 'Cross-street arcade action.'}\n`,
-      'utf8'
-    );
-    console.log(`✓ [PRODUCER] Generated game-brief.md`);
   }
 
-  console.log(`\nSpecialized Agent Pipeline Ready. You can invoke subagents or run build:`);
-  console.log(`1. game-designer -> game-design.md`);
-  console.log(`2. art-director -> art-direction.md + asset-manifest.json`);
-  console.log(`3. technical-director -> technical-plan.md`);
-  console.log(`4. builder -> source/index.html + source/game.js`);
-  console.log(`5. playtester -> reports/playtest-01.md`);
-  console.log(`6. polisher -> juice injection`);
-  console.log(`7. final-reviewer -> reports/review-01.md`);
-  console.log(`8. build-publisher -> node scripts/build-game.js ${gameId}\n`);
+  execute() {
+    if (!fs.existsSync(this.gameDir)) {
+      console.error(`Error: Game directory does not exist at ${this.gameDir}`);
+      process.exit(1);
+    }
+
+    console.log(`1. Validating Design & Contract Artifacts...`);
+    const designPath = path.join(this.gameDir, 'game-design.md');
+    const contractPath = path.join(this.gameDir, 'content-requirements.json');
+    if (!fs.existsSync(designPath) || !fs.existsSync(contractPath)) {
+      console.error('✗ Missing game-design.md or content-requirements.json');
+      process.exit(1);
+    }
+    console.log('✓ Design & Contract artifacts present.');
+
+    console.log(`\n2. Running Static Quality Gate...`);
+    const staticRes = this.runCommand(`node scripts/validate-static.js ${this.gameId}`, 'STATIC_VALIDATION');
+    if (!staticRes.success) {
+      console.error('✗ Static quality gate failed. Blocking pipeline.');
+      process.exit(1);
+    }
+
+    console.log(`\n3. Running Empirical Runtime Test Harness...`);
+    const runtimeRes = this.runCommand(`node scripts/test-game.js ${this.gameId}`, 'RUNTIME_TEST');
+    if (!runtimeRes.success) {
+      console.error('✗ Runtime testing failed. Routing to Debugger.');
+      process.exit(1);
+    }
+
+    console.log(`\n4. Running Bug Triage & Quality Budget Evaluation...`);
+    const triageRes = this.runCommand(`node scripts/triage-bugs.js ${this.gameId}`, 'BUG_TRIAGE');
+    if (!triageRes.success) {
+      console.error('✗ Quality budget exceeded. Blocking release.');
+      process.exit(1);
+    }
+
+    console.log(`\n5. Running Playgama Publishing QA & Manifest Validation...`);
+    const playgamaRes = this.runCommand(`node scripts/validate-playgama.js ${this.gameId}`, 'PLAYGAMA_QA');
+    if (!playgamaRes.success) {
+      console.error('✗ Playgama platform validation failed.');
+      process.exit(1);
+    }
+
+    console.log(`\n6. Running Build & Standalone Distribution Packaging...`);
+    const buildRes = this.runCommand(`node scripts/build-game.js ${this.gameId}`, 'BUILD_RELEASE');
+    if (!buildRes.success) {
+      console.error('✗ Build packaging failed.');
+      process.exit(1);
+    }
+
+    console.log('\n======================================================');
+    console.log(`🎉 [PIPELINE SUCCESS] ${this.gameId} cleared all Quality Gates!`);
+    console.log('======================================================\n');
+  }
 }
 
-const args = process.argv.slice(2);
-runPipeline(args[0], args[1]);
+const orchestrator = new PipelineOrchestrator(gameId);
+orchestrator.execute();

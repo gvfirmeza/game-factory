@@ -5,27 +5,24 @@ description: Guidelines, formulas, content budgets, and rubrics for designing co
 
 # Game Design Skill & Standards
 
-## 1. Definition of "Done"
-A game is NOT a prototype; it must be a **complete small finished game** satisfying:
-- Complete (full content budget fulfilled).
-- Playable (smooth responsive controls).
-- Functional (every displayed interactive element works).
-- Tested (verified across edge cases).
-- Polished (juice, particles, Web Audio synthesis).
+## 1. Upgraded Definition of "DONE"
+A game is NOT a technical demo. A game is ONLY DONE when:
+- Mechanically complete (all controls, kinematics, and abilities implemented).
+- Empirically runtime tested (verified across real simulated inputs).
+- Zero-tolerance Quality Budget satisfied (`CRITICAL = 0`, `BLOCKING = 0`, `MAJOR = 0`).
+- Playgama verified (`PLAYGAMA_READY` status with publication manifest).
 
-## 2. Content Budgeting & `content-requirements.json`
-Every design document must accompany a machine-readable `content-requirements.json` specifying:
-- `rooms`: Total distinct interconnected map areas (e.g. 5–8 for mini-metroidvanias).
-- `enemyTypes`: Distinct enemy/hazard AI archetypes (e.g. 2–4).
-- `abilities`: Distinct progression movement upgrades (e.g. 2–3).
-- `npcs`: Interactive story/guide NPCs (e.g. 2–4).
-- `collectibles`: Items/stars/seeds scattered with reward loops (e.g. 6–12).
-- `checkpoints`: Safe respawn anchors.
-- `secrets`: Hidden paths/false walls.
+## 2. Machine-Readable Gameplay Contract (`game-contract.json`)
+Every design phase must generate `game-contract.json` alongside `game-design.md` and `content-requirements.json`:
+- `controls`: Declarative key/action mapping (`move`, `jump`, `dash`, `interact`, `pause`).
+- `kinematics`: Numerical bounds (`maxRunSpeed`, `jumpImpulse`, `variableJumpCut`, `coyoteTime`, `jumpBuffer`, `maxAirDashes`).
+- `enemies`: Array of enemy archetypes (`patrol_walker`, `rhythmic_hopper`, `sine_flyer`, `proximity_charger`, `multi_phase_boss`) with HP, stompability, damage values, and bounding rules.
+- `npcs`: Array of NPCs with multi-line dialogues.
+- `rules`: Max health, checkpoint respawn rules, win/loss criteria.
 
-## 3. Gameplay Beats Structure
+## 3. Content Budgeting & Progression Beats
 Progression must follow a structured beat arc:
-`INTRO` -> `TEACHING` -> `FIRST CHALLENGE` -> `NEW MECHANIC` -> `EXPLORATION` -> `NEW ABILITY` -> `ABILITY-GATED AREA` -> `HARDER ENCOUNTER` -> `SECRET / REWARD` -> `FINAL CHALLENGE` -> `COMPLETION / CLIMAX`.
+`INTRO` -> `TEACHING` -> `FIRST CHALLENGE` -> `NEW MECHANIC` -> `EXPLORATION` -> `ABILITY GATING` -> `BOSS / CLIMAX` -> `VICTORY`.
 
-## 4. Non-Overflowing Interaction Rule
-Any interactable prompt (e.g. "E to Talk") MUST link to a functional `DialogueBox` with auto text-wrapping and clean page advancement. Visual placeholders are strictly forbidden.
+## 4. Interaction & Dialogue Standards
+Every interactable prompt (e.g. `[E] Talk`) MUST link to a functional `DialogueSystem` with automatic word wrapping, solid `#0A1610` backplates, typewriter audio chirps, and 250ms input debouncing. Visual fake placeholders are strictly forbidden.

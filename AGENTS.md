@@ -1,45 +1,93 @@
-# AI Game Factory — Workspace Agent Rules & Guidelines
+# AI Game Factory — Workspace Agent Rules & Quality Guidelines
 
 ## Studio Operational Model
-The AI Game Factory is a multi-agent autonomous game creation studio. Rather than a single prompt attempting to design, draw, code, test, polish, and package everything in one giant unverified step, development is partitioned across specialized subagents with explicit artifact handoffs.
+The AI Game Factory is an autonomous multi-agent game creation studio. Development is partitioned across specialized subagents with explicit artifact handoffs, deterministic runtime verification, and enforceable Quality Gates.
 
-## Specialized Roles
-- **producer**: Pipeline coordinator & state machine manager (`metadata.json`, `execution-trace.json`).
-- **game-designer**: Designs gameplay mechanics, content budgets (`content-requirements.json`), and progression beats (`game-design.md`).
-- **art-director**: Designs visual identity, color palettes, and procedural vector asset recipes (`art-direction.md`, `asset-manifest.json`).
-- **technical-director**: Designs entity systems, kinematic physics, and audio architectures (`technical-plan.md`).
-- **builder**: Implements clean HTML5/Canvas source code (`source/*`).
-- **playtester**: Adversarially tests mechanics, input triggers, physics edge cases, and verifies all coverage checks (`reports/playtest-*.md`).
-- **debugger**: Fixes reported runtime bugs, collision glitches, enemy physics models, and text wrapping issues.
-- **content-reviewer**: Evaluates world scale and content density against the content budget; issues `PASS` or `EXPAND` (`reports/content-review-*.md`).
-- **polisher**: Injects juice, squash & stretch, screen shake, particles, and procedural audio chord synthesis.
-- **final-reviewer**: Independent gatekeeper; issues binding PASS / FAIL review with Content Completeness Score (`reports/review-*.md`).
-- **playgama-specialist**: Platform publishing authority; validates official SDK integration, Game Ready timing, save/load persistence, audio/visibility lifecycle, UX compliance, clean ZIP extraction, and generates `publication-manifest.json` and `reports/playgama-qa.md`.
-- **build-publisher**: Packages verified games into standalone distributions (`build/*.zip`).
+## Redefined Definition of "DONE"
+A game is **NOT DONE** simply because:
+- it builds or generates a ZIP archive;
+- the page loads without crashing;
+- the player can perform basic movement;
+- there are no obvious JavaScript syntax errors;
+- a hypothetical QA report was written.
 
-## Rules & Constraints
-1. **Artifact-First**: Never proceed to implementation without design, art, and technical artifacts.
-2. **Real Subagent Delegation**: The Producer MUST always delegate tasks using native `invoke_subagent` calls. Monolithic fallback is strictly forbidden.
-3. **Zero-Friction Interactive Title Screens**: Title screens must NEVER be a fragile static canvas draw that blocks input. Use interactive DOM overlay buttons (`#btn-play-game`) alongside universal key listeners (`Space`, `Enter`, `E`, `W`, `Arrows`, `Click`, `PointerDown`).
-4. **Enemy Physics & Grounded Clamp**: Ground enemies MUST always simulate real platform gravity (`vy += 800 * dt`) and platform AABB collision resolution. Ground charges/dashes MUST strictly clamp to platform bounds `[minX, maxX]` and enter a dazed stun state upon hitting boundaries or walls. Ground enemies must never launch or fly into the sky.
-5. **Dialogue & UI Spatial Separation**: Dialogue boxes MUST use 100% solid, opaque backplates (`#0A1610`) to eliminate canvas pixel bleed-through. UI notifications / toast banners must NEVER share coordinate space with the dialogue box. Dialogue dismissal MUST enforce a minimum 250ms input debounce cooldown to prevent instant re-open typewriter stutter.
-6. **Playgama Readiness & Blocking Gate**: A game is NOT ready for distribution until it achieves `PLAYGAMA_READY` status via `node scripts/validate-playgama.js <id>`. Mandatory platform requirements include:
-   - `window.bridge.platform.sendMessage('game_ready')` emitted ONLY after assets are loaded and the player can interact.
+A game is **ONLY DONE** when:
+1. It is mechanically coherent and fully implemented against a machine-readable `game-contract.json`.
+2. It has been empirically tested in a 60 FPS runtime loop with simulated inputs.
+3. It passes the Quality Budget: **`CRITICAL = 0`**, **`BLOCKING = 0`**, **`MAJOR = 0`**.
+4. It passes all 20 Playgama platform compliance gates with verified `PLAYGAMA_READY` status.
+5. It receives an independent adversarial review with an overall score $\ge 9.0/10$.
+
+---
+
+## The 11-Stage Studio Quality Pipeline
+```
+DESIGN (game-contract.json + game-design.md)
+  ↓
+ART & TECH (art-direction.md + technical-plan.md)
+  ↓
+IMPLEMENT (source/* leveraging engine/*)
+  ↓
+STATIC VALIDATION (node scripts/validate-static.js <id>)
+  ↓
+RUNTIME TEST (node scripts/test-game.js <id>)
+  ↓
+BUG TRIAGE (node scripts/triage-bugs.js <id>)
+  ↓
+DEBUG (Surgical root-cause fixes)
+  ↓
+RUNTIME TEST AGAIN (Verification pass)
+  ↓
+REGRESSION TEST (Full suite re-test)
+  ↓
+POLISH (Squash/stretch, particles, procedural audio chords, screen shakes)
+  ↓
+PLAYGAMA QA (node scripts/validate-playgama.js <id> -> publication-manifest.json)
+  ↓
+FINAL REVIEW (Adversarial audit across 7 Master Quality Gates)
+  ↓
+BUILD & PACKAGE (build/<id>.zip with index.html at root)
+```
+
+---
+
+## Mandatory Studio Architectural Rules
+
+1. **Artifact-First & Machine-Readable Contracts**:
+   - The Game Designer MUST produce `game-contract.json` specifying controls, enemy archetypes, damage rules, NPCs, and win/loss conditions.
+   - The Builder MUST implement directly against this contract using `engine/` modules.
+   - The Playtester MUST test against this contract.
+
+2. **Centralized Enemy Architecture (`EnemyController`)**:
+   - Ground enemies (`patrol_walker`, `rhythmic_hopper`, `proximity_charger`) MUST always simulate platform gravity (`vy += gravity * dt`) and platform swept AABB collision resolution.
+   - Ground chargers MUST clamp to platform bounds `[minX, maxX]` and enter a dazed stun state upon hitting walls or edges.
+   - Ground enemies must NEVER fly or launch into the sky.
+
+3. **Centralized Dialogue Architecture (`DialogueSystem`)**:
+   - Dialogue boxes MUST use 100% solid, opaque backplates (`#0A1610`) to eliminate canvas pixel bleed-through.
+   - Dialogue boxes MUST use dynamic word wrapping with safe line margins and single authoritative state locking.
+   - Dialogue dismissal MUST enforce a minimum 250ms input debounce cooldown to prevent instant re-open typewriter stutter.
+   - UI notifications / toast banners must NEVER share coordinate space with the dialogue box.
+
+4. **Centralized Input & Single Source of Truth (`InputManager`)**:
+   - UI control hints (Title Screen, HUD, How-to-Play) MUST be derived directly from `input.getControlHints()`.
+   - Never show conflicting key hints (e.g. UI says Shift but game uses X).
+
+5. **Empirical Runtime Playtesting (No Hypothetical Reports)**:
+   - The Playtester MUST actually launch and simulate runtime execution (`node scripts/test-game.js <id>`).
+   - Every report must provide empirical telemetry (displacement px, jump velocity, draw call count, damage events).
+
+6. **Adversarial Final Review**:
+   - The Final Reviewer acts as an external release auditor searching for reasons to reject rather than justify.
+   - Has binding veto power to reject any game with open Critical/Blocking/Major defects.
+
+7. **Air-Dash Constraints (1x per Airborne Period)**:
+   - Players are strictly limited to ONE mid-air dash per jump/fall.
+   - `hasAirDash` is consumed on air dash and resets ONLY upon landing on a solid platform, springboard bounce, thermal updraft, or enemy stomp bounce.
+
+8. **Playgama Compliance & Standalone Independence**:
+   - Must achieve `PLAYGAMA_READY` via `node scripts/validate-playgama.js <id>`.
+   - `window.bridge.platform.sendMessage('game_ready')` emitted ONLY after assets are loaded and player can interact.
    - On-screen Audio Mute control (`🔊 / 🔇`) and automatic audio pause on tab visibility change.
-   - Zero prohibited third-party tracking scripts or broken external CDN assets.
-   - Production ZIP contains `index.html` at the archive root (no nested folders).
-   - Publication metadata manifest generated at `games/<id>/playgama/publication-manifest.json`.
-7. **Explicit Lifecycle States**: The studio recognizes 7 distinct lifecycle states: `DEVELOPMENT` -> `QA` -> `HTML5_READY` -> `PLAYGAMA_QA` -> `PLAYGAMA_BLOCKED` -> `PLAYGAMA_READY` -> `PUBLISHED`.
-8. **Deterministic Test Harnesses**: All test and QA scripts MUST include watchdog hard-timeouts, explicit `GameLoop.stop()` calls, active timer tracking and cleanup in `finally`, and deterministic `process.exit(0/1)`.
-9. **Cache-Busting & Direct Window Play**: Studio players and iframes must always load games with cache-busting timestamps (`?t=Date.now()`) and provide a direct full-window link (`/games/<id>/source/index.html`).
-10. **Standalone Independence**: Games must run 100% offline with zero broken asset dependencies or external CDN scripts.
-11. **Iframe & Fullscreen Permissions**: Game players and iframes MUST always include `allow="fullscreen; autoplay; gamepad"` and `allowfullscreen="true"`, with auto-focusing on iframe load.
-12. **Orientation Responsiveness**: Games and studio containers must dynamically support both Landscape (720x450 / 16:9) and Portrait (480x800) without distortion.
-13. **Juice by Default**: Every interaction must have visual/audio feedback.
-14. **No Fake Progress**: Builds and playtests must reflect real execution.
-15. **Air-Dash Constraints (1x per Airborne Period)**: Players are strictly limited to ONE mid-air dash per jump/fall. `hasAirDash` is consumed on air dash and resets ONLY upon landing on a solid platform (`isGrounded === true`).
-16. **Level Design Ergonomics & Anti-Trapping**: Jump pads/spore mushrooms MUST always be placed in open vertical chutes leading directly to upper platforms (never placed under low ceilings that cause infinite bounce loops). All pits and secret rooms MUST provide two-way vertical traversal (step heights $\le 80\text{px}$ or return springboards). Headroom above all walkways must be $\ge 70\text{px}$.
-17. **Diegetic Signposting & Powerup Modals**: Never spam floating neon text banners across room boundaries. Central spawn hubs use subtle, minimalist wooden trail posts. Major powerups/abilities pause gameplay and render a clean, centered modal card with clear instructions and an explicit `[✖]` close button.
-18. **Save Reset & Ephemeral Test Mode**: Every game must support `?reset=1` (wipes saved data on start) and `?nosave=1` (ephemeral in-memory test session without writing to disk). The studio UI player toolbar provides dedicated `🗑️ Reset Save` and `💾 Save: ON/OFF` toggle buttons. Game Title and Pause screens must provide accessible Save Reset options so testers and players can start fresh at any time with zero friction.
-
-
+   - Standalone offline execution with zero broken CDN scripts.
+   - Production ZIP contains `index.html` at archive root.

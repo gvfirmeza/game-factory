@@ -3,29 +3,41 @@ name: game-testing
 description: Aggressive QA testing, edge case stress testing, input simulation, coverage reports, and regression protocols for HTML5 games.
 ---
 
-# Game Testing & QA Skill
+# Game Testing & Quality Assurance Standards
 
-## 1. Playtester Mandate: "Try to Break the Game"
-The Playtester must actively test edge cases:
-- **Movement**: Rapid direction switches, boundary collision, coyote time, jump buffering, wall sliding.
-- **Combat & Hazards**: Enemy collision, invulnerability blink, knockback, damage recovery, respawn.
-- **Interactions**: Rapid 'E'/tap presses, multi-page dialogue word wrap, prompt appearance/disappearance, NPC state changes.
-- **Progression**: Ability gates blocking when unobtained, unlocking when collected, backtracking across rooms.
-- **UI & Layout**: No text clipping or container overflow on long dialogues, responsive mobile touch layout.
+## 1. Empirical Runtime Testing Requirement (No Hypothetical Passes)
+The Playtester must execute the automated deterministic test harness:
+`node scripts/test-game.js <game-id>`
+Every playtest report MUST cite empirical runtime telemetry:
+- Canvas draw call counts (verifies canvas is actively rendering and not pitch black).
+- Horizontal player displacement pixels.
+- Jump impulse vertical velocity ($v_y$) and early release cut velocity.
+- 1x Mid-air dash state and consumption.
+- Ground enemy platform containment and gravity resolution.
+- Stomp combat hit resolution and upward bounce.
+- DialogueBox word wrapping bounds and single-authoritative state.
+- Checkpoint recovery at 3 HP without state leaks or page reloads.
 
-## 2. Coverage Matrix Report Format
-Every playtest report (`reports/playtest-*.md`) must include a category-by-category verification matrix:
-```markdown
-### 1. Verification Matrix
-| Subsystem | Test Case | Status | Notes |
-|---|---|---|---|
-| Movement | Walk / Run Acceleration | [PASS] | Responsive damping |
-| Movement | Double Jump / Glide | [PASS] | Particles emit on jump 2 |
-| Interaction | NPC Proximity & Prompt | [PASS] | "Talk (E)" appears within 48px |
-| Interaction | Dialogue Text Wrapping | [PASS] | Auto-wraps, no text overflow |
-| Progression | Ability Gates | [PASS] | Locked until ability obtained |
-| Combat | Enemy Collision & Hurt | [PASS] | Knockback & invuln frames active |
+## 2. Structured Bug Triage & Quality Budget (`BUG-XXX`)
+All defects must be formatted via `scripts/triage-bugs.js` with Severity:
+- **`CRITICAL`**: Game crash, black screen, infinite freeze, fatal exception.
+- **`BLOCKING`**: Soft-lock, inability to complete level, broken controls.
+- **`MAJOR`**: Flying/launching ground enemies, dialogue text bleed/overlap, broken attacks.
+- **`MINOR`**: Subtle timing glitch, non-blocking visual artifact.
+- **`COSMETIC`**: Typo, slight color inconsistency.
+
+### Studio Quality Budget Gate:
+**`CRITICAL = 0`**, **`BLOCKING = 0`**, **`MAJOR = 0`**.
+Any presence of a Critical, Blocking, or Major defect **STRICTLY BLOCKS** release approval.
+
+## 3. Mandatory Regression Loop
 ```
-
-## 3. Regression Testing Protocol
-Whenever a bug is fixed by the Debugger, the Playtester must re-test the failing subsystem AND run a full integration smoke test before issuing a PASS.
+Playtest Fail (BUG-XXX generated)
+  ↓
+Debugger (Surgical root-cause fix)
+  ↓
+Playtester (Re-runs test-game.js + regression suite)
+  ↓
+Quality Budget Verification (triage-bugs.js)
+```
+No game can jump from Debugger directly to Final Reviewer without passing an independent re-test.
