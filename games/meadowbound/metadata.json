@@ -66,9 +66,9 @@
     ]
   },
   "build": {
-    "timestamp": "2026-08-16T17:36:30.023Z",
+    "timestamp": "2026-08-16T18:43:00.208Z",
     "zipFile": "build/meadowbound.zip",
-    "sizeBytes": 67370,
+    "sizeBytes": 67710,
     "success": true
   }
 }

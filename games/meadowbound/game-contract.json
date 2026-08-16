@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "meadowbound",
+  "title": "Meadowbound",
+  "genre": "2d_action_platformer",
+  "version": "1.1.0",
+  "controls": {
+    "move": ["KeyA", "KeyD", "ArrowLeft", "ArrowRight"],
+    "jump": ["Space", "KeyW", "ArrowUp"],
+    "dash": ["ShiftLeft", "ShiftRight", "KeyJ", "KeyX"],
+    "interact": ["KeyE", "Enter"],
+    "pause": ["Escape", "KeyP"]
+  },
+  "kinematics": {
+    "maxRunSpeed": 200,
+    "jumpImpulse": -390,
+    "variableJumpCut": -140,
+    "gravity": 980,
+    "coyoteTime": 0.10,
+    "jumpBuffer": 0.12,
+    "dashSpeed": 450,
+    "dashDuration": 0.18,
+    "maxAirDashes": 1,
+    "stompRebound": -320
+  },
+  "enemies": [
+    {
+      "id": "acorn_walker",
+      "archetype": "patrol_walker",
+      "name": "Acorn Walker",
+      "maxHealth": 1,
+      "canBeStomped": true,
+      "scoreValue": 100,
+      "speed": 60
+    },
+    {
+      "id": "spore_hopper",
+      "archetype": "rhythmic_hopper",
+      "name": "Spore Hopper",
+      "maxHealth": 1,
+      "canBeStomped": true,
+      "scoreValue": 150,
+      "hopInterval": 1.2,
+      "hopImpulse": -350
+    },
+    {
+      "id": "glow_bat",
+      "archetype": "sine_flyer",
+      "name": "Glow Bat Flyer",
+      "maxHealth": 1,
+      "canBeStomped": true,
+      "scoreValue": 150,
+      "sineAmplitude": 28,
+      "sineFrequency": 3.77
+    },
+    {
+      "id": "bramble_charger",
+      "archetype": "proximity_charger",
+      "name": "Bramble Charger",
+      "maxHealth": 2,
+      "canBeStomped": true,
+      "stompRequiresDazed": true,
+      "scoreValue": 250,
+      "aggroRange": 180,
+      "chargeSpeed": 280,
+      "dazeDuration": 2.2
+    },
+    {
+      "id": "bramblethorn_golem",
+      "archetype": "multi_phase_boss",
+      "name": "The Bramblethorn Golem",
+      "maxHealth": 3,
+      "phases": 3,
+      "scoreValue": 1000
+    }
+  ],
+  "collectibles": {
+    "sun_berries": { "required": 25, "points": 50 },
+    "lore_medallions": { "required": 5, "points": 500 }
+  },
+  "npcs": [
+    { "id": "barnaby_snail", "name": "Barnaby the Snail", "level": 1 },
+    { "id": "willow_owl", "name": "Willow the Owl", "level": 2 },
+    { "id": "elder_spirit", "name": "Elder Root Spirit", "level": 5 }
+  ],
+  "rules": {
+    "playerMaxHealth": 3,
+    "instantCheckpointRespawn": true,
+    "preservesCollectiblesOnDeath": true,
+    "supportsPlaygamaSave": true
+  }
+}

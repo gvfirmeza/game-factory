@@ -12,7 +12,10 @@ import {
   PlaygamaBridge,
   ProceduralPrimitives,
   MathUtils,
+  CollisionUtils,
+  EnemyController,
   DialogueBox,
+  DialogueSystem,
   Collectible,
   NPC,
   Checkpoint,
@@ -1969,7 +1972,8 @@ export class MeadowboundGame {
     this.audio = new MeadowboundAudio();
     this.particles = new ParticleSystem(300);
     this.juice = new JuiceEffects();
-    this.dialogueBox = new DialogueBox(this.virtualWidth, this.virtualHeight);
+    this.dialogueSystem = new DialogueSystem(this.virtualWidth, this.virtualHeight);
+    this.dialogueBox = this.dialogueSystem;
     this.playgama = new PlaygamaBridge();
     this.playgama.init();
 
@@ -3116,8 +3120,10 @@ export class MeadowboundGame {
     // Layer 9: Screen HUD & Modals
     this.renderHUD(ctx);
 
-    if (this.dialogueBox.active) {
-      this.dialogueBox.render(ctx);
+    if (this.dialogueSystem && this.dialogueSystem.active) {
+      this.dialogueSystem.render(ctx, (c, avatar, x, y, size) => {
+        this.renderNPCAvatar(c, avatar, x, y, size);
+      });
     }
 
     if (this.fsm.currentState === GameStates.VICTORY) {
@@ -3128,6 +3134,23 @@ export class MeadowboundGame {
     this.juice.renderScreen(ctx, this.virtualWidth, this.virtualHeight);
 
     this.renderer.endFrame();
+  }
+
+  renderNPCAvatar(ctx, avatar, x, y, size) {
+    ctx.save();
+    ctx.translate(x, y);
+    const scale = size / 48;
+    ctx.scale(scale, scale);
+    if (avatar === 'snail' || avatar === 'barnaby_snail') {
+      Renderer.drawBarnabySnail(ctx, 0, 0, this.animTime);
+    } else if (avatar === 'owl' || avatar === 'willow_owl') {
+      Renderer.drawWillowOwl(ctx, 0, 0, this.animTime);
+    } else if (avatar === 'spirit' || avatar === 'elder_spirit' || avatar === 'elder_root_spirit') {
+      Renderer.drawElderRootSpirit(ctx, 0, 0, this.animTime);
+    } else {
+      Renderer.drawPip(ctx, 0, 0, { facing: 1, vx: 0, vy: 0, isGrounded: true, animTime: this.animTime, scaleX: 1, scaleY: 1 });
+    }
+    ctx.restore();
   }
 
   renderParallaxBackground(ctx) {
@@ -3249,6 +3272,22 @@ export class MeadowboundGame {
     ctx.fillStyle = '#E2ECE9';
     ctx.font = "12px 'Nunito', sans-serif";
     ctx.fillText(`Score: ${this.score.toLocaleString()}`, this.virtualWidth / 2 - 40, 62);
+
+    // Top-Right: Control Hints from InputManager
+    ctx.fillStyle = 'rgba(18, 38, 28, 0.80)';
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(this.virtualWidth - 215, 14, 200, 26, 13);
+    else ctx.rect(this.virtualWidth - 215, 14, 200, 26);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(46, 196, 182, 0.5)';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#A7F3D0';
+    ctx.font = "bold 9.5px 'Fredoka', sans-serif";
+    ctx.textAlign = 'center';
+    ctx.fillText(this.input.getControlHints(), this.virtualWidth - 115, 30);
+    ctx.textAlign = 'left';
 
     // Boss Health Bar (Level 5 Boss Coliseum)
     if (this.boss && this.boss.health > 0 && this.player.x > 1100 && this.player.x < 1850) {
