@@ -28,34 +28,34 @@ import {
 export const ARENA = {
   width: 450,
   height: 720,
-  center: { x: 225, y: 320 },
-  coreRadius: 45,
-  orbitRadius: 90,
-  innerHazardRadius: 120,
-  midOrbitRadius: 155,
-  spawnRadius: 185,
+  center: { x: 225, y: 285 },
+  coreRadius: 40,
+  orbitRadius: 85,
+  innerHazardRadius: 115,
+  midOrbitRadius: 145,
+  spawnRadius: 172,
   slots: [
-    { id: 'slot_0', index: 0, angleDeg: 0,   angleRad: 0.0000, x: 315.00, y: 320.00, compass: 'E' },
-    { id: 'slot_1', index: 1, angleDeg: 45,  angleRad: 0.7854, x: 288.64, y: 383.64, compass: 'SE' },
-    { id: 'slot_2', index: 2, angleDeg: 90,  angleRad: 1.5708, x: 225.00, y: 410.00, compass: 'S' },
-    { id: 'slot_3', index: 3, angleDeg: 135, angleRad: 2.3562, x: 161.36, y: 383.64, compass: 'SW' },
-    { id: 'slot_4', index: 4, angleDeg: 180, angleRad: 3.1416, x: 135.00, y: 320.00, compass: 'W' },
-    { id: 'slot_5', index: 5, angleDeg: 225, angleRad: 3.9270, x: 161.36, y: 256.36, compass: 'NW' },
-    { id: 'slot_6', index: 6, angleDeg: 270, angleRad: 4.7124, x: 225.00, y: 230.00, compass: 'N' },
-    { id: 'slot_7', index: 7, angleDeg: 315, angleRad: 5.4978, x: 288.64, y: 256.36, compass: 'NE' }
+    { id: 'slot_0', index: 0, angleDeg: 0,   angleRad: 0.0000, x: 310.00, y: 285.00, compass: 'E' },
+    { id: 'slot_1', index: 1, angleDeg: 45,  angleRad: 0.7854, x: 285.10, y: 345.10, compass: 'SE' },
+    { id: 'slot_2', index: 2, angleDeg: 90,  angleRad: 1.5708, x: 225.00, y: 370.00, compass: 'S' },
+    { id: 'slot_3', index: 3, angleDeg: 135, angleRad: 2.3562, x: 164.90, y: 345.10, compass: 'SW' },
+    { id: 'slot_4', index: 4, angleDeg: 180, angleRad: 3.1416, x: 140.00, y: 285.00, compass: 'W' },
+    { id: 'slot_5', index: 5, angleDeg: 225, angleRad: 3.9270, x: 164.90, y: 224.90, compass: 'NW' },
+    { id: 'slot_6', index: 6, angleDeg: 270, angleRad: 4.7124, x: 225.00, y: 200.00, compass: 'N' },
+    { id: 'slot_7', index: 7, angleDeg: 315, angleRad: 5.4978, x: 285.10, y: 224.90, compass: 'NE' }
   ],
   bench: [
-    { id: 'bench_0', index: 0, x: 105, y: 620 },
-    { id: 'bench_1', index: 1, x: 185, y: 620 },
-    { id: 'bench_2', index: 2, x: 265, y: 620 },
-    { id: 'bench_3', index: 3, x: 345, y: 620 }
+    { id: 'bench_0', index: 0, x: 68, y: 512 },
+    { id: 'bench_1', index: 1, x: 142, y: 512 },
+    { id: 'bench_2', index: 2, x: 216, y: 512 },
+    { id: 'bench_3', index: 3, x: 290, y: 512 }
   ],
-  recycleSlot: { id: 'recycle', x: 405, y: 620, radius: 25, refundPercent: 0.70 },
+  recycleSlot: { id: 'recycle', x: 382, y: 512, radius: 26, refundPercent: 0.70 },
   portals: [
-    { id: 'portal_north', angleDeg: 270, angleRad: 4.7124, x: 225.0, y: 135.0, name: 'North Portal' },
-    { id: 'portal_east',  angleDeg: 0,   angleRad: 0.0000, x: 410.0, y: 320.0, name: 'East Portal' },
-    { id: 'portal_south', angleDeg: 90,  angleRad: 1.5708, x: 225.0, y: 505.0, name: 'South Portal' },
-    { id: 'portal_west',  angleDeg: 180, angleRad: 3.1416, x: 40.0,  y: 320.0, name: 'West Portal' }
+    { id: 'portal_north', angleDeg: 270, angleRad: 4.7124, x: 225.0, y: 113.0, name: 'North Portal' },
+    { id: 'portal_east',  angleDeg: 0,   angleRad: 0.0000, x: 397.0, y: 285.0, name: 'East Portal' },
+    { id: 'portal_south', angleDeg: 90,  angleRad: 1.5708, x: 225.0, y: 457.0, name: 'South Portal' },
+    { id: 'portal_west',  angleDeg: 180, angleRad: 3.1416, x: 53.0,  y: 285.0, name: 'West Portal' }
   ]
 };
 
@@ -167,12 +167,12 @@ export const ARCHETYPES = {
 };
 
 export const ENEMY_TYPES = {
-  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 40,  speedDeg: 65,  armor: 0.00, coreDmg: 10, gold: 3,  radius: 12, color: '#76FF03' },
-  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 22,  speedDeg: 140, armor: 0.00, coreDmg: 8,  gold: 4,  radius: 10, color: '#FFD600' },
-  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 160, speedDeg: 35,  armor: 0.40, coreDmg: 25, gold: 10, radius: 18, color: '#D50000' },
-  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 75,  speedDeg: 55,  armor: 0.00, coreDmg: 15, gold: 8,  radius: 16, color: '#AA00FF', splitCount: 5 },
-  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 12,  speedDeg: 110, armor: 0.00, coreDmg: 3,  gold: 1,  radius: 6,  color: '#00E676' },
-  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 90,  speedDeg: 45,  armor: 0.10, coreDmg: 20, gold: 12, radius: 14, color: '#00B0FF', shootCooldown: 6.0 }
+  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 40,  speedDeg: 38,  armor: 0.00, coreDmg: 10, gold: 3,  radius: 12, color: '#76FF03' },
+  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 22,  speedDeg: 80,  armor: 0.00, coreDmg: 8,  gold: 4,  radius: 10, color: '#FFD600' },
+  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 160, speedDeg: 20,  armor: 0.40, coreDmg: 25, gold: 10, radius: 18, color: '#D50000' },
+  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 75,  speedDeg: 30,  armor: 0.00, coreDmg: 15, gold: 8,  radius: 16, color: '#AA00FF', splitCount: 5 },
+  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 12,  speedDeg: 62,  armor: 0.00, coreDmg: 3,  gold: 1,  radius: 6,  color: '#00E676' },
+  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 90,  speedDeg: 24,  armor: 0.10, coreDmg: 20, gold: 12, radius: 14, color: '#00B0FF', shootCooldown: 6.0 }
 };
 
 export const WORKSHOP_DEFS = [
@@ -1542,6 +1542,16 @@ export function drawEnemy(ctx, enemy, animTime) {
       break;
   }
 
+  // Hit Flash Feedback
+  if (enemy.hitFlashTimer > 0) {
+    ctx.save();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+    ctx.beginPath();
+    ctx.arc(enemy.x, enemy.y, (enemy.radius || 12) + 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
   // Enemy Mini Health Bar
   if (enemy.hp < enemy.maxHp) {
     const barW = Math.max(20, (enemy.radius || 12) * 2);
@@ -1707,10 +1717,45 @@ export class OrbitGuardGame {
       }
     };
 
+    // Speed Multiplier Controller (1x, 2x, 3x)
+    this.timeScale = 1.0;
+    this.speeds = [1.0, 2.0, 3.0];
+    this.speedIndex = 0;
+    this._waveBannerTimeout = null;
+
     // Attach to window for evaluation & testing
     if (typeof window !== 'undefined') {
       window.__orbitGuardInstance = this;
       window.__gameInstance = this;
+    }
+  }
+
+  cycleSpeed() {
+    this.speedIndex = (this.speedIndex + 1) % this.speeds.length;
+    this.timeScale = this.speeds[this.speedIndex];
+    const btnSpeed = document.getElementById('btn-speed');
+    if (btnSpeed) {
+      btnSpeed.textContent = `${this.timeScale}x`;
+      btnSpeed.classList.remove('speed-2x', 'speed-3x');
+      if (this.timeScale === 2.0) btnSpeed.classList.add('speed-2x');
+      else if (this.timeScale === 3.0) btnSpeed.classList.add('speed-3x');
+    }
+    this.audio.playPop();
+    this.juice.spawnFloatingText(`${this.timeScale}x SPEED`, ARENA.center.x, ARENA.center.y - 60, { color: '#FFD166' });
+  }
+
+  showWaveBanner(title, subtitle = '', durationSec = 2.2) {
+    const banner = document.getElementById('wave-banner');
+    const bTitle = document.getElementById('wave-banner-title');
+    const bSub = document.getElementById('wave-banner-subtitle');
+    if (bTitle) bTitle.textContent = title;
+    if (bSub) bSub.textContent = subtitle;
+    if (banner) {
+      banner.classList.remove('hidden');
+      clearTimeout(this._waveBannerTimeout);
+      this._waveBannerTimeout = setTimeout(() => {
+        banner.classList.add('hidden');
+      }, durationSec * 1000);
     }
   }
 
@@ -1777,6 +1822,15 @@ export class OrbitGuardGame {
         this.saveData.settings = { ...this.saveData.settings, isMuted: nextMuted };
         btnMute.textContent = nextMuted ? '🔇' : '🔊';
         SaveManager.save(this.playgama, this.saveData);
+      });
+    }
+
+    // Speed button
+    const btnSpeed = document.getElementById('btn-speed');
+    if (btnSpeed) {
+      btnSpeed.addEventListener('click', () => {
+        this.audio.init();
+        this.cycleSpeed();
       });
     }
 
@@ -1959,6 +2013,7 @@ export class OrbitGuardGame {
     this.placeSentinel('slot_4', 'ballista_archer', 1);
 
     document.getElementById('title-overlay')?.classList.add('hidden');
+    document.getElementById('header-hud-center')?.classList.remove('hidden');
     document.getElementById('game-hud')?.classList.remove('hidden');
     this.closeAllModals();
 
@@ -1969,7 +2024,9 @@ export class OrbitGuardGame {
   returnToTitle() {
     this.state = 'TITLE';
     document.getElementById('game-hud')?.classList.add('hidden');
+    document.getElementById('header-hud-center')?.classList.add('hidden');
     document.getElementById('title-overlay')?.classList.remove('hidden');
+    this.closeAllModals();
     this.updateTitleRecords();
   }
 
@@ -2005,7 +2062,7 @@ export class OrbitGuardGame {
     document.getElementById('tutorial-modal')?.classList.add('hidden');
     document.getElementById('pause-modal')?.classList.add('hidden');
     document.getElementById('game-over-modal')?.classList.add('hidden');
-    document.getElementById('boss-banner')?.classList.add('hidden');
+    document.getElementById('wave-banner')?.classList.add('hidden');
   }
 
   renderWorkshopUI() {
@@ -2024,14 +2081,13 @@ export class OrbitGuardGame {
       const canAfford = this.gold >= cost && !isMax;
 
       const card = document.createElement('div');
-      card.className = 'upgrade-card';
+      card.className = 'ws-item';
       card.innerHTML = `
-        <div class="upg-info">
-          <div class="upg-name">${upg.name}</div>
-          <div class="upg-desc">${upg.effect > 0 ? '+' : ''}${upg.effect * (upg.unit.includes('%') ? 100 : 1)}${upg.unit} per level</div>
-          <div class="upg-level">Lv ${currentLvl} / ${upg.maxLevel}</div>
+        <div class="ws-info">
+          <div class="ws-name">${upg.name} (Lv ${currentLvl}/${upg.maxLevel})</div>
+          <div class="ws-desc">${upg.effect > 0 ? '+' : ''}${upg.effect * (upg.unit.includes('%') ? 100 : 1)}${upg.unit} per level</div>
         </div>
-        <button class="btn-buy-upgrade" ${!canAfford ? 'disabled' : ''}>
+        <button class="ws-buy-btn" ${!canAfford ? 'disabled' : ''}>
           ${isMax ? 'MAX' : `${cost} 💰`}
         </button>
       `;
@@ -2381,6 +2437,7 @@ export class OrbitGuardGame {
     this.waveState = 'SPAWNING';
     this.spawnQueue = [];
     this.bossEntity = null;
+    this.spawnIntervalTimer = 0.6;
 
     if (waveNum > (this.saveData.highestWave || 1)) {
       this.saveData.highestWave = waveNum;
@@ -2389,7 +2446,15 @@ export class OrbitGuardGame {
 
     const isBossWave = waveNum % 5 === 0;
     if (isBossWave) {
-      this.triggerBossWarning(waveNum);
+      let bossName = 'IRON COLOSSUS';
+      if (waveNum === 10) bossName = 'HYDRA QUEEN';
+      else if (waveNum === 15) bossName = 'CHRONO WRAITH';
+      else if (waveNum > 15) bossName = 'OVERDRIVE TITAN';
+      this.showWaveBanner(`⚠️ BOSS WAVE ${waveNum}`, `${bossName} INCOMING`, 2.8);
+      this.audio.playBossRoar();
+      this.juice.screenShake(6);
+    } else {
+      this.showWaveBanner(`WAVE ${waveNum}`, 'DEFEND THE NEXUS CORE', 1.8);
     }
 
     // Generate Spawn Queue
@@ -2397,56 +2462,26 @@ export class OrbitGuardGame {
     this.updateHUD();
   }
 
-  triggerBossWarning(waveNum) {
-    const banner = document.getElementById('boss-banner');
-    const bName = document.getElementById('boss-banner-name');
-    const bTitle = document.getElementById('boss-banner-title');
-
-    let name = 'IRON COLOSSUS';
-    let title = 'The Shielded Titan';
-    if (waveNum === 10) {
-      name = 'HYDRA QUEEN';
-      title = 'The Broodmother';
-    } else if (waveNum === 15) {
-      name = 'CHRONO WRAITH';
-      title = 'The Spacetime Phantom';
-    } else if (waveNum > 15) {
-      name = 'OVERDRIVE TITAN';
-      title = `Apex Cosmic Entity (Wave ${waveNum})`;
-    }
-
-    if (bName) bName.textContent = name;
-    if (bTitle) bTitle.textContent = title;
-    if (banner) banner.classList.remove('hidden');
-
-    this.audio.playBossRoar();
-    this.juice.screenShake(8);
-
-    setTimeout(() => {
-      banner?.classList.add('hidden');
-    }, 2500);
-  }
-
   buildWaveSpawnQueue(waveNum) {
     const isBossWave = waveNum % 5 === 0;
 
     // Scaling formulas
     const hpMult = Math.pow(1 + 0.16 * (waveNum - 1), 1.15);
-    const speedMult = Math.min(1.8, 1.0 + 0.025 * (waveNum - 1));
+    const speedMult = Math.min(1.6, 1.0 + 0.02 * (waveNum - 1));
 
     if (isBossWave) {
       let bossId = 'iron_colossus';
       let bossBaseHp = 1500;
-      let bossSpeed = 28;
+      let bossSpeed = 18;
 
       if (waveNum === 10) {
         bossId = 'hydra_queen';
         bossBaseHp = 3500;
-        bossSpeed = 32;
+        bossSpeed = 22;
       } else if (waveNum >= 15) {
         bossId = 'chrono_wraith';
         bossBaseHp = 8000;
-        bossSpeed = 40;
+        bossSpeed = 26;
       }
 
       this.spawnQueue.push({
@@ -2459,11 +2494,11 @@ export class OrbitGuardGame {
       });
 
       // Supporting escorts
-      for (let i = 0; i < 6 + waveNum; i++) {
+      for (let i = 0; i < 4 + waveNum; i++) {
         this.spawnQueue.push({
           type: MathUtils.randomChoice(['void_crawler', 'swift_dart', 'swarm_pod']),
           hp: Math.floor(40 * hpMult),
-          speed: 65 * speedMult,
+          speed: 45 * speedMult,
           portal: MathUtils.randomChoice(ARENA.portals),
           isBoss: false
         });
@@ -2515,12 +2550,13 @@ export class OrbitGuardGame {
       x: portal.x,
       y: portal.y,
       angle: portal.angleRad + Math.PI / 2,
-      // Debuffs
+      // Debuffs & Visuals
       chilledTimer: 0,
       slowPercent: 0,
       stunTimer: 0,
       burnTimer: 0,
       burnDPS: 0,
+      hitFlashTimer: 0,
       // Boss mechanics
       shieldAngle: 0,
       shieldActive: true,
@@ -2535,24 +2571,26 @@ export class OrbitGuardGame {
   }
 
   /* ==========================================================================
-   * 10. SIMULATION UPDATE TICK (60Hz Fixed Timestep)
+   * 10. SIMULATION UPDATE TICK (60Hz Fixed Timestep with TimeScale)
    * ========================================================================== */
 
   update(dt) {
     if (this.state !== 'PLAYING') return;
 
-    this.animTime += dt;
-    this.particles.update(dt);
-    this.juice.update(dt);
+    const scaledDt = dt * (this.timeScale || 1.0);
+
+    this.animTime += scaledDt;
+    this.particles.update(scaledDt);
+    this.juice.update(scaledDt);
 
     // Timers & Buffs
-    if (this.coreDamagedTimer > 0) this.coreDamagedTimer -= dt;
-    if (this.surgeCooldown > 0) this.surgeCooldown -= dt;
-    if (this.surgeBuffTimer > 0) this.surgeBuffTimer -= dt;
+    if (this.coreDamagedTimer > 0) this.coreDamagedTimer -= scaledDt;
+    if (this.surgeCooldown > 0) this.surgeCooldown -= scaledDt;
+    if (this.surgeBuffTimer > 0) this.surgeBuffTimer -= scaledDt;
 
     // Expanding Shockwave Animation
     if (this.activeShockwave) {
-      this.activeShockwave.radius += this.activeShockwave.speed * dt;
+      this.activeShockwave.radius += this.activeShockwave.speed * scaledDt;
       if (this.activeShockwave.radius >= this.activeShockwave.maxRadius) {
         this.activeShockwave = null;
       }
@@ -2560,11 +2598,11 @@ export class OrbitGuardGame {
 
     // Wave Spawning Controller
     if (this.waveState === 'SPAWNING') {
-      this.spawnIntervalTimer -= dt;
+      this.spawnIntervalTimer -= scaledDt;
       if (this.spawnIntervalTimer <= 0 && this.spawnQueue.length > 0) {
         const spec = this.spawnQueue.shift();
         this.spawnEnemy(spec);
-        this.spawnIntervalTimer = 0.55;
+        this.spawnIntervalTimer = 0.65;
       }
       if (this.spawnQueue.length === 0) {
         this.waveState = 'WAVE_ACTIVE';
@@ -2574,33 +2612,33 @@ export class OrbitGuardGame {
     // Check Wave Cleared
     if (this.waveState === 'WAVE_ACTIVE' && this.enemies.length === 0) {
       this.waveState = 'WAVE_CLEARED';
-      this.waveTimer = 3.0;
+      this.waveTimer = 2.8;
 
       const bounty = 25 + 12 * this.wave + Math.floor(1.5 * Math.pow(this.wave, 1.2));
       const finalBounty = Math.floor(bounty * this.getWorkshopStat('goldBonus'));
       this.addGold(finalBounty);
       this.audio.playVictoryFanfare();
-      this.juice.spawnFloatingText(`WAVE ${this.wave} CLEARED! +${finalBounty}💰`, ARENA.center.x, ARENA.center.y - 50, { color: '#00F5D4', size: 20 });
+      this.showWaveBanner(`WAVE ${this.wave} CLEARED!`, `+${finalBounty} 💰 BOUNTY`, 2.5);
     }
 
     if (this.waveState === 'WAVE_CLEARED') {
-      this.waveTimer -= dt;
+      this.waveTimer -= scaledDt;
       if (this.waveTimer <= 0) {
         this.startWave(this.wave + 1);
       }
     }
 
     // Update Sentinels
-    this.updateSentinels(dt);
+    this.updateSentinels(scaledDt);
 
     // Update Enemies (Archimedean Inward Spiral Progression)
-    this.updateEnemies(dt);
+    this.updateEnemies(scaledDt);
 
     // Update Projectiles & Combat Raycasts
-    this.updateProjectiles(dt);
+    this.updateProjectiles(scaledDt);
 
     // Burning Plasma Pools
-    this.updateBurningPools(dt);
+    this.updateBurningPools(scaledDt);
 
     // Check High Score Update
     if (this.score > (this.saveData.highScore || 0)) {
@@ -2825,6 +2863,8 @@ export class OrbitGuardGame {
     const damage = rawDamage * (1.0 - effectiveArmor);
 
     enemy.hp -= damage;
+    enemy.hitFlashTimer = 0.08;
+
     this.juice.spawnFloatingText(`${Math.round(damage)}`, enemy.x, enemy.y - 10, {
       color: isCrit ? '#FFD166' : damageType === 'cryo' ? '#38BDF8' : '#F8FAFC',
       size: isCrit ? 18 : 13
@@ -2850,7 +2890,7 @@ export class OrbitGuardGame {
           color: '#00E676',
           maxHp: 12,
           hp: 12,
-          baseSpeedDeg: 110,
+          baseSpeedDeg: 62,
           armor: 0,
           coreDmg: 3,
           gold: 1,
@@ -2861,7 +2901,8 @@ export class OrbitGuardGame {
           angle: enemy.angle,
           chilledTimer: 0,
           slowPercent: 0,
-          stunTimer: 0
+          stunTimer: 0,
+          hitFlashTimer: 0
         });
       }
     }
@@ -2879,7 +2920,7 @@ export class OrbitGuardGame {
           color: '#00E676',
           maxHp: enemy.maxHp * 0.45,
           hp: enemy.maxHp * 0.45,
-          baseSpeedDeg: 50 * s,
+          baseSpeedDeg: 30 * s,
           armor: 0,
           coreDmg: 20,
           gold: 50,
@@ -2890,7 +2931,8 @@ export class OrbitGuardGame {
           angle: enemy.angle,
           chilledTimer: 0,
           slowPercent: 0,
-          stunTimer: 0
+          stunTimer: 0,
+          hitFlashTimer: 0
         });
       }
     }
@@ -2905,7 +2947,7 @@ export class OrbitGuardGame {
   }
 
   updateEnemies(dt) {
-    const radialDriftRate = (ARENA.spawnRadius - ARENA.coreRadius) / 18.0; // Inward drift speed ~7.78px/s
+    const radialDriftRate = (ARENA.spawnRadius - ARENA.coreRadius) / 22.0; // Smooth inward drift
 
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const e = this.enemies[i];
@@ -2915,6 +2957,7 @@ export class OrbitGuardGame {
       }
 
       // Timers & Debuffs
+      if (e.hitFlashTimer > 0) e.hitFlashTimer -= dt;
       if (e.stunTimer > 0) {
         e.stunTimer -= dt;
         continue; // Stunned: freezes movement
@@ -3100,8 +3143,9 @@ export class OrbitGuardGame {
     if (hpFill) {
       const pct = Math.max(0, Math.min(100, (this.coreHp / this.coreMaxHp) * 100));
       hpFill.style.width = `${pct}%`;
-      if (pct < 30) hpFill.classList.add('danger');
-      else hpFill.classList.remove('danger');
+      hpFill.classList.remove('warning', 'critical');
+      if (pct < 30) hpFill.classList.add('critical');
+      else if (pct < 60) hpFill.classList.add('warning');
     }
 
     if (buyCost) buyCost.textContent = `${this.getSummonCost()} 💰`;

@@ -11,53 +11,53 @@
     "landscapeHeight": 450
   },
   "arena": {
-    "center": { "x": 225, "y": 320 },
+    "center": { "x": 225, "y": 285 },
     "core": {
-      "radius": 45,
+      "radius": 40,
       "baseMaxHp": 100,
       "color": "#00E5FF",
-      "breachThresholdRadius": 45
+      "breachThresholdRadius": 40
     },
     "innerTroopRing": {
-      "radius": 90,
+      "radius": 85,
       "slotCount": 8,
       "angularSpacingDeg": 45,
       "slots": [
-        { "id": "slot_0", "index": 0, "angleDeg": 0,   "angleRad": 0.0000, "x": 315.00, "y": 320.00, "compass": "E" },
-        { "id": "slot_1", "index": 1, "angleDeg": 45,  "angleRad": 0.7854, "x": 288.64, "y": 383.64, "compass": "SE" },
-        { "id": "slot_2", "index": 2, "angleDeg": 90,  "angleRad": 1.5708, "x": 225.00, "y": 410.00, "compass": "S" },
-        { "id": "slot_3", "index": 3, "angleDeg": 135, "angleRad": 2.3562, "x": 161.36, "y": 383.64, "compass": "SW" },
-        { "id": "slot_4", "index": 4, "angleDeg": 180, "angleRad": 3.1416, "x": 135.00, "y": 320.00, "compass": "W" },
-        { "id": "slot_5", "index": 5, "angleDeg": 225, "angleRad": 3.9270, "x": 161.36, "y": 256.36, "compass": "NW" },
-        { "id": "slot_6", "index": 6, "angleDeg": 270, "angleRad": 4.7124, "x": 225.00, "y": 230.00, "compass": "N" },
-        { "id": "slot_7", "index": 7, "angleDeg": 315, "angleRad": 5.4978, "x": 288.64, "y": 256.36, "compass": "NE" }
+        { "id": "slot_0", "index": 0, "angleDeg": 0,   "angleRad": 0.0000, "x": 310.00, "y": 285.00, "compass": "E" },
+        { "id": "slot_1", "index": 1, "angleDeg": 45,  "angleRad": 0.7854, "x": 285.10, "y": 345.10, "compass": "SE" },
+        { "id": "slot_2", "index": 2, "angleDeg": 90,  "angleRad": 1.5708, "x": 225.00, "y": 370.00, "compass": "S" },
+        { "id": "slot_3", "index": 3, "angleDeg": 135, "angleRad": 2.3562, "x": 164.90, "y": 345.10, "compass": "SW" },
+        { "id": "slot_4", "index": 4, "angleDeg": 180, "angleRad": 3.1416, "x": 140.00, "y": 285.00, "compass": "W" },
+        { "id": "slot_5", "index": 5, "angleDeg": 225, "angleRad": 3.9270, "x": 164.90, "y": 224.90, "compass": "NW" },
+        { "id": "slot_6", "index": 6, "angleDeg": 270, "angleRad": 4.7124, "x": 225.00, "y": 200.00, "compass": "N" },
+        { "id": "slot_7", "index": 7, "angleDeg": 315, "angleRad": 5.4978, "x": 285.10, "y": 224.90, "compass": "NE" }
       ]
     },
     "standbyBench": {
       "slotCount": 4,
-      "y": 620,
-      "snapRadius": 45,
+      "y": 512,
+      "snapRadius": 40,
       "slots": [
-        { "id": "bench_0", "index": 0, "x": 105, "y": 620 },
-        { "id": "bench_1", "index": 1, "x": 185, "y": 620 },
-        { "id": "bench_2", "index": 2, "x": 265, "y": 620 },
-        { "id": "bench_3", "index": 3, "x": 345, "y": 620 }
+        { "id": "bench_0", "index": 0, "x": 68, "y": 512 },
+        { "id": "bench_1", "index": 1, "x": 142, "y": 512 },
+        { "id": "bench_2", "index": 2, "x": 216, "y": 512 },
+        { "id": "bench_3", "index": 3, "x": 290, "y": 512 }
       ]
     },
     "recycleBin": {
       "id": "recycle_slot",
-      "x": 405,
-      "y": 620,
-      "radius": 25,
+      "x": 382,
+      "y": 512,
+      "radius": 26,
       "refundPercent": 0.70
     },
     "outerSpawnOrbit": {
-      "radius": 185,
+      "radius": 172,
       "portals": [
-        { "id": "portal_north", "angleDeg": 270, "angleRad": 4.7124, "x": 225.0, "y": 135.0, "compass": "N" },
-        { "id": "portal_east",  "angleDeg": 0,   "angleRad": 0.0000, "x": 410.0, "y": 320.0, "compass": "E" },
-        { "id": "portal_south", "angleDeg": 90,  "angleRad": 1.5708, "x": 225.0, "y": 505.0, "compass": "S" },
-        { "id": "portal_west",  "angleDeg": 180, "angleRad": 3.1416, "x": 40.0,  "y": 320.0, "compass": "W" }
+        { "id": "portal_north", "angleDeg": 270, "angleRad": 4.7124, "x": 225.0, "y": 113.0, "compass": "N" },
+        { "id": "portal_east",  "angleDeg": 0,   "angleRad": 0.0000, "x": 397.0, "y": 285.0, "compass": "E" },
+        { "id": "portal_south", "angleDeg": 90,  "angleRad": 1.5708, "x": 225.0, "y": 457.0, "compass": "S" },
+        { "id": "portal_west",  "angleDeg": 180, "angleRad": 3.1416, "x": 53.0,  "y": 285.0, "compass": "W" }
       ]
     }
   },
@@ -69,21 +69,21 @@
     "shadow_assassin": { "baseRange": 85, "maxReach": 175, "coverageRatio": 1.059 }
   },
   "waves": [
-    { "wave": 1, "purpose": "TEACH_MECHANIC", "spawnPortals": ["portal_north"], "manifest": [{ "enemyId": "void_crawler", "count": 8, "hp": 40, "speed": 65, "goldReward": 3 }], "boss": null },
-    { "wave": 2, "purpose": "APPLY_MECHANIC", "spawnPortals": ["portal_north", "portal_east"], "manifest": [{ "enemyId": "void_crawler", "count": 12, "hp": 46, "speed": 69, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 4, "hp": 25, "speed": 147, "goldReward": 4 }], "boss": null },
-    { "wave": 3, "purpose": "COMBINE_MECHANICS", "spawnPortals": ["portal_north", "portal_east", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 16, "hp": 53, "speed": 72, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 6, "hp": 29, "speed": 154, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 2, "hp": 210, "speed": 38, "goldReward": 10 }], "boss": null },
-    { "wave": 4, "purpose": "ENCOUNTER_CHALLENGE", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 12, "hp": 60, "speed": 75, "goldReward": 3 }, { "enemyId": "swarm_pod", "count": 8, "hp": 112, "speed": 63, "goldReward": 8 }, { "enemyId": "armored_bruiser", "count": 4, "hp": 240, "speed": 40, "goldReward": 10 }], "boss": null },
-    { "wave": 5, "purpose": "CLIMAX_BOSS", "spawnPortals": ["portal_north"], "manifest": [{ "enemyId": "void_crawler", "count": 8, "hp": 68, "speed": 78, "goldReward": 3 }], "boss": { "id": "iron_colossus", "name": "Iron Colossus", "hp": 2250, "speed": 28, "shieldArcDeg": 120 } },
-    { "wave": 6, "purpose": "TEACH_MECHANIC", "spawnPortals": ["portal_north", "portal_south"], "manifest": [{ "enemyId": "void_crawler", "count": 14, "hp": 76, "speed": 80, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 8, "hp": 42, "speed": 165, "goldReward": 4 }, { "enemyId": "void_slinger", "count": 4, "hp": 170, "speed": 52, "goldReward": 12 }], "boss": null },
-    { "wave": 7, "purpose": "APPLY_MECHANIC", "spawnPortals": ["portal_east", "portal_west"], "manifest": [{ "enemyId": "swift_dart", "count": 10, "hp": 48, "speed": 170, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 6, "hp": 340, "speed": 43, "goldReward": 10 }, { "enemyId": "void_slinger", "count": 4, "hp": 190, "speed": 54, "goldReward": 12 }], "boss": null },
-    { "wave": 8, "purpose": "COMBINE_MECHANICS", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 10, "hp": 92, "speed": 83, "goldReward": 3 }, { "enemyId": "swarm_pod", "count": 12, "hp": 175, "speed": 69, "goldReward": 8 }, { "enemyId": "void_slinger", "count": 6, "hp": 210, "speed": 56, "goldReward": 12 }], "boss": null },
-    { "wave": 9, "purpose": "ENCOUNTER_CHALLENGE", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 10, "hp": 102, "speed": 85, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 8, "hp": 56, "speed": 175, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 6, "hp": 410, "speed": 45, "goldReward": 10 }, { "enemyId": "swarm_pod", "count": 6, "hp": 190, "speed": 71, "goldReward": 8 }, { "enemyId": "void_slinger", "count": 4, "hp": 230, "speed": 58, "goldReward": 12 }], "boss": null },
-    { "wave": 10, "purpose": "CLIMAX_BOSS", "spawnPortals": ["portal_north"], "manifest": [{ "enemyId": "swarm_pod", "count": 6, "hp": 210, "speed": 73, "goldReward": 8 }], "boss": { "id": "hydra_queen", "name": "Hydra Queen", "hp": 5200, "speed": 32, "splitAtHpPercent": 0.50 } },
-    { "wave": 11, "purpose": "APPLY_MECHANIC", "spawnPortals": ["portal_north", "portal_south"], "manifest": [{ "enemyId": "swift_dart", "count": 18, "hp": 72, "speed": 185, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 8, "hp": 520, "speed": 47, "goldReward": 10 }], "boss": null },
-    { "wave": 12, "purpose": "COMBINE_MECHANICS", "spawnPortals": ["portal_east", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 12, "hp": 135, "speed": 88, "goldReward": 3 }, { "enemyId": "armored_bruiser", "count": 8, "hp": 570, "speed": 48, "goldReward": 10 }, { "enemyId": "void_slinger", "count": 10, "hp": 320, "speed": 60, "goldReward": 12 }], "boss": null },
-    { "wave": 13, "purpose": "ENCOUNTER_CHALLENGE", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "swarm_pod", "count": 16, "hp": 270, "speed": 77, "goldReward": 8 }, { "enemyId": "swift_dart", "count": 14, "hp": 85, "speed": 190, "goldReward": 4 }], "boss": null },
-    { "wave": 14, "purpose": "ENCOUNTER_CHALLENGE", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 12, "hp": 160, "speed": 90, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 12, "hp": 95, "speed": 195, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 8, "hp": 680, "speed": 50, "goldReward": 10 }, { "enemyId": "swarm_pod", "count": 8, "hp": 300, "speed": 80, "goldReward": 8 }, { "enemyId": "void_slinger", "count": 6, "hp": 370, "speed": 62, "goldReward": 12 }], "boss": null },
-    { "wave": 15, "purpose": "CLIMAX_BOSS", "spawnPortals": ["portal_north"], "manifest": [{ "enemyId": "void_slinger", "count": 6, "hp": 400, "speed": 64, "goldReward": 12 }, { "enemyId": "swift_dart", "count": 8, "hp": 105, "speed": 200, "goldReward": 4 }], "boss": { "id": "chrono_wraith", "name": "Chrono Wraith", "hp": 12000, "speed": 40, "blinkInterval": 5.0 } }
+    { "wave": 1, "purpose": "TEACH_MECHANIC", "spawnPortals": ["portal_north"], "manifest": [{ "enemyId": "void_crawler", "count": 8, "hp": 40, "speed": 38, "goldReward": 3 }], "boss": null },
+    { "wave": 2, "purpose": "APPLY_MECHANIC", "spawnPortals": ["portal_north", "portal_east"], "manifest": [{ "enemyId": "void_crawler", "count": 12, "hp": 46, "speed": 40, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 4, "hp": 25, "speed": 82, "goldReward": 4 }], "boss": null },
+    { "wave": 3, "purpose": "COMBINE_MECHANICS", "spawnPortals": ["portal_north", "portal_east", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 16, "hp": 53, "speed": 42, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 6, "hp": 29, "speed": 85, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 2, "hp": 210, "speed": 22, "goldReward": 10 }], "boss": null },
+    { "wave": 4, "purpose": "ENCOUNTER_CHALLENGE", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 12, "hp": 60, "speed": 44, "goldReward": 3 }, { "enemyId": "swarm_pod", "count": 8, "hp": 112, "speed": 32, "goldReward": 8 }, { "enemyId": "armored_bruiser", "count": 4, "hp": 240, "speed": 24, "goldReward": 10 }], "boss": null },
+    { "wave": 5, "purpose": "CLIMAX_BOSS", "spawnPortals": ["portal_north"], "manifest": [{ "enemyId": "void_crawler", "count": 8, "hp": 68, "speed": 46, "goldReward": 3 }], "boss": { "id": "iron_colossus", "name": "Iron Colossus", "hp": 2250, "speed": 18, "shieldArcDeg": 120 } },
+    { "wave": 6, "purpose": "TEACH_MECHANIC", "spawnPortals": ["portal_north", "portal_south"], "manifest": [{ "enemyId": "void_crawler", "count": 14, "hp": 76, "speed": 48, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 8, "hp": 42, "speed": 90, "goldReward": 4 }, { "enemyId": "void_slinger", "count": 4, "hp": 170, "speed": 26, "goldReward": 12 }], "boss": null },
+    { "wave": 7, "purpose": "APPLY_MECHANIC", "spawnPortals": ["portal_east", "portal_west"], "manifest": [{ "enemyId": "swift_dart", "count": 10, "hp": 48, "speed": 92, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 6, "hp": 340, "speed": 25, "goldReward": 10 }, { "enemyId": "void_slinger", "count": 4, "hp": 190, "speed": 27, "goldReward": 12 }], "boss": null },
+    { "wave": 8, "purpose": "COMBINE_MECHANICS", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 10, "hp": 92, "speed": 50, "goldReward": 3 }, { "enemyId": "swarm_pod", "count": 12, "hp": 175, "speed": 34, "goldReward": 8 }, { "enemyId": "void_slinger", "count": 6, "hp": 210, "speed": 28, "goldReward": 12 }], "boss": null },
+    { "wave": 9, "purpose": "ENCOUNTER_CHALLENGE", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 10, "hp": 102, "speed": 52, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 8, "hp": 56, "speed": 95, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 6, "hp": 410, "speed": 26, "goldReward": 10 }, { "enemyId": "swarm_pod", "count": 6, "hp": 190, "speed": 35, "goldReward": 8 }, { "enemyId": "void_slinger", "count": 4, "hp": 230, "speed": 29, "goldReward": 12 }], "boss": null },
+    { "wave": 10, "purpose": "CLIMAX_BOSS", "spawnPortals": ["portal_north"], "manifest": [{ "enemyId": "swarm_pod", "count": 6, "hp": 210, "speed": 36, "goldReward": 8 }], "boss": { "id": "hydra_queen", "name": "Hydra Queen", "hp": 5200, "speed": 22, "splitAtHpPercent": 0.50 } },
+    { "wave": 11, "purpose": "APPLY_MECHANIC", "spawnPortals": ["portal_north", "portal_south"], "manifest": [{ "enemyId": "swift_dart", "count": 18, "hp": 72, "speed": 98, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 8, "hp": 520, "speed": 27, "goldReward": 10 }], "boss": null },
+    { "wave": 12, "purpose": "COMBINE_MECHANICS", "spawnPortals": ["portal_east", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 12, "hp": 135, "speed": 54, "goldReward": 3 }, { "enemyId": "armored_bruiser", "count": 8, "hp": 570, "speed": 28, "goldReward": 10 }, { "enemyId": "void_slinger", "count": 10, "hp": 320, "speed": 30, "goldReward": 12 }], "boss": null },
+    { "wave": 13, "purpose": "ENCOUNTER_CHALLENGE", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "swarm_pod", "count": 16, "hp": 270, "speed": 38, "goldReward": 8 }, { "enemyId": "swift_dart", "count": 14, "hp": 85, "speed": 100, "goldReward": 4 }], "boss": null },
+    { "wave": 14, "purpose": "ENCOUNTER_CHALLENGE", "spawnPortals": ["portal_north", "portal_east", "portal_south", "portal_west"], "manifest": [{ "enemyId": "void_crawler", "count": 12, "hp": 160, "speed": 56, "goldReward": 3 }, { "enemyId": "swift_dart", "count": 12, "hp": 95, "speed": 102, "goldReward": 4 }, { "enemyId": "armored_bruiser", "count": 8, "hp": 680, "speed": 29, "goldReward": 10 }, { "enemyId": "swarm_pod", "count": 8, "hp": 300, "speed": 40, "goldReward": 8 }, { "enemyId": "void_slinger", "count": 6, "hp": 370, "speed": 32, "goldReward": 12 }], "boss": null },
+    { "wave": 15, "purpose": "CLIMAX_BOSS", "spawnPortals": ["portal_north"], "manifest": [{ "enemyId": "void_slinger", "count": 6, "hp": 400, "speed": 34, "goldReward": 12 }, { "enemyId": "swift_dart", "count": 8, "hp": 105, "speed": 105, "goldReward": 4 }], "boss": { "id": "chrono_wraith", "name": "Chrono Wraith", "hp": 12000, "speed": 26, "blinkInterval": 5.0 } }
   ],
   "infiniteScaling": {
     "effectiveFromWave": 16,
