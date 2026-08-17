@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "tidebound",
+  "title": "Tidebound",
+  "genre": "2d_action_platformer",
+  "version": "1.0.0",
+  "controls": {
+    "move": ["KeyA", "KeyD", "ArrowLeft", "ArrowRight"],
+    "jump": ["Space", "KeyW", "ArrowUp"],
+    "dash": ["ShiftLeft", "ShiftRight", "KeyJ", "KeyX"],
+    "interact": ["KeyE", "Enter"],
+    "pause": ["Escape", "KeyP"]
+  },
+  "kinematics": {
+    "maxRunSpeed": 200,
+    "groundAccel": 1200,
+    "groundDecel": 1400,
+    "jumpImpulse": -390,
+    "variableJumpCut": -140,
+    "gravity": 980,
+    "fallClamp": 480,
+    "coyoteTime": 0.10,
+    "jumpBuffer": 0.12,
+    "maxJumpReachHorizontal": 280,
+    "maxJumpReachVertical": 135,
+    "safetyJumpDistance": 220,
+    "safetyStepHeight": 95,
+    "dashSpeed": 450,
+    "dashDuration": 0.18,
+    "maxAirDashes": 1,
+    "stompRebound": -320
+  },
+  "enemies": [
+    {
+      "id": "hermit_scuttler",
+      "archetype": "patrol_walker",
+      "name": "Hermit Scuttler",
+      "maxHealth": 1,
+      "canBeStomped": true,
+      "scoreValue": 100,
+      "speed": 60,
+      "behavior": "Platform patrol with edge & wall detection clamps"
+    },
+    {
+      "id": "spiny_urchin",
+      "archetype": "rhythmic_hopper",
+      "name": "Spiny Urchin",
+      "maxHealth": 1,
+      "canBeStomped": true,
+      "scoreValue": 150,
+      "hopInterval": 1.2,
+      "hopImpulse": -350,
+      "behavior": "Timed vertical spike pulse hop with ground telegraph"
+    },
+    {
+      "id": "bubble_ray",
+      "archetype": "sine_flyer",
+      "name": "Bubble Ray Flyer",
+      "maxHealth": 1,
+      "canBeStomped": true,
+      "scoreValue": 150,
+      "sineAmplitude": 28,
+      "sineFrequency": 3.77,
+      "behavior": "Smooth sine-wave aerial flight acting as stomping stepping stone"
+    },
+    {
+      "id": "coral_crusher",
+      "archetype": "proximity_charger",
+      "name": "Coral Crusher Crab",
+      "maxHealth": 2,
+      "canBeStomped": true,
+      "stompRequiresDazed": true,
+      "scoreValue": 250,
+      "aggroRange": 180,
+      "chargeSpeed": 280,
+      "dazeDuration": 2.2,
+      "behavior": "Proximity charge within 180px, crashes into walls for 2.2s dazed stun"
+    },
+    {
+      "id": "ancient_tide_golem",
+      "archetype": "multi_phase_boss",
+      "name": "The Ancient Tide Golem",
+      "maxHealth": 3,
+      "phases": 3,
+      "scoreValue": 1000,
+      "behavior": "3-phase boss encounter: Ground Slam Tidal Wave -> Rolling Coral Boulders -> Water Jet Barrage & Enraged Charge"
+    }
+  ],
+  "collectibles": {
+    "sun_pearls": { "required": 25, "points": 50 },
+    "nautilus_shells": { "required": 50, "points": 20 },
+    "lore_medallions": { "required": 5, "points": 500 }
+  },
+  "lighthouses": {
+    "ancient_lighthouses": 3,
+    "final_beacon": 1,
+    "total": 4
+  },
+  "npcs": [
+    { "id": "coralia_diver", "name": "Coralia the Pearl Diver", "level": 1 },
+    { "id": "barnaby_navigator", "name": "Barnaby the Navigator", "level": 2 },
+    { "id": "ancient_beacon_keeper", "name": "Ancient Beacon Keeper", "level": 5 }
+  ],
+  "rules": {
+    "playerMaxHealth": 3,
+    "instantCheckpointRespawn": true,
+    "preservesCollectiblesOnDeath": true,
+    "supportsPlaygamaSave": true
+  }
+}

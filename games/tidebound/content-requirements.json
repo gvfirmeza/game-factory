@@ -1,0 +1,324 @@
+{
+  "gameId": "tidebound",
+  "title": "Tidebound",
+  "version": "1.0.0",
+  "budget": {
+    "rooms": { "required": 5, "implemented": 5 },
+    "npcs": { "required": 3, "implemented": 3 },
+    "abilities": { "required": 1, "implemented": 1 },
+    "collectibles": {
+      "required": 80,
+      "implemented": 80,
+      "sunPearls": { "required": 25, "implemented": 25 },
+      "nautilusShells": { "required": 50, "implemented": 50 },
+      "medallions": { "required": 5, "implemented": 5 }
+    },
+    "lighthouses": { "required": 4, "implemented": 4 },
+    "enemyTypes": { "required": 4, "implemented": 4 },
+    "bosses": { "required": 1, "implemented": 1 },
+    "checkpoints": { "required": 5, "implemented": 5 },
+    "secrets": { "required": 5, "implemented": 5 }
+  },
+  "player": {
+    "name": "Cori",
+    "title": "Reef Sprite",
+    "baseHealth": 3,
+    "maxHealth": 3,
+    "speed": 200,
+    "groundAccel": 1200,
+    "groundDecel": 1400,
+    "jumpVelocity": -390,
+    "jumpCutVelocity": -140,
+    "gravity": 980,
+    "terminalVelocity": 480,
+    "coyoteTime": 0.10,
+    "jumpBuffer": 0.12,
+    "maxJumpReachHorizontal": 280,
+    "maxJumpReachVertical": 135,
+    "safetyJumpDistance": 220,
+    "safetyStepHeight": 95,
+    "dashSpeed": 450,
+    "dashDuration": 0.18,
+    "maxAirDashes": 1,
+    "stompBounceVelocity": -320,
+    "invulnerabilityDuration": 1.5,
+    "hitbox": { "width": 18, "height": 26 }
+  },
+  "levels": [
+    {
+      "id": "level_1",
+      "index": 1,
+      "name": "Palm Beach",
+      "biome": "tropical_beach",
+      "width": 2160,
+      "height": 450,
+      "description": "Sun-drenched sandy shores with palm boughs, gentle tutorial platforms, Hermit Scuttlers, Waystone 1, and the First Ancient Lighthouse.",
+      "checkpoints": ["waystone_1"],
+      "lighthouse": "lighthouse_1",
+      "sunPearls": ["pearl_1_1", "pearl_1_2", "pearl_1_3", "pearl_1_4", "pearl_1_5"],
+      "nautilusShellsCount": 10,
+      "secretMedallion": "medallion_tides",
+      "enemies": ["hermit_scuttler"],
+      "npcs": ["coralia_diver"]
+    },
+    {
+      "id": "level_2",
+      "index": 2,
+      "name": "Overgrown Ruins",
+      "biome": "sunken_ruins",
+      "width": 1440,
+      "height": 900,
+      "description": "Vertical stone masonry ruins covered in coastal moss, crumbling stone arches, Spiny Urchins, Barnaby the Navigator, Waystone 2, and the Second Ancient Lighthouse.",
+      "checkpoints": ["waystone_2"],
+      "lighthouse": "lighthouse_2",
+      "sunPearls": ["pearl_2_1", "pearl_2_2", "pearl_2_3", "pearl_2_4", "pearl_2_5"],
+      "nautilusShellsCount": 10,
+      "secretMedallion": "medallion_ruins",
+      "enemies": ["hermit_scuttler", "spiny_urchin"],
+      "npcs": ["barnaby_navigator"]
+    },
+    {
+      "id": "level_3",
+      "index": 3,
+      "name": "Flooded Caves",
+      "biome": "bioluminescent_grotto",
+      "width": 2160,
+      "height": 675,
+      "description": "Subterranean tidal grotto with disappearing coral ledges, pulsing geysers, Bubble Ray Flyers, Spiny Urchins, Waystone 3, and the sacred Shrine of the Tide Dash.",
+      "checkpoints": ["waystone_3"],
+      "abilityUnlock": "tide_dash",
+      "sunPearls": ["pearl_3_1", "pearl_3_2", "pearl_3_3", "pearl_3_4", "pearl_3_5"],
+      "nautilusShellsCount": 10,
+      "secretMedallion": "medallion_depths",
+      "enemies": ["spiny_urchin", "bubble_ray"],
+      "npcs": []
+    },
+    {
+      "id": "level_4",
+      "index": 4,
+      "name": "Wind Cliffs",
+      "biome": "tempest_cliffs",
+      "width": 2880,
+      "height": 450,
+      "description": "Dramatic ocean cliffs featuring strong coastal updrafts, oscillating cloud shelves, aggressive Coral Crusher Crabs, Waystone 4, and the Third Ancient Lighthouse.",
+      "checkpoints": ["waystone_4"],
+      "lighthouse": "lighthouse_3",
+      "sunPearls": ["pearl_4_1", "pearl_4_2", "pearl_4_3", "pearl_4_4", "pearl_4_5"],
+      "nautilusShellsCount": 10,
+      "secretMedallion": "medallion_gale",
+      "enemies": ["coral_crusher", "bubble_ray"],
+      "npcs": []
+    },
+    {
+      "id": "level_5",
+      "index": 5,
+      "name": "Lighthouse Island & Boss Arena",
+      "biome": "beacon_sanctuary",
+      "width": 2160,
+      "height": 450,
+      "description": "The ultimate platforming gauntlet leading to the Ancient Beacon Keeper, Waystone 5, The Ancient Tide Golem coliseum, the Final Beacon, and the Grand Ending Altar.",
+      "checkpoints": ["waystone_5"],
+      "lighthouse": "final_beacon",
+      "sunPearls": ["pearl_5_1", "pearl_5_2", "pearl_5_3", "pearl_5_4", "pearl_5_5"],
+      "nautilusShellsCount": 10,
+      "secretMedallion": "medallion_beacon",
+      "enemies": ["spiny_urchin", "bubble_ray", "coral_crusher"],
+      "boss": "ancient_tide_golem",
+      "npcs": ["ancient_beacon_keeper"]
+    }
+  ],
+  "rooms": 5,
+  "enemyTypes": [
+    {
+      "id": "hermit_scuttler",
+      "name": "Hermit Scuttler",
+      "category": "ground_patrol",
+      "health": 1,
+      "speed": 60,
+      "width": 20,
+      "height": 22,
+      "stompable": true,
+      "scoreValue": 100,
+      "behavior": "Patrols platforms with edge and wall detection, turning around upon reaching boundaries. Stompable from above."
+    },
+    {
+      "id": "spiny_urchin",
+      "name": "Spiny Urchin",
+      "category": "rhythmic_vertical",
+      "health": 1,
+      "hopImpulse": -350,
+      "hopInterval": 1.2,
+      "width": 22,
+      "height": 24,
+      "stompable": true,
+      "scoreValue": 150,
+      "behavior": "Rhythmic squash telegraph for 0.25s, jumps vertically with -350px/s impulse. Stompable at apex or descent."
+    },
+    {
+      "id": "bubble_ray",
+      "name": "Bubble Ray Flyer",
+      "category": "aerial_sine",
+      "health": 1,
+      "speed": 70,
+      "sineAmplitude": 28,
+      "sineFrequency": 0.6,
+      "width": 24,
+      "height": 18,
+      "stompable": true,
+      "scoreValue": 150,
+      "behavior": "Smooth sine-wave flight pattern. Acts as an aerial stepping stone; stomping it resets Cori's Tide Dash."
+    },
+    {
+      "id": "coral_crusher",
+      "name": "Coral Crusher Crab",
+      "category": "charge_and_stun",
+      "health": 2,
+      "patrolSpeed": 40,
+      "chargeSpeed": 280,
+      "aggroRange": 180,
+      "dazeDuration": 2.2,
+      "width": 32,
+      "height": 24,
+      "stompable": "only_when_dazed",
+      "scoreValue": 250,
+      "behavior": "Patrols until player is within 180px line-of-sight. Winds up for 0.4s and charges at 280px/s. Crashes into solid walls entering a 2.2s dazed stun where it becomes vulnerable to stomps."
+    }
+  ],
+  "bosses": [
+    {
+      "id": "ancient_tide_golem",
+      "name": "The Ancient Tide Golem",
+      "health": 3,
+      "width": 64,
+      "height": 74,
+      "phases": [
+        {
+          "phase": 1,
+          "hpThreshold": 3,
+          "attacks": ["ground_slam_tidal_wave", "heavy_stride"],
+          "vulnerabilityDuration": 3.5,
+          "description": "Leaps and slams ground creating a traveling tidal shockwave. Coral core exposes at head level for 3.5s."
+        },
+        {
+          "phase": 2,
+          "hpThreshold": 2,
+          "speedMultiplier": 1.25,
+          "attacks": ["rolling_coral_boulders", "ground_slam_tidal_wave"],
+          "vulnerabilityDuration": 2.6,
+          "description": "Hurls bouncing coral boulders that ricochet across the arena. Slam wave moves 25% faster. Core exposed for 2.6s."
+        },
+        {
+          "phase": 3,
+          "hpThreshold": 1,
+          "speedMultiplier": 1.4,
+          "attacks": ["water_jet_barrage", "double_slam_wave", "enraged_wall_charge"],
+          "vulnerabilityDuration": 2.2,
+          "description": "Pressurized water jets rain down from ceiling geysers, followed by double shockwave slams and an enraged charge into the arena wall causing a 2.2s wall crash stun."
+        }
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "id": "coralia_diver",
+      "name": "Coralia the Pearl Diver",
+      "location": "level_1",
+      "role": "tutorial_guide",
+      "dialogue": [
+        "Ahoy there, little Cori! The coastal tempests have extinguished the Three Ancient Lighthouses, and dark tides churn across the archipelago.",
+        "Collect the 5 Sun Pearls scattered across each reef to restore their radiance. Press [Space] to leap, and stomp atop Hermit Scuttlers to bounce safely!",
+        "Seek out my old sailing partner Barnaby in the Overgrown Ruins ahead. Keep your antennae glowing bright, little sprite!"
+      ]
+    },
+    {
+      "id": "barnaby_navigator",
+      "name": "Barnaby the Navigator",
+      "location": "level_2",
+      "role": "lore_guide",
+      "dialogue": [
+        "Shiver me barnacles! You made it past the outer reefs, young Cori. The ancient masonry here holds strong, but the waters are rising fast.",
+        "Deep within the Flooded Caves lies the sacred Shrine of the Tide Dash. Once attuned, you can press [Shift] or [J] mid-air to surge through the sea breeze!",
+        "Beware the Coral Crusher Crabs on the high cliffs. Their thick armor can only be cracked when they daze themselves against hard stone walls!"
+      ]
+    },
+    {
+      "id": "ancient_beacon_keeper",
+      "name": "Ancient Beacon Keeper",
+      "location": "level_5",
+      "role": "ending_arbiter",
+      "dialogue": [
+        "Cori, child of the tides! You have awakened the ancient beacons and calmed the fury of the Tide Golem.",
+        "All 4 Lighthouses ignite across the horizon! The storm subsides and the coral isles flourish once more.",
+        "May the great ocean cradle guide your travels forever, Master Navigator of the Reefs!"
+      ]
+    }
+  ],
+  "collectibles": {
+    "sunPearlsTotal": 25,
+    "sunPearlsPerLevel": 5,
+    "sunPearlPoints": 50,
+    "nautilusShellsTotal": 50,
+    "nautilusShellsPerLevel": 10,
+    "nautilusShellPoints": 20,
+    "medallionsTotal": 5,
+    "medallionPoints": 500,
+    "medallions": [
+      {
+        "id": "medallion_tides",
+        "level": 1,
+        "name": "Medallion of the Tides",
+        "lore": "When the first ocean cooled, the Tidal Core gave life to the coral reefs and whispered rhythm to the sea."
+      },
+      {
+        "id": "medallion_ruins",
+        "level": 2,
+        "name": "Medallion of the Deep Ruins",
+        "lore": "The ancient seafolk built towers to mirror the constellations, harnessing starlight to guide distant voyagers."
+      },
+      {
+        "id": "medallion_depths",
+        "level": 3,
+        "name": "Medallion of the Flooded Grotto",
+        "lore": "Deep within the flooded grottos, bioluminescent currents pulse with the heartbeat of the sleeping sentinel."
+      },
+      {
+        "id": "medallion_gale",
+        "level": 4,
+        "name": "Medallion of the Sea Gale",
+        "lore": "The cliff winds sing an unbroken sea shanty, lifting those who dare to leap with faith into the updraft."
+      },
+      {
+        "id": "medallion_beacon",
+        "level": 5,
+        "name": "Medallion of the Horizon Beacon",
+        "lore": "When all four beacons shine upon the horizon, the tempest calms and the ocean cradle enters eternal harmony."
+      }
+    ]
+  },
+  "lighthouses": [
+    { "id": "lighthouse_1", "level": 1, "name": "Lighthouse of the Sandy Shoals", "x": 1980, "y": 280 },
+    { "id": "lighthouse_2", "level": 2, "name": "Lighthouse of the Sunken Arch", "x": 1280, "y": 320 },
+    { "id": "lighthouse_3", "level": 4, "name": "Lighthouse of the Windy Crags", "x": 2680, "y": 260 },
+    { "id": "final_beacon", "level": 5, "name": "The Great Horizon Beacon", "x": 1920, "y": 240 }
+  ],
+  "checkpoints": [
+    { "id": "waystone_1", "level": 1, "x": 1240, "y": 380 },
+    { "id": "waystone_2", "level": 2, "x": 720, "y": 480 },
+    { "id": "waystone_3", "level": 3, "x": 1080, "y": 520 },
+    { "id": "waystone_4", "level": 4, "x": 1500, "y": 360 },
+    { "id": "waystone_5", "level": 5, "x": 980, "y": 380 }
+  ],
+  "secrets": [
+    { "id": "secret_1", "level": 1, "type": "false_seaweed_curtain", "reward": "medallion_tides" },
+    { "id": "secret_2", "level": 2, "type": "ruin_submerged_hollow", "reward": "medallion_ruins" },
+    { "id": "secret_3", "level": 3, "type": "coral_shaft_alcove", "reward": "medallion_depths" },
+    { "id": "secret_4", "level": 4, "type": "cliffside_wind_grotto", "reward": "medallion_gale" },
+    { "id": "secret_5", "level": 5, "type": "sanctuary_hidden_coral_shelf", "reward": "medallion_beacon" }
+  ],
+  "technicalSpecs": {
+    "viewport": { "width": 720, "height": 450, "aspectRatio": "16:9" },
+    "physicsTickRate": 60,
+    "saveKey": "tidebound_save_v1",
+    "qaFlags": ["?reset=1", "?nosave=1", "?level=N", "?god=1"]
+  }
+}

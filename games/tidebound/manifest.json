@@ -1,0 +1,10 @@
+{
+  "name": "Tidebound",
+  "short_name": "Tidebound",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#06110A",
+  "theme_color": "#2EC4B6",
+  "description": "A cozy, vibrant 2D platform adventure guiding Cori the Reef Sprite across 5 island biomes to gather Sun Pearls, awaken ancient lighthouses, and pacify the Ancient Tide Golem."
+}

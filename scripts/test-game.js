@@ -204,7 +204,7 @@ async function testGame(gameId) {
       for (const fn of eventListeners['DOMContentLoaded']) fn();
     }
 
-    const instance = global.window.__meadowboundInstance || global.window.__groveOdysseyInstance || global.window.__gameInstance;
+    const instance = global.window.__tideboundInstance || global.window.__meadowboundInstance || global.window.__groveOdysseyInstance || global.window.__gameInstance;
 
     if (instance) {
       // Transition to PLAYING
@@ -260,7 +260,7 @@ async function testGame(gameId) {
       }
 
       // Check 3.5: Ground Enemy Physics & Platform Containment
-      const enemies = (instance.levelData && instance.levelData.enemies) || instance.enemies || [];
+      const enemies = (instance.enemies && instance.enemies.length > 0) ? instance.enemies : ((instance.levelData && instance.levelData.enemies) || []);
       if (enemies.length > 0) {
         const groundEnemy = enemies.find(e => e.type === 'acorn_walker' || e.type === 'bramble_slime' || e.type === 'patrol_walker' || e.type === 'thorn_beetle');
         if (groundEnemy) {

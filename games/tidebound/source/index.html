@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tidebound — Cozy 2D Platform Adventure</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- On-screen Audio Mute Button (Playgama UX Requirement) -->
+    <button id="btn-mute" class="hud-mute-btn" aria-label="Toggle Audio Mute" title="Toggle Sound">🔊</button>
+
+    <!-- Interactive HTML Title Screen Overlay -->
+    <div id="title-overlay" class="title-overlay">
+      <div class="title-card">
+        <div class="title-badge">🌊 COZY 2D PLATFORM ADVENTURE</div>
+        <h1 class="title-glow">TIDEBOUND</h1>
+        <p class="title-subtitle">Reignite the Great Horizon Beacon</p>
+
+        <div class="title-actions">
+          <button id="btn-play-game" class="btn-play-game" autofocus>
+            ▶ START ADVENTURE
+          </button>
+          <div class="title-secondary-actions">
+            <button id="btn-how-to-play" class="btn-secondary" title="Learn controls and mechanics">
+              📖 How to Play
+            </button>
+            <button id="btn-reset-save" class="btn-secondary btn-reset-save" title="Clear saved progress and start fresh">
+              🗑️ Reset Save
+            </button>
+          </div>
+        </div>
+
+        <div class="title-controls-hint">
+          <span class="hint-item"><kbd>A</kbd> <kbd>D</kbd> / <kbd>←</kbd> <kbd>→</kbd> Move</span>
+          <span class="hint-item"><kbd>Space</kbd> / <kbd>W</kbd> Jump</span>
+          <span class="hint-item"><kbd>Shift</kbd> / <kbd>J</kbd> / <kbd>X</kbd> Tide Dash</span>
+          <span class="hint-item"><kbd>E</kbd> / <kbd>Enter</kbd> Talk / Read</span>
+          <span class="hint-item"><kbd>Esc</kbd> / <kbd>P</kbd> Pause</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to Play Modal Overlay -->
+    <div id="how-to-play-overlay" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>📖 How to Play</h2>
+          <button id="btn-close-how-to-play" class="btn-close-modal" aria-label="Close">✖</button>
+        </div>
+        <div class="modal-body">
+          <div class="guide-grid">
+            <div class="guide-card">
+              <h3>🏃 Movement & Jump</h3>
+              <p>Use <kbd>A</kbd>/<kbd>D</kbd> or Arrow Keys to run. Press <kbd>Space</kbd> or <kbd>W</kbd> to jump. Release early for variable jump heights!</p>
+            </div>
+            <div class="guide-card">
+              <h3>🌊 Tide Dash</h3>
+              <p>Press <kbd>Shift</kbd>, <kbd>J</kbd>, or <kbd>X</kbd> in mid-air for a hydro-powered dash! You get <strong>1 Air Dash per jump</strong>, restored by landing or stomping enemies.</p>
+            </div>
+            <div class="guide-card">
+              <h3>💥 Enemy Stomp</h3>
+              <p>Land directly on top of enemies to bounce skyward (<strong>-320px/s</strong>), defeating pests and instantly resetting your Tide Dash!</p>
+            </div>
+            <div class="guide-card">
+              <h3>☀️ Sun Pearls & Lighthouses</h3>
+              <p>Collect all <strong>25 Sun Pearls</strong>, discover <strong>5 Hidden Lore Medallions</strong>, and ignite <strong>4 Lighthouses</strong> to calm the Ancient Tide Golem!</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-back-to-menu" class="btn-play-game">Got it, Let's Explore!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Virtual Touch Overlay -->
+    <div id="touch-controls" class="touch-controls">
+      <div class="touch-dpad">
+        <button id="btn-left" class="touch-btn touch-dir" aria-label="Move Left">◀</button>
+        <button id="btn-down" class="touch-btn touch-dir" aria-label="Crouch / Drop Down">▼</button>
+        <button id="btn-right" class="touch-btn touch-dir" aria-label="Move Right">▶</button>
+      </div>
+      <div class="touch-actions">
+        <button id="btn-interact" class="touch-btn btn-interact" aria-label="Talk / Interact">💬 Talk</button>
+        <button id="btn-dash" class="touch-btn btn-dash" aria-label="Tide Dash">🌊 Dash</button>
+        <button id="btn-jump" class="touch-btn btn-jump" aria-label="Jump">🐬 Jump</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>
