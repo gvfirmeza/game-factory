@@ -40,6 +40,7 @@ class MockCanvasContext {
   roundRect() {}
   measureText(text) { return { width: text ? text.length * 8 : 0 }; }
   fillText() {}
+  strokeText() {}
   createLinearGradient() { return { addColorStop() {} }; }
   createRadialGradient() { return { addColorStop() {} }; }
   setLineDash() {}

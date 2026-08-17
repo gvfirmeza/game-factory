@@ -30,3 +30,5 @@ export { ProceduralAudio } from './audio/ProceduralAudio.js';
 export { InputManager } from './input/InputManager.js';
 export { Camera2D } from './camera/Camera2D.js';
 export { PlaygamaBridge } from './platform/playgama/PlaygamaBridge.js';
+export { RenderLayers, LayeredRenderer } from './render/RenderLayers.js';
+export { ReachabilityValidator } from './level/ReachabilityValidator.js';

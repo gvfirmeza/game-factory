@@ -1,89 +1,86 @@
-# AI Game Factory — Workspace Agent Rules & Quality Guidelines
+# AI Game Factory — Studio Operational Rules & Quality Guidelines
 
 ## Studio Operational Model
-The AI Game Factory is an autonomous multi-agent game creation studio. Development is partitioned across specialized subagents with explicit artifact handoffs, deterministic runtime verification, and enforceable Quality Gates.
+The AI Game Factory is an autonomous multi-agent game creation studio. Development is partitioned across specialized subagents with explicit artifact handoffs, mathematical reachability verification, deterministic runtime simulation, and enforceable Quality Gates.
 
-## Redefined Definition of "DONE"
-A game is **NOT DONE** simply because:
-- it builds or generates a ZIP archive;
-- the page loads without crashing;
-- the player can perform basic movement;
-- there are no obvious JavaScript syntax errors;
-- a hypothetical QA report was written.
-
-A game is **ONLY DONE** when:
-1. It is mechanically coherent and fully implemented against a machine-readable `game-contract.json`.
-2. It has been empirically tested in a 60 FPS runtime loop with simulated inputs.
-3. It passes the Quality Budget: **`CRITICAL = 0`**, **`BLOCKING = 0`**, **`MAJOR = 0`**.
-4. It passes all 20 Playgama platform compliance gates with verified `PLAYGAMA_READY` status.
-5. It receives an independent adversarial review with an overall score $\ge 9.0/10$.
+## The Design-First Philosophy
+The Factory optimizes for **INTENTIONAL GAMEPLAY**, not content volume.
+- Every mechanic, room, enemy, collectible, and NPC must have a concrete reason to exist.
+- A smaller game with 5 handcrafted, reachable, well-paced rooms is vastly superior to a game with 20 repetitive, unvalidated rooms.
+- A game without NPCs is vastly superior to a game with broken or forced NPCs.
+- A game with one excellent, well-integrated mechanic is vastly superior to a game with 5 meaningless mechanics.
 
 ---
 
-## The 11-Stage Studio Quality Pipeline
+## The 15-Stage Studio Quality Pipeline
 ```
-DESIGN (game-contract.json + game-design.md)
+CONCEPT (game-brief.md)
+  ↓
+DESIGN INTENT (game-design-intent.md: Core loop, Verb, Mechanic Purpose Contract)
+  ↓
+LEVEL GRAPH (level-graph.json + ascii-layout.txt with explicit room purposes)
+  ↓
+REACHABILITY ANALYSIS (node scripts/validate-reachability.js <id>)
+  ↓
+DESIGN REVIEW (node scripts/validate-design.js <id> -> design-validation.md: Gate FAIL = DO NOT BUILD)
   ↓
 ART & TECH (art-direction.md + technical-plan.md)
   ↓
-IMPLEMENT (source/* leveraging engine/*)
+IMPLEMENTATION (source/* leveraging engine/* and RenderLayers)
   ↓
 STATIC VALIDATION (node scripts/validate-static.js <id>)
   ↓
+LEVEL VALIDATION (node scripts/validate-level.js <id>)
+  ↓
 RUNTIME TEST (node scripts/test-game.js <id>)
   ↓
-BUG TRIAGE (node scripts/triage-bugs.js <id>)
+BUG TRIAGE & DEBUG (node scripts/triage-bugs.js <id>)
   ↓
-DEBUG (Surgical root-cause fixes)
-  ↓
-RUNTIME TEST AGAIN (Verification pass)
-  ↓
-REGRESSION TEST (Full suite re-test)
-  ↓
-POLISH (Squash/stretch, particles, procedural audio chords, screen shakes)
+POLISH (Squash/stretch, particles, Web Audio synthesis, screen shakes)
   ↓
 PLAYGAMA QA (node scripts/validate-playgama.js <id> -> publication-manifest.json)
   ↓
-FINAL REVIEW (Adversarial audit across 7 Master Quality Gates)
+FINAL REVIEW (node scripts/validate-static.js + 7 Master Quality Gates score >= 9.0/10)
   ↓
-BUILD & PACKAGE (build/<id>.zip with index.html at root)
+BUILD & PACKAGE (node scripts/build-game.js <id> -> build/<id>.zip)
 ```
 
 ---
 
-## Mandatory Studio Architectural Rules
+## Studio Architectural & Quality Rules
 
-1. **Artifact-First & Machine-Readable Contracts**:
-   - The Game Designer MUST produce `game-contract.json` specifying controls, enemy archetypes, damage rules, NPCs, and win/loss conditions.
-   - The Builder MUST implement directly against this contract using `engine/` modules.
-   - The Playtester MUST test against this contract.
+1. **Design-First & Pre-Build Gate**:
+   - The Game Designer must write `game-design-intent.md` defining the Core Loop, Primary Verb, and Mechanic Purpose Contract (`PURPOSE`, `TEACHING`, `APPLICATION`, `ESCALATION`, `MASTERY`).
+   - The Level Designer must produce a structured `level-graph.json` and ASCII paper prototype.
+   - The Design Reviewer must certify all 9 Pre-Build Gates in `design-validation.md` before the Builder can write code.
 
-2. **Centralized Enemy Architecture (`EnemyController`)**:
+2. **Kinematic Reach & Safety Margin ($\le 82\%$)**:
+   - Level geometry must be designed only AFTER player kinematics ($v_{run}, v_{jump}, v_{cut}, g, v_{dash}$) are mathematically established.
+   - Required platform jumps must NEVER exceed **$82\%$** of physical ballistic reach ($X_{max} = v_x \cdot \frac{2 v_{jump}}{g}$).
+   - Required step heights must NEVER exceed **$70\%$** of max jump height ($H_{max} = \frac{v_{jump}^2}{2g}$).
+   - Vertical ceiling clearance above platforms and stompable enemies must be $\ge 70\text{px}$.
+
+3. **No Mandatory NPCs or Cookie-Cutter Systems**:
+   - NPCs, dialogue, shops, quests, collectibles, and secondary abilities are strictly OPTIONAL.
+   - Do NOT add systems merely because they are common in games. Only include systems that serve the core loop.
+
+4. **Centralized Enemy Architecture (`EnemyController`)**:
    - Ground enemies (`patrol_walker`, `rhythmic_hopper`, `proximity_charger`) MUST always simulate platform gravity (`vy += gravity * dt`) and platform swept AABB collision resolution.
    - Ground chargers MUST clamp to platform bounds `[minX, maxX]` and enter a dazed stun state upon hitting walls or edges.
-   - Ground enemies must NEVER fly or launch into the sky.
+   - Ground enemies must NEVER fly, float away, or be placed inside spikes/hazards.
 
-3. **Centralized Dialogue Architecture (`DialogueSystem`)**:
+5. **Isolated Dialogue & Render Layers (`RenderLayers` & `DialogueSystem`)**:
+   - All rendering must adhere to explicit `RenderLayers` (`BACKGROUND` < `WORLD` < `CHARACTERS` < `EFFECTS` < `DIALOGUE` < `HUD` < `OVERLAY`).
    - Dialogue boxes MUST use 100% solid, opaque backplates (`#0A1610`) to eliminate canvas pixel bleed-through.
    - Dialogue boxes MUST use dynamic word wrapping with safe line margins and single authoritative state locking.
-   - Dialogue dismissal MUST enforce a minimum 250ms input debounce cooldown to prevent instant re-open typewriter stutter.
-   - UI notifications / toast banners must NEVER share coordinate space with the dialogue box.
+   - Dialogue dismissal MUST enforce a minimum 250ms input debounce cooldown.
 
-4. **Centralized Input & Single Source of Truth (`InputManager`)**:
-   - UI control hints (Title Screen, HUD, How-to-Play) MUST be derived directly from `input.getControlHints()`.
-   - Never show conflicting key hints (e.g. UI says Shift but game uses X).
-
-5. **Empirical Runtime Playtesting (No Hypothetical Reports)**:
-   - The Playtester MUST actually launch and simulate runtime execution (`node scripts/test-game.js <id>`).
-   - Every report must provide empirical telemetry (displacement px, jump velocity, draw call count, damage events).
-
-6. **Adversarial Final Review**:
-   - The Final Reviewer acts as an external release auditor searching for reasons to reject rather than justify.
-   - Has binding veto power to reject any game with open Critical/Blocking/Major defects.
-
-7. **Air-Dash Constraints (1x per Airborne Period)**:
+6. **Air-Dash Constraints (1x per Airborne Period)**:
    - Players are strictly limited to ONE mid-air dash per jump/fall.
-   - `hasAirDash` is consumed on air dash and resets ONLY upon landing on a solid platform, springboard bounce, thermal updraft, or enemy stomp bounce.
+   - `hasAirDash` resets ONLY upon landing on a solid platform, springboard bounce, thermal updraft, or enemy stomp bounce.
+
+7. **Factory Benchmark Suite Verification**:
+   - All shared engine systems must continuously pass the 8-scenario benchmark suite (`node scripts/test-benchmarks.js`).
 
 8. **Playgama Compliance & Standalone Independence**:
    - Must achieve `PLAYGAMA_READY` via `node scripts/validate-playgama.js <id>`.

@@ -12,7 +12,7 @@
     "height": 450
   },
   "created": "2026-08-17T11:40:00.000Z",
-  "updated": "2026-08-17T11:44:00.000Z",
+  "updated": "2026-08-17T12:26:00.000Z",
   "author": "AI Game Factory Studio",
   "description": "A cozy, colorful, and responsive 2D platform adventure featuring Cori the Reef Sprite leaping across 5 sun-kissed island biomes, gathering Sun Pearls, unlocking the Tide Dash, and reigniting the Great Horizon Beacon.",
   "tags": [
@@ -36,7 +36,7 @@
     "nautilusShells": 50
   },
   "pipeline": {
-    "currentStage": "playgama-publisher",
+    "currentStage": "build-publisher",
     "build": "done",
     "submission_manifest": "ready",
     "history": [
@@ -59,13 +59,18 @@
         "stage": "playgama-publisher",
         "status": "COMPLETED",
         "timestamp": "2026-08-17T12:15:00.000Z"
+      },
+      {
+        "stage": "build-publisher",
+        "status": "COMPLETED",
+        "timestamp": "2026-08-17T12:26:00.000Z"
       }
     ]
   },
   "build": {
-    "timestamp": "2026-08-17T11:25:23.346Z",
+    "timestamp": "2026-08-17T11:49:05.190Z",
     "zipFile": "build/tidebound.zip",
-    "sizeBytes": 67774,
+    "sizeBytes": 72218,
     "success": true
   }
 }

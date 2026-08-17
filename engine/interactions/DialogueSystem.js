@@ -86,6 +86,14 @@ export class DialogueSystem {
     this.onComplete = null;
   }
 
+  get isActive() {
+    return this.active;
+  }
+
+  isDebounced() {
+    return this.closeCooldown > 0;
+  }
+
   /**
    * Start a new authoritative dialogue sequence.
    * Cancels/resets any previous dialogue state cleanly.

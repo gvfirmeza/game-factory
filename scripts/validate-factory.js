@@ -31,10 +31,12 @@ function check(name, condition, details = '') {
   }
 }
 
-// 1. Audit Agent Definitions
+// 1. Audit Agent Definitions (14 Specialized Agents)
 const requiredAgents = [
   'producer',
   'game-designer',
+  'level-designer',
+  'design-reviewer',
   'art-director',
   'technical-director',
   'builder',
@@ -47,16 +49,17 @@ const requiredAgents = [
   'build-publisher'
 ];
 
-console.log('1. Checking 12 Specialized Agent Definitions...');
+console.log('1. Checking 14 Specialized Agent Definitions...');
 for (const agent of requiredAgents) {
   const agentPath = path.join(rootDir, '.agents', 'agents', `${agent}.md`);
   const exists = fs.existsSync(agentPath);
   check(`Agent: ${agent}`, exists, exists ? 'Found' : 'Missing');
 }
 
-// 2. Audit Factory Skills
+// 2. Audit Factory Skills (9 Core Skills)
 const requiredSkills = [
   'game-design',
+  'level-design',
   'game-programming',
   'game-testing',
   'game-polish',
@@ -66,7 +69,7 @@ const requiredSkills = [
   'html5-build'
 ];
 
-console.log('\n2. Checking Studio Skills...');
+console.log('\n2. Checking 9 Studio Skills...');
 for (const skill of requiredSkills) {
   const skillPath = path.join(rootDir, '.agents', 'skills', skill, 'SKILL.md');
   const exists = fs.existsSync(skillPath);
@@ -85,6 +88,8 @@ const engineModules = [
   'input/InputManager.js',
   'rendering/CanvasRenderer.js',
   'rendering/ProceduralPrimitives.js',
+  'render/RenderLayers.js',
+  'level/ReachabilityValidator.js',
   'audio/ProceduralAudio.js',
   'particles/ParticleSystem.js',
   'platform/playgama/PlaygamaBridge.js',
@@ -98,10 +103,13 @@ for (const mod of engineModules) {
 }
 
 // 4. Audit Core Studio Scripts
-console.log('\n4. Checking Studio & QA Scripts...');
+console.log('\n4. Checking Studio, Validation & Benchmark Scripts...');
 const requiredScripts = [
   'test-game.js',
   'validate-static.js',
+  'validate-design.js',
+  'validate-reachability.js',
+  'test-benchmarks.js',
   'triage-bugs.js',
   'validate-playgama.js',
   'validate-game.js',

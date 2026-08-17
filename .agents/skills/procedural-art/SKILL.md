@@ -1,74 +1,43 @@
 ---
 name: procedural-art
-description: Code recipes and algorithms for procedural vector rendering of characters, vehicles, environments, and icons via HTML5 2D Canvas.
+description: Code recipes, stylistic frameworks, and algorithms for procedural vector rendering of characters, vehicles, environments, and icons via HTML5 2D Canvas.
 ---
 
-# Procedural Art Skill
+# Procedural Art Framework & Visual Identity Differentiation
 
-## 1. Procedural Shape Primitives
+## 1. Preventing Visual Repetition & Cookie-Cutter Aesthetics
+The Art Director must develop a unique visual language for every game. Do NOT simply change background color hex codes. Actively vary:
+1. **Silhouette & Shape Language**:
+   - *Organic / Soft*: Rounded curves, bulbous leaves, wavy ripples (Cozy / Nature).
+   - *Angular / Crystalline*: Sharp 45° bevels, geometric rhombuses, faceted surfaces (Sci-Fi / Caverns).
+   - *Ancient / Weathered*: Cracked stone blocks, uneven masonry, crumbling pillars (Ruins / Antiquity).
+2. **Proportions & Anatomy**:
+   - Chibi/Sprite: Large head (50% height), stubby body, floating appendages.
+   - Slender/Agile: Elongated limbs, flowing scarf or cloak, dynamic leaning torso.
+   - Heavy/Golem: Broad rectangular shoulders, low center of gravity, tiny legs.
+3. **Environment Composition & Parallax**:
+   - Vary layering depth: Front silhouettes, mid-ground platforms, atmospheric fog planes, scrolling clouds, celestial celestial bodies.
+4. **Distinct UI Language**:
+   - Cozy wood-plank frames with parchment panels.
+   - Futuristic neon glassmorphism with subtle glow.
+   - Aquatic seashell/pearl badges with organic borders.
+
+---
+
+## 2. Procedural Shape Primitives
 Always compose graphics using pure mathematical shapes with anti-aliasing:
 - **Rounded Rectangles**: `ctx.roundRect(x, y, w, h, [r1, r2, r3, r4])`
-- **Drop Shadows**: Render an offset translucent ellipse below ground-standing actors before drawing the body.
-- **Eye & Facial Highlights**: Layer white highlight circles in upper corners of pupil ellipses for expressiveness.
+- **Dynamic Drop Shadows**: Render an offset translucent ellipse below ground-standing actors before drawing the body.
+- **Eye & Catchlight Highlights**: Layer white highlight circles in upper corners of pupil ellipses for expressiveness.
+- **Linear & Radial Gradients**: Provide rich lighting gradients to avoid flat cartoon looks.
 
-## 2. Character Composition Structure
-A cute procedural character consists of:
-```javascript
-function drawCuteCharacter(ctx, x, y, options) {
-  ctx.save();
-  ctx.translate(x, y);
-  
-  // 1. Ground shadow
-  ctx.fillStyle = 'rgba(0,0,0,0.18)';
-  ctx.beginPath();
-  ctx.ellipse(0, 18, 16 * (options.scaleX || 1), 6, 0, 0, Math.PI * 2);
-  ctx.fill();
+---
 
-  // 2. Squash & stretch transformation
-  ctx.scale(options.scaleX || 1, options.scaleY || 1);
-
-  // 3. Main body / head
-  ctx.fillStyle = options.primaryColor || '#FFD93D';
-  ctx.beginPath();
-  ctx.roundRect(-16, -24, 32, 36, [16, 16, 12, 12]);
-  ctx.fill();
-  ctx.lineWidth = 2.5;
-  ctx.strokeStyle = options.strokeColor || '#B8860B';
-  ctx.stroke();
-
-  // 4. Cheeks (blush)
-  ctx.fillStyle = 'rgba(255, 107, 129, 0.4)';
-  ctx.beginPath();
-  ctx.ellipse(-10, -4, 4, 2.5, 0, 0, Math.PI * 2);
-  ctx.ellipse(10, -4, 4, 2.5, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  // 5. Eyes with catchlights
-  ctx.fillStyle = '#2C3E50';
-  ctx.beginPath();
-  ctx.arc(-7, -10, 3, 0, Math.PI * 2);
-  ctx.arc(7, -10, 3, 0, Math.PI * 2);
-  ctx.fill();
-  
-  ctx.fillStyle = '#FFFFFF';
-  ctx.beginPath();
-  ctx.arc(-8, -11, 1.2, 0, Math.PI * 2);
-  ctx.arc(6, -11, 1.2, 0, Math.PI * 2);
-  ctx.fill();
-
-  // 6. Beak / Snout / Mouth
-  if (options.snoutColor) {
-    ctx.fillStyle = options.snoutColor;
-    ctx.beginPath();
-    ctx.roundRect(-5, -6, 10, 6, [3, 3, 2, 2]);
-    ctx.fill();
-  }
-
-  ctx.restore();
-}
-```
-
-## 3. Vehicle & Environment Composition
-- **Cars**: Rounded rectangle chassis + contrasting roof cabin + glowing headlights + dark rounded wheel wells.
-- **Trees**: Fluffy segmented cloud circles layered with light/dark green gradients + wooden trunk.
-- **Water / Grass**: Alternating subtle banded tiles or procedural ripple strokes.
+## 3. Squash & Stretch Animation Recipes
+Always incorporate responsive kinematics deformation:
+- **Run Lean**: `ctx.rotate(facing * 0.08 * Math.sin(animTime * 12))`
+- **Jump Impulse**: `scaleX = 0.85, scaleY = 1.20`
+- **Dash Surge**: `scaleX = 1.35, scaleY = 0.75`
+- **Landing Impact**: `scaleX = 1.25, scaleY = 0.75`
+- **Stomp Rebound**: `scaleX = 1.30, scaleY = 0.70`
+- **Harmonic Spring Recovery**: `scale += (1.0 - scale) * dt * 14`
