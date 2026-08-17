@@ -60,20 +60,20 @@ export const ARENA = {
 };
 
 export const TIERS = [
-  { tier: 1, badge: '★',   border: '#CD7F32', glow: 'rgba(205, 127, 50, 0.35)', dpsMult: 1.00, rangeBonus: 0,  label: 'T1 Bronze' },
+  { tier: 1, badge: '★',   border: '#D97706', glow: 'rgba(217, 119, 6, 0.40)',   dpsMult: 1.00, rangeBonus: 0,  label: 'T1 Bronze' },
   { tier: 2, badge: '★★',  border: '#E2E8F0', glow: 'rgba(226, 232, 240, 0.45)', dpsMult: 2.25, rangeBonus: 15, label: 'T2 Silver' },
-  { tier: 3, badge: '★★★', border: '#FFD166', glow: 'rgba(255, 209, 102, 0.60)', dpsMult: 5.10, rangeBonus: 30, label: 'T3 Gold' },
-  { tier: 4, badge: '◆',   border: '#00E5FF', glow: 'rgba(0, 229, 255, 0.70)',   dpsMult: 11.5, rangeBonus: 45, label: 'T4 Plasma' },
-  { tier: 5, badge: '❖',   border: '#C084FC', glow: 'rgba(192, 132, 252, 0.80)', dpsMult: 26.0, rangeBonus: 60, label: 'T5 Void' },
-  { tier: 6, badge: '👑',  border: '#FFFFFF', glow: 'rgba(255, 255, 255, 0.95)', dpsMult: 60.0, rangeBonus: 80, label: 'T6 Celestial' }
+  { tier: 3, badge: '★★★', border: '#F59E0B', glow: 'rgba(245, 158, 11, 0.60)',  dpsMult: 5.10, rangeBonus: 30, label: 'T3 Gold' },
+  { tier: 4, badge: '◆',   border: '#10B981', glow: 'rgba(16, 185, 129, 0.70)',  dpsMult: 11.5, rangeBonus: 45, label: 'T4 Emerald' },
+  { tier: 5, badge: '❖',   border: '#A855F7', glow: 'rgba(168, 85, 247, 0.80)',  dpsMult: 26.0, rangeBonus: 60, label: 'T5 Void' },
+  { tier: 6, badge: '👑',  border: '#00F5D4', glow: 'rgba(0, 245, 212, 0.95)',   dpsMult: 60.0, rangeBonus: 80, label: 'T6 Celestial' }
 ];
 
 export const ARCHETYPES = {
   ballista_archer: {
     id: 'ballista_archer',
     name: 'Ballista Archer',
-    role: 'Kinetic Sniper',
-    color: '#00E5FF',
+    role: 'Solar Sniper',
+    color: '#F59E0B',
     baseRange: 240,
     baseDamage: 18,
     baseRate: 1.6,
@@ -91,8 +91,8 @@ export const ARCHETYPES = {
   heavy_cannon: {
     id: 'heavy_cannon',
     name: 'Heavy Cannon',
-    role: 'AOE Plasma Mortar',
-    color: '#FF9E00',
+    role: 'Crimson Plasma Mortar',
+    color: '#EF4444',
     baseRange: 200,
     baseDamage: 45,
     baseRate: 0.6,
@@ -110,8 +110,8 @@ export const ARCHETYPES = {
   arcane_mage: {
     id: 'arcane_mage',
     name: 'Arcane Mage',
-    role: 'Tesla Chain Caster',
-    color: '#C084FC',
+    role: 'Arcane Tesla Caster',
+    color: '#A855F7',
     baseRange: 170,
     baseDamage: 22,
     baseRate: 1.1,
@@ -129,8 +129,8 @@ export const ARCHETYPES = {
   frost_warden: {
     id: 'frost_warden',
     name: 'Frost Warden',
-    role: 'Cryo CC Emitter',
-    color: '#38BDF8',
+    role: 'Glacial Cryo Emitter',
+    color: '#06B6D4',
     baseRange: 140,
     baseDamage: 8,
     baseRate: 1.0,
@@ -148,8 +148,8 @@ export const ARCHETYPES = {
   shadow_assassin: {
     id: 'shadow_assassin',
     name: 'Shadow Assassin',
-    role: 'Critical Shredder',
-    color: '#F43F5E',
+    role: 'Jade Critical Shredder',
+    color: '#10B981',
     baseRange: 100,
     baseDamage: 32,
     baseRate: 2.2,
@@ -167,12 +167,15 @@ export const ARCHETYPES = {
 };
 
 export const ENEMY_TYPES = {
-  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 40,  speedDeg: 38,  armor: 0.00, coreDmg: 10, gold: 3,  radius: 12, color: '#76FF03' },
-  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 22,  speedDeg: 80,  armor: 0.00, coreDmg: 8,  gold: 4,  radius: 10, color: '#FFD600' },
-  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 160, speedDeg: 20,  armor: 0.40, coreDmg: 25, gold: 10, radius: 18, color: '#D50000' },
-  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 75,  speedDeg: 30,  armor: 0.00, coreDmg: 15, gold: 8,  radius: 16, color: '#AA00FF', splitCount: 5 },
-  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 12,  speedDeg: 62,  armor: 0.00, coreDmg: 3,  gold: 1,  radius: 6,  color: '#00E676' },
-  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 90,  speedDeg: 24,  armor: 0.10, coreDmg: 20, gold: 12, radius: 14, color: '#00B0FF', shootCooldown: 6.0 }
+  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 40,   speedDeg: 22, armor: 0.00, coreDmg: 10, gold: 3,   radius: 12, color: '#76FF03' },
+  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 22,   speedDeg: 48, armor: 0.00, coreDmg: 8,  gold: 4,   radius: 10, color: '#FFD600' },
+  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 160,  speedDeg: 12, armor: 0.40, coreDmg: 25, gold: 10,  radius: 18, color: '#D50000' },
+  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 75,   speedDeg: 18, armor: 0.00, coreDmg: 15, gold: 8,   radius: 16, color: '#AA00FF', splitCount: 5 },
+  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 12,   speedDeg: 36, armor: 0.00, coreDmg: 3,  gold: 1,   radius: 6,  color: '#00E676' },
+  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 90,   speedDeg: 15, armor: 0.10, coreDmg: 20, gold: 12,  radius: 14, color: '#00B0FF', shootCooldown: 6.0 },
+  iron_colossus:  { id: 'iron_colossus',  name: 'Iron Colossus',  baseHp: 1500, speedDeg: 10, armor: 0.20, coreDmg: 35, gold: 50,  radius: 30, color: '#EF4444' },
+  hydra_queen:    { id: 'hydra_queen',    name: 'Hydra Queen',    baseHp: 3500, speedDeg: 12, armor: 0.00, coreDmg: 40, gold: 80,  radius: 32, color: '#10B981' },
+  chrono_wraith:  { id: 'chrono_wraith',  name: 'Chrono Wraith',  baseHp: 8000, speedDeg: 14, armor: 0.00, coreDmg: 50, gold: 120, radius: 34, color: '#A855F7' }
 };
 
 export const WORKSHOP_DEFS = [
@@ -363,20 +366,24 @@ export class OrbitAudioSynthesizer {
 
   playBossRoar() {
     if (!this.ctx || this.isMuted) return;
-    this.resume();
-    const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(60, t);
-    osc.frequency.linearRampToValueAtTime(140, t + 0.35);
-    osc.frequency.exponentialRampToValueAtTime(30, t + 0.85);
-    gain.gain.setValueAtTime(0.4, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.85);
-    osc.connect(gain);
-    gain.connect(this.masterGain);
-    osc.start(t);
-    osc.stop(t + 0.85);
+    try {
+      this.resume();
+      const t = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(60, t);
+      osc.frequency.linearRampToValueAtTime(140, t + 0.35);
+      osc.frequency.exponentialRampToValueAtTime(30, t + 0.85);
+      gain.gain.setValueAtTime(0.4, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.85);
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(t);
+      osc.stop(t + 0.85);
+    } catch (e) {
+      console.warn('playBossRoar error:', e);
+    }
   }
 
   playCoinDrop() {
@@ -440,27 +447,50 @@ export class OrbitAudioSynthesizer {
  * 3. PROCEDURAL VECTOR RENDERERS (Canvas 2D)
  * ============================================================================ */
 
+export function drawRoundRect(ctx, x, y, width, height, radius = 4) {
+  let r = typeof radius === 'number' ? radius : (Array.isArray(radius) ? radius[0] : 4);
+  if (width < 2 * r) r = width / 2;
+  if (height < 2 * r) r = height / 2;
+  if (typeof ctx.arc === 'function') {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + width - r, y);
+    ctx.arc(x + width - r, y + r, r, -Math.PI / 2, 0);
+    ctx.lineTo(x + width, y + height - r);
+    ctx.arc(x + width - r, y + height - r, r, 0, Math.PI / 2);
+    ctx.lineTo(x + r, y + height);
+    ctx.arc(x + r, y + height - r, r, Math.PI / 2, Math.PI);
+    ctx.lineTo(x, y + r);
+    ctx.arc(x + r, y + r, r, Math.PI, -Math.PI / 2);
+    ctx.closePath();
+  } else {
+    ctx.beginPath();
+    ctx.rect(x, y, width, height);
+    ctx.closePath();
+  }
+}
+
 export function drawCosmicBackground(ctx, width, height, animTime, stars) {
-  // Deep Void Gradient
+  // Deep Cosmic Indigo/Charcoal Gradient
   const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
-  bgGrad.addColorStop(0, '#04060E');
-  bgGrad.addColorStop(0.5, '#070A18');
-  bgGrad.addColorStop(1, '#0C1026');
+  bgGrad.addColorStop(0, '#090C16');
+  bgGrad.addColorStop(0.5, '#0E1324');
+  bgGrad.addColorStop(1, '#131A32');
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, width, height);
 
   // Distant Nebula Gas Clouds
   ctx.save();
   const neb1 = ctx.createRadialGradient(width * 0.3, height * 0.35, 10, width * 0.3, height * 0.35, 180);
-  neb1.addColorStop(0, 'rgba(126, 34, 206, 0.14)');
-  neb1.addColorStop(0.6, 'rgba(79, 70, 229, 0.06)');
+  neb1.addColorStop(0, 'rgba(168, 85, 247, 0.16)');
+  neb1.addColorStop(0.6, 'rgba(59, 130, 246, 0.08)');
   neb1.addColorStop(1, 'rgba(0, 0, 0, 0)');
   ctx.fillStyle = neb1;
   ctx.fillRect(0, 0, width, height);
 
   const neb2 = ctx.createRadialGradient(width * 0.7, height * 0.55, 10, width * 0.7, height * 0.55, 190);
-  neb2.addColorStop(0, 'rgba(0, 229, 255, 0.12)');
-  neb2.addColorStop(0.5, 'rgba(14, 165, 233, 0.05)');
+  neb2.addColorStop(0, 'rgba(0, 229, 255, 0.15)');
+  neb2.addColorStop(0.5, 'rgba(16, 185, 129, 0.07)');
   neb2.addColorStop(1, 'rgba(0, 0, 0, 0)');
   ctx.fillStyle = neb2;
   ctx.fillRect(0, 0, width, height);
@@ -481,85 +511,110 @@ export function drawCosmicBackground(ctx, width, height, animTime, stars) {
 export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.save();
 
-  // Outer Spawn Orbit Ring
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.18)';
+  // 1. Inward Spiral Guide Track (Visualizes enemy trajectory toward center)
+  ctx.save();
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.14)';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([4, 6]);
+  ctx.beginPath();
+  for (let t = 0; t <= 1.0; t += 0.01) {
+    const r = ARENA.spawnRadius - (ARENA.spawnRadius - ARENA.coreRadius) * t;
+    const a = t * Math.PI * 3.0; // 540 degrees
+    const px = xc + Math.cos(a) * r;
+    const py = yc + Math.sin(a) * r;
+    if (t === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  // 2. Outer Spawn Orbit Ring
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.24)';
   ctx.lineWidth = 1.5;
   ctx.setLineDash([6, 6]);
   ctx.beginPath();
   ctx.arc(xc, yc, ARENA.spawnRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Mid Combat Orbit Ring
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+  // 3. Mid Combat Orbit Ring
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.15)';
   ctx.lineWidth = 1;
   ctx.setLineDash([4, 4]);
   ctx.beginPath();
   ctx.arc(xc, yc, ARENA.midOrbitRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Inner Hazard Perimeter Ring
-  ctx.strokeStyle = 'rgba(239, 68, 68, 0.18)';
-  ctx.lineWidth = 1.2;
-  ctx.setLineDash([3, 5]);
+  // 4. Inner Core Danger Perimeter (Breach Warning Zone)
+  ctx.strokeStyle = 'rgba(239, 68, 68, 0.55)';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([4, 4]);
   ctx.beginPath();
-  ctx.arc(xc, yc, ARENA.innerHazardRadius, 0, Math.PI * 2);
+  ctx.arc(xc, yc, ARENA.coreRadius + 4, 0, Math.PI * 2);
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // Inner Defense Ring (Placement Orbit)
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.35)';
+  // Soft Danger Warning Glow around Core
+  const dangerGrad = ctx.createRadialGradient(xc, yc, ARENA.coreRadius - 5, xc, yc, ARENA.coreRadius + 16);
+  dangerGrad.addColorStop(0, 'rgba(239, 68, 68, 0.22)');
+  dangerGrad.addColorStop(1, 'rgba(239, 68, 68, 0)');
+  ctx.fillStyle = dangerGrad;
+  ctx.beginPath();
+  ctx.arc(xc, yc, ARENA.coreRadius + 16, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 5. Inner Defense Ring (8 Turrets Placement Orbit)
+  ctx.strokeStyle = 'rgba(0, 229, 255, 0.38)';
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.arc(xc, yc, ARENA.orbitRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Rotating Cybernetic Reticle Spokes
-  ctx.save();
-  ctx.translate(xc, yc);
-  ctx.rotate(animTime * 0.08);
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.08)';
-  ctx.lineWidth = 1;
-  for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
-    ctx.beginPath();
-    ctx.moveTo(Math.cos(a) * ARENA.orbitRadius, Math.sin(a) * ARENA.orbitRadius);
-    ctx.lineTo(Math.cos(a) * ARENA.spawnRadius, Math.sin(a) * ARENA.spawnRadius);
-    ctx.stroke();
-  }
-  ctx.restore();
-
-  // Spawn Portals (N, E, S, W)
+  // 6. Spawn Portals (N, E, S, W) with directional indicators
   for (const portal of ARENA.portals) {
     const portalPulse = 6 + Math.sin(animTime * 4 + portal.angleRad) * 2;
-    const pGrad = ctx.createRadialGradient(portal.x, portal.y, 1, portal.x, portal.y, portalPulse + 8);
-    pGrad.addColorStop(0, 'rgba(239, 68, 68, 0.8)');
-    pGrad.addColorStop(0.4, 'rgba(168, 85, 247, 0.4)');
+    const pGrad = ctx.createRadialGradient(portal.x, portal.y, 1, portal.x, portal.y, portalPulse + 10);
+    pGrad.addColorStop(0, 'rgba(239, 68, 68, 0.85)');
+    pGrad.addColorStop(0.5, 'rgba(168, 85, 247, 0.45)');
     pGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = pGrad;
     ctx.beginPath();
-    ctx.arc(portal.x, portal.y, portalPulse + 8, 0, Math.PI * 2);
+    ctx.arc(portal.x, portal.y, portalPulse + 10, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.strokeStyle = '#EF4444';
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(portal.x, portal.y, 7, 0, Math.PI * 2);
+    ctx.arc(portal.x, portal.y, 8, 0, Math.PI * 2);
     ctx.stroke();
+
+    // Portal Inward Arrow Marker
+    const inwardAngle = Math.atan2(yc - portal.y, xc - portal.x);
+    ctx.fillStyle = '#FFD166';
+    ctx.beginPath();
+    ctx.moveTo(portal.x + Math.cos(inwardAngle) * 14, portal.y + Math.sin(inwardAngle) * 14);
+    ctx.lineTo(portal.x + Math.cos(inwardAngle + 2.5) * 8, portal.y + Math.sin(inwardAngle + 2.5) * 8);
+    ctx.lineTo(portal.x + Math.cos(inwardAngle - 2.5) * 8, portal.y + Math.sin(inwardAngle - 2.5) * 8);
+    ctx.closePath();
+    ctx.fill();
   }
 
-  // Standby Bench Rail (Bottom)
-  ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+  // 7. Standby Bench Rail (Bottom)
+  ctx.fillStyle = 'rgba(16, 22, 40, 0.80)';
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.30)';
   ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.roundRect(65, 580, 320, 80, 16);
+  drawRoundRect(ctx, 30, 480, 390, 64, 14);
   ctx.fill();
   ctx.stroke();
 
   // Bench Header Label
   ctx.font = 'bold 9px Orbitron, sans-serif';
-  ctx.fillStyle = 'rgba(148, 163, 184, 0.7)';
+  ctx.fillStyle = 'rgba(0, 229, 255, 0.85)';
   ctx.textAlign = 'left';
-  ctx.fillText('STANDBY BENCH', 78, 596);
+  ctx.fillText('STANDBY BENCH (DRAG TO MERGE)', 42, 496);
+
+  ctx.fillStyle = 'rgba(239, 68, 68, 0.85)';
+  ctx.textAlign = 'right';
+  ctx.fillText('RECYCLE 70% ♻️', 408, 496);
 
   ctx.restore();
 }
@@ -774,8 +829,7 @@ export function drawTierBadge(ctx, x, y, tier = 1) {
   ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
   ctx.strokeStyle = tierInfo.border;
   ctx.lineWidth = 1.2;
-  ctx.beginPath();
-  ctx.roundRect(-14, -6, 28, 12, 6);
+  drawRoundRect(ctx, -14, -6, 28, 12, 6);
   ctx.fill();
   ctx.stroke();
 
@@ -821,12 +875,10 @@ export function drawBallistaArcher(ctx, x, y, state = {}) {
   ctx.fillStyle = '#334155';
   ctx.strokeStyle = '#94A3B8';
   ctx.lineWidth = 1.2;
-  ctx.beginPath();
-  ctx.roundRect(0 - kick, -6, barrelLength, 3.5, 1);
+  drawRoundRect(ctx, 0 - kick, -6, barrelLength, 3.5, 1);
   ctx.fill();
   ctx.stroke();
-  ctx.beginPath();
-  ctx.roundRect(0 - kick, 2.5, barrelLength, 3.5, 1);
+  drawRoundRect(ctx, 0 - kick, 2.5, barrelLength, 3.5, 1);
   ctx.fill();
   ctx.stroke();
 
@@ -888,8 +940,7 @@ export function drawHeavyCannon(ctx, x, y, state = {}) {
   ctx.fillStyle = '#1E293B';
   ctx.strokeStyle = tierInfo.border;
   ctx.lineWidth = 2.2;
-  ctx.beginPath();
-  ctx.roundRect(-12 - kick, -14, 22, 28, 4);
+  drawRoundRect(ctx, -12 - kick, -14, 22, 28, 4);
   ctx.fill();
   ctx.stroke();
 
@@ -903,8 +954,7 @@ export function drawHeavyCannon(ctx, x, y, state = {}) {
   ctx.fillStyle = barrelGrad;
   ctx.strokeStyle = '#94A3B8';
   ctx.lineWidth = 1.8;
-  ctx.beginPath();
-  ctx.roundRect(-2 - kick, -barrelRadius, barrelLen, barrelRadius * 2, [2, 4, 4, 2]);
+  drawRoundRect(ctx, -2 - kick, -barrelRadius, barrelLen, barrelRadius * 2, 4);
   ctx.fill();
   ctx.stroke();
 
@@ -1213,8 +1263,7 @@ export function drawVoidCrawler(ctx, x, y, state = {}) {
   ctx.fillStyle = '#1E293B';
   ctx.strokeStyle = isChilled ? '#38BDF8' : '#EF4444';
   ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.roundRect(-10, -8, 20, 16, [6, 10, 10, 6]);
+  drawRoundRect(ctx, -10, -8, 20, 16, 6);
   ctx.fill();
   ctx.stroke();
 
@@ -1277,8 +1326,7 @@ export function drawArmoredBruiser(ctx, x, y, state = {}) {
   ctx.fillStyle = '#1E293B';
   ctx.strokeStyle = isChilled ? '#38BDF8' : '#F59E0B';
   ctx.lineWidth = 2.4;
-  ctx.beginPath();
-  ctx.roundRect(-16, -14, 30, 28, [10, 14, 14, 10]);
+  drawRoundRect(ctx, -16, -14, 30, 28, 10);
   ctx.fill();
   ctx.stroke();
 
@@ -1374,8 +1422,7 @@ export function drawVoidSlinger(ctx, x, y, state = {}) {
   ctx.fillStyle = '#1E1B4B';
   ctx.strokeStyle = isChilled ? '#38BDF8' : '#A855F7';
   ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.roundRect(-10, -10, 20, 20, 5);
+  drawRoundRect(ctx, -10, -10, 20, 20, 5);
   ctx.fill();
   ctx.stroke();
 
@@ -1399,8 +1446,7 @@ export function drawIronColossus(ctx, x, y, state = {}) {
   ctx.fillStyle = '#1E293B';
   ctx.strokeStyle = hpPercent > 0.5 ? '#00E5FF' : '#EF4444';
   ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.roundRect(-24, -22, 48, 44, [8, 14, 14, 8]);
+  drawRoundRect(ctx, -24, -22, 48, 44, 10);
   ctx.fill();
   ctx.stroke();
 
@@ -1854,17 +1900,6 @@ export class OrbitGuardGame {
       btnOpenTutorialTitle.addEventListener('click', () => this.openTutorialModal());
     }
 
-    const btnResetSave = document.getElementById('btn-reset-save');
-    if (btnResetSave) {
-      btnResetSave.addEventListener('click', () => {
-        if (confirm('Reset all saved progress and workshop upgrades?')) {
-          this.saveData = SaveManager.getDefaultSave();
-          SaveManager.save(this.playgama, this.saveData);
-          this.updateTitleRecords();
-        }
-      });
-    }
-
     // In-game HUD buttons
     const btnBuy = document.getElementById('btn-buy');
     if (btnBuy) {
@@ -2248,104 +2283,79 @@ export class OrbitGuardGame {
     const clientY = (e.clientY - rect.top) / this.renderer.scale;
 
     const slot = this.getSlotAt(clientX, clientY);
-    if (!slot) {
-      this.selectedSlot = null;
-      return;
-    }
-
-    // Tap-to-select fallback resolution
-    if (this.selectedSlot && this.selectedSlot !== slot.id) {
-      const selectedUnit = this.sentinels.get(this.selectedSlot);
-      const targetUnit = this.sentinels.get(slot.id);
-
-      if (slot.id === 'recycle') {
-        this.executeRecycle(this.selectedSlot);
-        this.selectedSlot = null;
-        return;
-      } else if (targetUnit && selectedUnit && this.canMerge(selectedUnit, targetUnit)) {
-        this.executeMerge(this.selectedSlot, slot.id);
-        this.selectedSlot = null;
-        return;
-      } else if (!targetUnit && selectedUnit) {
-        // Move unit
-        this.sentinels.delete(this.selectedSlot);
-        this.placeSentinel(slot.id, selectedUnit.archetype, selectedUnit.tier);
-        this.audio.playSummonPop();
-        this.selectedSlot = null;
-        return;
-      } else if (targetUnit && selectedUnit) {
-        // Swap units
-        this.sentinels.delete(this.selectedSlot);
-        this.sentinels.delete(slot.id);
-        this.placeSentinel(slot.id, selectedUnit.archetype, selectedUnit.tier);
-        this.placeSentinel(this.selectedSlot, targetUnit.archetype, targetUnit.tier);
-        this.audio.playSummonPop();
-        this.selectedSlot = null;
-        return;
-      }
-    }
+    if (!slot) return;
 
     const unit = this.sentinels.get(slot.id);
     if (unit) {
-      this.dragState = 'DRAGGING';
-      this.draggedSentinel = unit;
+      this.isPointerDown = true;
+      this.dragStartPos = { x: clientX, y: clientY };
       this.dragSourceSlot = slot.id;
+      this.draggedSentinel = unit;
       this.dragPos = { x: clientX, y: clientY };
-      this.selectedSlot = slot.id;
+      this.dragState = 'IDLE';
     }
   }
 
   handlePointerMove(e) {
-    if (this.dragState !== 'DRAGGING' && this.dragState !== 'SNAPPING') return;
+    if (!this.isPointerDown || !this.draggedSentinel) return;
 
     const rect = this.canvas.getBoundingClientRect();
     const clientX = (e.clientX - rect.left) / this.renderer.scale;
     const clientY = (e.clientY - rect.top) / this.renderer.scale;
 
-    this.dragPos = { x: clientX, y: clientY };
-    const nearestSlot = this.getSlotAt(clientX, clientY);
-
-    if (nearestSlot && nearestSlot.id !== this.dragSourceSlot) {
-      this.dragState = 'SNAPPING';
-      this.hoveredSlot = nearestSlot;
-    } else {
+    const dist = MathUtils.distance(clientX, clientY, this.dragStartPos.x, this.dragStartPos.y);
+    if (dist > 5) {
       this.dragState = 'DRAGGING';
-      this.hoveredSlot = null;
+    }
+
+    if (this.dragState === 'DRAGGING' || this.dragState === 'SNAPPING') {
+      this.dragPos = { x: clientX, y: clientY };
+      const nearestSlot = this.getSlotAt(clientX, clientY);
+
+      if (nearestSlot && nearestSlot.id !== this.dragSourceSlot) {
+        this.dragState = 'SNAPPING';
+        this.hoveredSlot = nearestSlot;
+      } else {
+        this.dragState = 'DRAGGING';
+        this.hoveredSlot = null;
+      }
     }
   }
 
   handlePointerUp(e) {
-    if (this.dragState !== 'DRAGGING' && this.dragState !== 'SNAPPING') return;
-
-    if (this.hoveredSlot && this.draggedSentinel) {
-      if (this.hoveredSlot.id === 'recycle') {
-        this.executeRecycle(this.dragSourceSlot);
-      } else {
-        const destUnit = this.sentinels.get(this.hoveredSlot.id);
-        if (destUnit) {
-          if (this.canMerge(this.draggedSentinel, destUnit)) {
-            this.executeMerge(this.dragSourceSlot, this.hoveredSlot.id);
+    if (this.dragState === 'DRAGGING' || this.dragState === 'SNAPPING') {
+      if (this.hoveredSlot && this.draggedSentinel) {
+        if (this.hoveredSlot.id === 'recycle') {
+          this.executeRecycle(this.dragSourceSlot);
+        } else {
+          const destUnit = this.sentinels.get(this.hoveredSlot.id);
+          if (destUnit) {
+            if (this.canMerge(this.draggedSentinel, destUnit)) {
+              this.executeMerge(this.dragSourceSlot, this.hoveredSlot.id);
+            } else {
+              // Swap positions
+              this.sentinels.delete(this.dragSourceSlot);
+              this.sentinels.delete(this.hoveredSlot.id);
+              this.placeSentinel(this.hoveredSlot.id, this.draggedSentinel.archetype, this.draggedSentinel.tier);
+              this.placeSentinel(this.dragSourceSlot, destUnit.archetype, destUnit.tier);
+              this.audio.playSummonPop();
+            }
           } else {
-            // Swap
+            // Move to empty slot
             this.sentinels.delete(this.dragSourceSlot);
-            this.sentinels.delete(this.hoveredSlot.id);
             this.placeSentinel(this.hoveredSlot.id, this.draggedSentinel.archetype, this.draggedSentinel.tier);
-            this.placeSentinel(this.dragSourceSlot, destUnit.archetype, destUnit.tier);
             this.audio.playSummonPop();
           }
-        } else {
-          // Move
-          this.sentinels.delete(this.dragSourceSlot);
-          this.placeSentinel(this.hoveredSlot.id, this.draggedSentinel.archetype, this.draggedSentinel.tier);
-          this.audio.playSummonPop();
         }
       }
     }
 
+    this.isPointerDown = false;
     this.dragState = 'IDLE';
     this.draggedSentinel = null;
     this.dragSourceSlot = null;
     this.hoveredSlot = null;
+    this.selectedSlot = null;
   }
 
   handleKeyDown(e) {
@@ -2947,7 +2957,7 @@ export class OrbitGuardGame {
   }
 
   updateEnemies(dt) {
-    const radialDriftRate = (ARENA.spawnRadius - ARENA.coreRadius) / 22.0; // Smooth inward drift
+    const radialDriftRate = (ARENA.spawnRadius - ARENA.coreRadius) / 36.0; // Smooth 36s inward drift for comfortable tracking
 
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const e = this.enemies[i];

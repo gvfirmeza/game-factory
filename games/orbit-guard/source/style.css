@@ -5,23 +5,46 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 229, 255, 0.45) rgba(15, 23, 42, 0.65);
+}
+
+/* Custom modern cyber scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(11, 15, 30, 0.75);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00E5FF, #3B82F6);
+  border-radius: 6px;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00F5D4;
 }
 
 :root {
-  --void-bg: #060814;
-  --void-surface: #0c1024;
-  --void-card: rgba(12, 16, 36, 0.94);
-  --void-modal: rgba(8, 11, 26, 0.96);
+  --void-bg: #090C16;
+  --void-surface: #0F1424;
+  --void-card: rgba(16, 22, 40, 0.94);
+  --void-modal: rgba(11, 16, 32, 0.97);
   --cyan-primary: #00e5ff;
   --cyan-bright: #00f5d4;
-  --gold-primary: #ffd166;
-  --gold-accent: #ff9e00;
-  --violet-primary: #c084fc;
+  --gold-primary: #f59e0b;
+  --gold-bright: #fbbf24;
   --crimson-alert: #ef4444;
   --emerald-safe: #10b981;
+  --violet-arcane: #a855f7;
   --text-white: #f8fafc;
   --text-dim: #94a3b8;
-  --border-glass: rgba(56, 189, 248, 0.24);
+  --border-glass: rgba(56, 189, 248, 0.28);
   --border-glow: rgba(0, 229, 255, 0.5);
 }
 
@@ -50,7 +73,7 @@ html, body {
 canvas {
   display: block;
   background-color: var(--void-bg);
-  box-shadow: 0 0 60px rgba(0, 229, 255, 0.12), 0 24px 48px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 60px rgba(0, 229, 255, 0.14), 0 24px 48px rgba(0, 0, 0, 0.85);
   border-radius: 6px;
 }
 
@@ -62,14 +85,14 @@ canvas {
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 62px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
   z-index: 50;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(6, 8, 20, 0.92) 0%, rgba(6, 8, 20, 0) 100%);
+  background: linear-gradient(180deg, rgba(9, 12, 22, 0.95) 0%, rgba(9, 12, 22, 0.6) 75%, rgba(9, 12, 22, 0) 100%);
 }
 
 .header-left, .header-right {
@@ -80,13 +103,13 @@ canvas {
 }
 
 .ctrl-btn {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
   background: var(--void-card);
   border: 1.5px solid var(--border-glass);
   color: var(--cyan-primary);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   display: flex;
@@ -102,7 +125,7 @@ canvas {
 .ctrl-btn:hover {
   transform: scale(1.06);
   border-color: var(--cyan-primary);
-  background: rgba(0, 229, 255, 0.12);
+  background: rgba(0, 229, 255, 0.14);
 }
 
 .ctrl-btn:active {
@@ -111,23 +134,23 @@ canvas {
 
 .btn-speed {
   font-size: 0.85rem;
-  color: var(--gold-primary);
+  color: var(--gold-bright);
   letter-spacing: 0.5px;
 }
 
 .btn-speed.speed-2x {
   color: #00F5D4;
   border-color: #00F5D4;
-  box-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
+  box-shadow: 0 0 10px rgba(0, 245, 212, 0.35);
 }
 
 .btn-speed.speed-3x {
   color: #FF5252;
   border-color: #FF5252;
-  box-shadow: 0 0 12px rgba(255, 82, 82, 0.4);
+  box-shadow: 0 0 12px rgba(255, 82, 82, 0.45);
 }
 
-/* Header Center Status (Wave, Core Health, Gold) */
+/* Header Center Status */
 .header-center {
   display: flex;
   align-items: center;
@@ -170,15 +193,15 @@ canvas {
 }
 
 .gold-pill .pill-num {
-  color: var(--gold-primary);
+  color: var(--gold-bright);
 }
 
-/* Core Health Track in Header */
+/* Core Health Track */
 .hud-core-track-wrapper {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  width: 120px;
+  width: 115px;
   background: var(--void-card);
   border: 1.5px solid var(--border-glass);
   border-radius: 8px;
@@ -238,10 +261,10 @@ canvas {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px 12px 14px 12px;
+  padding: 6px 12px 14px 12px;
   z-index: 40;
   pointer-events: auto;
-  background: linear-gradient(0deg, rgba(6, 8, 20, 0.95) 0%, rgba(6, 8, 20, 0.80) 70%, rgba(6, 8, 20, 0) 100%);
+  background: linear-gradient(0deg, rgba(9, 12, 22, 0.98) 0%, rgba(9, 12, 22, 0.85) 60%, rgba(9, 12, 22, 0) 100%);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
@@ -249,28 +272,6 @@ canvas {
   opacity: 0;
   pointer-events: none;
   transform: translateY(20px);
-}
-
-/* Bench Legend Bar */
-.bench-legend-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 8px;
-  font-family: 'Orbitron', monospace;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.bench-label {
-  color: var(--cyan-primary);
-  opacity: 0.85;
-}
-
-.recycle-label {
-  color: var(--crimson-alert);
-  opacity: 0.85;
 }
 
 /* Tactical Row Buttons */
@@ -328,12 +329,7 @@ canvas {
   font-family: 'Rajdhani', sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--gold-primary);
-}
-
-/* Surge button active/ready glow */
-.btn-surge {
-  border-color: rgba(0, 229, 255, 0.4);
+  color: var(--gold-bright);
 }
 
 .btn-surge.ready {
@@ -347,7 +343,7 @@ canvas {
   100% { box-shadow: 0 0 16px rgba(0, 245, 212, 0.55); }
 }
 
-/* Primary Big Summon Sentinel Button */
+/* Primary Summon Sentinel Button */
 .primary-deck-row {
   width: 100%;
 }
@@ -355,14 +351,14 @@ canvas {
 .btn-summon-main {
   position: relative;
   width: 100%;
-  height: 52px;
+  height: 50px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.25) 0%, rgba(13, 17, 39, 0.95) 50%, rgba(255, 209, 102, 0.20) 100%);
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.22) 0%, rgba(16, 22, 40, 0.96) 50%, rgba(245, 158, 11, 0.22) 100%);
   border: 2px solid var(--cyan-primary);
   color: var(--text-white);
   cursor: pointer;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.25), 0 2px 6px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.22), 0 2px 6px rgba(0, 0, 0, 0.6);
   transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
 }
 
@@ -395,11 +391,11 @@ canvas {
 }
 
 .summon-badge {
-  background: rgba(255, 209, 102, 0.25);
-  border: 1px solid var(--gold-primary);
+  background: rgba(245, 158, 11, 0.25);
+  border: 1px solid var(--gold-bright);
   border-radius: 8px;
   padding: 3px 8px;
-  color: var(--gold-primary);
+  color: var(--gold-bright);
   font-size: 0.85rem;
 }
 
@@ -408,7 +404,7 @@ canvas {
    ========================================================================= */
 .wave-banner {
   position: absolute;
-  top: 180px;
+  top: 160px;
   left: 0;
   right: 0;
   display: flex;
@@ -424,7 +420,7 @@ canvas {
 }
 
 .wave-banner-content {
-  background: var(--void-card);
+  background: var(--void-modal);
   border: 2px solid var(--cyan-bright);
   border-radius: 16px;
   padding: 10px 24px;
@@ -445,7 +441,7 @@ canvas {
 
 .banner-title {
   font-family: 'Orbitron', monospace;
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 900;
   color: var(--text-white);
   text-shadow: 0 0 12px var(--cyan-primary);
@@ -457,7 +453,7 @@ canvas {
 .modal-overlay, .title-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(6, 8, 20, 0.88);
+  background: rgba(9, 12, 22, 0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -492,7 +488,6 @@ canvas {
   100% { transform: scale(1.0); opacity: 1; }
 }
 
-/* Title Card Specifics */
 .title-card {
   align-items: center;
   text-align: center;
@@ -512,7 +507,7 @@ canvas {
 
 .title-headline {
   font-family: 'Orbitron', monospace;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 900;
   color: #FFFFFF;
   text-shadow: 0 0 20px rgba(0, 229, 255, 0.65), 0 4px 10px rgba(0, 0, 0, 0.8);
@@ -553,7 +548,7 @@ canvas {
   font-family: 'Orbitron', monospace;
   font-size: 1.25rem;
   font-weight: 900;
-  color: var(--gold-primary);
+  color: var(--gold-bright);
 }
 
 .title-cta-group {
@@ -614,21 +609,6 @@ canvas {
   background: rgba(0, 229, 255, 0.12);
 }
 
-.btn-save-reset {
-  background: none;
-  border: none;
-  color: var(--text-dim);
-  font-size: 0.75rem;
-  cursor: pointer;
-  text-decoration: underline;
-  opacity: 0.7;
-}
-
-.btn-save-reset:hover {
-  opacity: 1;
-  color: var(--crimson-alert);
-}
-
 .title-guide-chips {
   display: flex;
   flex-direction: column;
@@ -664,13 +644,13 @@ canvas {
 }
 
 .modal-gold-chip {
-  background: rgba(255, 209, 102, 0.15);
-  border: 1px solid var(--gold-primary);
+  background: rgba(245, 158, 11, 0.18);
+  border: 1px solid var(--gold-bright);
   border-radius: 12px;
   padding: 4px 10px;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
-  color: var(--gold-primary);
+  color: var(--gold-bright);
 }
 
 /* Workshop Scrollable List */
@@ -678,18 +658,9 @@ canvas {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 320px;
+  max-height: 300px;
   overflow-y: auto;
-  padding-right: 4px;
-}
-
-.workshop-scroll-list::-webkit-scrollbar {
-  width: 5px;
-}
-
-.workshop-scroll-list::-webkit-scrollbar-thumb {
-  background: rgba(0, 229, 255, 0.3);
-  border-radius: 3px;
+  padding-right: 6px;
 }
 
 .ws-item {
@@ -726,7 +697,7 @@ canvas {
   border-radius: 8px;
   background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(0, 229, 255, 0.05));
   border: 1px solid var(--cyan-primary);
-  color: var(--gold-primary);
+  color: var(--gold-bright);
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   font-size: 0.80rem;
@@ -790,8 +761,9 @@ canvas {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 320px;
+  max-height: 300px;
   overflow-y: auto;
+  padding-right: 6px;
 }
 
 .guide-step {
@@ -870,5 +842,5 @@ canvas {
   font-family: 'Orbitron', monospace;
   font-size: 1.15rem;
   font-weight: 900;
-  color: var(--gold-primary);
+  color: var(--gold-bright);
 }
