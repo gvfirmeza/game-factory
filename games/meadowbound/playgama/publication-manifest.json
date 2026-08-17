@@ -41,6 +41,7 @@
   },
   "distribution": {
     "archivePath": "games/meadowbound/build/meadowbound.zip",
+    "archiveSizeKB": 68,
     "entryPoint": "index.html",
     "aspectRatio": "16:9",
     "virtualResolution": {
@@ -49,5 +50,5 @@
     }
   },
   "submissionStatus": "PLAYGAMA_READY",
-  "validatedAt": "2026-08-15T12:15:00.000Z"
+  "validatedAt": "2026-08-16T22:28:20.000Z"
 }

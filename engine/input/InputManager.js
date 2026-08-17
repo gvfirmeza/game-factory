@@ -133,7 +133,6 @@ export class InputManager {
 
       // ATTACK / SPIRIT SPARK / LEAF SLASH
       case 'KeyK':
-      case 'KeyX':
       case 'KeyC':
       case 'KeyZ':
         this.actions.attack = isPressed;
@@ -144,8 +143,16 @@ export class InputManager {
       case 'ShiftLeft':
       case 'ShiftRight':
       case 'KeyJ':
+      case 'KeyX':
         this.actions.dash = isPressed;
         if (isPressed) this.justActions.dash = true;
+        break;
+
+      // INTERACT / ACTION / TALK
+      case 'KeyE':
+      case 'Enter':
+        this.actions.action = isPressed;
+        if (isPressed) this.justActions.action = true;
         break;
 
       // PAUSE / MENU

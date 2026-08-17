@@ -400,6 +400,19 @@ class MeadowboundAudio {
     g1.connect(this.masterGain);
     osc1.start(t);
     osc1.stop(t + 0.22);
+
+    // Visceral Low Sub-Thud
+    const osc2 = this.ctx.createOscillator();
+    const g2 = this.ctx.createGain();
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(140, t);
+    osc2.frequency.exponentialRampToValueAtTime(30, t + 0.18);
+    g2.gain.setValueAtTime(0.30, t);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    osc2.connect(g2);
+    g2.connect(this.masterGain);
+    osc2.start(t);
+    osc2.stop(t + 0.18);
   }
 
   playBossSlam() {
@@ -438,17 +451,29 @@ class MeadowboundAudio {
     if (this.isMuted || !this.ctx) return;
     this.init();
     const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const g = this.ctx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(170, t);
-    osc.frequency.exponentialRampToValueAtTime(75, t + 0.60);
-    g.gain.setValueAtTime(0.38, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.60);
-    osc.connect(g);
-    g.connect(this.masterGain);
-    osc.start(t);
-    osc.stop(t + 0.60);
+    const osc1 = this.ctx.createOscillator();
+    const g1 = this.ctx.createGain();
+    osc1.type = 'sawtooth';
+    osc1.frequency.setValueAtTime(180, t);
+    osc1.frequency.exponentialRampToValueAtTime(65, t + 0.60);
+    g1.gain.setValueAtTime(0.38, t);
+    g1.gain.exponentialRampToValueAtTime(0.001, t + 0.60);
+    osc1.connect(g1);
+    g1.connect(this.masterGain);
+    osc1.start(t);
+    osc1.stop(t + 0.60);
+
+    const osc2 = this.ctx.createOscillator();
+    const g2 = this.ctx.createGain();
+    osc2.type = 'square';
+    osc2.frequency.setValueAtTime(90, t);
+    osc2.frequency.exponentialRampToValueAtTime(35, t + 0.50);
+    g2.gain.setValueAtTime(0.22, t);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.50);
+    osc2.connect(g2);
+    g2.connect(this.masterGain);
+    osc2.start(t);
+    osc2.stop(t + 0.50);
   }
 
   playBossCrash() {
@@ -466,6 +491,18 @@ class MeadowboundAudio {
     g1.connect(this.masterGain);
     osc1.start(t);
     osc1.stop(t + 0.38);
+
+    const osc2 = this.ctx.createOscillator();
+    const g2 = this.ctx.createGain();
+    osc2.type = 'sawtooth';
+    osc2.frequency.setValueAtTime(120, t);
+    osc2.frequency.exponentialRampToValueAtTime(25, t + 0.28);
+    g2.gain.setValueAtTime(0.30, t);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+    osc2.connect(g2);
+    g2.connect(this.masterGain);
+    osc2.start(t);
+    osc2.stop(t + 0.28);
   }
 
   playVictory() {
@@ -798,7 +835,21 @@ class Player {
       this.scaleX = 0.85;
       this.scaleY = 1.20;
       audio.playJump();
-      particles.dust(this.x, this.y + this.height / 2, 5);
+      particles.emit({
+        x: this.x,
+        y: this.y + this.height / 2,
+        count: 8,
+        colors: ['#FFD166', '#FFE66D', '#FFF4E0', '#FFB703'],
+        speedMin: 35,
+        speedMax: 110,
+        radiusMin: 2,
+        radiusMax: 4.5,
+        lifeMin: 0.25,
+        lifeMax: 0.55,
+        gravity: 60,
+        shape: 'spark'
+      });
+      particles.dust(this.x, this.y + this.height / 2, 5, 'rgba(255, 209, 102, 0.85)');
       particles.leafBurst(this.x, this.y + this.height / 2, 4);
     }
 
@@ -972,8 +1023,8 @@ class BramblethornGolem {
         if (this.stateTimer <= 0) {
           this.state = 'SLAM';
           audio.playBossSlam();
-          juice.screenShake(16); // Elevated to 16px on Boss Slam!
-          juice.spawnShockwave(this.x, 390, 85, '#FFAA00');
+          juice.screenShake(20); // Elevated to 20px on Boss Slam!
+          juice.spawnShockwave(this.x, 390, 95, '#FFAA00');
           particles.dust(this.x - 30, 390, 10);
           particles.dust(this.x + 30, 390, 10);
           particles.burst(this.x, this.y, '#8D5B28', 24);
@@ -2719,6 +2770,8 @@ export class MeadowboundGame {
           this.player.vy = -620;
           this.player.isGrounded = false;
           this.player.hasAirDash = true;
+          this.player.scaleX = 0.85;
+          this.player.scaleY = 1.25;
           spring.isCompressed = true;
           setTimeout(() => { spring.isCompressed = false; }, 200);
           this.audio.playSporeBounce();
@@ -2941,10 +2994,10 @@ export class MeadowboundGame {
       if (Math.hypot(this.player.x - c.x, this.player.y - c.y) < 22) {
         if (c.type === 'berry' && !this.sunBerriesCollected.has(c.id)) {
           this.sunBerriesCollected.add(c.id);
-          this.score += 100;
+          this.score += 50;
           this.audio.playBerryCollect();
           this.juice.screenShake(2);
-          this.juice.spawnFloatingText('+100', c.x, c.y - 14, { color: '#FFD166', size: 18 });
+          this.juice.spawnFloatingText('+50 BERRY!', c.x, c.y - 14, { color: '#FFD166', size: 18 });
           this.particles.burst(c.x, c.y, '#FFD166', 16);
           this.particles.sparkles(c.x, c.y, 12);
           this.saveGame();
@@ -2952,7 +3005,7 @@ export class MeadowboundGame {
           this.goldenAcornsCollected.add(c.id);
           this.score += 20;
           this.audio.playAcorn();
-          this.juice.spawnFloatingText('+20', c.x, c.y - 10, { color: '#FFD000', size: 14 });
+          this.juice.spawnFloatingText('+20 ACORN!', c.x, c.y - 10, { color: '#FFD000', size: 14 });
           this.particles.burst(c.x, c.y, '#FFD000', 8);
           this.particles.sparkles(c.x, c.y, 6);
           this.saveGame();
@@ -2963,6 +3016,7 @@ export class MeadowboundGame {
           this.juice.screenShake(4);
           this.juice.spawnFloatingText('+500 LORE!', c.x, c.y - 18, { color: '#52B788', size: 20 });
           this.juice.spawnShockwave(c.x, c.y, 45, '#52B788');
+          this.particles.confetti(c.x, c.y, 40);
           this.particles.burst(c.x, c.y, '#52B788', 24);
           this.particles.sparkles(c.x, c.y, 16);
           this.saveGame();
@@ -3025,6 +3079,10 @@ export class MeadowboundGame {
   }
 
   transitionToNextLevel() {
+    this.particles.confetti(this.player.x, this.player.y, 45);
+    this.juice.spawnFloatingText('LEVEL CLEAR!', this.player.x, this.player.y - 25, { color: '#FFD166', size: 20 });
+    this.juice.screenFlash('#2EC4B6', 0.25);
+    this.audio.playMedallion();
     this.currentLevelIndex++;
     this.loadLevel(this.currentLevelIndex);
     this.saveGame();

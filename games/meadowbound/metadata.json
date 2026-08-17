@@ -12,7 +12,7 @@
     "height": 450
   },
   "created": "2026-08-15T11:56:00.000Z",
-  "updated": "2026-08-15T12:20:00.000Z",
+  "updated": "2026-08-16T22:30:35.353Z",
   "author": "AI Game Factory Studio",
   "description": "A cozy, colorful, and responsive 2D platform adventure featuring Pip the Meadow Sprite leaping across 5 vibrant worlds, defeating woodland pests, gathering Sun Berries, and restoring the Great Sunburst Tree.",
   "tags": [
@@ -66,9 +66,9 @@
     ]
   },
   "build": {
-    "timestamp": "2026-08-16T18:43:00.208Z",
+    "timestamp": "2026-08-16T22:30:35.353Z",
     "zipFile": "build/meadowbound.zip",
-    "sizeBytes": 67710,
+    "sizeBytes": 67985,
     "success": true
   }
 }
