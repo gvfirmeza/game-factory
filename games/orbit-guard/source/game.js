@@ -45,12 +45,12 @@ export const ARENA = {
     { id: 'slot_7', index: 7, angleDeg: 315, angleRad: 5.4978, x: 285.10, y: 224.90, compass: 'NE' }
   ],
   bench: [
-    { id: 'bench_0', index: 0, x: 68, y: 512 },
-    { id: 'bench_1', index: 1, x: 142, y: 512 },
-    { id: 'bench_2', index: 2, x: 216, y: 512 },
-    { id: 'bench_3', index: 3, x: 290, y: 512 }
+    { id: 'bench_0', index: 0, x: 65, y: 520 },
+    { id: 'bench_1', index: 1, x: 135, y: 520 },
+    { id: 'bench_2', index: 2, x: 205, y: 520 },
+    { id: 'bench_3', index: 3, x: 275, y: 520 }
   ],
-  recycleSlot: { id: 'recycle', x: 382, y: 512, radius: 26, refundPercent: 0.70 },
+  recycleSlot: { id: 'recycle', x: 378, y: 520, radius: 24, refundPercent: 0.70 },
   portals: [
     { id: 'portal_north', angleDeg: 270, angleRad: 4.7124, x: 225.0, y: 113.0, name: 'North Portal' },
     { id: 'portal_east',  angleDeg: 0,   angleRad: 0.0000, x: 397.0, y: 285.0, name: 'East Portal' },
@@ -347,6 +347,27 @@ export class OrbitAudioSynthesizer {
     osc.stop(t + 0.16);
   }
 
+  playPop() {
+    if (!this.ctx || this.isMuted) return;
+    try {
+      this.resume();
+      const t = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(520, t);
+      osc.frequency.exponentialRampToValueAtTime(880, t + 0.08);
+      gain.gain.setValueAtTime(0.2, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(t);
+      osc.stop(t + 0.08);
+    } catch (e) {
+      console.warn('playPop error:', e);
+    }
+  }
+
   playCoreAlarm() {
     if (!this.ctx || this.isMuted) return;
     this.resume();
@@ -569,52 +590,66 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.arc(xc, yc, ARENA.orbitRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // 6. Spawn Portals (N, E, S, W) with directional indicators
+  // 6. Spawn Portals (N, E, S, W) - Sleek Cosmic Singularity Gates
   for (const portal of ARENA.portals) {
-    const portalPulse = 6 + Math.sin(animTime * 4 + portal.angleRad) * 2;
-    const pGrad = ctx.createRadialGradient(portal.x, portal.y, 1, portal.x, portal.y, portalPulse + 10);
-    pGrad.addColorStop(0, 'rgba(239, 68, 68, 0.85)');
-    pGrad.addColorStop(0.5, 'rgba(168, 85, 247, 0.45)');
+    const pulse = 0.5 + Math.sin(animTime * 3 + portal.angleRad) * 0.5;
+    
+    // Soft outer nebula beacon
+    const pGrad = ctx.createRadialGradient(portal.x, portal.y, 2, portal.x, portal.y, 18);
+    pGrad.addColorStop(0, 'rgba(239, 68, 68, 0.6)');
+    pGrad.addColorStop(0.6, 'rgba(168, 85, 247, 0.25)');
     pGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = pGrad;
     ctx.beginPath();
-    ctx.arc(portal.x, portal.y, portalPulse + 10, 0, Math.PI * 2);
+    ctx.arc(portal.x, portal.y, 18, 0, Math.PI * 2);
     ctx.fill();
 
+    // Rotating Hologram Ring
+    ctx.save();
+    ctx.translate(portal.x, portal.y);
+    ctx.rotate(animTime * 2.0 + portal.angleRad);
     ctx.strokeStyle = '#EF4444';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1.8;
     ctx.beginPath();
-    ctx.arc(portal.x, portal.y, 8, 0, Math.PI * 2);
+    ctx.arc(0, 0, 9, 0, Math.PI * 0.65);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, 9, Math.PI, Math.PI * 1.65);
     ctx.stroke();
 
-    // Portal Inward Arrow Marker
-    const inwardAngle = Math.atan2(yc - portal.y, xc - portal.x);
-    ctx.fillStyle = '#FFD166';
+    // Core pulsing singularity
+    ctx.fillStyle = '#00F5D4';
     ctx.beginPath();
-    ctx.moveTo(portal.x + Math.cos(inwardAngle) * 14, portal.y + Math.sin(inwardAngle) * 14);
-    ctx.lineTo(portal.x + Math.cos(inwardAngle + 2.5) * 8, portal.y + Math.sin(inwardAngle + 2.5) * 8);
-    ctx.lineTo(portal.x + Math.cos(inwardAngle - 2.5) * 8, portal.y + Math.sin(inwardAngle - 2.5) * 8);
-    ctx.closePath();
+    ctx.arc(0, 0, 3 + pulse * 1.5, 0, Math.PI * 2);
     ctx.fill();
+    ctx.restore();
   }
 
   // 7. Standby Bench Rail (Bottom)
-  ctx.fillStyle = 'rgba(16, 22, 40, 0.80)';
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.30)';
+  ctx.fillStyle = 'rgba(16, 22, 40, 0.85)';
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.32)';
   ctx.lineWidth = 1.5;
-  drawRoundRect(ctx, 30, 480, 390, 64, 14);
+  drawRoundRect(ctx, 24, 478, 402, 74, 14);
   ctx.fill();
   ctx.stroke();
 
-  // Bench Header Label
-  ctx.font = 'bold 9px Orbitron, sans-serif';
+  // Bench Header Strip
+  ctx.font = 'bold 8.5px Orbitron, sans-serif';
   ctx.fillStyle = 'rgba(0, 229, 255, 0.85)';
   ctx.textAlign = 'left';
-  ctx.fillText('STANDBY BENCH (DRAG TO MERGE)', 42, 496);
+  ctx.fillText('STANDBY BENCH', 36, 492);
 
   ctx.fillStyle = 'rgba(239, 68, 68, 0.85)';
   ctx.textAlign = 'right';
-  ctx.fillText('RECYCLE 70% ♻️', 408, 496);
+  ctx.fillText('RECYCLE 70% ♻️', 414, 492);
+
+  // Subtle separator line
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(36, 496);
+  ctx.lineTo(414, 496);
+  ctx.stroke();
 
   ctx.restore();
 }
@@ -737,21 +772,18 @@ export function drawSlotPad(ctx, slot, isOccupied = false, isHighlighted = false
 
   if (slot.id === 'recycle') {
     // Recycle Bin Pad
-    ctx.fillStyle = isHovered ? 'rgba(239, 68, 68, 0.35)' : 'rgba(15, 23, 42, 0.8)';
-    ctx.strokeStyle = isHovered ? '#EF4444' : 'rgba(239, 68, 68, 0.5)';
+    ctx.fillStyle = isHovered ? 'rgba(239, 68, 68, 0.45)' : 'rgba(15, 23, 42, 0.85)';
+    ctx.strokeStyle = isHovered ? '#FF5252' : 'rgba(239, 68, 68, 0.65)';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(0, 0, slot.radius || 25, 0, Math.PI * 2);
+    ctx.arc(0, 0, slot.radius || 24, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
-    ctx.font = '16px sans-serif';
+    ctx.font = '15px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('♻️', 0, -2);
-    ctx.font = 'bold 8px Orbitron, sans-serif';
-    ctx.fillStyle = '#FFD166';
-    ctx.fillText('70%', 0, 14);
+    ctx.fillText('♻️', 0, 0);
     ctx.restore();
     return;
   }

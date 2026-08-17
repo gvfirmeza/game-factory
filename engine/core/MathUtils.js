@@ -73,5 +73,19 @@ export const MathUtils = {
 
   checkCircle(c1, c2) {
     return MathUtils.distanceSq(c1.x, c1.y, c2.x, c2.y) <= (c1.radius + c2.radius) ** 2;
+  },
+
+  normalizeAngle(rad) {
+    let a = rad % (Math.PI * 2);
+    if (a < -Math.PI) a += Math.PI * 2;
+    if (a > Math.PI) a -= Math.PI * 2;
+    return a;
+  },
+
+  angleDiff(a, b) {
+    let diff = (b - a) % (Math.PI * 2);
+    if (diff < -Math.PI) diff += Math.PI * 2;
+    if (diff > Math.PI) diff -= Math.PI * 2;
+    return diff;
   }
 };
