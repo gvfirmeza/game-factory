@@ -1,0 +1,33 @@
+{
+  "title": "Orbit Guard",
+  "id": "orbit-guard",
+  "version": "1.0.0",
+  "description": "Defend the Celestial Aegis planetary core! Summon orbital sentinels, merge identical units to ascend power tiers, and repel endless waves of void invaders in this mobile-first circular merge tower defense.",
+  "howToPlay": "Tap or drag to buy and merge identical same-tier sentinels. Sentinels auto-attack invaders along their circular spiral path. Survive waves, defeat massive multi-phase bosses, upgrade workshop tech, and trigger Overcharge Surge!",
+  "orientation": "portrait",
+  "resolution": {
+    "width": 450,
+    "height": 720,
+    "aspectRatio": "9:16",
+    "scalable": true
+  },
+  "genre": "Strategy / Merge / Tower Defense / Auto-Battle",
+  "storage": {
+    "key": "orbit_guard_save_v1",
+    "type": "cloud_with_local_fallback"
+  },
+  "audio": {
+    "synthesized": true,
+    "muteControlOnScreen": true,
+    "autoPauseOnHidden": true
+  },
+  "dependencies": {
+    "externalCdn": false,
+    "offlineCapable": true
+  },
+  "compliance": {
+    "originalIP": true,
+    "zeroTrackers": true,
+    "playgamaSdkReady": true
+  }
+}

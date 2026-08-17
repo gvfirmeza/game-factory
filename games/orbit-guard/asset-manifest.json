@@ -1,0 +1,589 @@
+{
+  "gameId": "orbit-guard",
+  "title": "Orbit Guard",
+  "version": "1.0.0",
+  "genre": "tower-defense-merge",
+  "viewport": {
+    "width": 450,
+    "height": 720,
+    "orientation": "portrait",
+    "aspectRatio": "9:16",
+    "safeArea": {
+      "top": 12,
+      "bottom": 16,
+      "left": 12,
+      "right": 12
+    }
+  },
+  "palette": {
+    "void": {
+      "bgDark": "#060814",
+      "bgMid": "#0D1127",
+      "bgLight": "#131B38",
+      "nebulaPurple": "rgba(126, 34, 206, 0.15)",
+      "nebulaCyan": "rgba(0, 229, 255, 0.12)",
+      "starfield": "#FFFFFF",
+      "gridLine": "rgba(56, 189, 248, 0.10)"
+    },
+    "metal": {
+      "obsidianDark": "#0F172A",
+      "obsidianMid": "#1E293B",
+      "obsidianLight": "#334155",
+      "slate": "#475569",
+      "titaniumLight": "#CBD5E1",
+      "titaniumWhite": "#F8FAFC"
+    },
+    "energy": {
+      "cyan": "#00E5FF",
+      "cyanBright": "#00F5D4",
+      "gold": "#FFD166",
+      "goldOrange": "#FF9E00",
+      "violet": "#C084FC",
+      "violetDark": "#7E22CE",
+      "frost": "#38BDF8",
+      "frostBright": "#7DD3FC",
+      "crimson": "#EF4444",
+      "crimsonBright": "#F43F5E"
+    },
+    "tierAscension": [
+      { "tier": 1, "name": "Bronze Recruit", "border": "#CD7F32", "fill": "#78350F", "glow": "rgba(205, 127, 50, 0.35)", "badge": "★", "multiplier": 1.0 },
+      { "tier": 2, "name": "Silver Veteran", "border": "#E2E8F0", "fill": "#475569", "glow": "rgba(226, 232, 240, 0.45)", "badge": "★★", "multiplier": 2.25 },
+      { "tier": 3, "name": "Gold Master", "border": "#FFD166", "fill": "#B45309", "glow": "rgba(255, 209, 102, 0.60)", "badge": "★★★", "multiplier": 5.1 },
+      { "tier": 4, "name": "Plasma Overclock", "border": "#00E5FF", "fill": "#0369A1", "glow": "rgba(0, 229, 255, 0.70)", "badge": "◆", "multiplier": 11.5 },
+      { "tier": 5, "name": "Void Champion", "border": "#C084FC", "fill": "#581C87", "glow": "rgba(192, 132, 252, 0.80)", "badge": "❖", "multiplier": 26.0 },
+      { "tier": 6, "name": "Celestial Radiant", "border": "#FFFFFF", "fill": "#BE185D", "glow": "rgba(255, 255, 255, 0.95)", "badge": "👑", "multiplier": 60.0 }
+    ],
+    "sentinels": {
+      "ballistaArcher": {
+        "chassis": "#1E293B",
+        "railDark": "#334155",
+        "railHighlight": "#94A3B8",
+        "coils": "#00E5FF",
+        "sightBeam": "rgba(0, 229, 255, 0.45)",
+        "muzzleFlash": "#00F5D4"
+      },
+      "heavyCannon": {
+        "chassis": "#1E293B",
+        "armorFlange": "#334155",
+        "barrel": "#0F172A",
+        "barrelBand": "#D97706",
+        "magmaCore": "#FF9E00",
+        "magmaHighlight": "#FFFBEB"
+      },
+      "arcaneMage": {
+        "pedestal": "#1E1B4B",
+        "runes": "#A855F7",
+        "shards": "#E9D5FF",
+        "obeliskTop": "#FAF5FF",
+        "obeliskMid": "#C084FC",
+        "obeliskBase": "#3B0764",
+        "arcSpark": "#F3E8FF"
+      },
+      "frostWarden": {
+        "mist": "rgba(56, 189, 248, 0.35)",
+        "gyroRing": "#38BDF8",
+        "snowflake": "#FFFFFF",
+        "iceDiamondTop": "#FFFFFF",
+        "iceDiamondMid": "#7DD3FC",
+        "iceDiamondBase": "#0284C7"
+      },
+      "shadowAssassin": {
+        "hull": "#0F172A",
+        "chakramGlow": "#F43F5E",
+        "chakramBlade": "#FFE4E6",
+        "sensorEye": "#EF4444",
+        "slashTrail": "rgba(244, 63, 94, 0.80)"
+      }
+    },
+    "enemies": {
+      "voidCrawler": {
+        "carapaceTop": "#334155",
+        "carapaceBase": "#0F172A",
+        "legs": "#64748B",
+        "opticEye": "#EF4444",
+        "mandibles": "#94A3B8"
+      },
+      "swiftDart": {
+        "mantaNose": "#00F5D4",
+        "mantaBody": "#0F172A",
+        "thrusterTrail": "rgba(0, 245, 212, 0.70)",
+        "wingGlint": "#00E5FF"
+      },
+      "armoredBruiser": {
+        "shellCarapace": "#1E293B",
+        "shellHighlight": "#334155",
+        "weakpointMagma": "#F59E0B",
+        "weakpointHot": "#FFFBEB",
+        "horns": "#94A3B8"
+      },
+      "swarmPod": {
+        "bulbTop": "#86EFAC",
+        "bulbMid": "#10B981",
+        "bulbBase": "#022C22",
+        "embryos": "#FDE047",
+        "tendrils": "#059669"
+      },
+      "voidMite": {
+        "body": "#10B981",
+        "bodyOutline": "#022C22",
+        "eye": "#EF4444"
+      },
+      "voidSlinger": {
+        "tripodLegs": "#475569",
+        "chassis": "#1E1B4B",
+        "plasmaMortar": "#C084FC",
+        "plasmaCore": "#FFFFFF",
+        "sightLaser": "rgba(192, 132, 252, 0.50)"
+      }
+    },
+    "bosses": {
+      "ironColossus": {
+        "hullDark": "#0F172A",
+        "hullMid": "#1E293B",
+        "hullLight": "#334155",
+        "exhausts": "#EA580C",
+        "coreEye": "#00E5FF",
+        "shieldArc": "#00E5FF",
+        "shieldGlow": "rgba(0, 245, 212, 0.40)"
+      },
+      "hydraQueen": {
+        "broodSacTop": "#86EFAC",
+        "broodSacBase": "#064E3B",
+        "serpentNeck": "#047857",
+        "serpentHead": "#064E3B",
+        "toxicEyes": "#FDE047"
+      },
+      "chronoWraith": {
+        "afterimage": "#C084FC",
+        "temporalRing": "rgba(192, 132, 252, 0.75)",
+        "shroudMid": "#A855F7",
+        "shroudBase": "#581C87",
+        "singularityCore": "#FFFFFF",
+        "singularityEye": "#FFD166"
+      }
+    },
+    "ui": {
+      "cardBg": "rgba(13, 17, 39, 0.85)",
+      "cardBorder": "rgba(56, 189, 248, 0.35)",
+      "cardBorderHover": "#00E5FF",
+      "textWhite": "#F8FAFC",
+      "textDim": "#94A3B8",
+      "goldCoin": "#FFD166",
+      "hpGreen": "#10B981",
+      "hpRed": "#EF4444",
+      "surgeReady": "#00E5FF",
+      "modalBackdrop": "rgba(6, 8, 20, 0.85)",
+      "buttonPrimaryBg": "linear-gradient(135deg, #00E5FF, #0284C7)",
+      "buttonSurgeBg": "linear-gradient(135deg, #FFD166, #EA580C)",
+      "buttonRepairBg": "linear-gradient(135deg, #10B981, #059669)",
+      "benchSlotEmpty": "rgba(30, 41, 59, 0.50)",
+      "benchSlotActive": "rgba(0, 229, 255, 0.20)",
+      "recycleBin": "rgba(239, 68, 68, 0.25)",
+      "synergyLinkBeam": "#FFD166"
+    }
+  },
+  "proceduralSprites": [
+    {
+      "id": "nexus_core",
+      "type": "core_generator",
+      "method": "drawNexusCore",
+      "params": {
+        "hpPercent": 1.0,
+        "animTime": 0,
+        "isDamaged": false,
+        "isSurging": false
+      }
+    },
+    {
+      "id": "sentinel_platform",
+      "type": "base_socket",
+      "method": "drawSentinelPlatform",
+      "params": {
+        "tier": 1,
+        "isSelected": false,
+        "isMergeTarget": false
+      }
+    },
+    {
+      "id": "sentinel_tier_badge",
+      "type": "ui_badge",
+      "method": "drawTierBadge",
+      "params": { "tier": 1 }
+    },
+    {
+      "id": "sentinel_ballista_archer",
+      "type": "sentinel_turret",
+      "method": "drawBallistaArcher",
+      "params": {
+        "angle": 0,
+        "tier": 1,
+        "recoil": 0,
+        "charging": 0,
+        "isSelected": false,
+        "isMergeTarget": false
+      }
+    },
+    {
+      "id": "sentinel_heavy_cannon",
+      "type": "sentinel_turret",
+      "method": "drawHeavyCannon",
+      "params": {
+        "angle": 0,
+        "tier": 1,
+        "recoil": 0,
+        "animTime": 0,
+        "isSelected": false,
+        "isMergeTarget": false
+      }
+    },
+    {
+      "id": "sentinel_arcane_mage",
+      "type": "sentinel_turret",
+      "method": "drawArcaneMage",
+      "params": {
+        "angle": 0,
+        "tier": 1,
+        "animTime": 0,
+        "isFiring": false,
+        "isSelected": false,
+        "isMergeTarget": false
+      }
+    },
+    {
+      "id": "sentinel_frost_warden",
+      "type": "sentinel_turret",
+      "method": "drawFrostWarden",
+      "params": {
+        "tier": 1,
+        "animTime": 0,
+        "isSelected": false,
+        "isMergeTarget": false
+      }
+    },
+    {
+      "id": "sentinel_shadow_assassin",
+      "type": "sentinel_turret",
+      "method": "drawShadowAssassin",
+      "params": {
+        "angle": 0,
+        "tier": 1,
+        "animTime": 0,
+        "isSlashing": false,
+        "isSelected": false,
+        "isMergeTarget": false
+      }
+    },
+    {
+      "id": "enemy_void_crawler",
+      "type": "enemy_walker",
+      "method": "drawVoidCrawler",
+      "params": {
+        "angle": 0,
+        "animTime": 0,
+        "hpPercent": 1.0,
+        "isChilled": false
+      }
+    },
+    {
+      "id": "enemy_swift_dart",
+      "type": "enemy_sprinter",
+      "method": "drawSwiftDart",
+      "params": {
+        "angle": 0,
+        "animTime": 0,
+        "isChilled": false
+      }
+    },
+    {
+      "id": "enemy_armored_bruiser",
+      "type": "enemy_tank",
+      "method": "drawArmoredBruiser",
+      "params": {
+        "angle": 0,
+        "animTime": 0,
+        "hpPercent": 1.0,
+        "isChilled": false
+      }
+    },
+    {
+      "id": "enemy_swarm_pod",
+      "type": "enemy_carrier",
+      "method": "drawSwarmPod",
+      "params": {
+        "angle": 0,
+        "animTime": 0,
+        "isChilled": false
+      }
+    },
+    {
+      "id": "enemy_void_mite",
+      "type": "enemy_minion",
+      "method": "drawVoidMite",
+      "params": {
+        "angle": 0,
+        "animTime": 0
+      }
+    },
+    {
+      "id": "enemy_void_slinger",
+      "type": "enemy_artillery",
+      "method": "drawVoidSlinger",
+      "params": {
+        "angle": 0,
+        "animTime": 0,
+        "chargeProgress": 0,
+        "isChilled": false
+      }
+    },
+    {
+      "id": "boss_iron_colossus",
+      "type": "boss_entity",
+      "method": "drawIronColossus",
+      "params": {
+        "angle": 0,
+        "animTime": 0,
+        "shieldAngle": 0,
+        "shieldActive": true,
+        "hpPercent": 1.0
+      }
+    },
+    {
+      "id": "boss_hydra_queen",
+      "type": "boss_entity",
+      "method": "drawHydraQueen",
+      "params": {
+        "angle": 0,
+        "animTime": 0,
+        "hpPercent": 1.0,
+        "isSplit": false
+      }
+    },
+    {
+      "id": "boss_chrono_wraith",
+      "type": "boss_entity",
+      "method": "drawChronoWraith",
+      "params": {
+        "angle": 0,
+        "animTime": 0,
+        "hpPercent": 1.0,
+        "isBlinking": false
+      }
+    },
+    {
+      "id": "fx_railgun_beam",
+      "type": "projectile_laser",
+      "method": "drawRailgunBeam",
+      "params": {
+        "x1": 0, "y1": 0,
+        "x2": 0, "y2": 0,
+        "alpha": 1.0
+      }
+    },
+    {
+      "id": "fx_mortar_shell",
+      "type": "projectile_ballistic",
+      "method": "drawMortarShell",
+      "params": {
+        "x": 0, "y": 0,
+        "height": 0
+      }
+    },
+    {
+      "id": "fx_mortar_explosion",
+      "type": "impact_explosion",
+      "method": "drawMortarExplosion",
+      "params": {
+        "x": 0, "y": 0,
+        "progress": 0
+      }
+    },
+    {
+      "id": "fx_tesla_lightning",
+      "type": "chain_lightning",
+      "method": "drawTeslaChainLightning",
+      "params": {
+        "targets": []
+      }
+    },
+    {
+      "id": "fx_merge_starburst",
+      "type": "ascension_fx",
+      "method": "drawMergeStarburst",
+      "params": {
+        "x": 0, "y": 0,
+        "progress": 0
+      }
+    }
+  ],
+  "particleSystems": [
+    {
+      "id": "particle_merge_starburst",
+      "count": 28,
+      "colors": ["#FFD166", "#FFFBEB", "#00E5FF", "#FFFFFF"],
+      "size": [3, 8],
+      "lifetime": 0.45,
+      "speed": [60, 180],
+      "gravity": 0
+    },
+    {
+      "id": "particle_railgun_sparks",
+      "count": 12,
+      "colors": ["#00E5FF", "#00F5D4", "#FFFFFF"],
+      "size": [2, 5],
+      "lifetime": 0.25,
+      "speed": [80, 160],
+      "gravity": 0
+    },
+    {
+      "id": "particle_mortar_embers",
+      "count": 22,
+      "colors": ["#FF9E00", "#EA580C", "#FFD166", "#FFFFFF"],
+      "size": [3, 7],
+      "lifetime": 0.5,
+      "speed": [40, 140],
+      "gravity": 40
+    },
+    {
+      "id": "particle_tesla_sparks",
+      "count": 14,
+      "colors": ["#C084FC", "#E9D5FF", "#FFFFFF", "#7E22CE"],
+      "size": [2, 4.5],
+      "lifetime": 0.3,
+      "speed": [50, 120],
+      "gravity": 0
+    },
+    {
+      "id": "particle_frost_mist",
+      "count": 16,
+      "colors": ["#38BDF8", "#7DD3FC", "#E0F2FE", "#FFFFFF"],
+      "size": [2.5, 6],
+      "lifetime": 0.6,
+      "speed": [15, 50],
+      "gravity": -10
+    },
+    {
+      "id": "particle_mite_rupture",
+      "count": 20,
+      "colors": ["#10B981", "#34D399", "#86EFAC"],
+      "size": [3, 6],
+      "lifetime": 0.4,
+      "speed": [70, 150],
+      "gravity": 20
+    },
+    {
+      "id": "particle_gold_coin_chime",
+      "count": 8,
+      "colors": ["#FFD166", "#F59E0B", "#FFFBEB"],
+      "size": [4, 7],
+      "lifetime": 0.35,
+      "speed": [30, 90],
+      "gravity": -20
+    },
+    {
+      "id": "particle_core_shield_pulse",
+      "count": 24,
+      "colors": ["#00E5FF", "#00F5D4", "#FFFFFF"],
+      "size": [3, 7],
+      "lifetime": 0.7,
+      "speed": [90, 200],
+      "gravity": 0
+    },
+    {
+      "id": "particle_boss_explosion",
+      "count": 64,
+      "colors": ["#FFD166", "#EA580C", "#00E5FF", "#C084FC", "#FFFFFF"],
+      "size": [4, 12],
+      "lifetime": 1.2,
+      "speed": [80, 260],
+      "gravity": 10
+    },
+    {
+      "id": "particle_ambient_stardust",
+      "count": 30,
+      "colors": ["rgba(255, 255, 255, 0.8)", "rgba(56, 189, 248, 0.6)", "rgba(192, 132, 252, 0.5)"],
+      "size": [1, 2.5],
+      "lifetime": 4.0,
+      "speed": [4, 12],
+      "gravity": 0
+    }
+  ],
+  "audioSynthesizer": [
+    {
+      "id": "sfx_summon",
+      "type": "sine_sweep",
+      "freqStart": 300,
+      "freqEnd": 600,
+      "duration": 0.12,
+      "desc": "Ascending metallic pop chord when summoning new sentinels"
+    },
+    {
+      "id": "sfx_merge",
+      "type": "arpeggio_major_power_chord",
+      "notes": [523.25, 659.25, 783.99, 1046.5],
+      "duration": 0.35,
+      "desc": "Dual harmonic crystalline ascension power chord (C-E-G-C)"
+    },
+    {
+      "id": "sfx_railgun",
+      "type": "narrow_pulse_zap",
+      "freqStart": 1200,
+      "freqEnd": 200,
+      "duration": 0.08,
+      "desc": "High frequency kinetic zap for Ballista Archer sniper fire"
+    },
+    {
+      "id": "sfx_mortar",
+      "type": "exponential_bass_thud",
+      "freqStart": 80,
+      "freqEnd": 30,
+      "duration": 0.40,
+      "desc": "Low resonant bass boom with noise explosion for Heavy Cannon"
+    },
+    {
+      "id": "sfx_tesla",
+      "type": "sawtooth_electric_buzz",
+      "freq": 440,
+      "modFreq": 80,
+      "duration": 0.15,
+      "desc": "Electric buzzing sawtooth chirp for Arcane Mage chain lightning"
+    },
+    {
+      "id": "sfx_frost",
+      "type": "filtered_crystalline_hiss",
+      "freq": 2000,
+      "duration": 0.25,
+      "desc": "Soft crystalline high-pass hiss for Frost Warden cryogenic aura"
+    },
+    {
+      "id": "sfx_assassin",
+      "type": "blade_slice_punch",
+      "freqStart": 900,
+      "freqEnd": 150,
+      "duration": 0.18,
+      "desc": "Blade slice with critical impact punch for Shadow Assassin"
+    },
+    {
+      "id": "sfx_coin",
+      "type": "twin_bell_chime",
+      "notes": [1046.5, 1318.5],
+      "duration": 0.09,
+      "desc": "Bright twin chiming bells on enemy gold bounty pickup"
+    },
+    {
+      "id": "sfx_surge",
+      "type": "planetary_sub_bass_sweep",
+      "freqStart": 50,
+      "freqMid": 150,
+      "freqEnd": 40,
+      "duration": 0.80,
+      "desc": "Deep planetary sub-bass sweep on Overcharge Surge panic button"
+    },
+    {
+      "id": "sfx_boss_alarm",
+      "type": "pulsing_emergency_siren",
+      "notes": [440.0, 554.37],
+      "duration": 0.60,
+      "desc": "Dual tone emergency warning klaxon when a Titan Boss enters arena"
+    }
+  ]
+}

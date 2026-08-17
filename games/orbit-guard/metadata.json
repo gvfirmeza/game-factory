@@ -1,0 +1,28 @@
+{
+  "id": "orbit-guard",
+  "title": "Orbit Guard",
+  "description": "A high-octane, mobile-first circular arena merge tower defense auto-battler where players deploy and merge defense towers on concentric orbital rings to protect the planetary Nexus Core against relentless void swarms and colossal bosses.",
+  "genre": "tower-defense-merge",
+  "version": "1.0.0",
+  "status": "ready",
+  "orientation": "portrait",
+  "pipeline": {
+    "design": "completed",
+    "art": "pending",
+    "technical": "pending",
+    "implementation": "pending",
+    "playtest": "pending",
+    "content_review": "pending",
+    "polish": "pending",
+    "final_review": "pending",
+    "playgama_qa": "pending",
+    "build": "done",
+    "submission_manifest": "pending"
+  },
+  "build": {
+    "timestamp": "2026-08-17T15:00:39.434Z",
+    "zipFile": "build/orbit-guard.zip",
+    "sizeBytes": 74918,
+    "success": true
+  }
+}

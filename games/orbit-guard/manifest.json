@@ -1,0 +1,10 @@
+{
+  "name": "Orbit Guard",
+  "short_name": "OrbitGuard",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#060814",
+  "theme_color": "#00E5FF",
+  "description": "Mobile-First Circular Arena Merge + Tower Defense + Auto-Battle. Deploy, merge, and command orbital sentinels to defend the planetary Nexus Core against cosmic void horrors."
+}

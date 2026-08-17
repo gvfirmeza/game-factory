@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Orbit Guard — Circular Arena Merge Tower Defense</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Top Left Sound Mute Button (Playgama UX Requirement) -->
+    <button id="btn-mute" class="hud-mute-btn" aria-label="Toggle Audio Mute" title="Toggle Sound">🔊</button>
+
+    <!-- Top Right Pause Button -->
+    <button id="btn-pause" class="hud-pause-btn" aria-label="Pause Game" title="Pause Game">⏸</button>
+
+    <!-- In-Game HUD Overlay (Top & Bottom bars) -->
+    <div id="game-hud" class="game-hud hidden">
+      <!-- Top Status Header -->
+      <div class="hud-top-bar">
+        <div class="hud-stat-pill wave-pill">
+          <span class="pill-label">WAVE</span>
+          <span id="hud-wave-val" class="pill-val">1</span>
+        </div>
+
+        <div class="hud-core-health">
+          <div class="core-hp-label">
+            <span>NEXUS CORE</span>
+            <span id="hud-hp-text">100 / 100</span>
+          </div>
+          <div class="core-hp-track">
+            <div id="hud-hp-fill" class="core-hp-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <div class="hud-stat-pill gold-pill">
+          <span class="gold-icon">💰</span>
+          <span id="hud-gold-val" class="pill-val">30</span>
+        </div>
+      </div>
+
+      <!-- Quick Emergency Surges / Repairs HUD bar -->
+      <div class="hud-tactical-bar">
+        <button id="btn-repair" class="btn-tactical btn-repair" title="Emergency Core Repair (+25% HP)">
+          <span class="tac-icon">🛠️</span>
+          <span class="tac-name">REPAIR</span>
+          <span id="hud-repair-cost" class="tac-cost">50 💰</span>
+        </button>
+
+        <button id="btn-surge" class="btn-tactical btn-surge" title="Overcharge Planetary Surge (Pushback + Stun)">
+          <div class="surge-glow-ring"></div>
+          <span class="tac-icon">⚡</span>
+          <span class="tac-name">OVERCHARGE</span>
+          <span id="hud-surge-meter" class="tac-cost">READY</span>
+        </button>
+
+        <button id="btn-open-workshop-hud" class="btn-tactical btn-workshop-toggle" title="Open Celestial Workshop">
+          <span class="tac-icon">⚙️</span>
+          <span class="tac-name">WORKSHOP</span>
+        </button>
+      </div>
+
+      <!-- Bottom Command Bar -->
+      <div class="hud-bottom-bar">
+        <button id="btn-buy" class="btn-buy-sentinel">
+          <div class="buy-inner">
+            <span class="buy-title">SUMMON SENTINEL</span>
+            <span id="hud-buy-cost" class="buy-price">15 💰</span>
+          </div>
+          <div class="buy-hint">Space / Tap</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Title Screen Overlay -->
+    <div id="title-overlay" class="title-overlay">
+      <div class="title-card">
+        <div class="title-badge">⚡ CIRCULAR ARENA MERGE DEFENSE</div>
+        <h1 class="title-glow">ORBIT GUARD</h1>
+        <p class="title-subtitle">Defend the Celestial Aegis Nexus Core</p>
+
+        <div class="title-records">
+          <div class="record-box">
+            <span class="rec-label">MAX WAVE</span>
+            <span id="title-best-wave" class="rec-val">1</span>
+          </div>
+          <div class="record-box">
+            <span class="rec-label">HIGH SCORE</span>
+            <span id="title-best-score" class="rec-val">0</span>
+          </div>
+        </div>
+
+        <div class="title-actions">
+          <button id="btn-start-game" class="btn-main-action btn-play" autofocus>
+            ▶ START DEFENSE
+          </button>
+          <div class="title-sub-actions">
+            <button id="btn-open-workshop-title" class="btn-sub-action">
+              ⚙️ WORKSHOP
+            </button>
+            <button id="btn-open-tutorial-title" class="btn-sub-action">
+              📖 HOW TO PLAY
+            </button>
+          </div>
+          <button id="btn-reset-save" class="btn-reset-save" title="Clear all saved run progress">
+            🗑️ Reset Save Data
+          </button>
+        </div>
+
+        <div class="title-controls-hint">
+          <span class="hint-item"><kbd>Drag</kbd> Merge Identical Towers</span>
+          <span class="hint-item"><kbd>Space</kbd> Summon Sentinel</span>
+          <span class="hint-item"><kbd>S</kbd> Overcharge</span>
+          <span class="hint-item"><kbd>R</kbd> Repair Core</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workshop Modal -->
+    <div id="workshop-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <h2 class="modal-title">CELESTIAL WORKSHOP</h2>
+            <p class="modal-subtitle">Permanent Technology Upgrades</p>
+          </div>
+          <div class="workshop-gold-badge">
+            <span>💰</span>
+            <span id="workshop-gold-val">30</span>
+          </div>
+        </div>
+
+        <div id="workshop-upgrade-list" class="workshop-list">
+          <!-- Populated dynamically by game.js -->
+        </div>
+
+        <div class="modal-footer">
+          <button id="btn-close-workshop" class="btn-modal-close">
+            DONE
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorial-modal" class="modal-overlay hidden">
+      <div class="modal-card tutorial-card">
+        <div class="modal-header">
+          <h2 class="modal-title">MISSION BRIEFING</h2>
+          <p class="modal-subtitle">Tactical Defense Guide</p>
+        </div>
+
+        <div class="tutorial-content">
+          <div class="tut-step">
+            <div class="tut-icon">🔄</div>
+            <div class="tut-info">
+              <h4>1. DRAG & MERGE</h4>
+              <p>Drag two identical sentinels of the same archetype and level together to evolve them to the next tier with exponentially higher DPS and perks.</p>
+            </div>
+          </div>
+
+          <div class="tut-step">
+            <div class="tut-icon">🎯</div>
+            <div class="tut-info">
+              <h4>2. AUTO-TARGETING COMBAT</h4>
+              <p>Sentinels automatically detect, track, and fire upon spiraling void invaders using specialized radial priority heuristics.</p>
+            </div>
+          </div>
+
+          <div class="tut-step">
+            <div class="tut-icon">🛡️</div>
+            <div class="tut-info">
+              <h4>3. PROTECT THE NEXUS CORE</h4>
+              <p>If enemies spiral into the center, the Core takes hull breach damage. Use Emergency Repairs and Overcharge Shockwaves to survive!</p>
+            </div>
+          </div>
+
+          <div class="tut-step">
+            <div class="tut-icon">♻️</div>
+            <div class="tut-info">
+              <h4>4. STANDBY BENCH & RECYCLER</h4>
+              <p>Store units on the 4 bottom bench pads. Drag unwanted units to the bottom-right Recycler for a 70% Gold refund.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="btn-close-tutorial" class="btn-modal-close">
+            UNDERSTOOD
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boss Warning Banner -->
+    <div id="boss-banner" class="boss-banner hidden">
+      <div class="boss-banner-content">
+        <div class="boss-strobe-pill">⚠️ SECTOR HAZARD WARNING ⚠️</div>
+        <h2 id="boss-banner-name" class="boss-name">IRON COLOSSUS</h2>
+        <p id="boss-banner-title" class="boss-title">The Shielded Titan</p>
+      </div>
+    </div>
+
+    <!-- Pause Modal -->
+    <div id="pause-modal" class="modal-overlay hidden">
+      <div class="modal-card pause-card">
+        <h2 class="modal-title">DEFENSE PAUSED</h2>
+        <div class="pause-actions">
+          <button id="btn-resume-game" class="btn-main-action">
+            ▶ RESUME
+          </button>
+          <button id="btn-restart-run" class="btn-sub-action">
+            🔄 RESTART RUN
+          </button>
+          <button id="btn-quit-to-title" class="btn-sub-action">
+            🏠 TITLE SCREEN
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal-overlay hidden">
+      <div class="modal-card game-over-card">
+        <div class="go-badge">CORE COMPROMISED</div>
+        <h2 class="go-title">NEXUS DESTROYED</h2>
+        
+        <div class="go-stats-grid">
+          <div class="go-stat-box">
+            <span class="go-stat-lbl">WAVE REACHED</span>
+            <span id="go-wave-val" class="go-stat-num">1</span>
+          </div>
+          <div class="go-stat-box">
+            <span class="go-stat-lbl">FINAL SCORE</span>
+            <span id="go-score-val" class="go-stat-num">0</span>
+          </div>
+          <div class="go-stat-box">
+            <span class="go-stat-lbl">TOTAL MERGES</span>
+            <span id="go-merges-val" class="go-stat-num">0</span>
+          </div>
+          <div class="go-stat-box">
+            <span class="go-stat-lbl">VOID KILLS</span>
+            <span id="go-kills-val" class="go-stat-num">0</span>
+          </div>
+        </div>
+
+        <div class="go-actions">
+          <button id="btn-retry-game" class="btn-main-action">
+            ⚡ RE-ENGAGE DEFENSE
+          </button>
+          <button id="btn-go-workshop" class="btn-sub-action">
+            ⚙️ WORKSHOP UPGRADES
+          </button>
+          <button id="btn-go-title" class="btn-sub-action">
+            🏠 TITLE SCREEN
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>

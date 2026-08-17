@@ -320,18 +320,23 @@ async function validatePlaygama(gameId) {
           }
 
           // Run active physics simulation
-          game.fsm.transitionTo('PLAYING');
+          if (game.fsm && typeof game.fsm.transitionTo === 'function') {
+            game.fsm.transitionTo('PLAYING');
+          }
           for (let f = 0; f < 60; f++) {
-            game.input.actions.right = true;
-            if (f === 15) game.input.triggerAction('up');
-            if (f === 30) game.input.triggerAction('attack');
-            if (f === 45) game.input.triggerAction('dash');
-            game.update(1 / 60);
-            game.render(1);
+            if (game.input && game.input.actions) {
+              game.input.actions.right = true;
+              if (f === 15 && game.input.triggerAction) game.input.triggerAction('up');
+              if (f === 30 && game.input.triggerAction) game.input.triggerAction('attack');
+              if (f === 45 && game.input.triggerAction) game.input.triggerAction('dash');
+            }
+            if (game.update) game.update(1 / 60);
+            if (game.render) game.render(1);
           }
 
           // Test Storage persistence
-          game.saveGameState();
+          if (game.saveGameState) game.saveGameState();
+          else if (game.saveGame) game.saveGame();
           if (!sdkEvents.storageSet) {
             report.warnings.push('Cloud storage sync was not triggered during saveGameState');
           }

@@ -1,0 +1,126 @@
+{
+  "gameId": "orbit-guard",
+  "title": "Orbit Guard",
+  "genre": "tower-defense-merge",
+  "budget": {
+    "rooms": { "required": 1, "implemented": 1 },
+    "levels": { "required": 15, "implemented": 15 },
+    "troops": { "required": 5, "implemented": 5 },
+    "mergeTiers": { "required": 6, "implemented": 6 },
+    "enemyTypes": { "required": 5, "implemented": 5 },
+    "bossTypes": { "required": 3, "implemented": 3 },
+    "workshopUpgrades": { "required": 5, "implemented": 5 },
+    "audioEffects": { "required": 10, "implemented": 10 }
+  },
+  "rooms": [
+    {
+      "id": "celestial_aegis_arena",
+      "name": "Celestial Aegis Orbital Arena",
+      "type": "circular_arena",
+      "features": [
+        "Planetary Nexus Core (Center, Radius 42px)",
+        "Inner Defense Placement Ring (Radius 100px, 10 Slots)",
+        "Inner Hazard Ring (Radius 150px)",
+        "Mid Combat Orbit Track (Radius 210px)",
+        "Outer Spawn Incursion Orbit (Radius 270px, 4 Portals)",
+        "Standby Merge Bench (Bottom, 4 Slots)",
+        "Recycle / Scrap Incinerator (Bottom-Right)"
+      ]
+    }
+  ],
+  "levels": [
+    { "wave": 1, "name": "Wave 1: First Breach", "type": "intro_swarm", "enemies": ["void_crawler"], "boss": null },
+    { "wave": 2, "name": "Wave 2: Velocity Test", "type": "speed_rush", "enemies": ["void_crawler", "swift_dart"], "boss": null },
+    { "wave": 3, "name": "Wave 3: Armored Advance", "type": "tank_incursion", "enemies": ["void_crawler", "armored_bruiser"], "boss": null },
+    { "wave": 4, "name": "Wave 4: Swarm Outbreak", "type": "cluster_swarm", "enemies": ["swift_dart", "swarm_pod"], "boss": null },
+    { "wave": 5, "name": "Wave 5: Iron Colossus", "type": "boss_encounter", "enemies": ["void_crawler"], "boss": "iron_colossus" },
+    { "wave": 6, "name": "Wave 6: Artillery Barrage", "type": "ranged_assault", "enemies": ["void_crawler", "void_slinger"], "boss": null },
+    { "wave": 7, "name": "Wave 7: Heavy Cavalry", "type": "mixed_assault", "enemies": ["armored_bruiser", "swift_dart"], "boss": null },
+    { "wave": 8, "name": "Wave 8: Pod Infestation", "type": "heavy_swarm", "enemies": ["swarm_pod", "void_slinger"], "boss": null },
+    { "wave": 9, "name": "Wave 9: Void Convergence", "type": "all_types", "enemies": ["void_crawler", "swift_dart", "armored_bruiser", "swarm_pod", "void_slinger"], "boss": null },
+    { "wave": 10, "name": "Wave 10: Hydra Queen", "type": "boss_encounter", "enemies": ["swarm_pod"], "boss": "hydra_queen" },
+    { "wave": 11, "name": "Wave 11: High-Speed Surge", "type": "speed_surge", "enemies": ["swift_dart", "armored_bruiser"], "boss": null },
+    { "wave": 12, "name": "Wave 12: Dual Bombardment", "type": "artillery_heavy", "enemies": ["void_slinger", "armored_bruiser"], "boss": null },
+    { "wave": 13, "name": "Wave 13: Brood Horde", "type": "cluster_horde", "enemies": ["swarm_pod", "swift_dart"], "boss": null },
+    { "wave": 14, "name": "Wave 14: The Vanguard Apex", "type": "elite_all_types", "enemies": ["void_crawler", "swift_dart", "armored_bruiser", "swarm_pod", "void_slinger"], "boss": null },
+    { "wave": 15, "name": "Wave 15: Chrono Wraith", "type": "boss_encounter", "enemies": ["void_slinger", "swift_dart"], "boss": "chrono_wraith" }
+  ],
+  "troops": [
+    {
+      "id": "ballista_archer",
+      "name": "Ballista Archer",
+      "archetype": "sniper",
+      "damageType": "kinetic",
+      "targetingHeuristic": "furthest_along_orbit",
+      "tiersCount": 6,
+      "signatureTrait": "High projectile speed, target piercing at Lv 3+"
+    },
+    {
+      "id": "heavy_cannon",
+      "name": "Heavy Cannon",
+      "archetype": "artillery",
+      "damageType": "explosive",
+      "targetingHeuristic": "densest_enemy_cluster",
+      "tiersCount": 6,
+      "signatureTrait": "Massive AOE splash damage and lingering plasma burn"
+    },
+    {
+      "id": "arcane_mage",
+      "name": "Arcane Mage",
+      "archetype": "chain_tesla",
+      "damageType": "energy",
+      "targetingHeuristic": "highest_hp_in_range",
+      "tiersCount": 6,
+      "signatureTrait": "Multi-target chain lightning jumping to 3-10 targets"
+    },
+    {
+      "id": "frost_warden",
+      "name": "Frost Warden",
+      "archetype": "crowd_control",
+      "damageType": "cryo",
+      "targetingHeuristic": "omnidirectional_aura",
+      "tiersCount": 6,
+      "signatureTrait": "360° cryogenic slowing aura (35%-75% slow) and brittle debuff"
+    },
+    {
+      "id": "shadow_assassin",
+      "name": "Shadow Assassin",
+      "archetype": "burst_assassin",
+      "damageType": "void_crit",
+      "targetingHeuristic": "closest_inner_perimeter",
+      "tiersCount": 6,
+      "signatureTrait": "Extreme critical strike burst (3x-5x crit multiplier) and armor shred"
+    }
+  ],
+  "enemyTypes": [
+    { "id": "void_crawler", "name": "Void Crawler", "role": "standard_walker", "baseHp": 40, "baseSpeed": 65 },
+    { "id": "swift_dart", "name": "Swift Dart", "role": "sprinter", "baseHp": 22, "baseSpeed": 140 },
+    { "id": "armored_bruiser", "name": "Armored Bruiser", "role": "tank", "baseHp": 160, "baseSpeed": 35 },
+    { "id": "swarm_pod", "name": "Swarm Pod", "role": "carrier", "baseHp": 75, "baseSpeed": 55, "splitChild": "void_mite" },
+    { "id": "void_slinger", "name": "Void Slinger", "role": "ranged_artillery", "baseHp": 90, "baseSpeed": 45 }
+  ],
+  "bosses": [
+    { "id": "iron_colossus", "name": "Iron Colossus", "wave": 5, "mechanic": "revolving_shield_and_seismic_stomp" },
+    { "id": "hydra_queen", "name": "Hydra Queen", "wave": 10, "mechanic": "brood_hatch_and_mitosis_split" },
+    { "id": "chrono_wraith", "name": "Chrono Wraith", "wave": 15, "mechanic": "phase_blink_and_time_distortion" }
+  ],
+  "workshopUpgrades": [
+    { "id": "nexus_hull", "name": "Nexus Hull Integrity", "maxLevel": 10, "benefit": "+20 Max Core HP per level" },
+    { "id": "rapid_overclock", "name": "Rapid Overclock", "maxLevel": 10, "benefit": "+3% Global Attack Speed per level" },
+    { "id": "starting_treasury", "name": "Starting Treasury", "maxLevel": 10, "benefit": "+15 Starting Gold per level" },
+    { "id": "hyper_crit", "name": "Hyper-Critical Focus", "maxLevel": 8, "benefit": "+2% Crit Chance & +0.2x Multiplier per level" },
+    { "id": "salvage_efficiency", "name": "Salvage Efficiency", "maxLevel": 5, "benefit": "+4% Gold drop bonus per level" }
+  ],
+  "audio": [
+    { "id": "sfx_summon", "type": "procedural_synth", "desc": "Ascending metallic pop chord" },
+    { "id": "sfx_merge", "type": "procedural_synth", "desc": "Dual harmonic crystalline power chord (C-E-G-C)" },
+    { "id": "sfx_railgun", "type": "procedural_synth", "desc": "High frequency kinetic zap" },
+    { "id": "sfx_mortar", "type": "procedural_synth", "desc": "Low resonant bass boom with noise explosion" },
+    { "id": "sfx_tesla", "type": "procedural_synth", "desc": "Electric buzzing sawtooth chirp" },
+    { "id": "sfx_frost", "type": "procedural_synth", "desc": "Soft crystalline high-pass hiss" },
+    { "id": "sfx_assassin", "type": "procedural_synth", "desc": "Blade slice with critical impact punch" },
+    { "id": "sfx_coin", "type": "procedural_synth", "desc": "Twin chiming bells" },
+    { "id": "sfx_surge", "type": "procedural_synth", "desc": "Deep planetary sub-bass sweep" },
+    { "id": "sfx_boss_alarm", "type": "procedural_synth", "desc": "Dual tone emergency warning klaxon" }
+  ]
+}
