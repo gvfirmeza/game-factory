@@ -19,18 +19,18 @@
       "breachThresholdRadius": 40
     },
     "innerTroopRing": {
-      "radius": 85,
+      "radius": 72,
       "slotCount": 8,
       "angularSpacingDeg": 45,
       "slots": [
-        { "id": "slot_0", "index": 0, "angleDeg": 0,   "angleRad": 0.0000, "x": 310.00, "y": 285.00, "compass": "E" },
-        { "id": "slot_1", "index": 1, "angleDeg": 45,  "angleRad": 0.7854, "x": 285.10, "y": 345.10, "compass": "SE" },
-        { "id": "slot_2", "index": 2, "angleDeg": 90,  "angleRad": 1.5708, "x": 225.00, "y": 370.00, "compass": "S" },
-        { "id": "slot_3", "index": 3, "angleDeg": 135, "angleRad": 2.3562, "x": 164.90, "y": 345.10, "compass": "SW" },
-        { "id": "slot_4", "index": 4, "angleDeg": 180, "angleRad": 3.1416, "x": 140.00, "y": 285.00, "compass": "W" },
-        { "id": "slot_5", "index": 5, "angleDeg": 225, "angleRad": 3.9270, "x": 164.90, "y": 224.90, "compass": "NW" },
-        { "id": "slot_6", "index": 6, "angleDeg": 270, "angleRad": 4.7124, "x": 225.00, "y": 200.00, "compass": "N" },
-        { "id": "slot_7", "index": 7, "angleDeg": 315, "angleRad": 5.4978, "x": 285.10, "y": 224.90, "compass": "NE" }
+        { "id": "slot_0", "index": 0, "angleDeg": 0,   "angleRad": 0.0000, "x": 297.00, "y": 280.00, "compass": "E" },
+        { "id": "slot_1", "index": 1, "angleDeg": 45,  "angleRad": 0.7854, "x": 275.91, "y": 330.91, "compass": "SE" },
+        { "id": "slot_2", "index": 2, "angleDeg": 90,  "angleRad": 1.5708, "x": 225.00, "y": 352.00, "compass": "S" },
+        { "id": "slot_3", "index": 3, "angleDeg": 135, "angleRad": 2.3562, "x": 174.09, "y": 330.91, "compass": "SW" },
+        { "id": "slot_4", "index": 4, "angleDeg": 180, "angleRad": 3.1416, "x": 153.00, "y": 280.00, "compass": "W" },
+        { "id": "slot_5", "index": 5, "angleDeg": 225, "angleRad": 3.9270, "x": 174.09, "y": 229.09, "compass": "NW" },
+        { "id": "slot_6", "index": 6, "angleDeg": 270, "angleRad": 4.7124, "x": 225.00, "y": 208.00, "compass": "N" },
+        { "id": "slot_7", "index": 7, "angleDeg": 315, "angleRad": 5.4978, "x": 275.91, "y": 229.09, "compass": "NE" }
       ]
     },
     "standbyBench": {
@@ -52,9 +52,9 @@
       "refundPercent": 0.70
     },
     "outerSpawnOrbit": {
-      "radius": 172,
+      "radius": 175,
       "portals": [
-        { "id": "portal_north", "angleDeg": 270, "angleRad": -1.5708, "x": 225.0, "y": 113.0, "compass": "N" }
+        { "id": "portal_north", "angleDeg": 270, "angleRad": -1.5708, "x": 225.0, "y": 105.0, "compass": "N" }
       ]
     }
   },

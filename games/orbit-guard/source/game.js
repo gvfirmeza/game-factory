@@ -28,21 +28,21 @@ import {
 export const ARENA = {
   width: 450,
   height: 720,
-  center: { x: 225, y: 285 },
-  coreRadius: 40,
-  orbitRadius: 85,
-  innerHazardRadius: 115,
-  midOrbitRadius: 145,
-  spawnRadius: 172,
+  center: { x: 225, y: 280 },
+  coreRadius: 36,
+  orbitRadius: 72,
+  innerHazardRadius: 108,
+  midOrbitRadius: 140,
+  spawnRadius: 175,
   slots: [
-    { id: 'slot_0', index: 0, angleDeg: 0,   angleRad: 0.0000, x: 310.00, y: 285.00, compass: 'E' },
-    { id: 'slot_1', index: 1, angleDeg: 45,  angleRad: 0.7854, x: 285.10, y: 345.10, compass: 'SE' },
-    { id: 'slot_2', index: 2, angleDeg: 90,  angleRad: 1.5708, x: 225.00, y: 370.00, compass: 'S' },
-    { id: 'slot_3', index: 3, angleDeg: 135, angleRad: 2.3562, x: 164.90, y: 345.10, compass: 'SW' },
-    { id: 'slot_4', index: 4, angleDeg: 180, angleRad: 3.1416, x: 140.00, y: 285.00, compass: 'W' },
-    { id: 'slot_5', index: 5, angleDeg: 225, angleRad: 3.9270, x: 164.90, y: 224.90, compass: 'NW' },
-    { id: 'slot_6', index: 6, angleDeg: 270, angleRad: 4.7124, x: 225.00, y: 200.00, compass: 'N' },
-    { id: 'slot_7', index: 7, angleDeg: 315, angleRad: 5.4978, x: 285.10, y: 224.90, compass: 'NE' }
+    { id: 'slot_0', index: 0, angleDeg: 0,   angleRad: 0.0000, x: 297.00, y: 280.00, compass: 'E' },
+    { id: 'slot_1', index: 1, angleDeg: 45,  angleRad: 0.7854, x: 275.91, y: 330.91, compass: 'SE' },
+    { id: 'slot_2', index: 2, angleDeg: 90,  angleRad: 1.5708, x: 225.00, y: 352.00, compass: 'S' },
+    { id: 'slot_3', index: 3, angleDeg: 135, angleRad: 2.3562, x: 174.09, y: 330.91, compass: 'SW' },
+    { id: 'slot_4', index: 4, angleDeg: 180, angleRad: 3.1416, x: 153.00, y: 280.00, compass: 'W' },
+    { id: 'slot_5', index: 5, angleDeg: 225, angleRad: 3.9270, x: 174.09, y: 229.09, compass: 'NW' },
+    { id: 'slot_6', index: 6, angleDeg: 270, angleRad: 4.7124, x: 225.00, y: 208.00, compass: 'N' },
+    { id: 'slot_7', index: 7, angleDeg: 315, angleRad: 5.4978, x: 275.91, y: 229.09, compass: 'NE' }
   ],
   bench: [
     { id: 'bench_0', index: 0, x: 65, y: 520 },
@@ -52,7 +52,7 @@ export const ARENA = {
   ],
   recycleSlot: { id: 'recycle', x: 378, y: 520, radius: 24, refundPercent: 0.70 },
   portals: [
-    { id: 'portal_north', angleDeg: 270, angleRad: -Math.PI / 2, x: 225.0, y: 113.0, name: 'Main Warp Gate' }
+    { id: 'portal_north', angleDeg: 270, angleRad: -Math.PI / 2, x: 225.0, y: 105.0, name: 'Main Warp Gate' }
   ]
 };
 
@@ -529,19 +529,36 @@ export function drawCosmicBackground(ctx, width, height, animTime, stars) {
 export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.save();
 
-  // 1. Single Clean, Flowing Orbital Spiral Path Track
+  // 1. Cosmic Orbital Incursion Highway (Outer Path - stays cleanly outside defenders)
   ctx.save();
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.40)';
-  ctx.lineWidth = 2.0;
-  ctx.setLineDash([6, 8]);
-  ctx.lineDashOffset = -animTime * 20; // Animated forward energy flow
-  ctx.beginPath();
-  const startAngle = -Math.PI / 2; // North Warp Gate (225, 113)
-  const totalRotations = 1.5 * Math.PI * 2; // 540 degrees spiral
+  const startAngle = -Math.PI / 2; // North Warp Gate (225, 105)
+  const totalRotations = 1.35 * Math.PI * 2; // ~485 degrees loop
   const steps = 80;
+
+  // A. Soft Translucent Highway Corridor
+  ctx.lineWidth = 16;
+  ctx.strokeStyle = 'rgba(0, 229, 255, 0.05)';
+  ctx.beginPath();
   for (let i = 0; i <= steps; i++) {
     const t = i / steps;
-    const r = ARENA.spawnRadius - (ARENA.spawnRadius - ARENA.coreRadius) * t;
+    const r = ARENA.spawnRadius - (ARENA.spawnRadius - ARENA.innerHazardRadius) * t;
+    const a = startAngle + totalRotations * t;
+    const px = xc + Math.cos(a) * r;
+    const py = yc + Math.sin(a) * r;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // B. Sleek Neon Guide Rail with smooth flowing energy pulse
+  ctx.lineWidth = 1.6;
+  ctx.strokeStyle = 'rgba(0, 229, 255, 0.35)';
+  ctx.setLineDash([8, 12]);
+  ctx.lineDashOffset = -animTime * 24;
+  ctx.beginPath();
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const r = ARENA.spawnRadius - (ARENA.spawnRadius - ARENA.innerHazardRadius) * t;
     const a = startAngle + totalRotations * t;
     const px = xc + Math.cos(a) * r;
     const py = yc + Math.sin(a) * r;
@@ -552,29 +569,29 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.setLineDash([]);
   ctx.restore();
 
-  // 2. Inner Defense Ring (8 Turrets Placement Orbit)
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.25)';
-  ctx.lineWidth = 1.8;
+  // 2. Defense Bastion Perimeter Ring (Connecting the 8 Defense Slots)
+  ctx.strokeStyle = 'rgba(0, 229, 255, 0.22)';
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.arc(xc, yc, ARENA.orbitRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // 3. Inner Core Danger Perimeter (Breach Warning Zone)
-  ctx.strokeStyle = 'rgba(239, 68, 68, 0.55)';
-  ctx.lineWidth = 2;
+  // 3. Inner Core Breach Danger Ring
+  ctx.strokeStyle = 'rgba(239, 68, 68, 0.40)';
+  ctx.lineWidth = 1.2;
   ctx.setLineDash([4, 4]);
   ctx.beginPath();
-  ctx.arc(xc, yc, ARENA.coreRadius + 4, 0, Math.PI * 2);
+  ctx.arc(xc, yc, ARENA.innerHazardRadius, 0, Math.PI * 2);
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // Soft Danger Warning Glow around Core
-  const dangerGrad = ctx.createRadialGradient(xc, yc, ARENA.coreRadius - 5, xc, yc, ARENA.coreRadius + 16);
-  dangerGrad.addColorStop(0, 'rgba(239, 68, 68, 0.22)');
+  // Soft Danger Glow at Core
+  const dangerGrad = ctx.createRadialGradient(xc, yc, ARENA.coreRadius - 5, xc, yc, ARENA.coreRadius + 12);
+  dangerGrad.addColorStop(0, 'rgba(239, 68, 68, 0.25)');
   dangerGrad.addColorStop(1, 'rgba(239, 68, 68, 0)');
   ctx.fillStyle = dangerGrad;
   ctx.beginPath();
-  ctx.arc(xc, yc, ARENA.coreRadius + 16, 0, Math.PI * 2);
+  ctx.arc(xc, yc, ARENA.coreRadius + 12, 0, Math.PI * 2);
   ctx.fill();
 
   // 4. Single North Spawn Warp Gate - Sleek Cosmic Singularity Gate
@@ -2987,7 +3004,7 @@ export class OrbitGuardGame {
   }
 
   updateEnemies(dt) {
-    const radialDriftRate = (ARENA.spawnRadius - ARENA.coreRadius) / 36.0; // Smooth 36s inward drift for comfortable tracking
+    const radialDriftRate = (ARENA.spawnRadius - ARENA.innerHazardRadius) / 36.0; // Smooth 36s inward drift for comfortable tracking
 
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const e = this.enemies[i];
@@ -3036,7 +3053,7 @@ export class OrbitGuardGame {
       }
 
       // Check Core Breach Collision
-      if (e.polarRadius <= ARENA.coreRadius) {
+      if (e.polarRadius <= ARENA.innerHazardRadius) {
         this.handleCoreBreach(e);
         this.enemies.splice(i, 1);
       }
