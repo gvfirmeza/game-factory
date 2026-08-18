@@ -54,10 +54,7 @@
     "outerSpawnOrbit": {
       "radius": 172,
       "portals": [
-        { "id": "portal_north", "angleDeg": 270, "angleRad": 4.7124, "x": 225.0, "y": 113.0, "compass": "N" },
-        { "id": "portal_east",  "angleDeg": 0,   "angleRad": 0.0000, "x": 397.0, "y": 285.0, "compass": "E" },
-        { "id": "portal_south", "angleDeg": 90,  "angleRad": 1.5708, "x": 225.0, "y": 457.0, "compass": "S" },
-        { "id": "portal_west",  "angleDeg": 180, "angleRad": 3.1416, "x": 53.0,  "y": 285.0, "compass": "W" }
+        { "id": "portal_north", "angleDeg": 270, "angleRad": -1.5708, "x": 225.0, "y": 113.0, "compass": "N" }
       ]
     }
   },

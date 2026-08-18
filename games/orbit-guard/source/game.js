@@ -52,10 +52,7 @@ export const ARENA = {
   ],
   recycleSlot: { id: 'recycle', x: 378, y: 520, radius: 24, refundPercent: 0.70 },
   portals: [
-    { id: 'portal_north', angleDeg: 270, angleRad: 4.7124, x: 225.0, y: 113.0, name: 'North Portal' },
-    { id: 'portal_east',  angleDeg: 0,   angleRad: 0.0000, x: 397.0, y: 285.0, name: 'East Portal' },
-    { id: 'portal_south', angleDeg: 90,  angleRad: 1.5708, x: 225.0, y: 457.0, name: 'South Portal' },
-    { id: 'portal_west',  angleDeg: 180, angleRad: 3.1416, x: 53.0,  y: 285.0, name: 'West Portal' }
+    { id: 'portal_north', angleDeg: 270, angleRad: -Math.PI / 2, x: 225.0, y: 113.0, name: 'Main Warp Gate' }
   ]
 };
 
@@ -167,15 +164,15 @@ export const ARCHETYPES = {
 };
 
 export const ENEMY_TYPES = {
-  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 40,   speedDeg: 22, armor: 0.00, coreDmg: 10, gold: 3,   radius: 12, color: '#76FF03' },
-  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 22,   speedDeg: 48, armor: 0.00, coreDmg: 8,  gold: 4,   radius: 10, color: '#FFD600' },
-  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 160,  speedDeg: 12, armor: 0.40, coreDmg: 25, gold: 10,  radius: 18, color: '#D50000' },
-  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 75,   speedDeg: 18, armor: 0.00, coreDmg: 15, gold: 8,   radius: 16, color: '#AA00FF', splitCount: 5 },
-  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 12,   speedDeg: 36, armor: 0.00, coreDmg: 3,  gold: 1,   radius: 6,  color: '#00E676' },
-  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 90,   speedDeg: 15, armor: 0.10, coreDmg: 20, gold: 12,  radius: 14, color: '#00B0FF', shootCooldown: 6.0 },
-  iron_colossus:  { id: 'iron_colossus',  name: 'Iron Colossus',  baseHp: 1500, speedDeg: 10, armor: 0.20, coreDmg: 35, gold: 50,  radius: 30, color: '#EF4444' },
-  hydra_queen:    { id: 'hydra_queen',    name: 'Hydra Queen',    baseHp: 3500, speedDeg: 12, armor: 0.00, coreDmg: 40, gold: 80,  radius: 32, color: '#10B981' },
-  chrono_wraith:  { id: 'chrono_wraith',  name: 'Chrono Wraith',  baseHp: 8000, speedDeg: 14, armor: 0.00, coreDmg: 50, gold: 120, radius: 34, color: '#A855F7' }
+  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 55,   speedDeg: 24, armor: 0.00, coreDmg: 12, gold: 3,   radius: 12, color: '#76FF03' },
+  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 32,   speedDeg: 50, armor: 0.00, coreDmg: 10, gold: 4,   radius: 10, color: '#FFD600' },
+  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 240,  speedDeg: 14, armor: 0.40, coreDmg: 28, gold: 12,  radius: 18, color: '#D50000' },
+  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 110,  speedDeg: 20, armor: 0.00, coreDmg: 16, gold: 10,  radius: 16, color: '#AA00FF', splitCount: 5 },
+  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 18,   speedDeg: 38, armor: 0.00, coreDmg: 4,  gold: 1,   radius: 6,  color: '#00E676' },
+  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 140,  speedDeg: 16, armor: 0.10, coreDmg: 22, gold: 14,  radius: 14, color: '#00B0FF', shootCooldown: 5.0 },
+  iron_colossus:  { id: 'iron_colossus',  name: 'Iron Colossus',  baseHp: 2200, speedDeg: 10, armor: 0.25, coreDmg: 45, gold: 60,  radius: 30, color: '#EF4444' },
+  hydra_queen:    { id: 'hydra_queen',    name: 'Hydra Queen',    baseHp: 5500, speedDeg: 12, armor: 0.00, coreDmg: 50, gold: 100, radius: 32, color: '#10B981' },
+  chrono_wraith:  { id: 'chrono_wraith',  name: 'Chrono Wraith',  baseHp: 12000,speedDeg: 14, armor: 0.00, coreDmg: 60, gold: 150, radius: 34, color: '#A855F7' }
 };
 
 export const WORKSHOP_DEFS = [
@@ -532,40 +529,37 @@ export function drawCosmicBackground(ctx, width, height, animTime, stars) {
 export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.save();
 
-  // 1. Inward Spiral Guide Track (Visualizes enemy trajectory toward center)
+  // 1. Single Clean, Flowing Orbital Spiral Path Track
   ctx.save();
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.14)';
-  ctx.lineWidth = 1.5;
-  ctx.setLineDash([4, 6]);
+  ctx.strokeStyle = 'rgba(0, 229, 255, 0.40)';
+  ctx.lineWidth = 2.0;
+  ctx.setLineDash([6, 8]);
+  ctx.lineDashOffset = -animTime * 20; // Animated forward energy flow
   ctx.beginPath();
-  for (let t = 0; t <= 1.0; t += 0.01) {
+  const startAngle = -Math.PI / 2; // North Warp Gate (225, 113)
+  const totalRotations = 1.5 * Math.PI * 2; // 540 degrees spiral
+  const steps = 80;
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
     const r = ARENA.spawnRadius - (ARENA.spawnRadius - ARENA.coreRadius) * t;
-    const a = t * Math.PI * 3.0; // 540 degrees
+    const a = startAngle + totalRotations * t;
     const px = xc + Math.cos(a) * r;
     const py = yc + Math.sin(a) * r;
-    if (t === 0) ctx.moveTo(px, py);
+    if (i === 0) ctx.moveTo(px, py);
     else ctx.lineTo(px, py);
   }
   ctx.stroke();
+  ctx.setLineDash([]);
   ctx.restore();
 
-  // 2. Outer Spawn Orbit Ring
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.24)';
-  ctx.lineWidth = 1.5;
-  ctx.setLineDash([6, 6]);
+  // 2. Inner Defense Ring (8 Turrets Placement Orbit)
+  ctx.strokeStyle = 'rgba(0, 229, 255, 0.25)';
+  ctx.lineWidth = 1.8;
   ctx.beginPath();
-  ctx.arc(xc, yc, ARENA.spawnRadius, 0, Math.PI * 2);
+  ctx.arc(xc, yc, ARENA.orbitRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // 3. Mid Combat Orbit Ring
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.15)';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([4, 4]);
-  ctx.beginPath();
-  ctx.arc(xc, yc, ARENA.midOrbitRadius, 0, Math.PI * 2);
-  ctx.stroke();
-
-  // 4. Inner Core Danger Perimeter (Breach Warning Zone)
+  // 3. Inner Core Danger Perimeter (Breach Warning Zone)
   ctx.strokeStyle = 'rgba(239, 68, 68, 0.55)';
   ctx.lineWidth = 2;
   ctx.setLineDash([4, 4]);
@@ -583,16 +577,10 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.arc(xc, yc, ARENA.coreRadius + 16, 0, Math.PI * 2);
   ctx.fill();
 
-  // 5. Inner Defense Ring (8 Turrets Placement Orbit)
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.38)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(xc, yc, ARENA.orbitRadius, 0, Math.PI * 2);
-  ctx.stroke();
-
-  // 6. Spawn Portals (N, E, S, W) - Sleek Cosmic Singularity Gates
-  for (const portal of ARENA.portals) {
-    const pulse = 0.5 + Math.sin(animTime * 3 + portal.angleRad) * 0.5;
+  // 4. Single North Spawn Warp Gate - Sleek Cosmic Singularity Gate
+  const portal = ARENA.portals[0];
+  if (portal) {
+    const pulse = 0.5 + Math.sin(animTime * 3) * 0.5;
     
     // Soft outer nebula beacon
     const pGrad = ctx.createRadialGradient(portal.x, portal.y, 2, portal.x, portal.y, 18);
@@ -607,7 +595,7 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
     // Rotating Hologram Ring
     ctx.save();
     ctx.translate(portal.x, portal.y);
-    ctx.rotate(animTime * 2.0 + portal.angleRad);
+    ctx.rotate(animTime * 2.0);
     ctx.strokeStyle = '#EF4444';
     ctx.lineWidth = 1.8;
     ctx.beginPath();
@@ -625,7 +613,7 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
     ctx.restore();
   }
 
-  // 7. Standby Bench Rail (Bottom)
+  // 5. Standby Bench Rail (Bottom)
   ctx.fillStyle = 'rgba(16, 22, 40, 0.85)';
   ctx.strokeStyle = 'rgba(56, 189, 248, 0.32)';
   ctx.lineWidth = 1.5;
@@ -2279,7 +2267,8 @@ export class OrbitGuardGame {
     if (!unit) return;
 
     const baseSummons = Math.pow(2, unit.tier - 1);
-    const refund = Math.floor(baseSummons * 15 * ARENA.recycleSlot.refundPercent * this.getWorkshopStat('goldBonus'));
+    const currentPrice = this.getSummonCost();
+    const refund = Math.max(10, Math.floor(baseSummons * currentPrice * 0.70 * this.getWorkshopStat('goldBonus')));
 
     this.sentinels.delete(sourceSlotId);
     this.addGold(refund);
@@ -2507,23 +2496,23 @@ export class OrbitGuardGame {
   buildWaveSpawnQueue(waveNum) {
     const isBossWave = waveNum % 5 === 0;
 
-    // Scaling formulas
-    const hpMult = Math.pow(1 + 0.16 * (waveNum - 1), 1.15);
-    const speedMult = Math.min(1.6, 1.0 + 0.02 * (waveNum - 1));
+    // Escalating exponential difficulty scaling curve
+    const hpMult = Math.pow(1.18, waveNum - 1) * (1.0 + 0.08 * (waveNum - 1));
+    const speedMult = Math.min(1.7, 1.0 + 0.025 * (waveNum - 1));
 
     if (isBossWave) {
       let bossId = 'iron_colossus';
-      let bossBaseHp = 1500;
-      let bossSpeed = 18;
+      let bossBaseHp = 2200;
+      let bossSpeed = 10;
 
       if (waveNum === 10) {
         bossId = 'hydra_queen';
-        bossBaseHp = 3500;
-        bossSpeed = 22;
+        bossBaseHp = 5500;
+        bossSpeed = 12;
       } else if (waveNum >= 15) {
         bossId = 'chrono_wraith';
-        bossBaseHp = 8000;
-        bossSpeed = 26;
+        bossBaseHp = 12000;
+        bossSpeed = 14;
       }
 
       this.spawnQueue.push({
@@ -2535,21 +2524,24 @@ export class OrbitGuardGame {
         bossId
       });
 
-      // Supporting escorts
-      for (let i = 0; i < 4 + waveNum; i++) {
+      // Supporting escorts during boss fight
+      const escortCount = 6 + waveNum * 2;
+      for (let i = 0; i < escortCount; i++) {
+        const type = MathUtils.randomChoice(['void_crawler', 'swift_dart', 'armored_bruiser', 'swarm_pod']);
+        const def = ENEMY_TYPES[type];
         this.spawnQueue.push({
-          type: MathUtils.randomChoice(['void_crawler', 'swift_dart', 'swarm_pod']),
-          hp: Math.floor(40 * hpMult),
-          speed: 45 * speedMult,
-          portal: MathUtils.randomChoice(ARENA.portals),
+          type,
+          hp: Math.floor(def.baseHp * hpMult),
+          speed: def.speedDeg * speedMult,
+          portal: ARENA.portals[0],
           isBoss: false
         });
       }
       return;
     }
 
-    // Regular Swarm Generation
-    const totalCount = 8 + waveNum * 3;
+    // Regular Incursion Swarm Generation
+    const totalCount = 10 + waveNum * 4;
     const allowedTypes = ['void_crawler'];
     if (waveNum >= 2) allowedTypes.push('swift_dart');
     if (waveNum >= 3) allowedTypes.push('armored_bruiser');
@@ -2563,7 +2555,7 @@ export class OrbitGuardGame {
         type,
         hp: Math.floor(def.baseHp * hpMult),
         speed: def.speedDeg * speedMult,
-        portal: MathUtils.randomChoice(ARENA.portals),
+        portal: ARENA.portals[0],
         isBoss: false
       });
     }
@@ -2693,6 +2685,9 @@ export class OrbitGuardGame {
     const globalSpeedBuff = this.getWorkshopStat('attackSpeed') * (this.surgeBuffTimer > 0 ? 1.5 : 1.0);
 
     for (const [slotId, s] of this.sentinels) {
+      // Standby / Bench units do NOT attack
+      if (slotId.startsWith('bench')) continue;
+
       if (s.scaleAnim > 1.0) {
         s.scaleAnim = Math.max(1.0, s.scaleAnim - dt * 2.5);
       }
@@ -2907,10 +2902,13 @@ export class OrbitGuardGame {
     enemy.hp -= damage;
     enemy.hitFlashTimer = 0.08;
 
-    this.juice.spawnFloatingText(`${Math.round(damage)}`, enemy.x, enemy.y - 10, {
-      color: isCrit ? '#FFD166' : damageType === 'cryo' ? '#38BDF8' : '#F8FAFC',
-      size: isCrit ? 18 : 13
-    });
+    // Only show critical hit popups to avoid continuous floating text spam
+    if (isCrit) {
+      this.juice.spawnFloatingText('CRIT!', enemy.x, enemy.y - 12, {
+        color: '#FFD166',
+        size: 15
+      });
+    }
 
     if (enemy.hp <= 0) {
       this.killEnemy(enemy);
@@ -3256,14 +3254,13 @@ export class OrbitGuardGame {
     // Layer 30: Burning Plasma Pools & Shockwaves
     this.layeredRenderer.draw(RenderLayers.EFFECTS, (c) => {
       for (const pool of this.burningPools) {
-        const pGrad = c.createRadialGradient(pool.x, pool.y, 2, pool.x, pool.y, pool.radius);
-        pGrad.addColorStop(0, 'rgba(255, 158, 0, 0.6)');
-        pGrad.addColorStop(0.7, 'rgba(234, 88, 12, 0.3)');
-        pGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        c.fillStyle = pGrad;
+        c.strokeStyle = 'rgba(239, 68, 68, 0.45)';
+        c.lineWidth = 1.5;
+        c.setLineDash([3, 4]);
         c.beginPath();
         c.arc(pool.x, pool.y, pool.radius, 0, Math.PI * 2);
-        c.fill();
+        c.stroke();
+        c.setLineDash([]);
       }
 
       if (this.activeShockwave) {
