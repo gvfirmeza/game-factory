@@ -164,15 +164,15 @@ export const ARCHETYPES = {
 };
 
 export const ENEMY_TYPES = {
-  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 55,   speedDeg: 24, armor: 0.00, coreDmg: 12, gold: 3,   radius: 12, color: '#76FF03' },
-  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 32,   speedDeg: 50, armor: 0.00, coreDmg: 10, gold: 4,   radius: 10, color: '#FFD600' },
-  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 240,  speedDeg: 14, armor: 0.40, coreDmg: 28, gold: 12,  radius: 18, color: '#D50000' },
-  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 110,  speedDeg: 20, armor: 0.00, coreDmg: 16, gold: 10,  radius: 16, color: '#AA00FF', splitCount: 5 },
-  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 18,   speedDeg: 38, armor: 0.00, coreDmg: 4,  gold: 1,   radius: 6,  color: '#00E676' },
-  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 140,  speedDeg: 16, armor: 0.10, coreDmg: 22, gold: 14,  radius: 14, color: '#00B0FF', shootCooldown: 5.0 },
-  iron_colossus:  { id: 'iron_colossus',  name: 'Iron Colossus',  baseHp: 2200, speedDeg: 10, armor: 0.25, coreDmg: 45, gold: 60,  radius: 30, color: '#EF4444' },
-  hydra_queen:    { id: 'hydra_queen',    name: 'Hydra Queen',    baseHp: 5500, speedDeg: 12, armor: 0.00, coreDmg: 50, gold: 100, radius: 32, color: '#10B981' },
-  chrono_wraith:  { id: 'chrono_wraith',  name: 'Chrono Wraith',  baseHp: 12000,speedDeg: 14, armor: 0.00, coreDmg: 60, gold: 150, radius: 34, color: '#A855F7' }
+  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 110,  speedDeg: 42, armor: 0.00, coreDmg: 15, gold: 4,   radius: 12, color: '#76FF03' },
+  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 65,   speedDeg: 85, armor: 0.00, coreDmg: 12, gold: 5,   radius: 10, color: '#FFD600' },
+  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 420,  speedDeg: 26, armor: 0.40, coreDmg: 35, gold: 14,  radius: 18, color: '#D50000' },
+  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 240,  speedDeg: 36, armor: 0.00, coreDmg: 20, gold: 12,  radius: 16, color: '#AA00FF', splitCount: 5 },
+  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 35,   speedDeg: 72, armor: 0.00, coreDmg: 6,  gold: 2,   radius: 6,  color: '#00E676' },
+  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 300,  speedDeg: 28, armor: 0.10, coreDmg: 25, gold: 16,  radius: 14, color: '#00B0FF', shootCooldown: 4.5 },
+  iron_colossus:  { id: 'iron_colossus',  name: 'Iron Colossus',  baseHp: 5500, speedDeg: 20, armor: 0.25, coreDmg: 60, gold: 80,  radius: 30, color: '#EF4444' },
+  hydra_queen:    { id: 'hydra_queen',    name: 'Hydra Queen',    baseHp: 14000,speedDeg: 24, armor: 0.00, coreDmg: 70, gold: 140, radius: 32, color: '#10B981' },
+  chrono_wraith:  { id: 'chrono_wraith',  name: 'Chrono Wraith',  baseHp: 32000,speedDeg: 28, armor: 0.00, coreDmg: 80, gold: 200, radius: 34, color: '#A855F7' }
 };
 
 export const WORKSHOP_DEFS = [
@@ -2596,22 +2596,22 @@ export class OrbitGuardGame {
     const isBossWave = waveNum % 5 === 0;
 
     // Escalating exponential difficulty scaling curve
-    const hpMult = Math.pow(1.18, waveNum - 1) * (1.0 + 0.08 * (waveNum - 1));
-    const speedMult = Math.min(1.7, 1.0 + 0.025 * (waveNum - 1));
+    const hpMult = Math.pow(1.22, waveNum - 1) * (1.0 + 0.10 * (waveNum - 1));
+    const speedMult = Math.min(1.8, 1.0 + 0.03 * (waveNum - 1));
 
     if (isBossWave) {
       let bossId = 'iron_colossus';
-      let bossBaseHp = 2200;
-      let bossSpeed = 10;
+      let bossBaseHp = 5500;
+      let bossSpeed = 20;
 
       if (waveNum === 10) {
         bossId = 'hydra_queen';
-        bossBaseHp = 5500;
-        bossSpeed = 12;
+        bossBaseHp = 14000;
+        bossSpeed = 24;
       } else if (waveNum >= 15) {
         bossId = 'chrono_wraith';
-        bossBaseHp = 12000;
-        bossSpeed = 14;
+        bossBaseHp = 32000;
+        bossSpeed = 28;
       }
 
       this.spawnQueue.push({
@@ -2624,7 +2624,7 @@ export class OrbitGuardGame {
       });
 
       // Supporting escorts during boss fight
-      const escortCount = 6 + waveNum * 2;
+      const escortCount = 8 + waveNum * 3;
       for (let i = 0; i < escortCount; i++) {
         const type = MathUtils.randomChoice(['void_crawler', 'swift_dart', 'armored_bruiser', 'swarm_pod']);
         const def = ENEMY_TYPES[type];
@@ -2640,7 +2640,7 @@ export class OrbitGuardGame {
     }
 
     // Regular Incursion Swarm Generation
-    const totalCount = 10 + waveNum * 4;
+    const totalCount = 12 + waveNum * 5;
     const allowedTypes = ['void_crawler'];
     if (waveNum >= 2) allowedTypes.push('swift_dart');
     if (waveNum >= 3) allowedTypes.push('armored_bruiser');
@@ -2733,9 +2733,12 @@ export class OrbitGuardGame {
     if (this.waveState === 'SPAWNING') {
       this.spawnIntervalTimer -= scaledDt;
       if (this.spawnIntervalTimer <= 0 && this.spawnQueue.length > 0) {
-        const spec = this.spawnQueue.shift();
-        this.spawnEnemy(spec);
-        this.spawnIntervalTimer = 0.65;
+        const burstCount = this.wave >= 4 ? Math.min(2, this.spawnQueue.length) : 1;
+        for (let b = 0; b < burstCount; b++) {
+          const spec = this.spawnQueue.shift();
+          if (spec) this.spawnEnemy(spec);
+        }
+        this.spawnIntervalTimer = 0.38;
       }
       if (this.spawnQueue.length === 0) {
         this.waveState = 'WAVE_ACTIVE';
@@ -3086,7 +3089,7 @@ export class OrbitGuardGame {
   }
 
   updateEnemies(dt) {
-    const radialDriftRate = (ARENA.spawnRadius - ARENA.innerHazardRadius) / 36.0; // Smooth 36s inward drift for comfortable tracking
+    const radialDriftRate = (ARENA.spawnRadius - ARENA.innerHazardRadius) / 16.0; // Dynamic 16s inward drift for engaging arcade pacing
 
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const e = this.enemies[i];
