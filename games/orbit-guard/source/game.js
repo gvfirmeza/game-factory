@@ -1995,9 +1995,64 @@ export class OrbitGuardGame {
       });
     }
 
+    // Playgama Rewarded Ad buttons
+    const btnAirdrop = document.getElementById('btn-airdrop');
+    if (btnAirdrop) {
+      btnAirdrop.addEventListener('click', () => {
+        this.audio.init();
+        this.playgama.showRewarded(() => {
+          this.addGold(120);
+          this.audio.playCoinDrop();
+          this.particles.burst(ARENA.center.x, ARENA.center.y, 30, '#FFD166');
+          this.juice.spawnFloatingText('+120 💰 AIR DROP!', ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 20 });
+          this.updateHUD();
+        });
+      });
+    }
+
+    const btnFreeGold = document.getElementById('btn-workshop-free-gold');
+    if (btnFreeGold) {
+      btnFreeGold.addEventListener('click', () => {
+        this.audio.init();
+        this.playgama.showRewarded(() => {
+          this.addGold(100);
+          this.audio.playCoinDrop();
+          this.renderWorkshopUI();
+          this.updateHUD();
+          this.juice.spawnFloatingText('+100 💰 TECH GRANT!', ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 18 });
+        });
+      });
+    }
+
+    const btnRevive = document.getElementById('btn-go-revive');
+    if (btnRevive) {
+      btnRevive.addEventListener('click', () => {
+        this.audio.init();
+        this.playgama.showRewarded(() => {
+          this.reviveCore();
+        });
+      });
+    }
+
+    const btnDoubleGold = document.getElementById('btn-go-double-gold');
+    if (btnDoubleGold) {
+      btnDoubleGold.addEventListener('click', () => {
+        this.audio.init();
+        this.playgama.showRewarded(() => {
+          const bonus = Math.max(50, Math.floor(this.gold * 0.8) + 50);
+          this.addGold(bonus);
+          this.audio.playCoinDrop();
+          btnDoubleGold.disabled = true;
+          btnDoubleGold.textContent = '✓ GOLD DOUBLED!';
+          this.juice.spawnFloatingText(`+${bonus} 💰 BONUS!`, ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 18 });
+        });
+      });
+    }
+
     const btnRetry = document.getElementById('btn-retry-game');
     if (btnRetry) {
       btnRetry.addEventListener('click', () => {
+        this.playgama.showInterstitial();
         this.closeAllModals();
         this.startNewRun();
       });
@@ -2029,11 +2084,13 @@ export class OrbitGuardGame {
     this.playgama.onVisibilityChange((isVisible) => {
       if (!isVisible && this.state === 'PLAYING') {
         this.state = 'PAUSED';
+        this.playgama.showBanner();
         document.getElementById('pause-modal')?.classList.remove('hidden');
       }
     });
 
     this.updateTitleRecords();
+    this.playgama.showBanner(); // Show banner in title screen
   }
 
   setupEvents() {
@@ -2088,8 +2145,22 @@ export class OrbitGuardGame {
     document.getElementById('header-hud-center')?.classList.remove('hidden');
     document.getElementById('game-hud')?.classList.remove('hidden');
     this.closeAllModals();
+    this.playgama.hideBanner();
 
     this.startWave(this.wave);
+    this.updateHUD();
+  }
+
+  reviveCore() {
+    this.coreHp = Math.floor(this.coreMaxHp * 0.5);
+    this.enemies = []; // Clear breaching invaders
+    this.state = 'PLAYING';
+    this.closeAllModals();
+    this.playgama.hideBanner();
+    this.audio.playVictoryFanfare();
+    this.particles.burst(ARENA.center.x, ARENA.center.y, 40, '#00F5D4');
+    this.juice.spawnFloatingText('CORE REVIVED (+50% HP)!', ARENA.center.x, ARENA.center.y - 40, { color: '#00F5D4', size: 20 });
+    this.showWaveBanner(`WAVE ${this.wave}`, 'DEFENSE RESUMED', 2.0);
     this.updateHUD();
   }
 
@@ -2100,33 +2171,44 @@ export class OrbitGuardGame {
     document.getElementById('title-overlay')?.classList.remove('hidden');
     this.closeAllModals();
     this.updateTitleRecords();
+    this.playgama.showBanner();
   }
 
   togglePause() {
     if (this.state === 'PLAYING') {
       this.state = 'PAUSED';
+      this.playgama.showBanner();
       document.getElementById('pause-modal')?.classList.remove('hidden');
     } else if (this.state === 'PAUSED') {
       this.state = 'PLAYING';
+      this.playgama.hideBanner();
       document.getElementById('pause-modal')?.classList.add('hidden');
     }
   }
 
   openWorkshopModal() {
     this.renderWorkshopUI();
+    this.playgama.showBanner();
     document.getElementById('workshop-modal')?.classList.remove('hidden');
   }
 
   closeWorkshopModal() {
     document.getElementById('workshop-modal')?.classList.add('hidden');
+    if (this.state === 'PLAYING') {
+      this.playgama.hideBanner();
+    }
   }
 
   openTutorialModal() {
+    this.playgama.showBanner();
     document.getElementById('tutorial-modal')?.classList.remove('hidden');
   }
 
   closeTutorialModal() {
     document.getElementById('tutorial-modal')?.classList.add('hidden');
+    if (this.state === 'PLAYING') {
+      this.playgama.hideBanner();
+    }
   }
 
   closeAllModals() {
@@ -3085,7 +3167,14 @@ export class OrbitGuardGame {
     document.getElementById('go-merges-val').textContent = this.saveData.totalMerges || 0;
     document.getElementById('go-kills-val').textContent = this.saveData.totalKills || 0;
 
+    const btnDoubleGold = document.getElementById('btn-go-double-gold');
+    if (btnDoubleGold) {
+      btnDoubleGold.disabled = false;
+      btnDoubleGold.textContent = '🎁 2X RUN GOLD (WATCH AD)';
+    }
+
     document.getElementById('game-over-modal')?.classList.remove('hidden');
+    this.playgama.showBanner();
     this.audio.playBossRoar();
     this.juice.screenShake(16);
   }

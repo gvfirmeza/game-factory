@@ -29,5 +29,24 @@
     "originalIP": true,
     "zeroTrackers": true,
     "playgamaSdkReady": true
+  },
+  "advertisement": {
+    "banners": {
+      "supported": true,
+      "placements": ["title_screen", "workshop_modal", "pause_screen", "game_over_screen"]
+    },
+    "rewarded": {
+      "supported": true,
+      "placements": [
+        { "id": "airdrop_gold", "reward": "+120 Gold Supply Drop", "location": "in_game_hud" },
+        { "id": "workshop_grant", "reward": "+100 Gold Tech Grant", "location": "workshop_modal" },
+        { "id": "core_revive", "reward": "Revive Core (+50% HP) and continue run", "location": "game_over_modal" },
+        { "id": "double_gold", "reward": "2x Run Gold Bonus", "location": "game_over_modal" }
+      ]
+    },
+    "interstitial": {
+      "supported": true,
+      "placements": ["boss_wave_clear", "run_retry"]
+    }
   }
 }

@@ -844,3 +844,105 @@ canvas {
   font-weight: 900;
   color: var(--gold-bright);
 }
+
+/* =========================================================================
+   PLAYGAMA ADS & REWARDED REWARD STYLING
+   ========================================================================= */
+.hud-airdrop-pill {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(234, 88, 12, 0.35));
+  border: 1.5px solid var(--gold-bright);
+  border-radius: 18px;
+  padding: 4px 8px;
+  color: var(--gold-bright);
+  font-family: 'Orbitron', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
+  animation: airdropPulse 2.2s infinite ease-in-out;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.hud-airdrop-pill:active {
+  transform: scale(0.92);
+}
+
+@keyframes airdropPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 8px rgba(245, 158, 11, 0.2); }
+  50% { transform: scale(1.05); box-shadow: 0 0 16px rgba(245, 158, 11, 0.5); }
+}
+
+.workshop-ad-grant-btn {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(245, 158, 11, 0.25));
+  border: 1.5px solid var(--gold-bright);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  cursor: pointer;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.2);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.workshop-ad-grant-btn:active {
+  transform: scale(0.96);
+  filter: brightness(1.2);
+}
+
+.btn-modal-revive {
+  background: linear-gradient(135deg, #10B981, #059669);
+  border: 2px solid #34D399;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-modal-revive:active {
+  transform: scale(0.96);
+  filter: brightness(1.2);
+}
+
+.btn-modal-reward {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.4));
+  border: 1.5px solid var(--gold-bright);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--gold-bright);
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-modal-reward:active {
+  transform: scale(0.96);
+  filter: brightness(1.2);
+}

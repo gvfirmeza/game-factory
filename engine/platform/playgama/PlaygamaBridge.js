@@ -226,6 +226,30 @@ export class PlaygamaBridge {
   // ADVERTISEMENT API
   // =========================================================================
 
+  async showBanner(options = {}) {
+    if (this.bridge?.advertisement?.showBanner) {
+      try {
+        return await this.bridge.advertisement.showBanner(options);
+      } catch (e) {
+        console.warn('[PlaygamaBridge] showBanner failed:', e);
+      }
+    } else {
+      console.log('[PlaygamaBridge] Mock showBanner executed');
+    }
+  }
+
+  async hideBanner() {
+    if (this.bridge?.advertisement?.hideBanner) {
+      try {
+        return await this.bridge.advertisement.hideBanner();
+      } catch (e) {
+        console.warn('[PlaygamaBridge] hideBanner failed:', e);
+      }
+    } else {
+      console.log('[PlaygamaBridge] Mock hideBanner executed');
+    }
+  }
+
   async showInterstitial() {
     if (this.bridge?.advertisement?.showInterstitial) {
       try {
@@ -233,24 +257,46 @@ export class PlaygamaBridge {
       } catch (e) {
         console.warn('[PlaygamaBridge] Interstitial ad failed:', e);
       }
+    } else {
+      console.log('[PlaygamaBridge] Mock showInterstitial executed');
+      return true;
     }
   }
 
   async showRewarded(onRewardedCallback) {
     if (this.bridge?.advertisement?.showRewarded) {
       try {
-        if (typeof onRewardedCallback === 'function' && this.bridge.advertisement.on) {
-          const handler = (state) => {
-            if (state === 'rewarded') {
-              onRewardedCallback();
-            }
-          };
-          this.bridge.advertisement.on('rewarded_state_changed', handler);
+        if (typeof onRewardedCallback === 'function') {
+          let rewardedTriggered = false;
+          if (this.bridge.advertisement.on) {
+            const handler = (state) => {
+              if (state === 'rewarded' && !rewardedTriggered) {
+                rewardedTriggered = true;
+                onRewardedCallback();
+              }
+            };
+            this.bridge.advertisement.on('rewarded_state_changed', handler);
+          }
+          const res = await this.bridge.advertisement.showRewarded();
+          if (res === true && !rewardedTriggered) {
+            rewardedTriggered = true;
+            onRewardedCallback();
+          }
+          return res;
         }
         return await this.bridge.advertisement.showRewarded();
       } catch (e) {
-        console.warn('[PlaygamaBridge] Rewarded ad failed:', e);
+        console.warn('[PlaygamaBridge] Rewarded ad failed, executing callback fallback:', e);
+        if (typeof onRewardedCallback === 'function') {
+          onRewardedCallback();
+        }
       }
+    } else {
+      console.log('[PlaygamaBridge] Mock showRewarded: granting reward immediately');
+      if (typeof onRewardedCallback === 'function') {
+        onRewardedCallback();
+      }
+      return true;
     }
   }
 
