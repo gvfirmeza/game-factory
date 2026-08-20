@@ -1,12 +1,10 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/games/orbit-guard/source/index.html" },
-    { "source": "/play", "destination": "/games/orbit-guard/source/index.html" },
-    { "source": "/orbit-guard", "destination": "/games/orbit-guard/source/index.html" },
-    { "source": "/studio", "destination": "/studio/index.html" },
-    { "source": "/studio/:path*", "destination": "/studio/:path*" }
+  "redirects": [
+    { "source": "/", "destination": "/games/orbit-guard/source/index.html", "permanent": false },
+    { "source": "/play", "destination": "/games/orbit-guard/source/index.html", "permanent": false },
+    { "source": "/orbit-guard", "destination": "/games/orbit-guard/source/index.html", "permanent": false }
   ],
   "headers": [
     {
