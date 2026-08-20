@@ -369,28 +369,17 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState) {
     }
     ctx.restore();
 
-    // Sawmill Queue & Status Badge
-    if (sawmillState) {
-      if (sawmillState.queue > 0) {
-        // Cutting progress radial indicator
-        const prog = sawmillState.timer / 0.35;
-        ctx.strokeStyle = '#00E676';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.arc(sawX, sawY, 28, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2);
-        ctx.stroke();
+    // Bottom label banner for sawmill
+    ctx.fillStyle = 'rgba(15, 10, 5, 0.90)';
+    ctx.beginPath();
+    ctx.roundRect(x + 8, y + h - 22, w - 16, 20, 6);
+    ctx.fill();
 
-        ctx.fillStyle = '#FFD54F';
-        ctx.font = 'bold 11px Fredoka, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(`⚙️ Slicing (${sawmillState.queue})`, x + w / 2, y + 18);
-      } else if (sawmillState.ready > 0) {
-        ctx.fillStyle = '#69F0AE';
-        ctx.font = 'bold 11px Fredoka, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(`🪵 Planks Ready: ${sawmillState.ready}`, x + w / 2, y + 18);
-      }
-    }
+    ctx.fillStyle = '#ffe082';
+    ctx.font = 'bold 12px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`${icon} ${name}`, x + w / 2, y + h - 12);
   } else if (bKey === 'sellZone') {
     // Golden Market pad
     ctx.fillStyle = '#ffd54f';
@@ -405,19 +394,44 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState) {
     ctx.beginPath();
     ctx.arc(x + w / 2, y + h / 2 - 4, 16, 0, Math.PI * 2);
     ctx.fill();
+
+    // Bottom label banner for sell zone
+    ctx.fillStyle = 'rgba(15, 10, 5, 0.90)';
+    ctx.beginPath();
+    ctx.roundRect(x + 8, y + h - 22, w - 16, 20, 6);
+    ctx.fill();
+
+    ctx.fillStyle = '#ffe082';
+    ctx.font = 'bold 12px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`${icon} ${name}`, x + w / 2, y + h - 12);
+  } else {
+    // Blacksmith, Backpack Depot, Worker Barracks: Label & Icon in the CENTER of the wooden square
+    const centerX = x + w / 2;
+    const centerY = y + h / 2;
+
+    // Big Center Icon
+    ctx.font = '26px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(icon, centerX, centerY - 10);
+
+    // Center Name Badge
+    ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
+    ctx.beginPath();
+    ctx.roundRect(centerX - (w - 20) / 2, centerY + 8, w - 20, 20, 6);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 179, 0, 0.35)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = '#ffe082';
+    ctx.font = 'bold 11px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(name, centerX, centerY + 18);
   }
-
-  // Label banner
-  ctx.fillStyle = 'rgba(15, 10, 5, 0.90)';
-  ctx.beginPath();
-  ctx.roundRect(x + 8, y + h - 22, w - 16, 20, 6);
-  ctx.fill();
-
-  ctx.fillStyle = '#ffe082';
-  ctx.font = 'bold 12px Fredoka, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(`${icon} ${name}`, x + w / 2, y + h - 12);
 
   ctx.restore();
 }
