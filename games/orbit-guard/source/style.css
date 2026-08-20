@@ -9,6 +9,10 @@
   scrollbar-color: rgba(0, 229, 255, 0.45) rgba(15, 23, 42, 0.65);
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* Custom modern cyber scrollbars */
 ::-webkit-scrollbar {
   width: 6px;

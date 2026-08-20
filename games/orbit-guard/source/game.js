@@ -2825,13 +2825,13 @@ export class OrbitGuardGame {
    * ========================================================================== */
 
   update(dt) {
+    this.animTime += dt;
+    this.particles.update(dt);
+    this.juice.update(dt);
+
     if (this.state !== 'PLAYING') return;
 
     const scaledDt = dt * (this.timeScale || 1.0);
-
-    this.animTime += scaledDt;
-    this.particles.update(scaledDt);
-    this.juice.update(scaledDt);
 
     // Timers & Buffs
     if (this.coreDamagedTimer > 0) this.coreDamagedTimer -= scaledDt;
