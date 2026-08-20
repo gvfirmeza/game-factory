@@ -3629,7 +3629,15 @@ export class OrbitGuardGame {
  * 12. BOOTSTRAP ENTRY POINT
  * ============================================================================ */
 
-window.addEventListener('DOMContentLoaded', () => {
+function bootOrbitGuard() {
   const game = new OrbitGuardGame();
   game.init().catch((err) => console.error('Error starting Orbit Guard:', err));
-});
+}
+
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', bootOrbitGuard);
+  } else {
+    bootOrbitGuard();
+  }
+}
