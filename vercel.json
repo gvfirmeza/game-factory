@@ -1,6 +1,14 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/games/:game/game.js", "destination": "/games/:game/source/game.js" },
+    { "source": "/games/:game/style.css", "destination": "/games/:game/source/style.css" },
+    { "source": "/games/:game/playgama-bridge-config.json", "destination": "/games/:game/source/playgama-bridge-config.json" },
+    { "source": "/games/:game/manifest.json", "destination": "/games/:game/manifest.json" },
+    { "source": "/games/:game", "destination": "/games/:game/source/index.html" },
+    { "source": "/games/:game/", "destination": "/games/:game/source/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
