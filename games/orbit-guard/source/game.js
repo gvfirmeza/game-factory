@@ -1919,14 +1919,61 @@ export class OrbitGuardGame {
     }
   }
 
+  updateMuteButtonUI() {
+    const btnMute = document.getElementById('btn-mute');
+    if (btnMute) {
+      btnMute.textContent = this.audio.isMuted ? '🔇' : '🔊';
+    }
+  }
+
   async init() {
     await this.playgama.init();
     this.saveData = await SaveManager.load(this.playgama);
-    this.audio.setMuted(this.saveData.settings?.isMuted || false);
+
+    // Initial Host Platform Audio Permission Check (Playgama Official SDK)
+    const platformAudioEnabled = this.playgama.isAudioEnabled();
+    const userMuted = this.saveData.settings?.isMuted || false;
+    this.audio.setMuted(!platformAudioEnabled || userMuted);
 
     this.applyWorkshopStats();
     this.setupDOM();
     this.setupEvents();
+
+    // Listen for host platform audio state changes (e.g. host tab mute)
+    this.playgama.onAudioStateChange((isEnabled) => {
+      console.log('[Playgama] Host audio state changed:', isEnabled);
+      if (!isEnabled) {
+        this.audio.setMuted(true);
+      } else {
+        const userSavedMute = this.saveData.settings?.isMuted || false;
+        this.audio.setMuted(userSavedMute);
+      }
+      this.updateMuteButtonUI();
+    });
+
+    // Listen for host platform pause/resume requests (Playgama Official SDK)
+    this.playgama.onPauseStateChange((isPaused) => {
+      console.log('[Playgama] Host pause state changed:', isPaused);
+      if (isPaused) {
+        if (this.state === 'PLAYING') {
+          this.state = 'PAUSED';
+          this.audio.setMuted(true);
+          this.playgama.showBanner();
+          document.getElementById('pause-modal')?.classList.remove('hidden');
+        }
+      } else {
+        const isWorkshopOpen = !document.getElementById('workshop-modal')?.classList.contains('hidden');
+        const isGameOverOpen = !document.getElementById('game-over-modal')?.classList.contains('hidden');
+        if (this.state === 'PAUSED' && !isWorkshopOpen && !isGameOverOpen) {
+          this.state = 'PLAYING';
+          const userSavedMute = this.saveData.settings?.isMuted || false;
+          const platformAudio = this.playgama.isAudioEnabled();
+          this.audio.setMuted(!platformAudio || userSavedMute);
+          this.playgama.hideBanner();
+          document.getElementById('pause-modal')?.classList.add('hidden');
+        }
+      }
+    });
 
     // Notify Playgama platform that game is ready & interactive
     this.playgama.sendGameReady();
@@ -1961,7 +2008,7 @@ export class OrbitGuardGame {
     // Mute button
     const btnMute = document.getElementById('btn-mute');
     if (btnMute) {
-      btnMute.textContent = this.saveData.settings?.isMuted ? '🔇' : '🔊';
+      btnMute.textContent = this.audio.isMuted ? '🔇' : '🔊';
       btnMute.addEventListener('click', () => {
         this.audio.init();
         const nextMuted = !this.audio.isMuted;
@@ -2211,6 +2258,7 @@ export class OrbitGuardGame {
 
     document.getElementById('title-overlay')?.classList.add('hidden');
     document.getElementById('header-hud-center')?.classList.remove('hidden');
+    document.getElementById('btn-airdrop')?.classList.remove('hidden');
     document.getElementById('game-hud')?.classList.remove('hidden');
     this.closeAllModals();
     this.playgama.hideBanner();
@@ -2236,6 +2284,7 @@ export class OrbitGuardGame {
     this.state = 'TITLE';
     document.getElementById('game-hud')?.classList.add('hidden');
     document.getElementById('header-hud-center')?.classList.add('hidden');
+    document.getElementById('btn-airdrop')?.classList.add('hidden');
     document.getElementById('title-overlay')?.classList.remove('hidden');
     this.closeAllModals();
     this.updateTitleRecords();

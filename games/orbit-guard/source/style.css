@@ -89,27 +89,29 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 6px 8px;
   z-index: 50;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(9, 12, 22, 0.95) 0%, rgba(9, 12, 22, 0.6) 75%, rgba(9, 12, 22, 0) 100%);
+  background: linear-gradient(180deg, rgba(9, 12, 22, 0.96) 0%, rgba(9, 12, 22, 0.6) 75%, rgba(9, 12, 22, 0) 100%);
+  box-sizing: border-box;
 }
 
 .header-left, .header-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   pointer-events: auto;
+  flex-shrink: 0;
 }
 
 .ctrl-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
   background: var(--void-card);
   border: 1.5px solid var(--border-glass);
   color: var(--cyan-primary);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   display: flex;
@@ -120,6 +122,8 @@ canvas {
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   transition: transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+  flex-shrink: 0;
+  padding: 0;
 }
 
 .ctrl-btn:hover {
@@ -133,7 +137,7 @@ canvas {
 }
 
 .btn-speed {
-  font-size: 0.85rem;
+  font-size: 0.80rem;
   color: var(--gold-bright);
   letter-spacing: 0.5px;
 }
@@ -150,13 +154,24 @@ canvas {
   box-shadow: 0 0 12px rgba(255, 82, 82, 0.45);
 }
 
+.btn-airdrop {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  animation: airdropPulse 2.2s infinite ease-in-out;
+}
+
+.btn-airdrop.hidden {
+  display: none !important;
+}
+
 /* Header Center Status */
 .header-center {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   pointer-events: auto;
   transition: opacity 0.2s ease;
+  flex-shrink: 1;
 }
 
 .header-center.hidden {
@@ -167,20 +182,21 @@ canvas {
 .hud-pill {
   background: var(--void-card);
   border: 1.5px solid var(--border-glass);
-  border-radius: 12px;
-  padding: 4px 10px;
+  border-radius: 8px;
+  padding: 3px 6px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   backdrop-filter: blur(8px);
+  white-space: nowrap;
 }
 
 .wave-pill .pill-tag {
   color: var(--text-dim);
-  font-size: 0.65rem;
+  font-size: 0.60rem;
   letter-spacing: 0.5px;
 }
 
@@ -189,7 +205,7 @@ canvas {
 }
 
 .gold-pill .gold-symbol {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .gold-pill .pill-num {
@@ -201,11 +217,11 @@ canvas {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  width: 115px;
+  width: 90px;
   background: var(--void-card);
   border: 1.5px solid var(--border-glass);
   border-radius: 8px;
-  padding: 3px 8px;
+  padding: 2px 6px;
   backdrop-filter: blur(8px);
 }
 
@@ -214,7 +230,7 @@ canvas {
   justify-content: space-between;
   align-items: center;
   font-family: 'Orbitron', monospace;
-  font-size: 0.65rem;
+  font-size: 0.58rem;
   font-weight: 700;
 }
 
@@ -228,7 +244,7 @@ canvas {
 
 .core-track-bg {
   width: 100%;
-  height: 6px;
+  height: 5px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   overflow: hidden;

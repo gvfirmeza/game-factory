@@ -1,0 +1,81 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "skills": {
+    "paths": [".agents/skills"]
+  },
+  "references": {
+    "engine": {
+      "path": "engine",
+      "description": "Shared HTML5 game engine modules: GameLoop, CollisionUtils, EnemyController, RenderLayers, ProceduralAudio, etc."
+    },
+    "agents": {
+      "path": ".agents/agents",
+      "description": "AI Game Factory agent role definitions with inputs, outputs, and acceptance criteria."
+    }
+  },
+  "agent": {
+    "game-designer": {
+      "mode": "subagent",
+      "description": "Transforms game concepts into game-design-intent.md, game-contract.json, and content-requirements.json. Defines kinematics, mechanics, and progression.",
+      "permission": {
+        "edit": "allow",
+        "bash": "deny"
+      }
+    },
+    "level-designer": {
+      "mode": "subagent",
+      "description": "Creates level-graph.json with validated geometry, ASCII paper prototypes, and room purpose contracts.",
+      "permission": {
+        "edit": "allow",
+        "bash": "deny"
+      }
+    },
+    "builder": {
+      "mode": "subagent",
+      "description": "Implements game source code (game.js, index.html, style.css) using engine modules and RenderLayers.",
+      "permission": {
+        "edit": "allow",
+        "bash": "ask"
+      }
+    },
+    "debugger": {
+      "mode": "subagent",
+      "description": "Reads playtest reports, reproduces bugs, identifies root causes, applies fixes, and verifies.",
+      "permission": {
+        "edit": "allow",
+        "bash": "ask"
+      }
+    },
+    "polisher": {
+      "mode": "subagent",
+      "description": "Adds juice: squash/stretch, particles, screen shake, procedural audio, micro-animations.",
+      "permission": {
+        "edit": "allow",
+        "bash": "deny"
+      }
+    },
+    "reviewer": {
+      "mode": "subagent",
+      "description": "Evaluates games against master quality checklist. Issues PASS or FAIL with routing instructions.",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny"
+      }
+    }
+  },
+  "command": {
+    "game": {
+      "description": "Create a new game through the full AI Game Factory pipeline",
+      "agent": "general"
+    },
+    "build": {
+      "description": "Build a game into production ZIP (usage: /build <game-id>)",
+      "agent": "general"
+    },
+    "test": {
+      "description": "Run validation and test suite for a game (usage: /test <game-id>)",
+      "agent": "general"
+    }
+  }
+}

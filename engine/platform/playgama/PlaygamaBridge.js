@@ -21,15 +21,26 @@ export class PlaygamaBridge {
       // Create official Playgama Bridge v2 mock object
       window.bridge = {
         isMock: true,
+        EVENT_NAME: {
+          AUDIO_STATE_CHANGED: 'audio_state_changed',
+          PAUSE_STATE_CHANGED: 'pause_state_changed',
+          VISIBILITY_STATE_CHANGED: 'visibility_state_changed',
+          REWARDED_STATE_CHANGED: 'rewarded_state_changed',
+          INTERSTITIAL_STATE_CHANGED: 'interstitial_state_changed'
+        },
         initialize: async () => {
           console.log('[PlaygamaBridge] Mock bridge.initialize() called successfully');
           return true;
         },
         platform: {
           id: 'playgama_mock',
+          isAudioEnabled: true,
           language: (typeof navigator !== 'undefined' && navigator.language) ? navigator.language.slice(0, 2).toLowerCase() : 'en',
           sendMessage: (msg) => {
             console.log(`[PlaygamaBridge] bridge.platform.sendMessage('${msg}')`);
+          },
+          on: (event, handler) => {
+            console.log(`[PlaygamaBridge] Subscribed to platform event: ${event}`);
           }
         },
         device: {
@@ -120,6 +131,53 @@ export class PlaygamaBridge {
     } else {
       this.isInitialized = true;
       console.log('[PlaygamaBridge] Running in fallback mode');
+    }
+  }
+
+  /**
+   * Returns whether the host platform currently allows game audio.
+   */
+  isAudioEnabled() {
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    if (b?.platform && typeof b.platform.isAudioEnabled === 'boolean') {
+      return b.platform.isAudioEnabled;
+    }
+    return true;
+  }
+
+  /**
+   * Registers a listener for host platform audio state changes (e.g. host tab mute).
+   */
+  onAudioStateChange(callback) {
+    if (typeof callback !== 'function') return;
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    const eventName = b?.EVENT_NAME?.AUDIO_STATE_CHANGED || 'audio_state_changed';
+    if (b?.platform?.on) {
+      try {
+        b.platform.on(eventName, (isEnabled) => {
+          callback(isEnabled);
+        });
+      } catch (e) {
+        console.warn('[PlaygamaBridge] Failed to bind platform audio event:', e);
+      }
+    }
+  }
+
+  /**
+   * Registers a listener for host platform pause/resume requests.
+   */
+  onPauseStateChange(callback) {
+    if (typeof callback !== 'function') return;
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    const eventName = b?.EVENT_NAME?.PAUSE_STATE_CHANGED || 'pause_state_changed';
+    if (b?.platform?.on) {
+      try {
+        b.platform.on(eventName, (isPaused) => {
+          callback(isPaused);
+        });
+      } catch (e) {
+        console.warn('[PlaygamaBridge] Failed to bind platform pause event:', e);
+      }
     }
   }
 
