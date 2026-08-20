@@ -653,112 +653,126 @@ function drawDroppedLog(ctx, log) {
 }
 
 /**
- * Authentic Hand-Held 2.5D Lumberjack Axe Vector Model
+ * Authentic Hand-Held 2.5D Lumberjack Axe Vector Model (Reference: media_1787256473572)
  */
 function drawHandHeldAxe(ctx, axe, isChopping, animTime) {
   ctx.save();
 
-  // Axe pivot at lumberjack's right hand (x: 10, y: -6)
-  ctx.translate(10, -6);
+  // Pivot at lumberjack's right hand (x: 10, y: -4)
+  ctx.translate(10, -4);
 
   if (isChopping) {
-    const chopAngle = Math.sin(animTime * 16) * 1.25 - 0.2;
+    // Natural swing rotation
+    const chopAngle = Math.sin(animTime * 15) * 0.95 - 0.15;
     ctx.rotate(chopAngle);
-
-    // Glowing white wind slash trail
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
-    ctx.lineWidth = 3.5;
-    ctx.beginPath();
-    ctx.arc(0, 0, 32, -Math.PI / 2, Math.PI / 3);
-    ctx.stroke();
   } else {
-    // Rest position: tilted forward-up naturally
-    ctx.rotate(-0.35);
+    // Idle/walking position: tilted upright naturally
+    ctx.rotate(-0.25);
   }
 
-  // 1. Curved Hickory Wooden Handle (Starts in hand and extends upward)
+  // 1. Hickory Handle (Smooth curved cartoon handle, 26px total length)
   ctx.save();
-  ctx.fillStyle = '#D7A15C';
+  ctx.fillStyle = '#E0A96D';
   ctx.beginPath();
-  ctx.moveTo(-2, 4);
-  ctx.bezierCurveTo(4, -2, 10, -10, 16, -22);
-  ctx.lineTo(20, -20);
-  ctx.bezierCurveTo(14, -8, 8, 0, 2, 8);
+  // Bottom knob / pommel
+  ctx.arc(0, 14, 3, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Handle shaft extending from y: 14 up to y: -16
+  ctx.beginPath();
+  ctx.moveTo(-2, 14);
+  ctx.quadraticCurveTo(0, 0, -1.5, -16);
+  ctx.lineTo(2, -16);
+  ctx.quadraticCurveTo(3.5, 0, 2, 14);
   ctx.closePath();
   ctx.fill();
-  ctx.strokeStyle = '#4E342E';
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = '#3E2723';
+  ctx.lineWidth = 1.4;
   ctx.stroke();
 
-  // Wood grain shadow
+  // Subtle woodgrain line
   ctx.strokeStyle = '#B87333';
-  ctx.lineWidth = 1;
+  ctx.lineWidth = 0.9;
   ctx.beginPath();
-  ctx.moveTo(0, 5);
-  ctx.bezierCurveTo(6, -1, 12, -9, 17, -21);
+  ctx.moveTo(0, 12);
+  ctx.quadraticCurveTo(1.5, 0, 0.5, -14);
   ctx.stroke();
 
-  // Wooden wedge protruding out through top of axe head
+  // Wooden wedge protruding out above axe head
   ctx.fillStyle = '#A16828';
   ctx.beginPath();
-  ctx.roundRect(14, -26, 5, 6, 2);
+  ctx.roundRect(-1.5, -20, 3.5, 5, 1.5);
   ctx.fill();
-  ctx.strokeStyle = '#4E342E';
+  ctx.strokeStyle = '#3E2723';
   ctx.lineWidth = 1;
   ctx.stroke();
   ctx.restore();
 
-  // 2. Thick Cartoon Axe Head (Sits on top-right of handle)
+  // 2. Beautiful Cartoon Axe Head (Matches Reference Image)
   ctx.save();
-  ctx.translate(16, -18);
+  ctx.translate(0, -13);
 
-  // Main Axe Head Body (Colored by tier)
+  // Dark socket collar wrap
+  ctx.fillStyle = '#263238';
+  ctx.beginPath();
+  ctx.roundRect(-3.5, -4.5, 7, 9, 2);
+  ctx.fill();
+
+  // Axe Body (Red/Bronze/Steel/Gold)
   ctx.fillStyle = axe.headColor;
   ctx.beginPath();
-  ctx.moveTo(-4, -6);
-  ctx.lineTo(8, -4);
-  ctx.bezierCurveTo(14, -8, 18, -10, 20, -14);  // Top flare
-  ctx.quadraticCurveTo(22, 0, 20, 14);          // Curved cutting face
-  ctx.bezierCurveTo(18, 10, 14, 8, 8, 4);      // Bottom flare
-  ctx.lineTo(-4, 6);
+  ctx.moveTo(0, -4);
+  ctx.bezierCurveTo(4, -5, 8, -7, 13, -10);    // Top flared spine
+  ctx.quadraticCurveTo(16, 0, 13, 10);        // Wide curved cutting blade
+  ctx.bezierCurveTo(8, 7, 4, 5, 0, 4);        // Bottom flared beard
   ctx.closePath();
   ctx.fill();
-  ctx.strokeStyle = '#212121';
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#1A1A1A';
+  ctx.lineWidth = 1.8;
   ctx.stroke();
 
-  // Dark Inner Socket Bevel
+  // Inner Bevel Shadow
   ctx.fillStyle = axe.bevel;
   ctx.beginPath();
-  ctx.moveTo(-3, -4);
-  ctx.lineTo(6, -3);
-  ctx.lineTo(6, 3);
-  ctx.lineTo(-3, 4);
+  ctx.moveTo(1, -2.5);
+  ctx.lineTo(6, -3.5);
+  ctx.lineTo(6, 3.5);
+  ctx.lineTo(1, 2.5);
   ctx.closePath();
   ctx.fill();
 
   // Sharp Shiny Silver Blade Edge
   ctx.fillStyle = axe.edge;
   ctx.beginPath();
-  ctx.moveTo(14, -10);
-  ctx.quadraticCurveTo(22, 0, 14, 10);
-  ctx.lineTo(20, 14);
-  ctx.quadraticCurveTo(22, 0, 20, -14);
+  ctx.moveTo(9, -7.5);
+  ctx.quadraticCurveTo(14, 0, 9, 7.5);
+  ctx.lineTo(13, 10);
+  ctx.quadraticCurveTo(16, 0, 13, -10);
   ctx.closePath();
   ctx.fill();
-  ctx.strokeStyle = '#212121';
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = '#1A1A1A';
+  ctx.lineWidth = 1.2;
   ctx.stroke();
 
-  // Bright light glint
+  // Specular Highlight Glint
   ctx.strokeStyle = '#FFFFFF';
-  ctx.lineWidth = 1.5;
+  ctx.lineWidth = 1.2;
   ctx.beginPath();
-  ctx.moveTo(16, -7);
-  ctx.quadraticCurveTo(19, -1, 16, 5);
+  ctx.moveTo(10.5, -5);
+  ctx.quadraticCurveTo(13, 0, 10.5, 4);
   ctx.stroke();
 
   ctx.restore();
+
+  // 3. Cute Lumberjack Hand gripping the handle
+  ctx.fillStyle = '#FFCC80';
+  ctx.beginPath();
+  ctx.arc(0, 0, 4, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#3E2723';
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+
   ctx.restore();
 }
 
