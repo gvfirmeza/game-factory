@@ -1522,40 +1522,60 @@ export class LumberTycoonGame {
   }
 
   /* ==========================================================================
-   * 7. STREAMING UPGRADE PADS
+   * 7. STREAMING UPGRADE PADS (CONTROLLED & CONTINUOUS)
    * ========================================================================== */
 
   updateUpgradePads(dt) {
     const p = this.player;
 
     for (const pad of this.upgradePads) {
+      // Post-upgrade visual pause
+      if (pad.cooldown && pad.cooldown > 0) {
+        pad.cooldown -= dt;
+        continue;
+      }
+
       if (pad.targetCost <= 0) continue;
 
       const d = Math.hypot(p.x - pad.x, p.y - pad.y);
       if (d < pad.radius) {
         const needed = pad.targetCost - pad.deposited;
         if (needed > 0 && this.saveData.cash > 0) {
-          const transferSpeed = Math.max(1, Math.ceil(pad.targetCost * dt * 2));
-          const transfer = Math.min(this.saveData.cash, needed, transferSpeed);
+          pad.tickTimer = (pad.tickTimer || 0) + dt;
 
-          this.saveData.cash -= transfer;
-          pad.deposited += transfer;
-          this.audio.playCoinTick();
+          // Controlled deposit rhythm every 0.07s
+          const tickInterval = 0.07;
+          if (pad.tickTimer >= tickInterval) {
+            pad.tickTimer = 0;
 
-          this.flyingCoins.push({
-            startX: p.x,
-            startY: p.y - 15,
-            endX: pad.x,
-            endY: pad.y,
-            t: 0
-          });
+            // Transfer deliberate, controllable chunks (e.g. ~5% of cost per tick, min $2, max $40)
+            const chunk = Math.min(
+              this.saveData.cash,
+              needed,
+              Math.max(2, Math.min(40, Math.ceil(pad.targetCost * 0.05)))
+            );
 
-          this.updateHUD();
+            this.saveData.cash -= chunk;
+            pad.deposited += chunk;
+            this.audio.playCoinTick();
 
-          if (pad.deposited >= pad.targetCost) {
-            this.completeUpgrade(pad);
+            this.flyingCoins.push({
+              startX: p.x,
+              startY: p.y - 15,
+              endX: pad.x + (Math.random() - 0.5) * 16,
+              endY: pad.y + (Math.random() - 0.5) * 12,
+              t: 0
+            });
+
+            this.updateHUD();
+
+            if (pad.deposited >= pad.targetCost) {
+              this.completeUpgrade(pad);
+            }
           }
         }
+      } else {
+        pad.tickTimer = 0;
       }
     }
   }
@@ -1566,10 +1586,13 @@ export class LumberTycoonGame {
     this.particles.burst(pad.x, pad.y, 30, '#FFD54F');
     this.juice.spawnFloatingText('LEVEL UP! ✨', pad.x, pad.y - 40, { color: '#00E676', size: 22 });
 
+    // Brief 0.35s celebration pause, then automatically starts next tier if player stays on pad!
+    pad.cooldown = 0.35;
+    pad.deposited = 0;
+
     if (pad.type === 'AXE') {
       this.player.axeTier++;
       this.saveData.axeTier = this.player.axeTier;
-      pad.deposited = 0;
       pad.targetCost = AXE_TIERS[this.player.axeTier + 1]?.cost || 0;
 
       // Complete tutorial step 3
@@ -1580,18 +1603,16 @@ export class LumberTycoonGame {
     } else if (pad.type === 'CAPACITY') {
       this.player.capacityIndex++;
       this.saveData.capacityIndex = this.player.capacityIndex;
-      pad.deposited = 0;
       pad.targetCost = CAPACITY_TIERS[this.player.capacityIndex + 1]?.cost || 0;
     } else if (pad.type === 'WORKER') {
       this.saveData.workerCount = this.workers.length + 1;
       this.spawnWorkers(this.saveData.workerCount);
-      pad.deposited = 0;
       pad.targetCost = Math.floor(250 * Math.pow(1.8, this.workers.length));
     } else if (pad.type.startsWith('ZONE_')) {
       const zoneId = pad.type.replace('ZONE_', '').toLowerCase();
       this.unlockedZones.add(zoneId);
       this.saveData.unlockedZones = Array.from(this.unlockedZones);
-      pad.targetCost = 0;
+      pad.targetCost = 0; // Max / fully unlocked
     }
 
     SaveManager.save(this.playgama, this.saveData);
