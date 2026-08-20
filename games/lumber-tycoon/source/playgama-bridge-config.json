@@ -1,0 +1,13 @@
+{
+  "sdk_version": "2.0.0",
+  "game_id": "lumber-tycoon",
+  "title": "Lumber Tycoon",
+  "platforms": {
+    "playgama": {
+      "app_id": "lumber-tycoon-app",
+      "banner_enabled": true,
+      "interstitial_enabled": true,
+      "rewarded_enabled": true
+    }
+  }
+}

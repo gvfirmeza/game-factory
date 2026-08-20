@@ -1,0 +1,50 @@
+{
+  "title": "Lumber Tycoon",
+  "id": "lumber-tycoon",
+  "version": "1.0.0",
+  "description": "Build your automated timber empire! Explore 6 rich forest biomes, chop lush trees, haul stacked logs, process timber at the sawmill for bonuses, upgrade axes and backpacks, and hire a crew of automated lumberjack bots in this cozy top-down tycoon arcade.",
+  "howToPlay": "Use WASD or touch virtual joystick to move freely. Stand near trees to auto-chop logs. Collect fallen logs in your backpack and deliver them to the Sawmill (+50% value) or Wood Market. Upgrade your axes and backpack at the shop, hire automated workers, and unlock new forest biomes!",
+  "orientation": "landscape",
+  "resolution": {
+    "width": 800,
+    "height": 600,
+    "aspectRatio": "4:3",
+    "scalable": true
+  },
+  "genre": "Simulation / Tycoon / Arcade",
+  "storage": {
+    "key": "lumber_tycoon_save_v1",
+    "type": "cloud_with_local_fallback"
+  },
+  "audio": {
+    "synthesized": true,
+    "muteControlOnScreen": true,
+    "autoPauseOnHidden": true
+  },
+  "dependencies": {
+    "externalCdn": false,
+    "offlineCapable": true
+  },
+  "compliance": {
+    "originalIP": true,
+    "zeroTrackers": true,
+    "playgamaSdkReady": true
+  },
+  "advertisement": {
+    "banners": {
+      "supported": true,
+      "placements": ["title_screen", "shop_modal", "pause_screen"]
+    },
+    "rewarded": {
+      "supported": true,
+      "placements": [
+        { "id": "airdrop_cash", "reward": "+$1,000 Cash Grant", "location": "in_game_hud" },
+        { "id": "turbo_rush", "reward": "60s 2X Speed Turbo Rush", "location": "action_deck" }
+      ]
+    },
+    "interstitial": {
+      "supported": true,
+      "placements": ["zone_unlock", "shop_exit"]
+    }
+  }
+}
