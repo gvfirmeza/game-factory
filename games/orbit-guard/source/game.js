@@ -2021,6 +2021,7 @@ export class OrbitGuardGame {
     const btnRestart = document.getElementById('btn-restart-run');
     if (btnRestart) {
       btnRestart.addEventListener('click', () => {
+        this.playgama.showInterstitial();
         this.closeAllModals();
         this.startNewRun();
       });
@@ -2029,6 +2030,7 @@ export class OrbitGuardGame {
     const btnQuitTitle = document.getElementById('btn-quit-to-title');
     if (btnQuitTitle) {
       btnQuitTitle.addEventListener('click', () => {
+        this.playgama.showInterstitial();
         this.closeAllModals();
         this.returnToTitle();
       });
@@ -2108,6 +2110,7 @@ export class OrbitGuardGame {
     const btnGoTitle = document.getElementById('btn-go-title');
     if (btnGoTitle) {
       btnGoTitle.addEventListener('click', () => {
+        this.playgama.showInterstitial();
         this.closeAllModals();
         this.returnToTitle();
       });
@@ -2788,6 +2791,11 @@ export class OrbitGuardGame {
     if (this.waveState === 'WAVE_ACTIVE' && this.enemies.length === 0) {
       this.waveState = 'WAVE_CLEARED';
       this.waveTimer = 2.8;
+
+      const isBossWave = this.wave % 5 === 0;
+      if (isBossWave) {
+        this.playgama.showInterstitial();
+      }
 
       const bounty = 25 + 12 * this.wave + Math.floor(1.5 * Math.pow(this.wave, 1.2));
       const finalBounty = Math.floor(bounty * this.getWorkshopStat('goldBonus'));
