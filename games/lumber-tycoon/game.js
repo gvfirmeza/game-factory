@@ -27,13 +27,13 @@ export const WORLD = {
 };
 
 export const AXE_TIERS = [
-  { name: 'Rusty Hatchet', power: 1, speed: 0.35, cost: 0, handle: '#8D6E63', blade: '#90A4AE', edge: '#ECEFF1' },
-  { name: 'Forged Bronze Axe', power: 2, speed: 0.30, cost: 200, handle: '#795548', blade: '#CD7F32', edge: '#FFE082' },
-  { name: 'Tempered Steel Axe', power: 4, speed: 0.25, cost: 750, handle: '#4E342E', blade: '#78909C', edge: '#FFFFFF' },
-  { name: 'Gold-Plated Broadaxe', power: 8, speed: 0.22, cost: 2500, handle: '#3E2723', blade: '#FFB300', edge: '#FFF59D' },
-  { name: 'Diamond Core Axe', power: 16, speed: 0.18, cost: 9000, handle: '#263238', blade: '#00E5FF', edge: '#E0F7FA' },
-  { name: 'Plasma Laser Cutter', power: 35, speed: 0.15, cost: 28000, handle: '#212121', blade: '#00E676', edge: '#B9F6CA' },
-  { name: 'Mythic Celestial Greataxe', power: 85, speed: 0.10, cost: 85000, handle: '#1A237E', blade: '#E040FB', edge: '#FFFFFF' }
+  { name: 'Red Camp Hatchet', power: 1, speed: 0.35, cost: 0, headColor: '#E53935', bevel: '#B71C1C', edge: '#ECEFF1' },
+  { name: 'Forged Bronze Axe', power: 2, speed: 0.30, cost: 200, headColor: '#CD7F32', bevel: '#8D5524', edge: '#FFE082' },
+  { name: 'Tempered Steel Axe', power: 4, speed: 0.25, cost: 750, headColor: '#607D8B', bevel: '#37474F', edge: '#FFFFFF' },
+  { name: 'Gold-Plated Broadaxe', power: 8, speed: 0.22, cost: 2500, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
+  { name: 'Diamond Core Axe', power: 16, speed: 0.18, cost: 9000, headColor: '#00E5FF', bevel: '#0097A7', edge: '#E0F7FA' },
+  { name: 'Plasma Laser Cutter', power: 35, speed: 0.15, cost: 28000, headColor: '#00E676', bevel: '#00A152', edge: '#B9F6CA' },
+  { name: 'Mythic Celestial Greataxe', power: 85, speed: 0.10, cost: 85000, headColor: '#E040FB', bevel: '#AA00FF', edge: '#FFFFFF' }
 ];
 
 export const CAPACITY_TIERS = [
@@ -56,10 +56,10 @@ export const ZONES = [
 ];
 
 export const BUILDINGS = {
-  sawmill: { x: 860, y: 720, w: 140, h: 100, name: 'Sawmill', icon: '⚙️', desc: 'Processes logs into planks (+50% bonus)' },
-  sellZone: { x: 1080, y: 720, w: 130, h: 100, name: 'Wood Market', icon: '💰', desc: 'Instant Cash Register' },
+  sawmill: { x: 860, y: 720, w: 140, h: 100, name: 'Sawmill', icon: '⚙️', desc: 'Processes raw logs into refined planks' },
+  sellZone: { x: 1080, y: 720, w: 130, h: 100, name: 'Wood Market', icon: '💰', desc: 'Sell refined planks (+50% bonus) or raw logs' },
   blacksmith: { x: 680, y: 720, w: 120, h: 95, name: 'Blacksmith', icon: '🪓', desc: 'Forge Mighty Axes' },
-  storageBarn: { x: 1270, y: 720, w: 120, h: 95, name: 'Backpack Depot', icon: '🎒', desc: 'Expand Log Capacity' },
+  storageBarn: { x: 1270, y: 720, w: 120, h: 95, name: 'Backpack Depot', icon: '🎒', desc: 'Expand Backpack Capacity' },
   workerHut: { x: 970, y: 570, w: 140, h: 95, name: 'Worker Barracks', icon: '👷', desc: 'Hire Automated Bots' }
 };
 
@@ -96,7 +96,7 @@ class TycoonAudioSynthesizer {
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(150 + Math.random() * 80, t);
+    osc.frequency.setValueAtTime(160 + Math.random() * 80, t);
     osc.frequency.exponentialRampToValueAtTime(45, t + 0.08);
 
     gain.gain.setValueAtTime(0.35, t);
@@ -127,6 +127,27 @@ class TycoonAudioSynthesizer {
     gain.connect(this.ctx.destination);
     osc.start(t);
     osc.stop(t + 0.45);
+  }
+
+  playSawBuzz() {
+    if (this.isMuted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(280, t);
+    osc.frequency.linearRampToValueAtTime(420, t + 0.12);
+
+    gain.gain.setValueAtTime(0.25, t);
+    gain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.15);
   }
 
   playCollect() {
@@ -246,6 +267,7 @@ class SaveManager {
       axeTier: 0,
       capacityIndex: 0,
       workerCount: 0,
+      tutorialStep: 0,
       unlockedZones: ['oak'],
       totalTreesCut: 0,
       totalCashEarned: 0,
@@ -325,7 +347,10 @@ function drawBuilding(ctx, bKey, building, animTime) {
   ctx.stroke();
 
   if (bKey === 'sawmill') {
-    // Animated circular buzzsaw on conveyor
+    // Animated conveyor belt + circular buzzsaw
+    ctx.fillStyle = '#37474f';
+    ctx.fillRect(x + 15, y + h / 2 - 8, w - 30, 16);
+
     const sawX = x + w / 2;
     const sawY = y + h / 2 - 2;
     ctx.save();
@@ -376,7 +401,7 @@ function drawBuilding(ctx, bKey, building, animTime) {
 }
 
 function drawUpgradePad(ctx, pad, animTime) {
-  const { x, y, radius, label, deposited, targetCost, icon } = pad;
+  const { x, y, radius, label, deposited, targetCost } = pad;
   const isComplete = targetCost <= 0 || deposited >= targetCost;
 
   ctx.save();
@@ -480,7 +505,7 @@ function drawTiltedTree(ctx, tree, animTime) {
   const shakeX = tree.shakeTimer > 0 ? Math.sin(tree.shakeTimer * 35) * 5 : 0;
   ctx.translate(tree.x + shakeX, tree.y);
 
-  // 1. Ground Drop Shadow (under trunk)
+  // 1. Ground Drop Shadow
   ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
   ctx.beginPath();
   ctx.ellipse(0, 4, tree.canopyR * 0.9, tree.canopyR * 0.45, 0, 0, Math.PI * 2);
@@ -506,7 +531,7 @@ function drawTiltedTree(ctx, tree, animTime) {
     ctx.fillRect(-tree.trunkR + 3, -trunkH + 28, 6, 3);
   }
 
-  // 3. Tilted Canopy (Drawn atop the trunk)
+  // 3. Tilted Canopy (Drawn atop trunk)
   ctx.translate(0, -trunkH);
 
   if (tree.type === 'pine') {
@@ -526,7 +551,7 @@ function drawTiltedTree(ctx, tree, animTime) {
       ctx.fill();
     }
   } else {
-    // Fluffy Organic Cloud-like Canopies (Oak, Birch, Sakura, Redwood, Golden)
+    // Fluffy Organic Cloud-like Canopies
     let outerColor = '#2e7d32';
     let midColor = '#43a047';
     let innerColor = '#66bb6a';
@@ -549,13 +574,11 @@ function drawTiltedTree(ctx, tree, animTime) {
       innerColor = '#fff176';
     }
 
-    // Outer cluster
     ctx.fillStyle = outerColor;
     ctx.beginPath();
     ctx.arc(0, -10, tree.canopyR, 0, Math.PI * 2);
     ctx.fill();
 
-    // Mid leafy bumps
     ctx.fillStyle = midColor;
     for (let i = 0; i < 5; i++) {
       const angle = (i / 5) * Math.PI * 2;
@@ -565,13 +588,11 @@ function drawTiltedTree(ctx, tree, animTime) {
       ctx.fill();
     }
 
-    // Top Highlight Dome
     ctx.fillStyle = innerColor;
     ctx.beginPath();
     ctx.arc(-tree.canopyR * 0.2, -18, tree.canopyR * 0.46, 0, Math.PI * 2);
     ctx.fill();
 
-    // Golden shimmer
     if (tree.type === 'golden') {
       ctx.fillStyle = '#ffffff';
       ctx.globalAlpha = 0.5 + Math.sin(animTime * 6) * 0.3;
@@ -630,8 +651,114 @@ function drawDroppedLog(ctx, log) {
   ctx.restore();
 }
 
+/**
+ * High-Quality Cartoon Vector Axe matching User References
+ */
+function drawCartoonAxe(ctx, axe, isChopping, animTime) {
+  ctx.save();
+  ctx.translate(8, -10);
+
+  if (isChopping) {
+    const chopAngle = Math.sin(animTime * 16) * 1.3 - 0.2;
+    ctx.rotate(chopAngle);
+
+    // Dynamic wind slash streak
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.lineWidth = 3.5;
+    ctx.beginPath();
+    ctx.arc(0, 0, 34, -Math.PI / 2, Math.PI / 3);
+    ctx.stroke();
+  }
+
+  // 1. Curved Hardwood Handle (Matches Reference)
+  ctx.save();
+  ctx.fillStyle = '#D7A15C';
+  ctx.beginPath();
+  // Ergonomic double-curved axe handle path
+  ctx.moveTo(0, -3);
+  ctx.bezierCurveTo(8, -4, 18, -1, 26, 4);
+  ctx.lineTo(24, 10);
+  ctx.bezierCurveTo(16, 5, 6, 2, -2, 3);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#5D4037';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Wood Grain Shadow Line
+  ctx.strokeStyle = '#B87333';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(2, -1);
+  ctx.bezierCurveTo(10, -2, 18, 1, 24, 6);
+  ctx.stroke();
+
+  // Top Protruding Wooden Wedge (Eye of Axe)
+  ctx.fillStyle = '#A16828';
+  ctx.beginPath();
+  ctx.roundRect(-4, -6, 7, 6, 2);
+  ctx.fill();
+  ctx.strokeStyle = '#5D4037';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.restore();
+
+  // 2. Thick Cartoon Axe Head (Matches Reference Shape)
+  ctx.save();
+  ctx.translate(2, -4);
+
+  // Main Axe Head Body (Red/Bronze/Steel/Gold/Diamond)
+  ctx.fillStyle = axe.headColor;
+  ctx.beginPath();
+  ctx.moveTo(-2, -6);
+  ctx.lineTo(12, -4);
+  ctx.bezierCurveTo(20, -8, 24, -10, 26, -14); // Upper flare
+  ctx.quadraticCurveTo(28, 0, 26, 14);         // Curved cutting face
+  ctx.bezierCurveTo(24, 10, 20, 8, 12, 4);     // Lower flare
+  ctx.lineTo(-2, 6);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#212121';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Dark Inner Bevel / Socket Shadow
+  ctx.fillStyle = axe.bevel;
+  ctx.beginPath();
+  ctx.moveTo(-1, -4);
+  ctx.lineTo(8, -3);
+  ctx.lineTo(8, 3);
+  ctx.lineTo(-1, 4);
+  ctx.closePath();
+  ctx.fill();
+
+  // Shiny Curved Metallic Blade Edge (Highlighted Crescent)
+  ctx.fillStyle = axe.edge;
+  ctx.beginPath();
+  ctx.moveTo(20, -11);
+  ctx.quadraticCurveTo(28, 0, 20, 11);
+  ctx.lineTo(26, 14);
+  ctx.quadraticCurveTo(28, 0, 26, -14);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#212121';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // White Specular Gleam Highlight
+  ctx.strokeStyle = '#FFFFFF';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(22, -8);
+  ctx.quadraticCurveTo(25, -2, 22, 4);
+  ctx.stroke();
+
+  ctx.restore();
+  ctx.restore();
+}
+
 function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
-  const { x, y, isWalking, isChopping, carriedLogs, axeTier } = actor;
+  const { x, y, isWalking, isChopping, carriedLogs, carriedPlanks, axeTier } = actor;
 
   ctx.save();
   ctx.translate(x, y);
@@ -648,25 +775,40 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   ctx.translate(0, walkBob);
   ctx.rotate(walkSway);
 
-  // 1. Stacked 3D Logs on Back
-  if (carriedLogs > 0) {
-    const stackCount = Math.min(8, carriedLogs);
+  // 1. Stacked Items on Back (Logs vs Planks)
+  const totalItems = (carriedLogs || 0) + (carriedPlanks || 0);
+  if (totalItems > 0) {
+    const stackCount = Math.min(8, totalItems);
     for (let i = 0; i < stackCount; i++) {
+      const isPlank = i < (carriedPlanks || 0);
+      const itemY = -12 - i * 7;
       ctx.save();
-      const logY = -12 - i * 7;
-      ctx.fillStyle = '#8d6e63';
-      ctx.beginPath();
-      ctx.roundRect(-13, logY, 26, 7, 3);
-      ctx.fill();
-      ctx.strokeStyle = '#4e342e';
-      ctx.lineWidth = 1;
-      ctx.stroke();
+
+      if (isPlank) {
+        // Refined Golden-Brown Planks Bundle
+        ctx.fillStyle = '#ffcc80';
+        ctx.beginPath();
+        ctx.roundRect(-14, itemY, 28, 6, 2);
+        ctx.fill();
+        ctx.strokeStyle = '#e65100';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+      } else {
+        // Raw Wood Log
+        ctx.fillStyle = '#8d6e63';
+        ctx.beginPath();
+        ctx.roundRect(-13, itemY, 26, 7, 3);
+        ctx.fill();
+        ctx.strokeStyle = '#4e342e';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
       ctx.restore();
     }
   }
 
   // 2. Body / Flannel Shirt & Overalls
-  ctx.fillStyle = isPlayer ? '#c62828' : '#e65100'; // Player Red Plaid, Worker Hi-Vis Orange
+  ctx.fillStyle = isPlayer ? '#c62828' : '#e65100';
   ctx.beginPath();
   ctx.roundRect(-12, -14, 24, 20, 7);
   ctx.fill();
@@ -702,60 +844,62 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   ctx.arc(2.5, -22.5, 0.8, 0, Math.PI * 2);
   ctx.fill();
 
-  // 4. REAL 2.5D CHUNKY LUMBERJACK AXE
-  ctx.save();
+  // 4. REAL CHUNKY CARTOON AXE
   const axe = AXE_TIERS[axeTier || 0] || AXE_TIERS[0];
-  ctx.translate(8, -12);
-
-  if (isChopping) {
-    const chopAngle = Math.sin(animTime * 15) * 1.3 - 0.3;
-    ctx.rotate(chopAngle);
-
-    // Dynamic Axe Swing Blur Trail
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.arc(0, 0, 32, -Math.PI / 2, Math.PI / 3);
-    ctx.stroke();
-  }
-
-  // Curved Hardwood Handle
-  ctx.fillStyle = axe.handle;
-  ctx.beginPath();
-  ctx.roundRect(0, -3, 24, 6, 2);
-  ctx.fill();
-  ctx.strokeStyle = '#3e2723';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-
-  // Metal Blade Collar
-  ctx.fillStyle = '#455a64';
-  ctx.fillRect(16, -5, 4, 10);
-
-  // Crescent Axe Head
-  ctx.fillStyle = axe.blade;
-  ctx.beginPath();
-  ctx.moveTo(20, -18);
-  ctx.quadraticCurveTo(28, -8, 28, 0);
-  ctx.quadraticCurveTo(28, 8, 20, 18);
-  ctx.lineTo(16, 12);
-  ctx.lineTo(16, -12);
-  ctx.closePath();
-  ctx.fill();
-  ctx.strokeStyle = '#37474f';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-
-  // Razor Sharp Cutting Edge Highlight
-  ctx.strokeStyle = axe.edge;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(20, -18);
-  ctx.quadraticCurveTo(28, -8, 28, 0);
-  ctx.quadraticCurveTo(28, 8, 20, 18);
-  ctx.stroke();
+  drawCartoonAxe(ctx, axe, isChopping, animTime);
 
   ctx.restore();
+}
+
+/**
+ * Animated Playgama-Style Guided Visual Tutorial Pointer
+ */
+function drawTutorialArrow(ctx, targetX, targetY, title, desc, animTime) {
+  const bounceY = Math.sin(animTime * 5) * 8;
+  const arrowY = targetY - 70 + bounceY;
+
+  ctx.save();
+  // Pulsating Ground Target Ring
+  ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+  ctx.beginPath();
+  ctx.arc(targetX, targetY, 32 + Math.sin(animTime * 4) * 6, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Bouncing 3D Chevron Arrow
+  ctx.translate(targetX, arrowY);
+
+  ctx.fillStyle = '#FFD54F';
+  ctx.beginPath();
+  ctx.moveTo(0, 18);
+  ctx.lineTo(-14, -6);
+  ctx.lineTo(-6, -6);
+  ctx.lineTo(-6, -20);
+  ctx.lineTo(6, -20);
+  ctx.lineTo(6, -6);
+  ctx.lineTo(14, -6);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#212121';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Floating Instruction Badge
+  ctx.font = 'bold 12px Fredoka, sans-serif';
+  const textWidth = ctx.measureText(title).width;
+  const boxW = Math.max(140, textWidth + 24);
+
+  ctx.fillStyle = 'rgba(15, 10, 5, 0.92)';
+  ctx.beginPath();
+  ctx.roundRect(-boxW / 2, -54, boxW, 28, 8);
+  ctx.fill();
+  ctx.strokeStyle = '#FFD54F';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = '#FFE082';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(title, 0, -40);
 
   ctx.restore();
 }
@@ -778,7 +922,7 @@ export class LumberTycoonGame {
     this.state = 'TITLE';
     this.animTime = 0;
 
-    // Player State
+    // Player State (with raw logs & processed planks inventory)
     this.player = {
       x: 1040,
       y: 840,
@@ -788,7 +932,8 @@ export class LumberTycoonGame {
       radius: 14,
       isWalking: false,
       isChopping: false,
-      carriedLogs: 0,
+      carriedLogs: 0,       // Raw wood logs
+      carriedPlanks: 0,     // Processed sawmill planks
       axeTier: 0,
       capacityIndex: 0,
       chopTimer: 0
@@ -813,6 +958,7 @@ export class LumberTycoonGame {
     this.promptText = '';
     this.isTurboActive = false;
     this.turboTimer = 0;
+    this.tutorialStep = 0; // 0: Tree -> 1: Sawmill -> 2: Market -> 3: Forge -> 4: Done
 
     this.update = this.update.bind(this);
     this.render = this.render.bind(this);
@@ -829,6 +975,7 @@ export class LumberTycoonGame {
 
     this.player.axeTier = this.saveData.axeTier || 0;
     this.player.capacityIndex = this.saveData.capacityIndex || 0;
+    this.tutorialStep = this.saveData.tutorialStep || 0;
     if (Array.isArray(this.saveData.unlockedZones)) {
       this.saveData.unlockedZones.forEach((z) => this.unlockedZones.add(z));
     }
@@ -857,7 +1004,6 @@ export class LumberTycoonGame {
         const x = zone.bounds.x + 60 + Math.random() * (zone.bounds.w - 120);
         const y = zone.bounds.y + 60 + Math.random() * (zone.bounds.h - 120);
 
-        // Keep clear of base clearing
         if (x > WORLD.baseZone.x - 50 && x < WORLD.baseZone.x + WORLD.baseZone.w + 50 &&
             y > WORLD.baseZone.y - 50 && y < WORLD.baseZone.y + WORLD.baseZone.h + 50) {
           continue;
@@ -987,6 +1133,7 @@ export class LumberTycoonGame {
         isWalking: false,
         isChopping: false,
         carriedLogs: 0,
+        carriedPlanks: 0,
         maxCarry: 8,
         axeTier: 1,
         targetTree: null,
@@ -1140,11 +1287,10 @@ export class LumberTycoonGame {
       p.vy = 0;
     }
 
-    // Proposed new position
     const nextX = Math.max(30, Math.min(WORLD.width - 30, p.x + p.vx * dt));
     const nextY = Math.max(30, Math.min(WORLD.height - 30, p.y + p.vy * dt));
 
-    // SOLID TREE TRUNK COLLISION (Player cannot walk through trunks)
+    // Solid tree trunk collision
     let canMoveX = true;
     let canMoveY = true;
 
@@ -1160,7 +1306,6 @@ export class LumberTycoonGame {
     if (canMoveX) p.x = nextX;
     if (canMoveY) p.y = nextY;
 
-    // Proximity Auto-Chop
     this.handlePlayerChopping(dt);
   }
 
@@ -1168,7 +1313,7 @@ export class LumberTycoonGame {
     const p = this.player;
     const axe = AXE_TIERS[p.axeTier] || AXE_TIERS[0];
     let nearestTree = null;
-    let minDist = 62; // Adjacent distance to tree trunk
+    let minDist = 64;
 
     for (const tree of this.trees) {
       if (tree.isCut || !this.unlockedZones.has(tree.zoneId)) continue;
@@ -1200,7 +1345,6 @@ export class LumberTycoonGame {
     this.audio.playChop();
     this.juice.screenShake(2);
 
-    // Wood chips particle burst
     this.particles.burst(tree.x, tree.y - (tree.trunkHeight || 42), 8, '#8D6E63');
 
     if (tree.hp <= 0) {
@@ -1211,7 +1355,7 @@ export class LumberTycoonGame {
 
       this.saveData.totalTreesCut = (this.saveData.totalTreesCut || 0) + 1;
 
-      // Spawn dropped logs in circular cluster
+      // Spawn dropped raw logs
       for (let i = 0; i < tree.logsPerTree; i++) {
         const offsetAng = Math.random() * Math.PI * 2;
         const offsetDist = 18 + Math.random() * 24;
@@ -1223,30 +1367,56 @@ export class LumberTycoonGame {
           life: 45
         });
       }
+
+      // Progress tutorial from step 0 (chop tree) to step 1 (take to sawmill)
+      if (this.tutorialStep === 0) {
+        this.tutorialStep = 1;
+        this.saveData.tutorialStep = 1;
+        SaveManager.save(this.playgama, this.saveData);
+      }
     }
   }
 
   updateWorkers(dt) {
     for (const w of this.workers) {
-      if (w.carriedLogs >= w.maxCarry) {
-        const target = BUILDINGS.sawmill;
+      if (w.carriedPlanks > 0) {
+        // Deliver processed planks to Market
+        const target = BUILDINGS.sellZone;
         const dx = target.x + target.w / 2 - w.x;
         const dy = target.y + target.h / 2 - w.y;
         const dist = Math.hypot(dx, dy);
 
         if (dist < 45) {
-          const cashEarned = w.carriedLogs * 25 * 1.5;
+          const cashEarned = w.carriedPlanks * 25 * 1.5;
           this.saveData.cash += cashEarned;
           this.audio.playCash();
           this.spawnCoinBursts(w.x, w.y, cashEarned);
-          w.carriedLogs = 0;
+          w.carriedPlanks = 0;
           w.targetTree = null;
         } else {
           w.isWalking = true;
           w.x += (dx / dist) * w.speed * dt;
           w.y += (dy / dist) * w.speed * dt;
         }
+      } else if (w.carriedLogs >= w.maxCarry) {
+        // Deliver raw logs to Sawmill to refine
+        const target = BUILDINGS.sawmill;
+        const dx = target.x + target.w / 2 - w.x;
+        const dy = target.y + target.h / 2 - w.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < 45) {
+          w.carriedPlanks = w.carriedLogs;
+          w.carriedLogs = 0;
+          this.audio.playSawBuzz();
+          this.particles.burst(w.x, w.y, 10, '#FFCC80');
+        } else {
+          w.isWalking = true;
+          w.x += (dx / dist) * w.speed * dt;
+          w.y += (dy / dist) * w.speed * dt;
+        }
       } else {
+        // Seek tree
         if (!w.targetTree || w.targetTree.isCut) {
           let best = null;
           let bestD = Infinity;
@@ -1303,6 +1473,7 @@ export class LumberTycoonGame {
   updateDroppedLogs(dt) {
     const p = this.player;
     const maxCapacity = CAPACITY_TIERS[p.capacityIndex]?.capacity || 5;
+    const currentTotal = p.carriedLogs + p.carriedPlanks;
 
     for (let i = this.droppedLogs.length - 1; i >= 0; i--) {
       const log = this.droppedLogs[i];
@@ -1310,7 +1481,7 @@ export class LumberTycoonGame {
 
       // Vacuum pickup by player
       const d = Math.hypot(p.x - log.x, p.y - log.y);
-      if (d < 90 && p.carriedLogs < maxCapacity) {
+      if (d < 90 && currentTotal < maxCapacity) {
         log.x += (p.x - log.x) * dt * 9;
         log.y += (p.y - log.y) * dt * 9;
 
@@ -1323,9 +1494,9 @@ export class LumberTycoonGame {
         }
       }
 
-      // Vacuum pickup by nearby workers
+      // Vacuum pickup by workers
       for (const w of this.workers) {
-        if (w.carriedLogs < w.maxCarry) {
+        if ((w.carriedLogs + w.carriedPlanks) < w.maxCarry) {
           const wd = Math.hypot(w.x - log.x, w.y - log.y);
           if (wd < 50) {
             w.carriedLogs++;
@@ -1351,7 +1522,7 @@ export class LumberTycoonGame {
   }
 
   /* ==========================================================================
-   * 7. STREAMING UPGRADE PADS (ARCADE IDLE MECHANIC)
+   * 7. STREAMING UPGRADE PADS
    * ========================================================================== */
 
   updateUpgradePads(dt) {
@@ -1362,10 +1533,8 @@ export class LumberTycoonGame {
 
       const d = Math.hypot(p.x - pad.x, p.y - pad.y);
       if (d < pad.radius) {
-        // Player standing inside upgrade pad!
         const needed = pad.targetCost - pad.deposited;
         if (needed > 0 && this.saveData.cash > 0) {
-          // Stream money smoothly
           const transferSpeed = Math.max(1, Math.ceil(pad.targetCost * dt * 2));
           const transfer = Math.min(this.saveData.cash, needed, transferSpeed);
 
@@ -1373,7 +1542,6 @@ export class LumberTycoonGame {
           pad.deposited += transfer;
           this.audio.playCoinTick();
 
-          // Spawn stream of coins rising into pad
           this.flyingCoins.push({
             startX: p.x,
             startY: p.y - 15,
@@ -1384,7 +1552,6 @@ export class LumberTycoonGame {
 
           this.updateHUD();
 
-          // Check if upgrade completed!
           if (pad.deposited >= pad.targetCost) {
             this.completeUpgrade(pad);
           }
@@ -1404,6 +1571,12 @@ export class LumberTycoonGame {
       this.saveData.axeTier = this.player.axeTier;
       pad.deposited = 0;
       pad.targetCost = AXE_TIERS[this.player.axeTier + 1]?.cost || 0;
+
+      // Complete tutorial step 3
+      if (this.tutorialStep === 3) {
+        this.tutorialStep = 4;
+        this.saveData.tutorialStep = 4;
+      }
     } else if (pad.type === 'CAPACITY') {
       this.player.capacityIndex++;
       this.saveData.capacityIndex = this.player.capacityIndex;
@@ -1418,51 +1591,90 @@ export class LumberTycoonGame {
       const zoneId = pad.type.replace('ZONE_', '').toLowerCase();
       this.unlockedZones.add(zoneId);
       this.saveData.unlockedZones = Array.from(this.unlockedZones);
-      pad.targetCost = 0; // Completed
+      pad.targetCost = 0;
     }
 
     SaveManager.save(this.playgama, this.saveData);
     this.updateHUD();
   }
 
+  /* ==========================================================================
+   * 8. SAWMILL CUTTING & WOOD MARKET SELLING
+   * ========================================================================== */
+
   checkBuildingInteractions() {
     const p = this.player;
     this.promptText = '';
 
-    // Sawmill deposit
+    // 1. SAWMILL: Converts raw logs into refined wood planks!
     const mill = BUILDINGS.sawmill;
     if (p.x > mill.x && p.x < mill.x + mill.w && p.y > mill.y && p.y < mill.y + mill.h) {
       if (p.carriedLogs > 0) {
-        const cashValue = p.carriedLogs * 25 * 1.5;
-        this.saveData.cash += cashValue;
-        this.saveData.totalCashEarned += cashValue;
-        this.spawnCoinBursts(p.x, p.y, cashValue);
-        this.audio.playCash();
+        const converted = p.carriedLogs;
+        p.carriedPlanks += converted;
         p.carriedLogs = 0;
+
+        this.audio.playSawBuzz();
+        this.juice.screenShake(4);
+        this.particles.burst(mill.x + mill.w / 2, mill.y + mill.h / 2, 16, '#FFCC80');
+        this.juice.spawnFloatingText(`+${converted} Refined Planks! 🪵✨`, p.x, p.y - 30, { color: '#FFD54F', size: 18 });
         this.updateHUD();
-        SaveManager.save(this.playgama, this.saveData);
+
+        // Tutorial: Step 1 (Sawmill) -> Step 2 (Market)
+        if (this.tutorialStep === 1) {
+          this.tutorialStep = 2;
+          this.saveData.tutorialStep = 2;
+          SaveManager.save(this.playgama, this.saveData);
+        }
       }
     }
 
-    // Sell Market deposit
+    // 2. WOOD MARKET: Sells refined planks (+50% bonus) or raw logs
     const sell = BUILDINGS.sellZone;
     if (p.x > sell.x && p.x < sell.x + sell.w && p.y > sell.y && p.y < sell.y + sell.h) {
+      let totalEarned = 0;
+
+      // Sell refined planks (+50% profit!)
+      if (p.carriedPlanks > 0) {
+        const plankCash = p.carriedPlanks * 25 * 1.5;
+        totalEarned += plankCash;
+        p.carriedPlanks = 0;
+      }
+
+      // Sell raw logs (normal 1.0x price)
       if (p.carriedLogs > 0) {
-        const cashValue = p.carriedLogs * 25;
-        this.saveData.cash += cashValue;
-        this.saveData.totalCashEarned += cashValue;
-        this.spawnCoinBursts(p.x, p.y, cashValue);
-        this.audio.playCash();
+        const rawCash = p.carriedLogs * 25;
+        totalEarned += rawCash;
         p.carriedLogs = 0;
+      }
+
+      if (totalEarned > 0) {
+        this.saveData.cash += totalEarned;
+        this.saveData.totalCashEarned += totalEarned;
+        this.spawnCoinBursts(p.x, p.y, totalEarned);
+        this.audio.playCash();
         this.updateHUD();
         SaveManager.save(this.playgama, this.saveData);
+
+        // Tutorial: Step 2 (Market) -> Step 3 (Forge Pad)
+        if (this.tutorialStep === 2) {
+          this.tutorialStep = 3;
+          this.saveData.tutorialStep = 3;
+          SaveManager.save(this.playgama, this.saveData);
+        }
       }
     }
 
+    // Contextual HUD Prompt bubble
     const bubble = document.getElementById('prompt-bubble');
     if (bubble) {
-      if (p.carriedLogs >= (CAPACITY_TIERS[p.capacityIndex]?.capacity || 5)) {
-        bubble.textContent = '🎒 Backpack Full! Deliver to Sawmill (+50% cash)';
+      const maxCap = CAPACITY_TIERS[p.capacityIndex]?.capacity || 5;
+      if (p.carriedLogs + p.carriedPlanks >= maxCap) {
+        if (p.carriedLogs > 0) {
+          bubble.textContent = '⚙️ Take logs to Sawmill to cut into planks (+50% bonus!)';
+        } else {
+          bubble.textContent = '💰 Deliver refined planks to Market to cash in!';
+        }
         bubble.classList.remove('hidden');
       } else {
         bubble.classList.add('hidden');
@@ -1472,11 +1684,11 @@ export class LumberTycoonGame {
 
   spawnCoinBursts(x, y, amount) {
     this.particles.burst(x, y, 12, '#FFD54F');
-    this.juice.spawnFloatingText(`+$${Math.ceil(amount)}`, x, y - 25, { color: '#FFE082', size: 18 });
+    this.juice.spawnFloatingText(`+$${Math.ceil(amount)} (+50% BONUS) 💰`, x, y - 25, { color: '#FFE082', size: 18 });
   }
 
   /* ==========================================================================
-   * 8. MODALS & UPGRADES
+   * 9. MODALS & UPGRADES
    * ========================================================================== */
 
   openShopModal() {
@@ -1509,7 +1721,7 @@ export class LumberTycoonGame {
     capCard.innerHTML = `
       <div class="shop-item-info">
         <span class="shop-item-title">🎒 Log Backpack</span>
-        <span class="shop-item-desc">Max Carry: ${CAPACITY_TIERS[this.player.capacityIndex]?.capacity} Logs</span>
+        <span class="shop-item-desc">Max Carry: ${CAPACITY_TIERS[this.player.capacityIndex]?.capacity} Items</span>
         <span class="shop-item-level">Tier ${this.player.capacityIndex + 1} / ${CAPACITY_TIERS.length}</span>
       </div>
       <button class="btn-upgrade" id="btn-buy-cap" ${!nextCap || this.saveData.cash < nextCap.cost ? 'disabled' : ''}>
@@ -1556,7 +1768,7 @@ export class LumberTycoonGame {
     card.innerHTML = `
       <div class="shop-item-info">
         <span class="shop-item-title">👷 Hire Lumberjack Bot</span>
-        <span class="shop-item-desc">Auto-chops trees & delivers timber</span>
+        <span class="shop-item-desc">Auto-chops trees, cuts planks & delivers</span>
         <span class="shop-item-level">Hired: ${this.workers.length} / 8</span>
       </div>
       <button class="btn-upgrade" id="btn-hire-worker" ${this.workers.length >= 8 || this.saveData.cash < workerCost ? 'disabled' : ''}>
@@ -1609,20 +1821,27 @@ export class LumberTycoonGame {
     const cash = document.getElementById('hud-cash-val');
     const cap = document.getElementById('hud-cap-val');
     const maxCap = CAPACITY_TIERS[this.player.capacityIndex]?.capacity || 5;
+    const currentTotal = this.player.carriedLogs + this.player.carriedPlanks;
 
     if (cash) cash.textContent = Math.floor(this.saveData.cash).toLocaleString();
-    if (cap) cap.textContent = `${this.player.carriedLogs} / ${maxCap}`;
+    if (cap) {
+      if (this.player.carriedPlanks > 0) {
+        cap.textContent = `${this.player.carriedPlanks} Planks / ${maxCap}`;
+      } else {
+        cap.textContent = `${this.player.carriedLogs} Logs / ${maxCap}`;
+      }
+    }
   }
 
   /* ==========================================================================
-   * 9. 2.5D DEPTH-SORTED RENDERING LOOP
+   * 10. 2.5D DEPTH-SORTED RENDERING LOOP & TUTORIAL OVERLAY
    * ========================================================================== */
 
   render() {
     const ctx = this.renderer.ctx;
     this.renderer.beginFrame(this.camera);
 
-    // 1. Ground Terrain & Roads (Always bottom)
+    // 1. Ground Terrain & Roads
     drawTopDownTerrain(ctx, WORLD.width, WORLD.height, this.animTime);
 
     // 2. Upgrade Pads (Ground Level)
@@ -1630,7 +1849,7 @@ export class LumberTycoonGame {
       drawUpgradePad(ctx, pad, this.animTime);
     }
 
-    // 3. Collect all 2.5D Entities for Depth Y-Sorting
+    // 3. Collect 2.5D Entities for Depth Y-Sorting
     const renderQueue = [];
 
     // Base Buildings
@@ -1671,13 +1890,13 @@ export class LumberTycoonGame {
       draw: () => drawLumberjackHero(ctx, this.player, true, this.animTime)
     });
 
-    // 4. SORT BY Y AND DRAW IN ORDER (Guarantees proper occlusion!)
+    // 4. SORT BY Y AND DRAW
     renderQueue.sort((a, b) => a.y - b.y);
     for (const item of renderQueue) {
       item.draw();
     }
 
-    // 5. Streaming Flying Coins (Above actors)
+    // 5. Streaming Flying Coins
     for (const coin of this.flyingCoins) {
       ctx.save();
       ctx.fillStyle = '#ffd54f';
@@ -1690,20 +1909,50 @@ export class LumberTycoonGame {
       ctx.restore();
     }
 
-    // 6. Particles & Floating Texts
+    // 6. Guided Playgama-Style Tutorial Arrow
+    if (this.tutorialStep === 0) {
+      // Step 0: Find nearest Oak tree
+      let nearestOak = null;
+      let minD = Infinity;
+      for (const t of this.trees) {
+        if (!t.isCut && t.zoneId === 'oak') {
+          const d = Math.hypot(this.player.x - t.x, this.player.y - t.y);
+          if (d < minD) { minD = d; nearestOak = t; }
+        }
+      }
+      if (nearestOak) {
+        drawTutorialArrow(ctx, nearestOak.x, nearestOak.y, '1. Chop tree for raw logs! 🪓', '', this.animTime);
+      }
+    } else if (this.tutorialStep === 1) {
+      // Step 1: Point to Sawmill
+      const mill = BUILDINGS.sawmill;
+      drawTutorialArrow(ctx, mill.x + mill.w / 2, mill.y + mill.h / 2, '2. Cut logs into planks at Sawmill! ⚙️', '', this.animTime);
+    } else if (this.tutorialStep === 2) {
+      // Step 2: Point to Wood Market
+      const market = BUILDINGS.sellZone;
+      drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '3. Sell planks for +50% Bonus Cash! 💰', '', this.animTime);
+    } else if (this.tutorialStep === 3) {
+      // Step 3: Point to Forge Pad
+      const forgePad = this.upgradePads.find((p) => p.type === 'AXE');
+      if (forgePad) {
+        drawTutorialArrow(ctx, forgePad.x, forgePad.y, '4. Stand on Forge Pad to upgrade Axe! 🪓', '', this.animTime);
+      }
+    }
+
+    // 7. Particles & World Juice
     this.particles.render(ctx);
     this.juice.renderWorld(ctx);
 
     this.renderer.endWorldFrame(this.camera);
 
-    // 7. Screen HUD Juice
+    // 8. Screen HUD Juice
     this.juice.renderScreen(ctx, this.renderer.virtualWidth, this.renderer.virtualHeight);
     this.renderer.endFrame();
   }
 }
 
 /* ============================================================================
- * 10. BOOTSTRAP ENTRY POINT
+ * 11. BOOTSTRAP ENTRY POINT
  * ============================================================================ */
 
 function bootLumberTycoon() {
