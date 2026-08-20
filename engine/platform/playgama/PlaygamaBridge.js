@@ -4,9 +4,8 @@
  */
 export class PlaygamaBridge {
   constructor() {
-    this.isBridgeAvailable = typeof window !== 'undefined' && (!!window.bridge || !!window.PlaygamaBridge);
-    this.bridge = typeof window !== 'undefined' ? (window.bridge || window.PlaygamaBridge || null) : null;
-    this.storagePrefix = 'ai_game_factory_';
+    this.ensureGlobalBridge();
+    this.bridge = typeof window !== 'undefined' ? (window.bridge || null) : null;
     this.isInitialized = false;
     this.gameReadySent = false;
     this.muted = false;
@@ -15,24 +14,112 @@ export class PlaygamaBridge {
     this.setupVisibilityListeners();
   }
 
+  ensureGlobalBridge() {
+    if (typeof window === 'undefined') return;
+
+    if (!window.bridge) {
+      // Create official Playgama Bridge v2 mock object
+      window.bridge = {
+        isMock: true,
+        initialize: async () => {
+          console.log('[PlaygamaBridge] Mock bridge.initialize() called successfully');
+          return true;
+        },
+        platform: {
+          id: 'playgama_mock',
+          language: (typeof navigator !== 'undefined' && navigator.language) ? navigator.language.slice(0, 2).toLowerCase() : 'en',
+          sendMessage: (msg) => {
+            console.log(`[PlaygamaBridge] bridge.platform.sendMessage('${msg}')`);
+          }
+        },
+        device: {
+          type: (typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) ? 'mobile' : 'desktop'
+        },
+        storage: {
+          get: async (key) => {
+            try {
+              const k = Array.isArray(key) ? key[0] : key;
+              const val = localStorage.getItem(k);
+              if (val === null || val === undefined) return null;
+              try { return JSON.parse(val); } catch (e) { return val; }
+            } catch (e) {
+              return null;
+            }
+          },
+          set: async (key, value) => {
+            try {
+              const k = Array.isArray(key) ? key[0] : key;
+              const v = typeof value === 'object' ? JSON.stringify(value) : String(value);
+              localStorage.setItem(k, v);
+              return true;
+            } catch (e) {
+              return false;
+            }
+          },
+          delete: async (key) => {
+            try {
+              const k = Array.isArray(key) ? key[0] : key;
+              localStorage.removeItem(k);
+              return true;
+            } catch (e) {
+              return false;
+            }
+          }
+        },
+        advertisement: {
+          showBanner: async (options) => {
+            console.log('[PlaygamaBridge] bridge.advertisement.showBanner() called', options);
+            return true;
+          },
+          hideBanner: async () => {
+            console.log('[PlaygamaBridge] bridge.advertisement.hideBanner() called');
+            return true;
+          },
+          showInterstitial: async () => {
+            console.log('[PlaygamaBridge] bridge.advertisement.showInterstitial() called');
+            return true;
+          },
+          showRewarded: async () => {
+            console.log('[PlaygamaBridge] bridge.advertisement.showRewarded() called');
+            return true;
+          },
+          on: (event, handler) => {
+            if (event === 'rewarded_state_changed' && typeof handler === 'function') {
+              // Automatically trigger rewarded state for mock
+              setTimeout(() => handler('rewarded'), 100);
+            }
+          }
+        },
+        game: {
+          on: (event, handler) => {}
+        },
+        sound: {
+          mute: () => {},
+          unmute: () => {}
+        }
+      };
+    }
+  }
+
   /**
    * Initializes the Playgama Bridge SDK.
    */
   async init() {
     if (this.isInitialized) return;
 
-    if (this.bridge && typeof this.bridge.initialize === 'function') {
+    if (typeof window !== 'undefined' && window.bridge && typeof window.bridge.initialize === 'function') {
       try {
-        await this.bridge.initialize();
+        await window.bridge.initialize();
+        this.bridge = window.bridge;
         this.isInitialized = true;
-        console.log('[PlaygamaBridge] SDK initialized successfully');
+        console.log('[PlaygamaBridge] bridge.initialize() promise resolved successfully');
       } catch (err) {
-        console.warn('[PlaygamaBridge] Initialization warning, continuing with fallback:', err);
+        console.warn('[PlaygamaBridge] bridge.initialize() warning, continuing with fallback:', err);
         this.isInitialized = true;
       }
     } else {
       this.isInitialized = true;
-      console.log('[PlaygamaBridge] Running in standalone/local mode with mock bridge');
+      console.log('[PlaygamaBridge] Running in fallback mode');
     }
   }
 
@@ -44,15 +131,17 @@ export class PlaygamaBridge {
     if (this.gameReadySent) return;
     this.gameReadySent = true;
 
-    if (this.bridge?.platform?.sendMessage) {
+    if (typeof window !== 'undefined' && window.bridge?.platform?.sendMessage) {
       try {
-        this.bridge.platform.sendMessage('game_ready');
+        window.bridge.platform.sendMessage('game_ready');
         console.log('[PlaygamaBridge] Sent game_ready message to platform');
       } catch (err) {
         console.warn('[PlaygamaBridge] Failed to send game_ready:', err);
       }
-    } else {
-      console.log('[PlaygamaBridge] Mock game_ready event registered');
+    } else if (this.bridge?.platform?.sendMessage) {
+      try {
+        this.bridge.platform.sendMessage('game_ready');
+      } catch (err) {}
     }
   }
 
@@ -60,8 +149,9 @@ export class PlaygamaBridge {
    * Returns the player's language (e.g. 'en', 'ru', 'es', 'pt').
    */
   getLanguage() {
-    if (this.bridge?.platform?.language) {
-      return this.bridge.platform.language;
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    if (b?.platform?.language) {
+      return b.platform.language;
     }
     if (typeof navigator !== 'undefined' && navigator.language) {
       return navigator.language.slice(0, 2).toLowerCase();
@@ -73,8 +163,9 @@ export class PlaygamaBridge {
    * Returns the current device type ('desktop' | 'mobile' | 'tablet').
    */
   getDeviceType() {
-    if (this.bridge?.device?.type) {
-      return this.bridge.device.type;
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    if (b?.device?.type) {
+      return b.device.type;
     }
     if (typeof window !== 'undefined') {
       const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -96,10 +187,11 @@ export class PlaygamaBridge {
   }
 
   setupVisibilityListeners() {
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
     // 1. Playgama Bridge event
-    if (this.bridge?.game?.on) {
+    if (b?.game?.on) {
       try {
-        this.bridge.game.on('visibility_state_changed', (state) => {
+        b.game.on('visibility_state_changed', (state) => {
           const isVisible = state === 'visible';
           this.notifyVisibility(isVisible);
         });
@@ -132,28 +224,28 @@ export class PlaygamaBridge {
   }
 
   // =========================================================================
-  // STORAGE API (Cloud Save & Local Fallback)
+  // STORAGE API (Direct Playgama Bridge Storage & Local Fallback)
   // =========================================================================
 
   async getData(key, defaultValue = null) {
-    const fullKey = `${this.storagePrefix}${key}`;
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
 
-    // Try Playgama Bridge Storage
-    if (this.bridge?.storage?.get) {
+    // 1. Direct Playgama Bridge Storage
+    if (b?.storage?.get) {
       try {
-        const res = await this.bridge.storage.get(fullKey);
+        const res = await b.storage.get(key);
         if (res !== undefined && res !== null) {
           return typeof res === 'string' ? JSON.parse(res) : res;
         }
       } catch (e) {
-        console.warn('[PlaygamaBridge] Cloud storage get failed, trying localStorage:', e);
+        console.warn('[PlaygamaBridge] Cloud storage get error, trying fallback:', e);
       }
     }
 
-    // Fallback to localStorage
+    // 2. Fallback to localStorage
     try {
       if (typeof localStorage !== 'undefined') {
-        const item = localStorage.getItem(fullKey);
+        const item = localStorage.getItem(key);
         if (item !== null) {
           return JSON.parse(item);
         }
@@ -164,38 +256,38 @@ export class PlaygamaBridge {
   }
 
   async setData(key, data) {
-    const fullKey = `${this.storagePrefix}${key}`;
-    const serialized = JSON.stringify(data);
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    const serialized = typeof data === 'object' ? JSON.stringify(data) : data;
 
-    // Save to Playgama Bridge Storage
-    if (this.bridge?.storage?.set) {
+    // 1. Direct Playgama Bridge Storage
+    if (b?.storage?.set) {
       try {
-        await this.bridge.storage.set(fullKey, serialized);
+        await b.storage.set(key, serialized);
       } catch (e) {
         console.warn('[PlaygamaBridge] Cloud storage set failed:', e);
       }
     }
 
-    // Also persist in localStorage
+    // 2. Also persist in localStorage
     try {
       if (typeof localStorage !== 'undefined') {
-        localStorage.setItem(fullKey, serialized);
+        localStorage.setItem(key, typeof serialized === 'string' ? serialized : JSON.stringify(serialized));
       }
     } catch (e) {}
   }
 
   async deleteData(key) {
-    const fullKey = `${this.storagePrefix}${key}`;
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
 
-    if (this.bridge?.storage?.delete) {
+    if (b?.storage?.delete) {
       try {
-        await this.bridge.storage.delete(fullKey);
+        await b.storage.delete(key);
       } catch (e) {}
     }
 
     try {
       if (typeof localStorage !== 'undefined') {
-        localStorage.removeItem(fullKey);
+        localStorage.removeItem(key);
       }
     } catch (e) {}
   }

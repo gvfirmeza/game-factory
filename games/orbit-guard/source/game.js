@@ -1660,9 +1660,34 @@ export class SaveManager {
     }
 
     try {
-      const data = await bridge.getData(this.STORAGE_KEY);
-      if (data && typeof data === 'object') {
-        return { ...this.getDefaultSave(), ...data, workshop: { ...this.getDefaultSave().workshop, ...(data.workshop || {}) } };
+      // 1. Try Direct Playgama Bridge Storage
+      if (typeof window !== 'undefined' && window.bridge?.storage?.get) {
+        const raw = await window.bridge.storage.get(this.STORAGE_KEY);
+        if (raw) {
+          const data = typeof raw === 'string' ? JSON.parse(raw) : raw;
+          if (data && typeof data === 'object') {
+            return { ...this.getDefaultSave(), ...data, workshop: { ...this.getDefaultSave().workshop, ...(data.workshop || {}) } };
+          }
+        }
+      }
+
+      // 2. Try Bridge Wrapper
+      if (bridge && typeof bridge.getData === 'function') {
+        const data = await bridge.getData(this.STORAGE_KEY);
+        if (data && typeof data === 'object') {
+          return { ...this.getDefaultSave(), ...data, workshop: { ...this.getDefaultSave().workshop, ...(data.workshop || {}) } };
+        }
+      }
+
+      // 3. Fallback to localStorage
+      if (typeof localStorage !== 'undefined') {
+        const item = localStorage.getItem(this.STORAGE_KEY);
+        if (item) {
+          const data = JSON.parse(item);
+          if (data && typeof data === 'object') {
+            return { ...this.getDefaultSave(), ...data, workshop: { ...this.getDefaultSave().workshop, ...(data.workshop || {}) } };
+          }
+        }
       }
     } catch (e) {
       console.warn('Save load failed, using default:', e);
@@ -1673,8 +1698,22 @@ export class SaveManager {
   static async save(bridge, data) {
     const searchStr = (typeof window !== 'undefined' && window.location && window.location.search) ? window.location.search : '';
     if (searchStr.includes('nosave=1')) return;
+
     try {
-      await bridge.setData(this.STORAGE_KEY, data);
+      // 1. Direct Playgama Bridge Storage
+      if (typeof window !== 'undefined' && window.bridge?.storage?.set) {
+        await window.bridge.storage.set(this.STORAGE_KEY, JSON.stringify(data));
+      }
+
+      // 2. Bridge Wrapper
+      if (bridge && typeof bridge.setData === 'function') {
+        await bridge.setData(this.STORAGE_KEY, data);
+      }
+
+      // 3. LocalStorage persistence
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+      }
     } catch (e) {
       console.warn('Save write failed:', e);
     }
