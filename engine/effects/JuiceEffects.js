@@ -43,6 +43,10 @@ export class JuiceEffects {
     });
   }
 
+  floatingText(text, x, y, color = '#FFD93D', size = 20) {
+    this.spawnFloatingText(text, x, y, { color, size });
+  }
+
   spawnShockwave(x, y, maxRadius = 50, color = '#FFFFFF') {
     this.shockwaves.push({
       x,

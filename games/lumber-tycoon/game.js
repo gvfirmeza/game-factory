@@ -1397,7 +1397,7 @@ export class LumberTycoonGame {
     this.audio.playUpgrade();
     this.juice.screenShake(8);
     this.particles.burst(pad.x, pad.y, 30, '#FFD54F');
-    this.juice.floatingText('LEVEL UP! ✨', pad.x, pad.y - 40, '#00E676', 22);
+    this.juice.spawnFloatingText('LEVEL UP! ✨', pad.x, pad.y - 40, { color: '#00E676', size: 22 });
 
     if (pad.type === 'AXE') {
       this.player.axeTier++;
@@ -1472,7 +1472,7 @@ export class LumberTycoonGame {
 
   spawnCoinBursts(x, y, amount) {
     this.particles.burst(x, y, 12, '#FFD54F');
-    this.juice.floatingText(`+$${Math.ceil(amount)}`, x, y - 25, '#FFE082', 18);
+    this.juice.spawnFloatingText(`+$${Math.ceil(amount)}`, x, y - 25, { color: '#FFE082', size: 18 });
   }
 
   /* ==========================================================================
