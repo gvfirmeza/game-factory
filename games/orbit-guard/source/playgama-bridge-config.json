@@ -1,0 +1,39 @@
+{
+  "platforms": {
+    "playgama": {
+      "gameId": "orbit-guard"
+    },
+    "yandex": {
+      "gameId": "orbit-guard"
+    },
+    "crazy_games": {
+      "gameId": "orbit-guard"
+    },
+    "game_distribution": {
+      "gameId": "orbit-guard"
+    },
+    "vk": {
+      "gameId": "orbit-guard"
+    },
+    "telegram": {
+      "gameId": "orbit-guard"
+    }
+  },
+  "advertisement": {
+    "interstitial": {
+      "preloadOnStart": true
+    },
+    "rewarded": {
+      "preloadOnStart": true
+    },
+    "banner": {
+      "preloadOnStart": true
+    }
+  },
+  "storage": {
+    "defaultType": "platform_internal"
+  },
+  "game": {
+    "orientation": "portrait"
+  }
+}
