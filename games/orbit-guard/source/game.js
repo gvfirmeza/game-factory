@@ -1625,16 +1625,6 @@ export function drawEnemy(ctx, enemy, animTime) {
       break;
   }
 
-  // Hit Flash Feedback
-  if (enemy.hitFlashTimer > 0) {
-    ctx.save();
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
-    ctx.beginPath();
-    ctx.arc(enemy.x, enemy.y, (enemy.radius || 12) + 2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-  }
-
   // Enemy Mini Health Bar
   if (enemy.hp < enemy.maxHp) {
     const barW = Math.max(20, (enemy.radius || 12) * 2);
@@ -1893,6 +1883,42 @@ export class OrbitGuardGame {
     this.saveGame();
   }
 
+  async showInterstitialAd() {
+    const prevState = this.state;
+    this.state = 'PAUSED';
+    const wasMuted = this.audio.isMuted;
+    this.audio.setMuted(true);
+
+    try {
+      await this.playgama.showInterstitial();
+    } catch (e) {
+      console.warn('Interstitial ad error:', e);
+    } finally {
+      this.audio.setMuted(wasMuted);
+      if (prevState === 'PLAYING') {
+        this.state = 'PLAYING';
+      }
+    }
+  }
+
+  async showRewardedAd(onRewardedCallback) {
+    const prevState = this.state;
+    this.state = 'PAUSED';
+    const wasMuted = this.audio.isMuted;
+    this.audio.setMuted(true);
+
+    try {
+      await this.playgama.showRewarded(onRewardedCallback);
+    } catch (e) {
+      console.warn('Rewarded ad error:', e);
+    } finally {
+      this.audio.setMuted(wasMuted);
+      if (prevState === 'PLAYING') {
+        this.state = 'PLAYING';
+      }
+    }
+  }
+
   async init() {
     await this.playgama.init();
     this.saveData = await SaveManager.load(this.playgama);
@@ -2020,8 +2046,8 @@ export class OrbitGuardGame {
 
     const btnRestart = document.getElementById('btn-restart-run');
     if (btnRestart) {
-      btnRestart.addEventListener('click', () => {
-        this.playgama.showInterstitial();
+      btnRestart.addEventListener('click', async () => {
+        await this.showInterstitialAd();
         this.closeAllModals();
         this.startNewRun();
       });
@@ -2029,8 +2055,8 @@ export class OrbitGuardGame {
 
     const btnQuitTitle = document.getElementById('btn-quit-to-title');
     if (btnQuitTitle) {
-      btnQuitTitle.addEventListener('click', () => {
-        this.playgama.showInterstitial();
+      btnQuitTitle.addEventListener('click', async () => {
+        await this.showInterstitialAd();
         this.closeAllModals();
         this.returnToTitle();
       });
@@ -2041,7 +2067,7 @@ export class OrbitGuardGame {
     if (btnAirdrop) {
       btnAirdrop.addEventListener('click', () => {
         this.audio.init();
-        this.playgama.showRewarded(() => {
+        this.showRewardedAd(() => {
           this.addGold(120);
           this.audio.playCoinDrop();
           this.particles.burst(ARENA.center.x, ARENA.center.y, 30, '#FFD166');
@@ -2055,7 +2081,7 @@ export class OrbitGuardGame {
     if (btnFreeGold) {
       btnFreeGold.addEventListener('click', () => {
         this.audio.init();
-        this.playgama.showRewarded(() => {
+        this.showRewardedAd(() => {
           this.addGold(100);
           this.audio.playCoinDrop();
           this.renderWorkshopUI();
@@ -2069,7 +2095,7 @@ export class OrbitGuardGame {
     if (btnRevive) {
       btnRevive.addEventListener('click', () => {
         this.audio.init();
-        this.playgama.showRewarded(() => {
+        this.showRewardedAd(() => {
           this.reviveCore();
         });
       });
@@ -2079,7 +2105,7 @@ export class OrbitGuardGame {
     if (btnDoubleGold) {
       btnDoubleGold.addEventListener('click', () => {
         this.audio.init();
-        this.playgama.showRewarded(() => {
+        this.showRewardedAd(() => {
           const bonus = Math.max(50, Math.floor(this.gold * 0.8) + 50);
           this.addGold(bonus);
           this.audio.playCoinDrop();
@@ -2092,8 +2118,8 @@ export class OrbitGuardGame {
 
     const btnRetry = document.getElementById('btn-retry-game');
     if (btnRetry) {
-      btnRetry.addEventListener('click', () => {
-        this.playgama.showInterstitial();
+      btnRetry.addEventListener('click', async () => {
+        await this.showInterstitialAd();
         this.closeAllModals();
         this.startNewRun();
       });
@@ -2109,8 +2135,8 @@ export class OrbitGuardGame {
 
     const btnGoTitle = document.getElementById('btn-go-title');
     if (btnGoTitle) {
-      btnGoTitle.addEventListener('click', () => {
-        this.playgama.showInterstitial();
+      btnGoTitle.addEventListener('click', async () => {
+        await this.showInterstitialAd();
         this.closeAllModals();
         this.returnToTitle();
       });
@@ -2794,7 +2820,7 @@ export class OrbitGuardGame {
 
       const isBossWave = this.wave % 5 === 0;
       if (isBossWave) {
-        this.playgama.showInterstitial();
+        this.showInterstitialAd();
       }
 
       const bounty = 25 + 12 * this.wave + Math.floor(1.5 * Math.pow(this.wave, 1.2));
@@ -3038,8 +3064,12 @@ export class OrbitGuardGame {
       if (angleDiff <= Math.PI / 3) {
         // Frontal shield deflection!
         this.audio.playCritSlash();
-        this.juice.spawnFloatingText('BLOCKED!', enemy.x, enemy.y - 20, { color: '#00E5FF', size: 14 });
-        this.particles.burst(enemy.x, enemy.y, 6, '#00E5FF');
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        if (!enemy.lastBlockedTextTime || (now - enemy.lastBlockedTextTime > 2000)) {
+          enemy.lastBlockedTextTime = now;
+          this.juice.spawnFloatingText('BLOCKED!', enemy.x, enemy.y - 20, { color: '#00E5FF', size: 14 });
+        }
+        this.particles.burst(enemy.x, enemy.y, 4, '#00E5FF');
         return;
       }
     }
