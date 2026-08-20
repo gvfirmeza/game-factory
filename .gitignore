@@ -48,3 +48,5 @@ dist/
 *.tar.gz
 *.tgz
 *.rar
+
+.vercel

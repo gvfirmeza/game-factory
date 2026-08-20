@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/games/orbit-guard/source/index.html" },
+    { "source": "/play", "destination": "/games/orbit-guard/source/index.html" },
+    { "source": "/orbit-guard", "destination": "/games/orbit-guard/source/index.html" },
+    { "source": "/studio", "destination": "/studio/index.html" },
+    { "source": "/studio/:path*", "destination": "/studio/:path*" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}
