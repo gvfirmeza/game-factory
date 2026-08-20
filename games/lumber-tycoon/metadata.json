@@ -1,0 +1,14 @@
+{
+  "id": "lumber-tycoon",
+  "title": "Lumber Tycoon",
+  "concept": "3D mobile tycoon game where players chop trees, collect logs, sell for cash, hire NPC workers, and build an automated lumber empire",
+  "status": "ready",
+  "created": "2026-08-20",
+  "pipeline_version": "1.0",
+  "build": {
+    "timestamp": "2026-08-20T17:22:00.291Z",
+    "zipFile": "build/lumber-tycoon.zip",
+    "sizeBytes": 59798,
+    "success": true
+  }
+}

@@ -190,7 +190,7 @@ const server = http.createServer((req, res) => {
     return handleDownloadZip(req, res, downloadMatch[1]);
   }
 
-  // Static Game and Engine routing
+  // Static Game, Engine, and Studio routing
   if (pathname.startsWith('/games/')) {
     const relativePath = pathname.replace(/^\/games\//, '');
     const fullPath = path.join(rootDir, 'games', relativePath);
@@ -203,8 +203,17 @@ const server = http.createServer((req, res) => {
     return serveFile(res, fullPath);
   }
 
+  if (pathname.startsWith('/studio/')) {
+    const relativePath = pathname.replace(/^\/studio\//, '');
+    const fullPath = path.join(rootDir, 'studio', relativePath);
+    return serveFile(res, fullPath);
+  }
+
   // Default: Serve studio UI
   let filePath = path.join(rootDir, 'studio', pathname === '/' ? 'index.html' : pathname);
+  if (!fs.existsSync(filePath)) {
+    filePath = path.join(rootDir, pathname === '/' ? 'index.html' : pathname);
+  }
   serveFile(res, filePath);
 });
 

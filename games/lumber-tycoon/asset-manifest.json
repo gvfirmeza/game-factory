@@ -1,0 +1,80 @@
+{
+  "gameId": "lumber-tycoon",
+  "version": "1.0",
+  "assets": {
+    "textures": {
+      "player": {
+        "file": "textures/player.png",
+        "size": "128x128",
+        "format": "PNG-32",
+        "description": "Player character spritesheet"
+      },
+      "worker": {
+        "file": "textures/worker.png",
+        "size": "128x128",
+        "format": "PNG-32",
+        "description": "Worker character spritesheet"
+      },
+      "trees": {
+        "birch": { "file": "textures/birch.png", "size": "64x128", "format": "PNG-8" },
+        "pine": { "file": "textures/pine.png", "size": "64x128", "format": "PNG-8" },
+        "oak": { "file": "textures/oak.png", "size": "96x160", "format": "PNG-8" },
+        "maple": { "file": "textures/maple.png", "size": "96x160", "format": "PNG-8" },
+        "cedar": { "file": "textures/cedar.png", "size": "128x192", "format": "PNG-8" },
+        "redwood": { "file": "textures/redwood.png", "size": "128x256", "format": "PNG-8" }
+      },
+      "environment": {
+        "grass": { "file": "textures/grass.png", "size": "256x256", "format": "PNG-8" },
+        "dirt": { "file": "textures/dirt.png", "size": "256x256", "format": "PNG-8" },
+        "stone": { "file": "textures/stone.png", "size": "128x128", "format": "PNG-8" }
+      },
+      "ui": {
+        "panel": { "file": "textures/ui-panel.png", "size": "512x512", "format": "PNG-32" },
+        "button": { "file": "textures/ui-button.png", "size": "256x64", "format": "PNG-32" },
+        "icon": { "file": "textures/ui-icons.png", "size": "256x256", "format": "PNG-32" }
+      },
+      "particles": {
+        "woodchip": { "file": "textures/particle-woodchip.png", "size": "16x16", "format": "PNG-8" },
+        "dust": { "file": "textures/particle-dust.png", "size": "32x32", "format": "PNG-8" },
+        "coin": { "file": "textures/particle-coin.png", "size": "16x16", "format": "PNG-8" },
+        "sparkle": { "file": "textures/particle-sparkle.png", "size": "16x16", "format": "PNG-8" }
+      }
+    },
+    "audio": {
+      "music": {
+        "mainTheme": { "file": "audio/music-main.mp3", "size": "2MB", "format": "MP3-128" },
+        "menuTheme": { "file": "audio/music-menu.mp3", "size": "1MB", "format": "MP3-128" }
+      },
+      "sfx": {
+        "chop1": { "file": "audio/sfx-chop1.mp3", "size": "50KB", "format": "MP3-128" },
+        "chop2": { "file": "audio/sfx-chop2.mp3", "size": "50KB", "format": "MP3-128" },
+        "chop3": { "file": "audio/sfx-chop3.mp3", "size": "50KB", "format": "MP3-128" },
+        "treeFall": { "file": "audio/sfx-tree-fall.mp3", "size": "100KB", "format": "MP3-128" },
+        "logPickup": { "file": "audio/sfx-log-pickup.mp3", "size": "30KB", "format": "MP3-128" },
+        "cashRegister": { "file": "audio/sfx-cash-register.mp3", "size": "80KB", "format": "MP3-128" },
+        "coinJingle": { "file": "audio/sfx-coin-jingle.mp3", "size": "40KB", "format": "MP3-128" },
+        "upgradePower": { "file": "audio/sfx-upgrade-power.mp3", "size": "60KB", "format": "MP3-128" },
+        "workerHire": { "file": "audio/sfx-worker-hire.mp3", "size": "50KB", "format": "MP3-128" },
+        "buttonClick": { "file": "audio/sfx-button-click.mp3", "size": "20KB", "format": "MP3-128" },
+        "menuOpen": { "file": "audio/sfx-menu-open.mp3", "size": "30KB", "format": "MP3-128" },
+        "zoneUnlock": { "file": "audio/sfx-zone-unlock.mp3", "size": "70KB", "format": "MP3-128" }
+      }
+    },
+    "fonts": {
+      "main": { "file": "fonts/main-font.ttf", "size": "100KB", "format": "TTF" }
+    }
+  },
+  "atlasGroups": {
+    "characters": ["player", "worker"],
+    "trees": ["birch", "pine", "oak", "maple", "cedar", "redwood"],
+    "environment": ["grass", "dirt", "stone"],
+    "ui": ["panel", "button", "icon"],
+    "particles": ["woodchip", "dust", "coin", "sparkle"]
+  },
+  "totalSize": {
+    "textures": "8MB",
+    "audio": "4MB",
+    "fonts": "200KB",
+    "total": "12.2MB"
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "gameId": "lumber-tycoon",
+  "version": "1.0",
+  "rooms": {
+    "total": 3,
+    "minimum": 3,
+    "description": "One room per zone (Forest, Deep Forest, Ancient Forest)"
+  },
+  "contentBudgets": {
+    "zones": {
+      "total": 3,
+      "minimum": 3,
+      "description": "Forest, Deep Forest, Ancient Forest"
+    },
+    "treeTypes": {
+      "total": 6,
+      "minimum": 6,
+      "description": "Birch, Pine, Oak, Maple, Cedar, Redwood"
+    },
+    "axeTiers": {
+      "total": 6,
+      "minimum": 6,
+      "description": "Rusty, Stone, Iron, Steel, Diamond, Golden"
+    },
+    "workerTiers": {
+      "total": 5,
+      "minimum": 5,
+      "description": "Novice, Apprentice, Journeyman, Expert, Master"
+    },
+    "capacityUpgrades": {
+      "total": 5,
+      "minimum": 5,
+      "description": "Basic, Backpack, Cart, Wagon, Truck"
+    },
+    "priceUpgrades": {
+      "total": 3,
+      "minimum": 3,
+      "description": "Better Buyer, Premium Market, Luxury Contracts"
+    }
+  },
+  "economy": {
+    "startingCash": 0,
+    "firstTreeValue": 5,
+    "upgradeCostMultiplier": 2.75,
+    "zoneCosts": [0, 500, 2000],
+    "workerCosts": [200, 800, 3000, 12000, 50000],
+    "totalCashToComplete": 500000,
+    "estimatedPlayTime": "8-12 hours"
+  },
+  "visuals": {
+    "artStyle": "low-poly 3D",
+    "colorPalette": "bright, saturated, warm wood tones",
+    "uiStyle": "clean, mobile-friendly, minimal",
+    "animations": [
+      "character walk",
+      "tree chopping",
+      "tree falling",
+      "log pickup",
+      "cash popup",
+      "upgrade glow",
+      "worker walking",
+      "worker chopping"
+    ],
+    "particles": [
+      "wood chips",
+      "dust cloud",
+      "coin burst",
+      "sparkle effect",
+      "level up glow"
+    ]
+  },
+  "audio": {
+    "music": {
+      "mainTheme": "upbeat, tropical, relaxing",
+      "menuTheme": "calm, inviting"
+    },
+    "sfx": [
+      "chop_wood",
+      "tree_fall",
+      "log_pickup",
+      "cash_register",
+      "coin_jingle",
+      "upgrade_power",
+      "worker_hire",
+      "button_click",
+      "menu_open",
+      "zone_unlock"
+    ]
+  },
+  "ui": {
+    "screens": [
+      "main_hud",
+      "upgrade_shop",
+      "worker_shop",
+      "zone_select",
+      "settings",
+      "save/load",
+      "tutorial"
+    ],
+    "hudElements": [
+      "cash_display",
+      "axe_info",
+      "carry_capacity",
+      "worker_count",
+      "zone_indicator",
+      "interaction_prompt"
+    ]
+  },
+  "performance": {
+    "targetFPS": 60,
+    "maxActiveTrees": 50,
+    "maxActiveWorkers": 10,
+    "maxActiveParticles": 100,
+    "objectPoolSizes": {
+      "logs": 50,
+      "effects": 30,
+      "workers": 15
+    }
+  },
+  "quality": {
+    "criticalBugs": 0,
+    "blockingBugs": 0,
+    "majorBugs": 0,
+    "minorBugs": 3,
+    "cosmeticIssues": 5,
+    "mobileOptimization": "required",
+    "saveSystem": "required",
+    "tutorial": "required",
+    "pauseSystem": "required"
+  }
+}

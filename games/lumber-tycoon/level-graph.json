@@ -1,0 +1,147 @@
+{
+  "levelId": "lumber-tycoon-world",
+  "name": "Lumber Tycoon World",
+  "width": 3000,
+  "height": 2000,
+  "zones": [
+    {
+      "zoneId": "forest",
+      "name": "Forest",
+      "unlockCost": 0,
+      "bounds": { "x": 0, "y": 0, "w": 1000, "h": 1000 },
+      "spawnPoint": { "x": 500, "y": 900 },
+      "trees": [
+        { "id": "birch_1", "type": "birch", "x": 200, "y": 300, "hp": 3, "logs": 2, "value": 5 },
+        { "id": "birch_2", "type": "birch", "x": 350, "y": 400, "hp": 3, "logs": 1, "value": 5 },
+        { "id": "birch_3", "type": "birch", "x": 150, "y": 550, "hp": 3, "logs": 2, "value": 5 },
+        { "id": "pine_1", "type": "pine", "x": 450, "y": 250, "hp": 5, "logs": 3, "value": 15 },
+        { "id": "pine_2", "type": "pine", "x": 600, "y": 350, "hp": 5, "logs": 2, "value": 15 },
+        { "id": "pine_3", "type": "pine", "x": 700, "y": 500, "hp": 5, "logs": 3, "value": 15 },
+        { "id": "birch_4", "type": "birch", "x": 250, "y": 700, "hp": 3, "logs": 2, "value": 5 },
+        { "id": "birch_5", "type": "birch", "x": 800, "y": 200, "hp": 3, "logs": 1, "value": 5 },
+        { "id": "pine_4", "type": "pine", "x": 550, "y": 600, "hp": 5, "logs": 2, "value": 15 },
+        { "id": "birch_6", "type": "birch", "x": 900, "y": 400, "hp": 3, "logs": 2, "value": 5 }
+      ],
+      "structures": [
+        {
+          "id": "sell_platform",
+          "type": "sell_platform",
+          "x": 500,
+          "y": 850,
+          "w": 120,
+          "h": 80,
+          "autoSellRange": 60
+        },
+        {
+          "id": "upgrade_shop",
+          "type": "shop",
+          "x": 300,
+          "y": 850,
+          "w": 80,
+          "h": 80
+        },
+        {
+          "id": "worker_hire",
+          "type": "worker_station",
+          "x": 700,
+          "y": 850,
+          "w": 80,
+          "h": 80
+        }
+      ],
+      "connections": [
+        { "to": "deep_forest", "type": "zone_gate", "cost": 500 }
+      ]
+    },
+    {
+      "zoneId": "deep_forest",
+      "name": "Deep Forest",
+      "unlockCost": 500,
+      "bounds": { "x": 1000, "y": 0, "w": 1000, "h": 1000 },
+      "spawnPoint": { "x": 1500, "y": 900 },
+      "trees": [
+        { "id": "oak_1", "type": "oak", "x": 1200, "y": 300, "hp": 8, "logs": 4, "value": 40 },
+        { "id": "oak_2", "type": "oak", "x": 1400, "y": 400, "hp": 8, "logs": 3, "value": 40 },
+        { "id": "oak_3", "type": "oak", "x": 1600, "y": 250, "hp": 8, "logs": 4, "value": 40 },
+        { "id": "maple_1", "type": "maple", "x": 1150, "y": 550, "hp": 10, "logs": 5, "value": 80 },
+        { "id": "maple_2", "type": "maple", "x": 1350, "y": 650, "hp": 10, "logs": 4, "value": 80 },
+        { "id": "maple_3", "type": "maple", "x": 1700, "y": 500, "hp": 10, "logs": 5, "value": 80 },
+        { "id": "oak_4", "type": "oak", "x": 1800, "y": 350, "hp": 8, "logs": 3, "value": 40 },
+        { "id": "maple_4", "type": "maple", "x": 1500, "y": 700, "hp": 10, "logs": 5, "value": 80 },
+        { "id": "oak_5", "type": "oak", "x": 1900, "y": 200, "hp": 8, "logs": 4, "value": 40 },
+        { "id": "maple_5", "type": "maple", "x": 1250, "y": 800, "hp": 10, "logs": 5, "value": 80 }
+      ],
+      "structures": [
+        {
+          "id": "sell_platform_deep",
+          "type": "sell_platform",
+          "x": 1500,
+          "y": 850,
+          "w": 120,
+          "h": 80,
+          "autoSellRange": 60
+        },
+        {
+          "id": "upgrade_shop_deep",
+          "type": "shop",
+          "x": 1300,
+          "y": 850,
+          "w": 80,
+          "h": 80
+        }
+      ],
+      "connections": [
+        { "to": "forest", "type": "zone_return", "cost": 0 },
+        { "to": "ancient_forest", "type": "zone_gate", "cost": 2000 }
+      ]
+    },
+    {
+      "zoneId": "ancient_forest",
+      "name": "Ancient Forest",
+      "unlockCost": 2000,
+      "bounds": { "x": 2000, "y": 0, "w": 1000, "h": 1000 },
+      "spawnPoint": { "x": 2500, "y": 900 },
+      "trees": [
+        { "id": "cedar_1", "type": "cedar", "x": 2200, "y": 300, "hp": 15, "logs": 6, "value": 150 },
+        { "id": "cedar_2", "type": "cedar", "x": 2400, "y": 400, "hp": 15, "logs": 5, "value": 150 },
+        { "id": "cedar_3", "type": "cedar", "x": 2600, "y": 250, "hp": 15, "logs": 6, "value": 150 },
+        { "id": "redwood_1", "type": "redwood", "x": 2150, "y": 550, "hp": 20, "logs": 8, "value": 300 },
+        { "id": "redwood_2", "type": "redwood", "x": 2350, "y": 650, "hp": 20, "logs": 7, "value": 300 },
+        { "id": "redwood_3", "type": "redwood", "x": 2700, "y": 500, "hp": 20, "logs": 8, "value": 300 },
+        { "id": "cedar_4", "type": "cedar", "x": 2800, "y": 350, "hp": 15, "logs": 5, "value": 150 },
+        { "id": "redwood_4", "type": "redwood", "x": 2500, "y": 700, "hp": 20, "logs": 8, "value": 300 },
+        { "id": "cedar_5", "type": "cedar", "x": 2900, "y": 200, "hp": 15, "logs": 6, "value": 150 },
+        { "id": "redwood_5", "type": "redwood", "x": 2250, "y": 800, "hp": 20, "logs": 7, "value": 300 }
+      ],
+      "structures": [
+        {
+          "id": "sell_platform_ancient",
+          "type": "sell_platform",
+          "x": 2500,
+          "y": 850,
+          "w": 120,
+          "h": 80,
+          "autoSellRange": 60
+        },
+        {
+          "id": "upgrade_shop_ancient",
+          "type": "shop",
+          "x": 2300,
+          "y": 850,
+          "w": 80,
+          "h": 80
+        }
+      ],
+      "connections": [
+        { "to": "deep_forest", "type": "zone_return", "cost": 0 }
+      ]
+    }
+  ],
+  "globalSettings": {
+    "treeRespawnTime": 30,
+    "logAutoCollectTime": 3,
+    "sellPlatformRange": 60,
+    "shopRange": 50,
+    "workerStationRange": 50
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "gameId": "lumber-tycoon",
+  "version": "1.0",
+  "kinematics": {
+    "maxRunSpeed": 180,
+    "walkSpeed": 120,
+    "acceleration": 800,
+    "friction": 1000,
+    "carrySlowdown": 0.7,
+    "minCarrySpeed": 0.5,
+    "workerBaseSpeed": 60,
+    "gravity": 0,
+    "jumpForce": 0,
+    "grounded": true
+  },
+  "controls": {
+    "movement": {
+      "type": "touch/click",
+      "description": "Tap and drag to move character, or use joystick on mobile",
+      "parameters": {
+        "walkSpeed": 120,
+        "runSpeed": 180,
+        "acceleration": 800,
+        "friction": 1000,
+        "carrySlowdown": 0.7,
+        "minCarrySpeed": 0.5
+      }
+    },
+    "jump": {
+      "type": "none",
+      "description": "No jumping in tycoon game - movement only",
+      "enabled": false
+    },
+    "interaction": {
+      "type": "tap",
+      "description": "Tap on objects to interact",
+      "actions": {
+        "chop": {
+          "trigger": "Tap on tree",
+          "cooldown": 1.0,
+          "range": 50,
+          "damage": 1,
+          "criticalChance": 0.1,
+          "criticalDamage": 2
+        },
+        "pickup": {
+          "trigger": "Walk over logs",
+          "autoCollect": true,
+          "range": 40
+        },
+        "sell": {
+          "trigger": "Stand on platform",
+          "autoSell": true,
+          "range": 60,
+          "cooldown": 0.5
+        }
+      }
+    },
+    "ui": {
+      "shopButton": "Open upgrade shop",
+      "workerButton": "Hire/upgrade workers",
+      "zoneButton": "View/unlock zones",
+      "sellButton": "Quick sell (if not on platform)"
+    }
+  },
+  "rules": {
+    "chopping": {
+      "baseDamage": 1,
+      "criticalChance": 0.1,
+      "criticalDamage": 2,
+      "chopInterval": 1.0,
+      "perfectTimingWindow": 0.1,
+      "perfectTimingBonus": 0.5
+    },
+    "carrying": {
+      "baseCapacity": 5,
+      "maxCapacity": 80,
+      "capacityLevels": [5, 10, 20, 40, 80],
+      "speedPenaltyPerLog": 0.04
+    },
+    "selling": {
+      "basePricePerLog": 5,
+      "zonePriceMultipliers": [1.0, 3.0, 10.0],
+      "upgradePriceMultipliers": [1.0, 1.4, 1.6, 1.8],
+      "comboBonus": 1.5,
+      "comboThreshold": 10,
+      "dailyBonusMultiplier": 2.0,
+      "workerBonusThreshold": 3,
+      "workerBonusMultiplier": 1.2
+    },
+    "workers": {
+      "maxWorkers": 10,
+      "workerTiers": 5,
+      "pathfindingGridSize": 10
+    },
+    "zones": {
+      "totalZones": 3,
+      "zoneCosts": [0, 500, 2000],
+      "treesPerZone": [10, 10, 10],
+      "respawnTime": 30
+    }
+  },
+  "enemies": [],
+  "enemyBehaviors": {},
+  "damageRules": {
+    "playerDamage": 0,
+    "hazardDamage": 0,
+    "deathCondition": "none",
+    "respawnMechanic": "none"
+  },
+  "winCondition": {
+    "type": "progression",
+    "description": "Reach maximum upgrades and unlock all zones",
+    "milestones": [
+      {
+        "id": "first_chop",
+        "name": "First Chop",
+        "condition": "Chop first tree",
+        "reward": "Tutorial complete"
+      },
+      {
+        "id": "first_sale",
+        "name": "First Sale",
+        "condition": "Sell wood for first time",
+        "reward": "Unlock shop"
+      },
+      {
+        "id": "first_upgrade",
+        "name": "First Upgrade",
+        "condition": "Purchase first upgrade",
+        "reward": "Unlock worker hiring"
+      },
+      {
+        "id": "first_worker",
+        "name": "First Worker",
+        "condition": "Hire first NPC worker",
+        "reward": "Unlock zone 2"
+      },
+      {
+        "id": "zone_explorer",
+        "name": "Zone Explorer",
+        "condition": "Unlock all 3 zones",
+        "reward": "Unlock master upgrades"
+      },
+      {
+        "id": "lumber_tycoon",
+        "name": "Lumber Tycoon",
+        "condition": "Purchase all upgrades",
+        "reward": "Game completion"
+      }
+    ]
+  },
+  "lossCondition": {
+    "type": "none",
+    "description": "No loss condition - pure progression game"
+  },
+  "saveSystem": {
+    "autoSaveInterval": 60,
+    "saveTriggers": ["purchase", "unlock", "hire", "exit"],
+    "data": [
+      "cash",
+      "axeTier",
+      "capacityLevel",
+      "speedLevel",
+      "workerCount",
+      "workerLevels",
+      "unlockedZones",
+      "stats",
+      "settings"
+    ]
+  },
+  "sessionManagement": {
+    "maxSessionLength": "unlimited",
+    "idleProgress": false,
+    "backgroundSave": true
+  }
+}

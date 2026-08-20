@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Lumber Tycoon</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+    
+    <!-- HUD -->
+    <div id="hud">
+      <div id="hud-top">
+        <div id="cash-display">💰 $<span id="cash-amount">0</span></div>
+        <div id="zone-display">🌲 <span id="zone-name">Forest</span></div>
+      </div>
+      <div id="hud-bottom">
+        <div id="stats-display">
+          <span id="axe-display">🪓 Rusty</span>
+          <span id="capacity-display">📦 <span id="carry-current">0</span>/<span id="carry-max">5</span></span>
+          <span id="worker-display">👷 <span id="worker-count">0</span></span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Interaction Prompt -->
+    <div id="interaction-prompt" class="hidden">
+      <span id="prompt-text">Tap to chop</span>
+    </div>
+    
+    <!-- Mobile Joystick -->
+    <div id="joystick-zone">
+      <div id="joystick">
+        <div id="joystick-knob"></div>
+      </div>
+    </div>
+    
+    <!-- Action Button -->
+    <div id="action-button" class="hidden">
+      <span id="action-icon">🪓</span>
+    </div>
+    
+    <!-- Mobile Touch Controls -->
+    <div id="touch-controls">
+      <button id="btn-buy" class="touch-btn">🛒</button>
+      <button id="btn-surge" class="touch-btn">⚡</button>
+    </div>
+    
+    <!-- Menu Buttons -->
+    <div id="menu-buttons">
+      <button id="btn-mute" class="menu-btn">🔊</button>
+      <button id="btn-shop" class="menu-btn">🛒 Shop</button>
+      <button id="btn-workers" class="menu-btn">👷 Workers</button>
+      <button id="btn-zones" class="menu-btn">🗺️ Zones</button>
+      <button id="btn-settings" class="menu-btn">⚙️</button>
+    </div>
+    
+    <!-- Shop Panel -->
+    <div id="shop-panel" class="panel hidden">
+      <div class="panel-header">
+        <h2>Upgrade Shop</h2>
+        <button id="shop-close" class="close-btn">&times;</button>
+      </div>
+      <div id="shop-content" class="panel-content"></div>
+    </div>
+    
+    <!-- Workers Panel -->
+    <div id="workers-panel" class="panel hidden">
+      <div class="panel-header">
+        <h2>Worker Station</h2>
+        <button id="workers-close" class="close-btn">&times;</button>
+      </div>
+      <div id="workers-content" class="panel-content"></div>
+    </div>
+    
+    <!-- Zones Panel -->
+    <div id="zones-panel" class="panel hidden">
+      <div class="panel-header">
+        <h2>Forest Zones</h2>
+        <button id="zones-close" class="close-btn">&times;</button>
+      </div>
+      <div id="zones-content" class="panel-content"></div>
+    </div>
+    
+    <!-- Settings Panel -->
+    <div id="settings-panel" class="panel hidden">
+      <div class="panel-header">
+        <h2>Settings</h2>
+        <button id="settings-close" class="close-btn">&times;</button>
+      </div>
+      <div class="panel-content">
+        <label><input type="checkbox" id="sound-toggle" checked> Sound Effects</label>
+        <label><input type="checkbox" id="music-toggle" checked> Music</label>
+        <button id="btn-save">Save Game</button>
+        <button id="btn-load">Load Game</button>
+        <button id="btn-reset">Reset Progress</button>
+      </div>
+    </div>
+    
+    <!-- Tutorial Overlay -->
+    <div id="tutorial-overlay" class="hidden">
+      <div id="tutorial-box">
+        <h3 id="tutorial-title">Welcome!</h3>
+        <p id="tutorial-text">Tap trees to chop them!</p>
+        <button id="tutorial-btn">OK</button>
+      </div>
+    </div>
+    
+    <!-- Floating Text Container -->
+    <div id="floating-texts"></div>
+    
+    <!-- Notification -->
+    <div id="notification" class="hidden">
+      <span id="notification-text"></span>
+    </div>
+  </div>
+  
+  <script type="module" src="game.js"></script>
+</body>
+</html>
