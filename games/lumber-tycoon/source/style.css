@@ -29,9 +29,9 @@
   --water-cyan: #00e5ff;
   --text-white: #ffffff;
   --text-dim: #cfd8dc;
-  --ui-bg: rgba(30, 20, 15, 0.92);
+  --ui-bg: rgba(30, 20, 15, 0.94);
   --ui-border: rgba(255, 179, 0, 0.4);
-  --glass-card: rgba(45, 30, 22, 0.88);
+  --glass-card: rgba(45, 30, 22, 0.90);
 }
 
 html, body {
@@ -77,7 +77,7 @@ canvas {
   align-items: center;
   z-index: 50;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(15, 10, 5, 0.85) 0%, rgba(15, 10, 5, 0) 100%);
+  background: linear-gradient(180deg, rgba(15, 10, 5, 0.88) 0%, rgba(15, 10, 5, 0) 100%);
 }
 
 .hud-group {
@@ -107,15 +107,27 @@ canvas {
   color: var(--gold-bright);
 }
 
-.capacity-badge {
-  border-color: var(--wood-light);
-  color: #ffcc80;
+.log-badge {
+  border-color: #a1887f;
+  color: #d7ccc8;
 }
 
-.zone-badge {
-  border-color: var(--forest-light);
-  color: #c8e6c9;
-  font-size: 0.85rem;
+.plank-badge {
+  border-color: #ffb74d;
+  color: #ffe0b2;
+}
+
+.airdrop-badge {
+  background: linear-gradient(135deg, rgba(171, 71, 188, 0.35), rgba(255, 179, 0, 0.35));
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-bright);
+  cursor: pointer;
+  animation: pulseAirdrop 2.2s infinite ease-in-out;
+  transition: transform 0.12s ease;
+}
+
+.airdrop-badge:hover {
+  transform: scale(1.05);
 }
 
 .hud-btn {
@@ -144,36 +156,36 @@ canvas {
   transform: scale(0.94);
 }
 
-.btn-airdrop {
-  border-color: var(--gold-primary);
-  animation: pulseAirdrop 2s infinite ease-in-out;
-}
-
 @keyframes pulseAirdrop {
   0%, 100% { transform: scale(1); box-shadow: 0 0 6px rgba(255, 179, 0, 0.3); }
-  50% { transform: scale(1.08); box-shadow: 0 0 16px rgba(255, 179, 0, 0.7); }
+  50% { transform: scale(1.06); box-shadow: 0 0 16px rgba(255, 179, 0, 0.7); }
 }
 
 /* ============================================================================
- * 2. BOTTOM COMMAND DECK & TOUCH JOYSTICK
+ * 2. RESPONSIVE TOUCH JOYSTICK (HIDDEN ON DESKTOP)
  * ============================================================================ */
 .bottom-controls {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  bottom: 16px;
+  left: 16px;
   z-index: 50;
   pointer-events: none;
 }
 
+/* Hidden by default on desktop/mouse */
 .joystick-container {
-  width: 130px;
-  height: 130px;
-  position: relative;
-  pointer-events: auto;
+  display: none;
+}
+
+/* Visible ONLY on touch screens / mobile */
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  .joystick-container {
+    display: block;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    pointer-events: auto;
+  }
 }
 
 .joystick-base {
@@ -188,8 +200,8 @@ canvas {
 }
 
 .joystick-stick {
-  width: 54px;
-  height: 54px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ffe082, #ff8f00);
   border: 2px solid #ffffff;
@@ -201,84 +213,8 @@ canvas {
   pointer-events: none;
 }
 
-.action-deck {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  pointer-events: auto;
-}
-
-.action-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-radius: 14px;
-  background: var(--glass-card);
-  border: 2px solid var(--ui-border);
-  color: var(--text-white);
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
-}
-
-.action-btn:hover {
-  transform: translateY(-2px);
-  border-color: var(--gold-primary);
-  background: rgba(70, 45, 30, 0.95);
-}
-
-.action-btn:active {
-  transform: translateY(1px);
-}
-
-.btn-turbo {
-  border-color: var(--emerald-accent);
-  background: linear-gradient(135deg, rgba(0, 230, 118, 0.2), rgba(30, 20, 15, 0.9));
-}
-
-.btn-turbo.active {
-  animation: turboGlow 1s infinite alternate;
-}
-
-@keyframes turboGlow {
-  0% { box-shadow: 0 0 10px rgba(0, 230, 118, 0.4); }
-  100% { box-shadow: 0 0 24px rgba(0, 230, 118, 0.9); }
-}
-
 /* ============================================================================
- * 3. PROXIMITY NOTIFICATION BUBBLE
- * ============================================================================ */
-.prompt-bubble {
-  position: absolute;
-  bottom: 160px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--ui-bg);
-  border: 2px solid var(--gold-primary);
-  border-radius: 20px;
-  padding: 8px 18px;
-  font-size: 0.90rem;
-  font-weight: 700;
-  color: var(--gold-bright);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-  z-index: 60;
-  pointer-events: none;
-  animation: floatPrompt 1.8s infinite ease-in-out;
-  white-space: nowrap;
-}
-
-@keyframes floatPrompt {
-  0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, -6px); }
-}
-
-/* ============================================================================
- * 4. MODALS & UPGRADE SHOP
+ * 3. MODALS & UPGRADE SHOP
  * ============================================================================ */
 .modal-overlay {
   position: absolute;
@@ -420,37 +356,8 @@ canvas {
   cursor: not-allowed;
 }
 
-.btn-modal-action {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #00e676, #00b0ff);
-  border: none;
-  color: #0d1e15;
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.95rem;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0, 230, 118, 0.4);
-}
-
-.btn-rewarded-grant {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #ab47bc, #ffb300);
-  border: 1.5px solid var(--gold-bright);
-  color: #ffffff;
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.88rem;
-  cursor: pointer;
-  margin-top: 4px;
-  box-shadow: 0 4px 14px rgba(255, 179, 0, 0.3);
-}
-
 /* ============================================================================
- * 5. TITLE & GAME OVER OVERLAYS
+ * 4. TITLE OVERLAY
  * ============================================================================ */
 .title-overlay {
   position: absolute;
