@@ -2466,14 +2466,31 @@ export class OrbitGuardGame {
         </div>
       `;
 
-      item.addEventListener('click', () => {
+      const selectDirective = (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        if (item.dataset.chosen === '1') return;
+        item.dataset.chosen = '1';
+
         this.activeDirectives.add(d.id);
-        this.audio.playMergeChime(3);
-        this.particles.starburst(ARENA.center.x, ARENA.center.y, 30, '#38BDF8');
-        this.juice.spawnFloatingText(`DIRECTIVE: ${d.name}!`, ARENA.center.x, ARENA.center.y - 35, { color: '#38BDF8', size: 16 });
+        this.audio.playVictoryFanfare();
+        this.particles.starburst(ARENA.center.x, ARENA.center.y, 35, '#38BDF8');
+        this.juice.spawnFloatingText(`DIRECTIVE: ${d.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 35, { color: '#38BDF8', size: 18 });
         this.closeAllModals();
         this.state = 'PLAYING';
         this.playgama.hideBanner();
+
+        // Immediately start next wave upon choosing directive
+        this.waveTimer = 0;
+        this.startWave(this.wave + 1);
+      };
+
+      item.addEventListener('click', selectDirective);
+      item.addEventListener('pointerdown', (e) => {
+        // Prevent pointer drag conflicts
+        e.stopPropagation();
       });
 
       list.appendChild(item);
@@ -3060,6 +3077,7 @@ export class OrbitGuardGame {
 
       // Trigger Roguelike Tactical Directive Choice on waves 3, 6, 9, 12, 15...
       if (this.wave % 3 === 0) {
+        this.waveTimer = 9999; // Wait for player selection in modal
         this.openDirectiveModal();
       }
     }
