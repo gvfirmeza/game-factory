@@ -775,16 +775,17 @@ canvas {
 }
 
 .directive-icon-box {
-  width: 38px;
-  height: 38px;
-  border-radius: 6px;
-  background: #0E1422;
-  border: 1px solid var(--border-subtle);
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #0A0E17;
+  border: 1.5px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   color: var(--steel);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
 .directive-icon-box svg {
@@ -792,10 +793,17 @@ canvas {
   height: 22px;
 }
 
+.directive-unit-thumb {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.8));
+}
+
 .directive-text-stack {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   flex-grow: 1;
 }
 
@@ -803,6 +811,7 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
 }
 
 .directive-name {
@@ -810,6 +819,18 @@ canvas {
   font-size: 0.80rem;
   font-weight: 900;
   color: #FFFFFF;
+}
+
+.directive-unit-badge {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.60rem;
+  font-weight: 900;
+  border-radius: 4px;
+  padding: 2px 7px;
+  border: 1px solid currentColor;
+  background: rgba(8, 12, 20, 0.9);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .directive-tag {

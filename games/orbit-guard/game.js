@@ -346,59 +346,83 @@ export const WORKSHOP_DEFS = [
 
 export const DIRECTIVES = [
   {
-    id: 'cryo_shatter',
-    name: 'Cryo Shatter',
-    desc: 'Frozen enemies shatter on defeat, dealing 60 AoE Cryo DMG to nearby hostiles and slowing them.',
-    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>`,
+    id: 'napalm_cluster',
+    name: 'Napalm Artillery',
+    unitName: 'Orange Cannon',
+    unitTag: '🟠 ORANGE CANNON',
+    unitColor: '#F97316',
+    sprite: 'assets/sentinel_cannon.png',
+    desc: 'Orange Cannons leave burning magma pools on impact for 4.0s dealing +50% Burn DMG over time.',
+    tag: 'OFFENSIVE'
+  },
+  {
+    id: 'rail_piercer',
+    name: 'Armor Piercer',
+    unitName: 'Blue Sniper',
+    unitTag: '🔵 BLUE SNIPER',
+    unitColor: '#38BDF8',
+    sprite: 'assets/sentinel_ballista.png',
+    desc: 'Blue Snipers pierce through +1 additional enemy along their laser path and ignore 50% of armor.',
     tag: 'OFFENSIVE'
   },
   {
     id: 'tesla_cascade',
     name: 'Tesla Overload',
-    desc: 'Tesla Pylons chain to +2 additional targets and trigger an electric micro-shockwave.',
-    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h8l-2 8 10-12h-8l2-8z"/></svg>`,
+    unitName: 'Yellow Mage',
+    unitTag: '🟡 YELLOW MAGE',
+    unitColor: '#FACC15',
+    sprite: 'assets/sentinel_mage.png',
+    desc: 'Yellow Mage lightning chains to +2 extra enemies and triggers an electric micro-stun shockwave.',
     tag: 'SYNERGY'
   },
   {
-    id: 'rail_piercer',
-    name: 'Depleted Core',
-    desc: 'Ballista Railguns gain +1 permanent pierce and ignore 50% of enemy armor.',
-    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>`,
-    tag: 'OFFENSIVE'
-  },
-  {
-    id: 'napalm_cluster',
-    name: 'Napalm Shells',
-    desc: 'Siege Mortar leaves burning napalm pools on impact for 4.0s with +50% burn DPS.',
-    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`,
+    id: 'cryo_shatter',
+    name: 'Cryo Shatter',
+    unitName: 'Green Frost',
+    unitTag: '🟢 GREEN FROST',
+    unitColor: '#10B981',
+    sprite: 'assets/sentinel_frost.png',
+    desc: 'Enemies frozen by Green Frost turrets explode into ice shards on defeat, dealing 60 AoE Cryo DMG.',
     tag: 'OFFENSIVE'
   },
   {
     id: 'shadow_vortex',
-    name: 'Vibro Phase Drive',
-    desc: 'Vibro Interceptors gain +35% attack speed and +15% critical strike chance.',
-    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+    name: 'Shadow Overdrive',
+    unitName: 'Red Assassin',
+    unitTag: '🔴 RED ASSASSIN',
+    unitColor: '#EF4444',
+    sprite: 'assets/sentinel_assassin.png',
+    desc: 'Red Assassins attack +35% faster and gain +15% critical strike chance on every spinning strike.',
     tag: 'CRITICAL'
+  },
+  {
+    id: 'overclock_protocol',
+    name: 'Orbital Overclock',
+    unitName: 'All Sentinels',
+    unitTag: '⚡ ALL UNITS',
+    unitColor: '#A855F7',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+    desc: 'All 5 sentinel types attack +20% faster, and Orbital Ion Strike cooldown is reduced by 4.0s.',
+    tag: 'TACTICAL'
   },
   {
     id: 'interest_treasury',
     name: 'Compound Treasury',
-    desc: 'Earn +10% interest on unspent Credits at the end of each wave (up to +25G).',
-    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+    unitName: 'Gold Bank',
+    unitTag: '💰 ECONOMY',
+    unitColor: '#F59E0B',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+    desc: 'Earn +10% interest on unspent Credits at the end of each wave (up to +25 bonus Gold per wave).',
     tag: 'ECONOMY'
   },
   {
-    id: 'overclock_protocol',
-    name: 'Kinetic Overclock',
-    desc: 'All Sentinels attack 20% faster, and Ion Strike cooldown is reduced by 4.0s.',
-    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
-    tag: 'TACTICAL'
-  },
-  {
     id: 'aegis_emergency',
-    name: 'Aegis Deflector',
-    desc: 'When Core HP drops below 35%, automatically deploys a barrier absorbing 100 DMG.',
-    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    name: 'Emergency Aegis',
+    unitName: 'Nexus Core',
+    unitTag: '🛡️ BASE CORE',
+    unitColor: '#38BDF8',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    desc: 'When Nexus Core HP drops below 35%, instantly deploys an energy shield absorbing 100 DMG.',
     tag: 'DEFENSE'
   }
 ];
@@ -3245,12 +3269,19 @@ export class OrbitGuardGame {
       const item = document.createElement('button');
       item.type = 'button';
       item.className = 'directive-item';
+
+      const iconHtml = d.sprite
+        ? `<img src="${d.sprite}" class="directive-unit-thumb" alt="${d.unitName}" />`
+        : (d.iconSvg || '');
+
       item.innerHTML = `
-        <div class="directive-icon-box">${d.iconSvg}</div>
+        <div class="directive-icon-box" style="border-color: ${d.unitColor || '#38BDF8'};">
+          ${iconHtml}
+        </div>
         <div class="directive-text-stack">
           <div class="directive-name-row">
             <span class="directive-name">${d.name}</span>
-            <span class="directive-tag">${d.tag}</span>
+            <span class="directive-unit-badge" style="color: ${d.unitColor || '#38BDF8'}; border-color: ${d.unitColor || '#38BDF8'};">${d.unitTag || d.tag}</span>
           </div>
           <p class="directive-desc">${d.desc}</p>
         </div>
