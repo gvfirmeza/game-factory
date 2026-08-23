@@ -1609,7 +1609,7 @@ export function drawArcaneMage(ctx, x, y, state = {}) {
 }
 
 export function drawFrostWarden(ctx, x, y, state = {}) {
-  const { tier = 1, animTime = 0, isSelected = false, isMergeTarget = false, scaleAnim = 1.0 } = state;
+  const { angle = 0, recoil = 0, isFiring = false, tier = 1, animTime = 0, isSelected = false, isMergeTarget = false, scaleAnim = 1.0 } = state;
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(scaleAnim, scaleAnim);
@@ -1621,13 +1621,13 @@ export function drawFrostWarden(ctx, x, y, state = {}) {
   // Rotating Cryo Torus
   ctx.save();
   ctx.rotate(animTime * 0.8);
-  ctx.strokeStyle = '#38BDF8';
-  ctx.lineWidth = 1.8;
+  ctx.strokeStyle = tierInfo.border || '#10B981';
+  ctx.lineWidth = 1.6;
   ctx.beginPath();
   for (let i = 0; i < 6; i++) {
-    const angle = (i * Math.PI * 2) / 6;
-    const px = Math.cos(angle) * 15;
-    const py = Math.sin(angle) * 15;
+    const a = (i * Math.PI * 2) / 6;
+    const px = Math.cos(a) * 16;
+    const py = Math.sin(a) * 16;
     if (i === 0) ctx.moveTo(px, py);
     else ctx.lineTo(px, py);
   }
@@ -1635,24 +1635,32 @@ export function drawFrostWarden(ctx, x, y, state = {}) {
   ctx.stroke();
   ctx.restore();
 
-  // Snowflake Core
+  // Ship Body with Target Rotation and Recoil Kick
   ctx.save();
-  ctx.rotate(-animTime * 1.2);
-  ctx.strokeStyle = '#F0F9FF';
-  ctx.lineWidth = 1.4;
-  for (let i = 0; i < 3; i++) {
-    const a = (i * Math.PI) / 3;
-    ctx.beginPath();
-    ctx.moveTo(Math.cos(a) * -11, Math.sin(a) * -11);
-    ctx.lineTo(Math.cos(a) * 11, Math.sin(a) * 11);
-    ctx.stroke();
-  }
-  ctx.restore();
+  const recoilX = Math.cos(angle) * -recoil;
+  const recoilY = Math.sin(angle) * -recoil;
+  ctx.translate(recoilX, recoilY);
+  ctx.rotate(angle);
 
-  // Curated Sprite or Crystal Diamond
+  // Twin Cryo Thrusters
+  const jetFlicker = 5 + Math.sin(animTime * 20) * 2;
+  ctx.fillStyle = 'rgba(56, 189, 248, 0.7)';
+  ctx.beginPath();
+  ctx.moveTo(-10, -4);
+  ctx.lineTo(-10 - jetFlicker, -4);
+  ctx.lineTo(-8, -2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(-10, 4);
+  ctx.lineTo(-10 - jetFlicker, 4);
+  ctx.lineTo(-8, 2);
+  ctx.closePath();
+  ctx.fill();
+
   const spriteLoaded = assets.isLoaded('sentinel_frost') && typeof ctx.drawImage === 'function';
   if (spriteLoaded) {
-    ctx.fillStyle = tierInfo.glow || 'rgba(56, 189, 248, 0.3)';
+    ctx.fillStyle = tierInfo.glow || 'rgba(16, 185, 129, 0.3)';
     ctx.beginPath();
     ctx.arc(0, 0, 18, 0, Math.PI * 2);
     ctx.fill();
@@ -1666,21 +1674,31 @@ export function drawFrostWarden(ctx, x, y, state = {}) {
     // Center Crystal Diamond Fallback
     const iceGrad = ctx.createRadialGradient(-2, -2, 1, 0, 0, 8);
     iceGrad.addColorStop(0, '#FFFFFF');
-    iceGrad.addColorStop(0.4, '#7DD3FC');
-    iceGrad.addColorStop(0.8, '#0284C7');
-    iceGrad.addColorStop(1, '#0C4A6E');
+    iceGrad.addColorStop(0.4, '#6EE7B7');
+    iceGrad.addColorStop(0.8, '#10B981');
+    iceGrad.addColorStop(1, '#064E3B');
     ctx.fillStyle = iceGrad;
     ctx.strokeStyle = tierInfo.border;
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(0, -8);
-    ctx.lineTo(6, 0);
+    ctx.lineTo(8, 0);
     ctx.lineTo(0, 8);
     ctx.lineTo(-6, 0);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
   }
+
+  // Firing Cryo Crystal Muzzle Flash
+  if (isFiring) {
+    ctx.fillStyle = '#BAE6FD';
+    ctx.beginPath();
+    ctx.arc(14, 0, 6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.restore();
 
   drawTierBadge(ctx, 0, 0, tier);
   ctx.restore();
@@ -2896,17 +2914,17 @@ export class OrbitGuardGame {
 
     const btnOpenWorkshopTitle = document.getElementById('btn-open-workshop-title');
     if (btnOpenWorkshopTitle) {
-      btnOpenWorkshopTitle.addEventListener('click', () => this.openWorkshopModal());
+      btnOpenWorkshopTitle.addEventListener('click', () => this.openWorkshopModal('TITLE'));
     }
 
     const btnOpenAchievementsTitle = document.getElementById('btn-open-achievements-title');
     if (btnOpenAchievementsTitle) {
-      btnOpenAchievementsTitle.addEventListener('click', () => this.openAchievementsModal());
+      btnOpenAchievementsTitle.addEventListener('click', () => this.openAchievementsModal('TITLE'));
     }
 
     const btnOpenTutorialTitle = document.getElementById('btn-open-tutorial-title');
     if (btnOpenTutorialTitle) {
-      btnOpenTutorialTitle.addEventListener('click', () => this.openTutorialModal());
+      btnOpenTutorialTitle.addEventListener('click', () => this.openTutorialModal('TITLE'));
     }
 
     // In-game HUD buttons
@@ -3001,9 +3019,14 @@ export class OrbitGuardGame {
       btnResume.addEventListener('click', () => this.togglePause());
     }
 
+    const btnOpenWorkshopPause = document.getElementById('btn-open-workshop-pause');
+    if (btnOpenWorkshopPause) {
+      btnOpenWorkshopPause.addEventListener('click', () => this.openWorkshopModal('PAUSED'));
+    }
+
     const btnOpenAchievementsPause = document.getElementById('btn-open-achievements-pause');
     if (btnOpenAchievementsPause) {
-      btnOpenAchievementsPause.addEventListener('click', () => this.openAchievementsModal());
+      btnOpenAchievementsPause.addEventListener('click', () => this.openAchievementsModal('PAUSED'));
     }
 
     const btnRestart = document.getElementById('btn-restart-run');
@@ -3090,16 +3113,14 @@ export class OrbitGuardGame {
     const btnGoWorkshop = document.getElementById('btn-go-workshop');
     if (btnGoWorkshop) {
       btnGoWorkshop.addEventListener('click', () => {
-        document.getElementById('game-over-modal')?.classList.add('hidden');
-        this.openWorkshopModal();
+        this.openWorkshopModal('GAME_OVER');
       });
     }
 
     const btnGoAchievements = document.getElementById('btn-go-achievements');
     if (btnGoAchievements) {
       btnGoAchievements.addEventListener('click', () => {
-        document.getElementById('game-over-modal')?.classList.add('hidden');
-        this.openAchievementsModal();
+        this.openAchievementsModal('GAME_OVER');
       });
     }
 
@@ -3229,7 +3250,13 @@ export class OrbitGuardGame {
     }
   }
 
-  openWorkshopModal() {
+  openWorkshopModal(caller = null) {
+    this.workshopCaller = caller || (this.state === 'GAME_OVER' ? 'GAME_OVER' : (this.state === 'PAUSED' ? 'PAUSED' : (this.state === 'TITLE' ? 'TITLE' : 'PLAYING')));
+    document.getElementById('pause-modal')?.classList.add('hidden');
+    document.getElementById('game-over-modal')?.classList.add('hidden');
+    document.getElementById('achievements-modal')?.classList.add('hidden');
+    document.getElementById('tutorial-modal')?.classList.add('hidden');
+
     this.renderWorkshopUI();
     this.playgama.showBanner();
     document.getElementById('workshop-modal')?.classList.remove('hidden');
@@ -3237,19 +3264,36 @@ export class OrbitGuardGame {
 
   closeWorkshopModal() {
     document.getElementById('workshop-modal')?.classList.add('hidden');
-    if (this.state === 'PLAYING') {
+    this.updateHUD();
+    this.updateTitleRecords();
+
+    if (this.workshopCaller === 'PAUSED' && this.state === 'PAUSED') {
+      document.getElementById('pause-modal')?.classList.remove('hidden');
+    } else if (this.workshopCaller === 'GAME_OVER' && this.state === 'GAME_OVER') {
+      document.getElementById('game-over-modal')?.classList.remove('hidden');
+    } else if (this.workshopCaller === 'TITLE' || this.state === 'TITLE') {
+      document.getElementById('title-overlay')?.classList.remove('hidden');
+    } else if (this.state === 'PLAYING') {
       this.playgama.hideBanner();
     }
   }
 
-  openTutorialModal() {
+  openTutorialModal(caller = null) {
+    this.tutorialCaller = caller || (this.state === 'PAUSED' ? 'PAUSED' : 'TITLE');
+    document.getElementById('pause-modal')?.classList.add('hidden');
+    document.getElementById('title-overlay')?.classList.add('hidden');
+
     this.playgama.showBanner();
     document.getElementById('tutorial-modal')?.classList.remove('hidden');
   }
 
   closeTutorialModal() {
     document.getElementById('tutorial-modal')?.classList.add('hidden');
-    if (this.state === 'PLAYING') {
+    if (this.tutorialCaller === 'PAUSED' && this.state === 'PAUSED') {
+      document.getElementById('pause-modal')?.classList.remove('hidden');
+    } else if (this.tutorialCaller === 'TITLE' || this.state === 'TITLE') {
+      document.getElementById('title-overlay')?.classList.remove('hidden');
+    } else if (this.state === 'PLAYING') {
       this.playgama.hideBanner();
     }
   }
@@ -3396,8 +3440,13 @@ export class OrbitGuardGame {
     }
   }
 
-  openAchievementsModal() {
-    this.closeAllModals();
+  openAchievementsModal(caller = null) {
+    this.achievementsCaller = caller || (this.state === 'GAME_OVER' ? 'GAME_OVER' : (this.state === 'PAUSED' ? 'PAUSED' : (this.state === 'TITLE' ? 'TITLE' : 'PLAYING')));
+    document.getElementById('pause-modal')?.classList.add('hidden');
+    document.getElementById('game-over-modal')?.classList.add('hidden');
+    document.getElementById('workshop-modal')?.classList.add('hidden');
+    document.getElementById('tutorial-modal')?.classList.add('hidden');
+
     this.checkAchievements();
     this.renderAchievementsUI();
     document.getElementById('achievements-modal')?.classList.remove('hidden');
@@ -3408,6 +3457,16 @@ export class OrbitGuardGame {
     document.getElementById('achievements-modal')?.classList.add('hidden');
     this.updateHUD();
     this.updateTitleRecords();
+
+    if (this.achievementsCaller === 'PAUSED' && this.state === 'PAUSED') {
+      document.getElementById('pause-modal')?.classList.remove('hidden');
+    } else if (this.achievementsCaller === 'GAME_OVER' && this.state === 'GAME_OVER') {
+      document.getElementById('game-over-modal')?.classList.remove('hidden');
+    } else if (this.achievementsCaller === 'TITLE' || this.state === 'TITLE') {
+      document.getElementById('title-overlay')?.classList.remove('hidden');
+    } else if (this.state === 'PLAYING') {
+      this.playgama.hideBanner();
+    }
   }
 
   renderAchievementsUI() {
@@ -4238,13 +4297,36 @@ export class OrbitGuardGame {
       }
 
       case 'frost_warden': {
+        s.recoil = 6;
+        s.isFiring = true;
+        s.angle = Math.atan2(target.y - s.y, target.x - s.x);
         this.audio.playFrostHum();
-        // Omnidirectional tick on all enemies in range
+
+        // Fire visible cryogenic Ice Shard Missile
+        this.projectiles.push({
+          id: `ice_${Math.random().toString(36).substring(2, 7)}`,
+          type: 'ice_shard',
+          x: s.x,
+          y: s.y,
+          targetX: target.x,
+          targetY: target.y,
+          speed: 680,
+          radius: 6,
+          color: '#38BDF8',
+          damage: s.damage,
+          splash: 45 + s.tier * 6,
+          slowPercent: s.tierData.slow || 0.40,
+          lingerSlow: 1.6 + (s.tierData.lingerSlow || 0),
+          targetId: target.id
+        });
+
+        this.particles.burst(s.x, s.y, 8, '#38BDF8');
+
+        // Apply Cryo Slow to all enemies in aura range
         for (const e of this.enemies) {
           if (MathUtils.distance(s.x, s.y, e.x, e.y) <= s.currentRange) {
-            e.chilledTimer = 0.35 + (s.tierData.lingerSlow || 0);
+            e.chilledTimer = 1.2 + (s.tierData.lingerSlow || 0);
             e.slowPercent = s.tierData.slow || 0.35;
-            this.applyDamageToEnemy(e, s.damage * 0.1, false, 'cryo');
           }
         }
         break;
@@ -4591,6 +4673,32 @@ export class OrbitGuardGame {
           this.executeChainLightning(p);
         }
         if (p.life <= 0) this.projectiles.splice(i, 1);
+      } else if (p.type === 'ice_shard') {
+        const dx = p.targetX - p.x;
+        const dy = p.targetY - p.y;
+        const dist = Math.hypot(dx, dy);
+        const step = p.speed * dt;
+
+        if (dist <= step || dist < 8) {
+          // Ice Shard Impact Detonation
+          this.audio.playFrostHum();
+          this.particles.burst(p.targetX, p.targetY, 14, '#38BDF8');
+          for (const e of this.enemies) {
+            const d = MathUtils.distance(p.targetX, p.targetY, e.x, e.y);
+            if (d <= p.splash) {
+              e.chilledTimer = Math.max(e.chilledTimer || 0, p.lingerSlow);
+              e.slowPercent = p.slowPercent;
+              this.applyDamageToEnemy(e, p.damage, false, 'cryo');
+            }
+          }
+          this.projectiles.splice(i, 1);
+        } else {
+          p.x += (dx / dist) * step;
+          p.y += (dy / dist) * step;
+          if (Math.random() < 0.25) {
+            this.particles.burst(p.x, p.y, 1, '#BAE6FD');
+          }
+        }
       }
     }
   }
@@ -4827,6 +4935,25 @@ export class OrbitGuardGame {
           c.beginPath();
           c.arc(p.x, p.y - height, 4.5, 0, Math.PI * 2);
           c.fill();
+        } else if (p.type === 'ice_shard') {
+          c.save();
+          c.translate(p.x, p.y);
+          const pAngle = Math.atan2(p.targetY - p.y, p.targetX - p.x);
+          c.rotate(pAngle);
+
+          // Glowing Cryo Shard Diamond
+          c.fillStyle = '#E0F2FE';
+          c.strokeStyle = '#38BDF8';
+          c.lineWidth = 1.6;
+          c.beginPath();
+          c.moveTo(8, 0);
+          c.lineTo(-3, -4.5);
+          c.lineTo(-6, 0);
+          c.lineTo(-3, 4.5);
+          c.closePath();
+          c.fill();
+          c.stroke();
+          c.restore();
         }
       }
 
