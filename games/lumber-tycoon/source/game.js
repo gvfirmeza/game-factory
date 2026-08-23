@@ -350,37 +350,144 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState) {
   ctx.stroke();
 
   if (bKey === 'sawmill') {
-    ctx.fillStyle = '#37474f';
-    ctx.fillRect(x + 15, y + h / 2 - 8, w - 30, 16);
+    // Heavy Steel Industrial Conveyor Table
+    ctx.fillStyle = '#263238';
+    ctx.fillRect(x + 10, y + h / 2 - 12, w - 20, 24);
+    ctx.fillStyle = '#37474F';
+    ctx.fillRect(x + 12, y + h / 2 - 10, w - 24, 20);
 
+    // Hazard Stripes on Conveyor edge
+    ctx.fillStyle = '#FFD600';
+    for (let hx = x + 16; hx < x + w - 20; hx += 18) {
+      ctx.fillRect(hx, y + h / 2 + 8, 8, 4);
+    }
+
+    // Authentic High-Speed Carbide Circular Saw Blade
     const isCutting = sawmillState && sawmillState.queue.length > 0;
-    const sawX = x + w / 2;
-    const sawY = y + h / 2 - 2;
+    const sawX = x + w / 2 - 15;
+    const sawY = y + h / 2;
+    const sawRadius = 22;
+
     ctx.save();
     ctx.translate(sawX, sawY);
-    ctx.rotate(animTime * (isCutting ? 20 : 6));
-    ctx.fillStyle = '#eceff1';
+    ctx.rotate(animTime * (isCutting ? 28 : 8));
+
+    // Outer Silver Blade Disk
+    ctx.fillStyle = '#ECEFF1';
     ctx.beginPath();
-    ctx.arc(0, 0, 22, 0, Math.PI * 2);
+    ctx.arc(0, 0, sawRadius, 0, Math.PI * 2);
     ctx.fill();
-    ctx.strokeStyle = '#b0bec5';
-    ctx.lineWidth = 3;
+
+    // 16 Sharp Angled Carbide Saw Teeth (Tooth Rake)
+    const teeth = 16;
+    ctx.fillStyle = '#CFD8DC';
+    ctx.beginPath();
+    for (let i = 0; i < teeth; i++) {
+      const a = (i / teeth) * Math.PI * 2;
+      const nextA = ((i + 1) / teeth) * Math.PI * 2;
+      const rInner = sawRadius - 3;
+      const rTip = sawRadius + 5;
+      const rBack = sawRadius - 1;
+
+      const p1x = Math.cos(a) * rInner;
+      const p1y = Math.sin(a) * rInner;
+      const p2x = Math.cos(a + 0.12) * rTip;
+      const p2y = Math.sin(a + 0.12) * rTip;
+      const p3x = Math.cos(nextA) * rBack;
+      const p3y = Math.sin(nextA) * rBack;
+
+      if (i === 0) ctx.moveTo(p1x, p1y);
+      ctx.lineTo(p2x, p2y);
+      ctx.lineTo(p3x, p3y);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#90A4AE';
+    ctx.lineWidth = 1.2;
     ctx.stroke();
 
-    ctx.fillStyle = '#78909c';
-    for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
-      ctx.fillRect(Math.cos(a) * 18 - 2, Math.sin(a) * 18 - 2, 5, 5);
-    }
+    // Center Arbor Flange & Nut
+    ctx.fillStyle = '#455A64';
+    ctx.beginPath();
+    ctx.arc(0, 0, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#263238';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.fillStyle = '#FFD54F';
+    ctx.beginPath();
+    ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+    ctx.fill();
     ctx.restore();
 
-    // Progress wheel if cutting
+    // Protective Orange/Yellow Saw Safety Hood Guard
+    ctx.fillStyle = '#F57F17';
+    ctx.beginPath();
+    ctx.arc(sawX, sawY, sawRadius + 6, -Math.PI * 0.95, -Math.PI * 0.05);
+    ctx.lineWidth = 3.5;
+    ctx.strokeStyle = '#F57F17';
+    ctx.stroke();
+
+    // Slicing Progress Radial Indicator
     if (sawmillState && sawmillState.queue.length > 0) {
       const prog = sawmillState.timer / 0.35;
       ctx.strokeStyle = '#00E676';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 4.5;
       ctx.beginPath();
-      ctx.arc(sawX, sawY, 28, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2);
+      ctx.arc(sawX, sawY, sawRadius + 8, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2);
       ctx.stroke();
+    }
+
+    // Cut Planks Stack on Output Side
+    if (sawmillState && sawmillState.ready.length > 0) {
+      const stackX = x + w - 36;
+      const readyCount = Math.min(5, sawmillState.ready.length);
+      for (let i = 0; i < readyCount; i++) {
+        const item = sawmillState.ready[i];
+        const prop = WOOD_PROPERTIES[item.type] || WOOD_PROPERTIES.oak;
+        ctx.fillStyle = prop.plankColor;
+        ctx.beginPath();
+        ctx.roundRect(stackX - 12, y + h / 2 - 5 - i * 4, 24, 5.5, 2);
+        ctx.fill();
+        ctx.strokeStyle = prop.plankBorder;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // High-Contrast Floating Alert Tag
+      const bounce = Math.sin(animTime * 5) * 6;
+      ctx.save();
+      ctx.translate(x + w / 2, y - 28 + bounce);
+
+      ctx.fillStyle = 'rgba(10, 30, 15, 0.95)';
+      ctx.beginPath();
+      ctx.roundRect(-80, -14, 160, 28, 8);
+      ctx.fill();
+      ctx.strokeStyle = '#00E676';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(0, 230, 118, 0.25)';
+      ctx.beginPath();
+      ctx.roundRect(-83, -17, 166, 34, 10);
+      ctx.fill();
+
+      ctx.fillStyle = '#69F0AE';
+      ctx.font = 'bold 12px Fredoka, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`🪚 ${sawmillState.ready.length} PLANKS READY!`, 0, 0);
+
+      // Downward Arrow
+      ctx.fillStyle = '#00E676';
+      ctx.beginPath();
+      ctx.moveTo(-6, 14);
+      ctx.lineTo(6, 14);
+      ctx.lineTo(0, 20);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
     }
 
     // Bottom label banner for sawmill
@@ -544,14 +651,15 @@ function drawTiltedTree(ctx, tree, animTime) {
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
   ctx.beginPath();
-  ctx.ellipse(0, 4, tree.canopyR * 0.9, tree.canopyR * 0.45, 0, 0, Math.PI * 2);
+  ctx.ellipse(0, 4, tree.canopyR * 0.95, tree.canopyR * 0.48, 0, 0, Math.PI * 2);
   ctx.fill();
 
   const trunkH = tree.trunkHeight || 42;
   const isBirch = tree.type === 'birch';
   const isRedwood = tree.type === 'redwood';
 
-  ctx.fillStyle = isBirch ? '#eceff1' : isRedwood ? '#b71c1c' : '#5d4037';
+  // Textured Trunk
+  ctx.fillStyle = isBirch ? '#ECEFF1' : isRedwood ? '#8D3B2B' : '#5D4037';
   ctx.fillRect(-tree.trunkR, -trunkH, tree.trunkR * 2, trunkH);
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
@@ -559,77 +667,116 @@ function drawTiltedTree(ctx, tree, animTime) {
 
   if (isBirch) {
     ctx.fillStyle = '#263238';
-    ctx.fillRect(-tree.trunkR + 2, -trunkH + 8, 5, 3);
-    ctx.fillRect(tree.trunkR - 6, -trunkH + 18, 5, 3);
-    ctx.fillRect(-tree.trunkR + 3, -trunkH + 28, 6, 3);
+    ctx.fillRect(-tree.trunkR + 2, -trunkH + 8, 5, 2.5);
+    ctx.fillRect(tree.trunkR - 6, -trunkH + 18, 5, 2.5);
+    ctx.fillRect(-tree.trunkR + 3, -trunkH + 28, 6, 2.5);
   }
 
   ctx.translate(0, -trunkH);
 
   if (tree.type === 'pine') {
+    // 4-Tiered Pyramidal Jagged Pine Fir Canopy
     const tiers = [
-      { y: 0, w: tree.canopyR * 1.05, h: 28, c: '#1b5e20' },
-      { y: -18, w: tree.canopyR * 0.85, h: 26, c: '#2e7d32' },
-      { y: -34, w: tree.canopyR * 0.60, h: 24, c: '#388e3c' }
+      { y: 0, w: tree.canopyR * 1.15, h: 26, c1: '#1B5E20', c2: '#0D3813' },
+      { y: -18, w: tree.canopyR * 0.95, h: 24, c1: '#2E7D32', c2: '#1B5E20' },
+      { y: -34, w: tree.canopyR * 0.75, h: 22, c1: '#388E3C', c2: '#2E7D32' },
+      { y: -48, w: tree.canopyR * 0.50, h: 20, c1: '#43A047', c2: '#388E3C' }
     ];
     for (const t of tiers) {
-      ctx.fillStyle = t.c;
+      ctx.fillStyle = t.c2;
       ctx.beginPath();
       ctx.moveTo(-t.w, t.y);
       ctx.lineTo(0, t.y - t.h);
       ctx.lineTo(t.w, t.y);
       ctx.closePath();
       ctx.fill();
+
+      // Needle detail
+      ctx.fillStyle = t.c1;
+      ctx.beginPath();
+      ctx.moveTo(-t.w + 4, t.y - 4);
+      ctx.lineTo(0, t.y - t.h + 3);
+      ctx.lineTo(t.w - 4, t.y - 4);
+      ctx.closePath();
+      ctx.fill();
     }
   } else {
-    let outerColor = '#2e7d32';
-    let midColor = '#43a047';
-    let innerColor = '#66bb6a';
+    // Volumetric Leafy Canopy with Organic Cloud Lobes
+    let cBase = '#1B5E20';
+    let cMid = '#2E7D32';
+    let cTop = '#43A047';
+    let cHighlight = '#81C784';
 
     if (tree.type === 'birch') {
-      outerColor = '#689f38';
-      midColor = '#8bc34a';
-      innerColor = '#dce775';
+      cBase = '#558B2F';
+      cMid = '#7CB342';
+      cTop = '#9CCC65';
+      cHighlight = '#DCE775';
     } else if (tree.type === 'sakura') {
-      outerColor = '#c2185b';
-      midColor = '#e91e63';
-      innerColor = '#f48fb1';
+      cBase = '#880E4F';
+      cMid = '#C2185B';
+      cTop = '#E91E63';
+      cHighlight = '#F48FB1';
     } else if (tree.type === 'redwood') {
-      outerColor = '#3e2723';
-      midColor = '#880e4f';
-      innerColor = '#b71c1c';
+      cBase = '#3E2723';
+      cMid = '#5D4037';
+      cTop = '#8D6E63';
+      cHighlight = '#B71C1C';
     } else if (tree.type === 'golden') {
-      outerColor = '#ff8f00';
-      midColor = '#ffb300';
-      innerColor = '#fff176';
+      cBase = '#FF8F00';
+      cMid = '#FFB300';
+      cTop = '#FFD54F';
+      cHighlight = '#FFF9C4';
     }
 
-    ctx.fillStyle = outerColor;
+    // 1. Base Shadow Canopy
+    ctx.fillStyle = cBase;
     ctx.beginPath();
-    ctx.arc(0, -10, tree.canopyR, 0, Math.PI * 2);
+    ctx.ellipse(0, -6, tree.canopyR * 1.05, tree.canopyR * 0.85, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = midColor;
-    for (let i = 0; i < 5; i++) {
-      const angle = (i / 5) * Math.PI * 2;
-      const off = tree.canopyR * 0.45;
+    // 2. Mid Foliage Lobes (Organic Cloud Tufts)
+    ctx.fillStyle = cMid;
+    const lobes = 6;
+    for (let i = 0; i < lobes; i++) {
+      const ang = (i / lobes) * Math.PI * 2;
+      const lx = Math.cos(ang) * (tree.canopyR * 0.55);
+      const ly = -14 + Math.sin(ang) * (tree.canopyR * 0.45);
+      const lr = tree.canopyR * 0.52;
       ctx.beginPath();
-      ctx.arc(Math.cos(angle) * off, -10 + Math.sin(angle) * off, tree.canopyR * 0.52, 0, Math.PI * 2);
+      ctx.arc(lx, ly, lr, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    ctx.fillStyle = innerColor;
+    // 3. Top Volume Canopy
+    ctx.fillStyle = cTop;
     ctx.beginPath();
-    ctx.arc(-tree.canopyR * 0.2, -18, tree.canopyR * 0.46, 0, Math.PI * 2);
+    ctx.ellipse(-tree.canopyR * 0.15, -20, tree.canopyR * 0.65, tree.canopyR * 0.55, -0.1, 0, Math.PI * 2);
     ctx.fill();
 
+    // 4. Stylized Sunlight Highlight Leaf Puffs
+    ctx.fillStyle = cHighlight;
+    ctx.beginPath();
+    ctx.arc(-tree.canopyR * 0.35, -28, tree.canopyR * 0.28, 0, Math.PI * 2);
+    ctx.arc(tree.canopyR * 0.15, -26, tree.canopyR * 0.24, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Golden Sparkles / Sakura Petals
     if (tree.type === 'golden') {
-      ctx.fillStyle = '#ffffff';
-      ctx.globalAlpha = 0.5 + Math.sin(animTime * 6) * 0.3;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.globalAlpha = 0.55 + Math.sin(animTime * 6) * 0.35;
       ctx.beginPath();
-      ctx.arc(0, -15, tree.canopyR * 0.25, 0, Math.PI * 2);
+      ctx.arc(-tree.canopyR * 0.2, -30, 3.5, 0, Math.PI * 2);
+      ctx.arc(tree.canopyR * 0.3, -18, 2.5, 0, Math.PI * 2);
       ctx.fill();
-      ctx.globalAlpha = 1;
+      ctx.globalAlpha = 1.0;
+    } else if (tree.type === 'sakura') {
+      ctx.fillStyle = '#F8BBD0';
+      const petalY = (animTime * 15) % 30;
+      ctx.beginPath();
+      ctx.arc(-tree.canopyR * 0.4, -10 + petalY, 2, 0, Math.PI * 2);
+      ctx.arc(tree.canopyR * 0.35, -20 + petalY * 0.7, 2, 0, Math.PI * 2);
+      ctx.fill();
     }
   }
 
@@ -684,13 +831,15 @@ function drawDroppedLog(ctx, log) {
  */
 function drawHandHeldAxe(ctx, axe, isChopping, animTime) {
   ctx.save();
-  ctx.translate(10, -4);
+  // Pivot placed cleanly to the right side of the character!
+  ctx.translate(16, -1);
 
   if (isChopping) {
-    const chopAngle = Math.sin(animTime * 15) * 0.95 - 0.15;
+    const chopAngle = Math.sin(animTime * 15) * 0.85 + 0.15;
     ctx.rotate(chopAngle);
   } else {
-    ctx.rotate(-0.25);
+    // Tilted slightly outward, pointing away from the face!
+    ctx.rotate(0.18);
   }
 
   // Handle
@@ -718,6 +867,7 @@ function drawHandHeldAxe(ctx, axe, isChopping, animTime) {
   ctx.quadraticCurveTo(1.5, 0, 0.5, -14);
   ctx.stroke();
 
+  // Wedge top
   ctx.fillStyle = '#A16828';
   ctx.beginPath();
   ctx.roundRect(-1.5, -20, 3.5, 5, 1.5);
@@ -778,10 +928,10 @@ function drawHandHeldAxe(ctx, axe, isChopping, animTime) {
 
   ctx.restore();
 
-  // Hand
+  // Hand Glove holding Handle
   ctx.fillStyle = '#FFCC80';
   ctx.beginPath();
-  ctx.arc(0, 0, 4, 0, Math.PI * 2);
+  ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
   ctx.fill();
   ctx.strokeStyle = '#3E2723';
   ctx.lineWidth = 1.2;
@@ -796,9 +946,10 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   ctx.save();
   ctx.translate(x, y);
 
+  // Soft Ground Shadow
   ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
   ctx.beginPath();
-  ctx.ellipse(0, 6, 16, 9, 0, 0, Math.PI * 2);
+  ctx.ellipse(0, 7, 16, 9, 0, 0, Math.PI * 2);
   ctx.fill();
 
   const walkBob = isWalking ? Math.sin(animTime * 14) * 2.5 : 0;
@@ -812,7 +963,7 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
     for (let i = 0; i < stackCount; i++) {
       const item = inventory[i];
       const prop = WOOD_PROPERTIES[item.type] || WOOD_PROPERTIES.oak;
-      const itemY = -12 - i * 7;
+      const itemY = -14 - i * 7;
       ctx.save();
 
       if (item.isPlank) {
@@ -836,41 +987,115 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
     }
   }
 
-  // Body
-  ctx.fillStyle = isPlayer ? '#c62828' : '#e65100';
+  // Left Arm (Relaxed with sleeve cuff)
+  ctx.fillStyle = isPlayer ? '#B71C1C' : '#E65100';
   ctx.beginPath();
-  ctx.roundRect(-12, -14, 24, 20, 7);
+  ctx.roundRect(-16, -10, 6, 12, 3);
+  ctx.fill();
+  ctx.fillStyle = '#FFE0B2';
+  ctx.beginPath();
+  ctx.arc(-13, 3, 3.5, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = '#1565c0';
-  ctx.fillRect(-8, -14, 4, 18);
-  ctx.fillRect(4, -14, 4, 18);
+  // Torso (Red Flannel Plaid Shirt)
+  ctx.fillStyle = isPlayer ? '#D32F2F' : '#F57C00';
+  ctx.beginPath();
+  ctx.roundRect(-13, -14, 26, 22, 8);
+  ctx.fill();
+
+  // Denim Dungarees / Overalls
+  ctx.fillStyle = '#1976D2';
+  ctx.beginPath();
+  ctx.roundRect(-11, -4, 22, 14, 4);
+  ctx.fill();
+
+  // Denim Straps & Golden Buckles
+  ctx.fillStyle = '#1565C0';
+  ctx.fillRect(-9, -14, 4, 14);
+  ctx.fillRect(5, -14, 4, 14);
+
+  ctx.fillStyle = '#FFD54F';
+  ctx.beginPath();
+  ctx.arc(-7, -4, 1.8, 0, Math.PI * 2);
+  ctx.arc(7, -4, 1.8, 0, Math.PI * 2);
+  ctx.fill();
 
   // Head
-  ctx.fillStyle = '#ffcc80';
+  ctx.fillStyle = '#FFE0B2';
   ctx.beginPath();
   ctx.arc(0, -22, 11, 0, Math.PI * 2);
   ctx.fill();
+  ctx.strokeStyle = '#5D4037';
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
 
-  ctx.fillStyle = isPlayer ? '#ffb300' : '#ffe082';
+  // Fluffy Hair Tufts Peeking Out
+  ctx.fillStyle = '#5D4037';
+  ctx.beginPath();
+  ctx.arc(-10, -22, 3, 0, Math.PI * 2);
+  ctx.arc(10, -22, 3, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Rosy Cheeks
+  ctx.fillStyle = '#FF8A80';
+  ctx.globalAlpha = 0.65;
+  ctx.beginPath();
+  ctx.arc(-6, -20, 2.5, 0, Math.PI * 2);
+  ctx.arc(6, -20, 2.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalAlpha = 1.0;
+
+  // Eyes with Dual Specular Sparkle Highlights
+  ctx.fillStyle = '#212121';
+  ctx.beginPath();
+  ctx.arc(-4, -23, 2.5, 0, Math.PI * 2);
+  ctx.arc(4, -23, 2.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.beginPath();
+  ctx.arc(-4.6, -23.8, 0.9, 0, Math.PI * 2);
+  ctx.arc(-3.2, -22.2, 0.5, 0, Math.PI * 2);
+  ctx.arc(3.4, -23.8, 0.9, 0, Math.PI * 2);
+  ctx.arc(4.8, -22.2, 0.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Cute Little Smile
+  ctx.strokeStyle = '#5D4037';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.arc(0, -18.5, 2.5, 0.2, Math.PI - 0.2);
+  ctx.stroke();
+
+  // Safety Helmet with 3D Curved Brim & Safety Ridge
+  const helmetColor = isPlayer ? '#FBC02D' : '#FFE082';
+  const helmetRidge = isPlayer ? '#F57F17' : '#FFD54F';
+
+  // Cap Dome
+  ctx.fillStyle = helmetColor;
   ctx.beginPath();
   ctx.arc(0, -26, 12, Math.PI, Math.PI * 2);
   ctx.fill();
-  ctx.fillRect(-14, -26, 28, 4);
+  ctx.strokeStyle = '#E65100';
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
 
-  // Eyes
-  ctx.fillStyle = '#212121';
+  // Safety Center Ridge
+  ctx.fillStyle = helmetRidge;
   ctx.beginPath();
-  ctx.arc(-3, -22, 2, 0, Math.PI * 2);
-  ctx.arc(3, -22, 2, 0, Math.PI * 2);
+  ctx.roundRect(-2.5, -37, 5, 11, 2);
   ctx.fill();
 
-  ctx.fillStyle = '#ffffff';
+  // 3D Curved Brim
+  ctx.fillStyle = helmetColor;
   ctx.beginPath();
-  ctx.arc(-3.5, -22.5, 0.8, 0, Math.PI * 2);
-  ctx.arc(2.5, -22.5, 0.8, 0, Math.PI * 2);
+  ctx.roundRect(-14, -27, 28, 4.5, 2);
   ctx.fill();
+  ctx.strokeStyle = '#E65100';
+  ctx.lineWidth = 1;
+  ctx.stroke();
 
+  // Axe on the side
   const axe = AXE_TIERS[axeTier || 0] || AXE_TIERS[0];
   drawHandHeldAxe(ctx, axe, isChopping, animTime);
 

@@ -6,9 +6,9 @@
   "created": "2026-08-20",
   "pipeline_version": "1.0",
   "build": {
-    "timestamp": "2026-08-23T15:45:20.137Z",
+    "timestamp": "2026-08-23T15:48:32.024Z",
     "zipFile": "build/lumber-tycoon.zip",
-    "sizeBytes": 66864,
+    "sizeBytes": 68646,
     "success": true
   }
 }
