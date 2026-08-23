@@ -16,6 +16,13 @@
     "key": "orbit_guard_save_v1",
     "type": "cloud_with_local_fallback"
   },
+  "leaderboards": [
+    {
+      "id": "orbit_guard_high_score",
+      "isMain": true,
+      "name": "Global High Score"
+    }
+  ],
   "audio": {
     "synthesized": true,
     "muteControlOnScreen": true,

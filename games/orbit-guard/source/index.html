@@ -172,6 +172,12 @@
               </svg>
               AWARDS
             </button>
+            <button id="btn-open-leaderboard-title" class="btn-secondary-action">
+              <svg class="ui-icon" style="margin-right: 5px; width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.45 1-1 1H7M14 14.66V17c0 .55.45 1 1 1h2M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+              </svg>
+              RANKINGS
+            </button>
             <button id="btn-open-tutorial-title" class="btn-secondary-action">
               <svg class="ui-icon" style="margin-right: 5px; width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
@@ -245,6 +251,34 @@
 
         <div class="modal-bottom">
           <button id="btn-close-achievements" class="btn-modal-primary">
+            CONFIRM AND RETURN
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboards Modal -->
+    <div id="leaderboard-modal" class="modal-overlay hidden">
+      <div class="modal-card leaderboard-card">
+        <div class="modal-top">
+          <div class="modal-title-stack">
+            <h2 class="modal-heading">GLOBAL RANKINGS</h2>
+            <p class="modal-subheading">Top Galactic Commanders on Playgama</p>
+          </div>
+          <div class="modal-gold-chip">
+            <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.45 1-1 1H7M14 14.66V17c0 .55.45 1 1 1h2M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+            </svg>
+            <span id="lb-player-rank">#1</span>
+          </div>
+        </div>
+
+        <div id="leaderboard-list" class="leaderboard-scroll-list">
+          <!-- Populated dynamically by PlaygamaBridge.getLeaderboardEntries() -->
+        </div>
+
+        <div class="modal-bottom">
+          <button id="btn-close-leaderboard" class="btn-modal-primary">
             CONFIRM AND RETURN
           </button>
         </div>
@@ -368,6 +402,9 @@
           <button id="btn-open-achievements-pause" class="btn-modal-secondary">
             AWARDS & ACHIEVEMENTS
           </button>
+          <button id="btn-open-leaderboard-pause" class="btn-modal-secondary">
+            GLOBAL RANKINGS
+          </button>
           <button id="btn-restart-run" class="btn-modal-secondary">
             RESTART
           </button>
@@ -418,6 +455,9 @@
           </button>
           <button id="btn-go-achievements" class="btn-modal-secondary">
             AWARDS & ACHIEVEMENTS
+          </button>
+          <button id="btn-go-leaderboard" class="btn-modal-secondary">
+            GLOBAL RANKINGS
           </button>
           <button id="btn-go-title" class="btn-modal-secondary">
             MAIN MENU

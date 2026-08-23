@@ -1018,6 +1018,129 @@ canvas {
   border-color: #10B981;
 }
 
+/* =========================================================================
+   Leaderboard Modal Styling
+   ========================================================================= */
+.leaderboard-scroll-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.lb-item {
+  background: #141B2B;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.lb-item.current-player {
+  border-color: #38BDF8;
+  background: #0E223D;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+.lb-item.rank-1 {
+  border-color: #F59E0B;
+  background: #241A08;
+}
+
+.lb-item.rank-2 {
+  border-color: #94A3B8;
+  background: #1A2333;
+}
+
+.lb-item.rank-3 {
+  border-color: #D97706;
+  background: #1E160E;
+}
+
+.lb-left-stack {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lb-rank-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 0.78rem;
+  background: #080C14;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.lb-item.rank-1 .lb-rank-badge {
+  background: #F59E0B;
+  border-color: #FBBF24;
+  color: #000000;
+}
+
+.lb-item.rank-2 .lb-rank-badge {
+  background: #94A3B8;
+  border-color: #CBD5E1;
+  color: #000000;
+}
+
+.lb-item.rank-3 .lb-rank-badge {
+  background: #D97706;
+  border-color: #F59E0B;
+  color: #FFFFFF;
+}
+
+.lb-item.current-player .lb-rank-badge {
+  border-color: #38BDF8;
+  color: #38BDF8;
+}
+
+.lb-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lb-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lb-you-tag {
+  font-size: 0.58rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #0284C7;
+  color: #FFFFFF;
+  font-weight: 900;
+}
+
+.lb-score-val {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: #F59E0B;
+  white-space: nowrap;
+}
+
 .ws-buy-btn:hover:not(:disabled) {
   background: #1D4ED8;
 }

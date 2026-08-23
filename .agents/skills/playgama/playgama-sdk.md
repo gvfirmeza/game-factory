@@ -76,6 +76,27 @@ if (window.bridge && window.bridge.advertisement) {
 }
 ```
 
+### Leaderboards API (Bridge SDK v2)
+Playgama Bridge SDK v2 wraps native platform leaderboards and provides in-game data:
+```javascript
+// 1. Leaderboard Type
+const lbType = window.bridge?.leaderboards?.type; // 'not_available' | 'in_game' | 'native' | 'native_popup'
+
+// 2. Set Score (after wave clear or game over)
+await window.bridge?.leaderboards?.setScore('main_leaderboard', score);
+
+// 3. Get Entries (for 'in_game' custom leaderboard UI)
+const entries = await window.bridge?.leaderboards?.getEntries('main_leaderboard');
+entries.forEach(entry => {
+  console.log(entry.id, entry.name, entry.score, entry.rank, entry.photo);
+});
+
+// 4. Show Native Popup (for 'native_popup' mode)
+if (lbType === 'native_popup') {
+  await window.bridge?.leaderboards?.showNativePopup('main_leaderboard');
+}
+```
+
 ### Device Information
 ```javascript
 const deviceType = window.bridge?.device?.type; // 'desktop' | 'mobile' | 'tablet'

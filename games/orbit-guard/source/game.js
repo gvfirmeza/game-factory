@@ -2922,6 +2922,11 @@ export class OrbitGuardGame {
       btnOpenAchievementsTitle.addEventListener('click', () => this.openAchievementsModal('TITLE'));
     }
 
+    const btnOpenLeaderboardTitle = document.getElementById('btn-open-leaderboard-title');
+    if (btnOpenLeaderboardTitle) {
+      btnOpenLeaderboardTitle.addEventListener('click', () => this.openLeaderboardModal('TITLE'));
+    }
+
     const btnOpenTutorialTitle = document.getElementById('btn-open-tutorial-title');
     if (btnOpenTutorialTitle) {
       btnOpenTutorialTitle.addEventListener('click', () => this.openTutorialModal('TITLE'));
@@ -3009,6 +3014,11 @@ export class OrbitGuardGame {
       btnCloseAchievements.addEventListener('click', () => this.closeAchievementsModal());
     }
 
+    const btnCloseLeaderboard = document.getElementById('btn-close-leaderboard');
+    if (btnCloseLeaderboard) {
+      btnCloseLeaderboard.addEventListener('click', () => this.closeLeaderboardModal());
+    }
+
     const btnCloseTutorial = document.getElementById('btn-close-tutorial');
     if (btnCloseTutorial) {
       btnCloseTutorial.addEventListener('click', () => this.closeTutorialModal());
@@ -3027,6 +3037,11 @@ export class OrbitGuardGame {
     const btnOpenAchievementsPause = document.getElementById('btn-open-achievements-pause');
     if (btnOpenAchievementsPause) {
       btnOpenAchievementsPause.addEventListener('click', () => this.openAchievementsModal('PAUSED'));
+    }
+
+    const btnOpenLeaderboardPause = document.getElementById('btn-open-leaderboard-pause');
+    if (btnOpenLeaderboardPause) {
+      btnOpenLeaderboardPause.addEventListener('click', () => this.openLeaderboardModal('PAUSED'));
     }
 
     const btnRestart = document.getElementById('btn-restart-run');
@@ -3121,6 +3136,13 @@ export class OrbitGuardGame {
     if (btnGoAchievements) {
       btnGoAchievements.addEventListener('click', () => {
         this.openAchievementsModal('GAME_OVER');
+      });
+    }
+
+    const btnGoLeaderboard = document.getElementById('btn-go-leaderboard');
+    if (btnGoLeaderboard) {
+      btnGoLeaderboard.addEventListener('click', () => {
+        this.openLeaderboardModal('GAME_OVER');
       });
     }
 
@@ -3536,6 +3558,97 @@ export class OrbitGuardGame {
     SaveManager.save(this.playgama, this.saveData);
     this.renderAchievementsUI();
     this.updateHUD();
+  }
+
+  openLeaderboardModal(caller = null) {
+    this.leaderboardCaller = caller || (this.state === 'GAME_OVER' ? 'GAME_OVER' : (this.state === 'PAUSED' ? 'PAUSED' : (this.state === 'TITLE' ? 'TITLE' : 'PLAYING')));
+
+    const lbType = this.playgama.getLeaderboardType();
+    if (lbType === 'native_popup') {
+      this.playgama.showLeaderboardNativePopup('orbit_guard_high_score');
+      return;
+    }
+
+    document.getElementById('pause-modal')?.classList.add('hidden');
+    document.getElementById('game-over-modal')?.classList.add('hidden');
+    document.getElementById('workshop-modal')?.classList.add('hidden');
+    document.getElementById('achievements-modal')?.classList.add('hidden');
+    document.getElementById('tutorial-modal')?.classList.add('hidden');
+
+    this.renderLeaderboardUI();
+    document.getElementById('leaderboard-modal')?.classList.remove('hidden');
+    this.playgama.showBanner();
+  }
+
+  closeLeaderboardModal() {
+    document.getElementById('leaderboard-modal')?.classList.add('hidden');
+    this.updateHUD();
+    this.updateTitleRecords();
+
+    if (this.leaderboardCaller === 'PAUSED' && this.state === 'PAUSED') {
+      document.getElementById('pause-modal')?.classList.remove('hidden');
+    } else if (this.leaderboardCaller === 'GAME_OVER' && this.state === 'GAME_OVER') {
+      document.getElementById('game-over-modal')?.classList.remove('hidden');
+    } else if (this.leaderboardCaller === 'TITLE' || this.state === 'TITLE') {
+      document.getElementById('title-overlay')?.classList.remove('hidden');
+    } else if (this.state === 'PLAYING') {
+      this.playgama.hideBanner();
+    }
+  }
+
+  async renderLeaderboardUI() {
+    const list = document.getElementById('leaderboard-list');
+    const playerRankEl = document.getElementById('lb-player-rank');
+    if (!list) return;
+
+    list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px 10px; font-family: 'Orbitron', monospace; font-size: 0.75rem; letter-spacing: 0.5px;">CONNECTING TO ORBITAL SATELLITE...</div>`;
+
+    let entries = [];
+    try {
+      entries = await this.playgama.getLeaderboardEntries('orbit_guard_high_score');
+    } catch (e) {
+      console.warn('Leaderboard fetch warning:', e);
+    }
+
+    list.innerHTML = '';
+
+    if (!entries || entries.length === 0) {
+      list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px 10px; font-family: 'Orbitron', monospace; font-size: 0.72rem;">NO RECORDED DATA YET. DEFEND THE NEXUS TO CLAIM #1!</div>`;
+      return;
+    }
+
+    let foundPlayerRank = null;
+
+    entries.forEach((entry, idx) => {
+      const rank = entry.rank || (idx + 1);
+      const isPlayer = entry.id === 'player_local';
+      if (isPlayer) foundPlayerRank = rank;
+
+      const item = document.createElement('div');
+      const rankClass = rank === 1 ? 'rank-1' : (rank === 2 ? 'rank-2' : (rank === 3 ? 'rank-3' : ''));
+      item.className = `lb-item ${rankClass} ${isPlayer ? 'current-player' : ''}`;
+
+      const rankSymbol = rank === 1 ? '🥇' : (rank === 2 ? '🥈' : (rank === 3 ? '🥉' : `#${rank}`));
+
+      item.innerHTML = `
+        <div class="lb-left-stack">
+          <div class="lb-rank-badge">${rankSymbol}</div>
+          <div class="lb-info">
+            <div class="lb-name">
+              ${entry.name || `Commander #${rank}`}
+              ${isPlayer ? '<span class="lb-you-tag">YOU</span>' : ''}
+            </div>
+          </div>
+        </div>
+        <div class="lb-score-val">${Number(entry.score || 0).toLocaleString()} PTS</div>
+      `;
+
+      list.appendChild(item);
+    });
+
+    if (playerRankEl) {
+      playerRankEl.textContent = foundPlayerRank ? `#${foundPlayerRank}` : '#--';
+    }
   }
 
   /* ==========================================================================
@@ -4611,6 +4724,13 @@ export class OrbitGuardGame {
     document.getElementById('go-score-val').textContent = this.score;
     document.getElementById('go-merges-val').textContent = this.saveData.totalMerges || 0;
     document.getElementById('go-kills-val').textContent = this.saveData.totalKills || 0;
+
+    // Submit High Score to Playgama Leaderboard
+    if (this.score > (this.saveData.highScore || 0)) {
+      this.saveData.highScore = this.score;
+      SaveManager.save(this.playgama, this.saveData);
+    }
+    this.playgama.setLeaderboardScore('orbit_guard_high_score', this.score);
 
     const btnDoubleGold = document.getElementById('btn-go-double-gold');
     if (btnDoubleGold) {

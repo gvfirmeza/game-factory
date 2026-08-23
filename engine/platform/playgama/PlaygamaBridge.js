@@ -104,6 +104,67 @@ export class PlaygamaBridge {
         game: {
           on: (event, handler) => {}
         },
+        leaderboards: {
+          type: 'in_game',
+          setScore: async (leaderboardId, score) => {
+            console.log(`[PlaygamaBridge] bridge.leaderboards.setScore('${leaderboardId}', ${score})`);
+            try {
+              const key = `lb_${leaderboardId}`;
+              let existing = JSON.parse(localStorage.getItem(key) || '[]');
+              if (!Array.isArray(existing) || existing.length === 0) {
+                existing = [
+                  { id: 'bot_1', name: 'Nova Commander', score: 48500, rank: 1 },
+                  { id: 'bot_2', name: 'Aegis Sentinel', score: 36200, rank: 2 },
+                  { id: 'bot_3', name: 'Solaris VII', score: 27800, rank: 3 },
+                  { id: 'bot_4', name: 'Vortex Pilot', score: 19400, rank: 4 },
+                  { id: 'bot_5', name: 'Cosmic Guard', score: 12500, rank: 5 },
+                  { id: 'bot_6', name: 'Star Defender', score: 8400, rank: 6 }
+                ];
+              }
+              const playerIdx = existing.findIndex(e => e.id === 'player_local');
+              if (playerIdx >= 0) {
+                if (score > existing[playerIdx].score) {
+                  existing[playerIdx].score = score;
+                }
+              } else {
+                existing.push({
+                  id: 'player_local',
+                  name: 'Commander (You)',
+                  score: score,
+                  rank: 1
+                });
+              }
+              existing.sort((a, b) => b.score - a.score);
+              existing.forEach((e, idx) => e.rank = idx + 1);
+              localStorage.setItem(key, JSON.stringify(existing));
+            } catch (e) {}
+            return true;
+          },
+          getEntries: async (leaderboardId) => {
+            console.log(`[PlaygamaBridge] bridge.leaderboards.getEntries('${leaderboardId}')`);
+            try {
+              const key = `lb_${leaderboardId}`;
+              let stored = JSON.parse(localStorage.getItem(key) || 'null');
+              if (!stored || stored.length === 0) {
+                stored = [
+                  { id: 'bot_1', name: 'Nova Commander', score: 48500, rank: 1 },
+                  { id: 'bot_2', name: 'Aegis Sentinel', score: 36200, rank: 2 },
+                  { id: 'bot_3', name: 'Solaris VII', score: 27800, rank: 3 },
+                  { id: 'bot_4', name: 'Vortex Pilot', score: 19400, rank: 4 },
+                  { id: 'bot_5', name: 'Cosmic Guard', score: 12500, rank: 5 },
+                  { id: 'bot_6', name: 'Star Defender', score: 8400, rank: 6 }
+                ];
+              }
+              return stored;
+            } catch (e) {
+              return [];
+            }
+          },
+          showNativePopup: async (leaderboardId) => {
+            console.log(`[PlaygamaBridge] bridge.leaderboards.showNativePopup('${leaderboardId}')`);
+            return true;
+          }
+        },
         sound: {
           mute: () => {},
           unmute: () => {}
@@ -351,8 +412,16 @@ export class PlaygamaBridge {
   }
 
   // =========================================================================
-  // LEADERBOARDS API
+  // LEADERBOARDS API (Playgama Bridge SDK v2)
   // =========================================================================
+
+  getLeaderboardType() {
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    if (b?.leaderboards?.type) {
+      return b.leaderboards.type;
+    }
+    return 'in_game';
+  }
 
   async getHighScore(leaderboardName = 'main') {
     const score = await this.getData(`hs_${leaderboardName}`, 0);
@@ -364,12 +433,43 @@ export class PlaygamaBridge {
     if (score > current) {
       await this.setData(`hs_${leaderboardName}`, score);
     }
+    await this.setLeaderboardScore(leaderboardName, score);
+  }
 
-    if (this.bridge?.leaderboard?.setScore) {
+  async setLeaderboardScore(leaderboardId, score) {
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    if (b?.leaderboards?.setScore) {
       try {
-        await this.bridge.leaderboard.setScore({ leaderboardName, score });
-      } catch (e) {}
+        return await b.leaderboards.setScore(leaderboardId, score);
+      } catch (e) {
+        console.warn('[PlaygamaBridge] leaderboards.setScore failed:', e);
+      }
     }
+    return false;
+  }
+
+  async getLeaderboardEntries(leaderboardId) {
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    if (b?.leaderboards?.getEntries) {
+      try {
+        return await b.leaderboards.getEntries(leaderboardId);
+      } catch (e) {
+        console.warn('[PlaygamaBridge] leaderboards.getEntries failed:', e);
+      }
+    }
+    return [];
+  }
+
+  async showLeaderboardNativePopup(leaderboardId) {
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+    if (b?.leaderboards?.showNativePopup) {
+      try {
+        return await b.leaderboards.showNativePopup(leaderboardId);
+      } catch (e) {
+        console.warn('[PlaygamaBridge] leaderboards.showNativePopup failed:', e);
+      }
+    }
+    return false;
   }
 
   // =========================================================================
