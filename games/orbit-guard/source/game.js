@@ -2385,6 +2385,94 @@ export class OrbitGuardGame {
       window.__orbitGuardInstance = this;
       window.__gameInstance = this;
     }
+
+    this.initTitleShips();
+  }
+
+  initTitleShips() {
+    const sprites = [
+      'sentinel_ballista', 'sentinel_cannon', 'sentinel_mage', 'sentinel_frost', 'sentinel_assassin',
+      'enemy_crawler', 'enemy_dart', 'enemy_bruiser', 'enemy_swarm', 'enemy_slinger',
+      'boss_colossus', 'boss_hydra', 'boss_chrono'
+    ];
+    this.titleShips = [];
+    for (let i = 0; i < 12; i++) {
+      const angle = (Math.random() * Math.PI * 2);
+      const speed = 10 + Math.random() * 16;
+      this.titleShips.push({
+        spriteKey: sprites[i % sprites.length],
+        x: Math.random() * ARENA.width,
+        y: Math.random() * ARENA.height,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        angle: angle + Math.PI / 2,
+        rotSpeed: (Math.random() - 0.5) * 0.25,
+        scale: 0.35 + Math.random() * 0.22,
+        alpha: 0.60 + Math.random() * 0.35,
+        bobPhase: Math.random() * Math.PI * 2,
+        bobSpeed: 0.8 + Math.random() * 1.2,
+        trailTimer: 0
+      });
+    }
+  }
+
+  updateTitleShips(dt) {
+    if (!this.titleShips || this.titleShips.length === 0) {
+      this.initTitleShips();
+    }
+    for (const ship of this.titleShips) {
+      ship.x += ship.vx * dt;
+      ship.y += ship.vy * dt + Math.sin(this.animTime * ship.bobSpeed + ship.bobPhase) * 0.25;
+      ship.angle += ship.rotSpeed * dt;
+
+      // Screen wrapping with generous padding
+      const pad = 50;
+      if (ship.x < -pad) ship.x = ARENA.width + pad;
+      if (ship.x > ARENA.width + pad) ship.x = -pad;
+      if (ship.y < -pad) ship.y = ARENA.height + pad;
+      if (ship.y > ARENA.height + pad) ship.y = -pad;
+
+      // Subtle engine thrust dust particles
+      ship.trailTimer = (ship.trailTimer || 0) + dt;
+      if (ship.trailTimer > 0.12 && Math.random() < 0.4) {
+        ship.trailTimer = 0;
+        const trailDist = 16 * ship.scale;
+        const tx = ship.x - Math.cos(ship.angle - Math.PI / 2) * trailDist;
+        const ty = ship.y - Math.sin(ship.angle - Math.PI / 2) * trailDist;
+        this.particles.dust(tx, ty, 1, 'rgba(56, 189, 248, 0.4)');
+      }
+    }
+  }
+
+  drawTitleFloatingFleet(ctx) {
+    if (!this.titleShips) return;
+    for (const ship of this.titleShips) {
+      ctx.save();
+      ctx.globalAlpha = ship.alpha;
+      ctx.translate(ship.x, ship.y);
+      ctx.rotate(ship.angle);
+
+      // Atmospheric engine thrust glow
+      const glowGrad = ctx.createRadialGradient(0, 10 * ship.scale, 2, 0, 10 * ship.scale, 18 * ship.scale);
+      glowGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+      glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+      ctx.fillStyle = glowGrad;
+      ctx.beginPath();
+      ctx.arc(0, 10 * ship.scale, 18 * ship.scale, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Render ship sprite with fallback
+      if (this.assets && this.assets.isLoaded(ship.spriteKey)) {
+        this.assets.drawSprite(ctx, ship.spriteKey, 0, 0, ship.scale, ship.scale, 0);
+      } else {
+        ctx.fillStyle = '#38BDF8';
+        ctx.beginPath();
+        ctx.arc(0, 0, 14 * ship.scale, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
   }
 
   cycleSpeed() {
@@ -2928,7 +3016,7 @@ export class OrbitGuardGame {
           this.activeDirectives.add(d.id);
           this.audio.playVictoryFanfare();
           this.particles.burst(ARENA.center.x, ARENA.center.y, 35, '#38BDF8');
-          this.juice.spawnFloatingText(`DIRECTIVE: ${d.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 35, { color: '#38BDF8', size: 18 });
+          this.juice.spawnFloatingText(`UPGRADE: ${d.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 35, { color: '#38BDF8', size: 18 });
         } catch (err) {
           console.warn('Directive select effect error:', err);
         }
@@ -3464,6 +3552,11 @@ export class OrbitGuardGame {
     this.animTime += dt;
     this.particles.update(dt);
     this.juice.update(dt);
+
+    if (this.state === 'TITLE') {
+      this.updateTitleShips(dt);
+      return;
+    }
 
     if (this.state !== 'PLAYING') return;
 
@@ -4194,6 +4287,23 @@ export class OrbitGuardGame {
     this.layeredRenderer.draw(RenderLayers.BACKGROUND, (c) => {
       drawCosmicBackground(c, ARENA.width, ARENA.height, this.animTime, this.stars);
     });
+
+    if (this.state === 'TITLE') {
+      // Draw dynamic floating space fleet around the title screen
+      this.layeredRenderer.draw(RenderLayers.CHARACTERS, (c) => {
+        this.drawTitleFloatingFleet(c);
+      });
+
+      this.layeredRenderer.draw(RenderLayers.OVERLAY, (c) => {
+        this.particles.render(c);
+        this.juice.renderWorld(c);
+      });
+
+      this.layeredRenderer.flush(ctx);
+      this.juice.renderScreen(ctx, ARENA.width, ARENA.height);
+      this.renderer.endFrame();
+      return;
+    }
 
     // Layer 10: Arena Grid & Slot Bases
     this.layeredRenderer.draw(RenderLayers.WORLD_BACK, (c) => {

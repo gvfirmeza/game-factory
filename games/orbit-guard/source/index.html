@@ -54,13 +54,12 @@
         </div>
       </div>
 
-      <!-- Right Controls (Air Drop & Pause) -->
+      <!-- Right Controls (Ad Reward & Pause) -->
       <div class="header-right">
-        <button id="btn-airdrop" class="ctrl-btn btn-airdrop hidden" aria-label="Supply Drop" title="Watch short ad to receive +120 Credits Supply Drop">
+        <button id="btn-airdrop" class="ctrl-btn btn-airdrop hidden" aria-label="Free Credits" title="Watch Ad to receive +120 Credits">
           <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2a8 8 0 0 0-8 8c0 4.42 8 12 8 12s8-7.58 8-12a8 8 0 0 0-8-8z"/>
-            <rect x="9" y="15" width="6" height="6" rx="1"/>
-            <line x1="12" y1="10" x2="12" y2="15"/>
+            <rect x="2" y="4" width="20" height="16" rx="3"/>
+            <polygon points="10 8 16 12 10 16" fill="currentColor"/>
           </svg>
         </button>
         <button id="btn-pause" class="ctrl-btn btn-pause" aria-label="Pause" title="Pause Game">
@@ -74,7 +73,7 @@
 
     <!-- In-Game Bottom Command Deck -->
     <nav id="game-hud" class="game-hud hidden">
-      <!-- Tactical Row (Surge, Repair, Workshop) -->
+      <!-- Tactical Row (Surge, Repair, Upgrades) -->
       <div class="tactical-deck-row">
         <button id="btn-surge" class="deck-btn btn-surge" title="Orbital Ion Strike">
           <svg class="deck-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -96,14 +95,14 @@
           </div>
         </button>
 
-        <button id="btn-open-workshop-hud" class="deck-btn btn-workshop" title="Celestial Workshop">
+        <button id="btn-open-workshop-hud" class="deck-btn btn-workshop" title="Permanent Upgrades">
           <svg class="deck-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"/>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
           <div class="btn-text-block">
-            <span class="btn-label">TECH LAB</span>
-            <span class="btn-subtext">UPGRADES</span>
+            <span class="btn-label">UPGRADES</span>
+            <span class="btn-subtext">SHOP</span>
           </div>
         </button>
       </div>
@@ -117,7 +116,7 @@
               <line x1="12" y1="8" x2="12" y2="16"/>
               <line x1="8" y1="12" x2="16" y2="12"/>
             </svg>
-            <span class="summon-title">DEPLOY SENTINEL</span>
+            <span class="summon-title">BUY UNIT</span>
             <span id="hud-buy-cost" class="summon-badge">15 G</span>
           </div>
         </button>
@@ -135,9 +134,9 @@
     <!-- Title Screen Overlay -->
     <div id="title-overlay" class="title-overlay">
       <div class="title-card">
-        <div class="title-top-badge">ORBITAL DEFENSE COMMAND</div>
+        <div class="title-top-badge">SPACE TOWER DEFENSE</div>
         <h1 class="title-headline">ORBIT GUARD</h1>
-        <p class="title-subhead">Defend the Celestial Aegis Nexus Core</p>
+        <p class="title-subhead">Merge sentinels and defend the central nexus core</p>
 
         <div class="title-record-deck">
           <div class="rec-card">
@@ -155,7 +154,7 @@
             <svg class="ui-icon" style="margin-right: 8px;" viewBox="0 0 24 24" fill="currentColor">
               <polygon points="5 3 19 12 5 21 5 3"/>
             </svg>
-            START DEFENSE
+            PLAY GAME
           </button>
           
           <div class="title-secondary-row">
@@ -164,21 +163,21 @@
                 <circle cx="12" cy="12" r="3"/>
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
               </svg>
-              TECH LAB
+              UPGRADES
             </button>
             <button id="btn-open-tutorial-title" class="btn-secondary-action">
               <svg class="ui-icon" style="margin-right: 6px; width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
               </svg>
-              TACTICAL BRIEFING
+              HOW TO PLAY
             </button>
           </div>
         </div>
 
         <div class="title-guide-chips">
-          <span class="chip">Drag and drop identical tier units to merge</span>
-          <span class="chip">Cryo and Tesla units trigger Superconductor combos</span>
+          <span class="chip">Drag and drop same-tier units to merge</span>
+          <span class="chip">Tap any enemy to focus-fire all sentinels</span>
         </div>
       </div>
     </div>
@@ -188,8 +187,8 @@
       <div class="modal-card workshop-card">
         <div class="modal-top">
           <div class="modal-title-stack">
-            <h2 class="modal-heading">TECH LAB</h2>
-            <p class="modal-subheading">Permanent Core and Combat Upgrades</p>
+            <h2 class="modal-heading">PERMANENT UPGRADES</h2>
+            <p class="modal-subheading">Strengthen your base and sentinels for all runs</p>
           </div>
           <div class="modal-gold-chip">
             <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
@@ -205,7 +204,7 @@
         </div>
 
         <button id="btn-workshop-free-gold" class="workshop-ad-grant-btn">
-          CLAIM +100 CREDITS (TECH GRANT)
+          WATCH AD FOR +100 CREDITS
         </button>
 
         <div class="modal-bottom">
@@ -221,15 +220,15 @@
       <div class="modal-card tutorial-card">
         <div class="modal-top">
           <div class="modal-title-stack">
-            <h2 class="modal-heading">TACTICAL BRIEFING</h2>
-            <p class="modal-subheading">Orbital Defense Standard Protocol</p>
+            <h2 class="modal-heading">HOW TO PLAY</h2>
+            <p class="modal-subheading">Game Rules & Combat Guide</p>
           </div>
         </div>
 
         <div class="tutorial-step-list">
           <div class="guide-step">
             <div class="guide-step-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="17 1 21 5 17 9"/>
                 <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
                 <polyline points="7 23 3 19 7 15"/>
@@ -238,37 +237,13 @@
             </div>
             <div class="guide-step-text">
               <h4>DRAG TO MERGE</h4>
-              <p>Drag one sentinel on top of another identical sentinel (same class and tier) to ascend them to higher tiers (T1 to T6) with multiplied firepower.</p>
+              <p>Drag one unit on top of another identical unit to level it up (Tier 1 to Tier 6) and multiply its attack damage.</p>
             </div>
           </div>
 
           <div class="guide-step">
             <div class="guide-step-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M13 2L3 14h8l-2 8 10-12h-8l2-8z" fill="rgba(245, 158, 11, 0.25)"/>
-              </svg>
-            </div>
-            <div class="guide-step-text">
-              <h4>ELEMENTAL SYNERGIES</h4>
-              <p>Combine Cryo and Tesla to trigger Superconductor electrical blasts (+100% DMG), or Mortar and Railgun for Thermal Detonations.</p>
-            </div>
-          </div>
-
-          <div class="guide-step">
-            <div class="guide-step-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(16, 185, 129, 0.25)"/>
-              </svg>
-            </div>
-            <div class="guide-step-text">
-              <h4>DEFEND THE NEXUS</h4>
-              <p>Hostiles spawn at the north warp gate and spiral inward. Prevent them from breaching the red Core perimeter. Use Ion Strike when overwhelmed.</p>
-            </div>
-          </div>
-
-          <div class="guide-step">
-            <div class="guide-step-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--steel)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"/>
                 <line x1="22" y1="12" x2="18" y2="12"/>
                 <line x1="6" y1="12" x2="2" y2="12"/>
@@ -277,40 +252,52 @@
               </svg>
             </div>
             <div class="guide-step-text">
-              <h4>TACTICAL TARGET LOCK</h4>
-              <p>Tap any elite hostile or boss in the arena to focus-fire all active sentinels onto that target immediately.</p>
+              <h4>FOCUS TARGET LOCK</h4>
+              <p>Tap any enemy or boss on screen to immediately focus-fire all your turrets onto that target.</p>
             </div>
           </div>
 
           <div class="guide-step">
             <div class="guide-step-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--steel)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(16, 185, 129, 0.25)"/>
+              </svg>
+            </div>
+            <div class="guide-step-text">
+              <h4>DEFEND THE CORE</h4>
+              <p>Enemies spiral inward toward the center base. Don't let them reach your core HP! Use Ion Strike if overwhelmed.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="guide-step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
               </svg>
             </div>
             <div class="guide-step-text">
-              <h4>ORBITAL RESONANCE LINKS</h4>
-              <p>Place complementary sentinels in adjacent ring slots to ignite energy barrier beams that zap and slow passing invaders.</p>
+              <h4>RESONANCE BEAMS</h4>
+              <p>Place complementary sentinels in adjacent ring slots to ignite laser barriers that zap passing invaders.</p>
             </div>
           </div>
 
           <div class="guide-step">
             <div class="guide-step-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--crimson)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 6h18"/>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
               </svg>
             </div>
             <div class="guide-step-text">
               <h4>BENCH AND RECYCLE</h4>
-              <p>Store reserve units on the bottom standby bench. Drag unwanted units to the right Recycler slot for an immediate 70% Credit refund.</p>
+              <p>Store extra units on the bottom standby bench. Drag unwanted units to the Recycler on the right for 70% refund.</p>
             </div>
           </div>
         </div>
 
         <div class="modal-bottom">
           <button id="btn-close-tutorial" class="btn-modal-primary">
-            ACKNOWLEDGE
+            GOT IT
           </button>
         </div>
       </div>
@@ -321,8 +308,8 @@
       <div class="modal-card directive-card">
         <div class="modal-top">
           <div class="modal-title-stack">
-            <h2 class="modal-heading">TACTICAL DIRECTIVE</h2>
-            <span class="modal-subheading">Select 1 combat enhancement protocol</span>
+            <h2 class="modal-heading">CHOOSE UPGRADE</h2>
+            <span class="modal-subheading">Select 1 bonus perk for this run</span>
           </div>
         </div>
         <div id="directive-options-list" class="directive-options-list">
@@ -334,16 +321,16 @@
     <!-- Pause Modal -->
     <div id="pause-modal" class="modal-overlay hidden">
       <div class="modal-card pause-card">
-        <h2 class="modal-heading">DEFENSE PAUSED</h2>
+        <h2 class="modal-heading">GAME PAUSED</h2>
         <div class="pause-button-stack">
           <button id="btn-resume-game" class="btn-modal-primary">
-            RESUME DEFENSE
+            RESUME GAME
           </button>
           <button id="btn-restart-run" class="btn-modal-secondary">
-            RESTART WAVE 1
+            RESTART
           </button>
           <button id="btn-quit-to-title" class="btn-modal-secondary">
-            QUIT TO TITLE
+            MAIN MENU
           </button>
         </div>
       </div>
@@ -352,8 +339,8 @@
     <!-- Game Over Modal -->
     <div id="game-over-modal" class="modal-overlay hidden">
       <div class="modal-card game-over-card">
-        <div class="go-alert-badge">CORE COMPROMISED</div>
-        <h2 class="go-headline">NEXUS DESTROYED</h2>
+        <div class="go-alert-badge">BASE DESTROYED</div>
+        <h2 class="go-headline">GAME OVER</h2>
         
         <div class="go-summary-grid">
           <div class="summary-cell">
@@ -369,26 +356,26 @@
             <span id="go-merges-val" class="cell-number">0</span>
           </div>
           <div class="summary-cell">
-            <span class="cell-label">HOSTILES NEUTRALIZED</span>
+            <span class="cell-label">ENEMIES DEFEATED</span>
             <span id="go-kills-val" class="cell-number">0</span>
           </div>
         </div>
 
         <div class="go-cta-stack">
           <button id="btn-go-revive" class="btn-modal-revive">
-            EMERGENCY REBOOT (+50% HP)
+            WATCH AD TO REVIVE (+50% HP)
           </button>
           <button id="btn-go-double-gold" class="btn-modal-reward">
-            2X RUN CREDITS (AIRDROP)
+            WATCH AD FOR 2X CREDITS
           </button>
           <button id="btn-retry-game" class="btn-modal-primary">
-            RE-ENGAGE DEFENSE
+            PLAY AGAIN
           </button>
           <button id="btn-go-workshop" class="btn-modal-secondary">
-            UPGRADE IN TECH LAB
+            PERMANENT UPGRADES
           </button>
           <button id="btn-go-title" class="btn-modal-secondary">
-            TITLE SCREEN
+            MAIN MENU
           </button>
         </div>
       </div>
