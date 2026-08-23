@@ -720,6 +720,9 @@ canvas {
 }
 
 .directive-item {
+  width: 100%;
+  font-family: inherit;
+  text-align: left;
   background: #141C2E;
   border: 1.5px solid var(--border-subtle);
   border-radius: 8px;
@@ -728,6 +731,7 @@ canvas {
   align-items: center;
   gap: 12px;
   cursor: pointer;
+  outline: none;
   transition: transform 0.08s ease, border-color 0.1s ease, background 0.1s ease;
 }
 

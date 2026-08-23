@@ -2453,7 +2453,8 @@ export class OrbitGuardGame {
     const choices = shuffled.slice(0, 3);
 
     choices.forEach((d) => {
-      const item = document.createElement('div');
+      const item = document.createElement('button');
+      item.type = 'button';
       item.className = 'directive-item';
       item.innerHTML = `
         <div class="directive-icon-box">${d.iconSvg}</div>
@@ -2466,14 +2467,11 @@ export class OrbitGuardGame {
         </div>
       `;
 
-      const selectDirective = (e) => {
+      item.onclick = (e) => {
         if (e) {
           e.preventDefault();
           e.stopPropagation();
         }
-        if (item.dataset.chosen === '1') return;
-        item.dataset.chosen = '1';
-
         this.activeDirectives.add(d.id);
         this.audio.playVictoryFanfare();
         this.particles.starburst(ARENA.center.x, ARENA.center.y, 35, '#38BDF8');
@@ -2482,16 +2480,10 @@ export class OrbitGuardGame {
         this.state = 'PLAYING';
         this.playgama.hideBanner();
 
-        // Immediately start next wave upon choosing directive
+        // Advance to next wave immediately
         this.waveTimer = 0;
         this.startWave(this.wave + 1);
       };
-
-      item.addEventListener('click', selectDirective);
-      item.addEventListener('pointerdown', (e) => {
-        // Prevent pointer drag conflicts
-        e.stopPropagation();
-      });
 
       list.appendChild(item);
     });

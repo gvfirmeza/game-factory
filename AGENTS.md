@@ -9,6 +9,11 @@ The AI Game Factory is an autonomous multi-agent game creation studio running on
 - One excellent mechanic > 5 meaningless mechanics.
 - NPCs, dialogue, shops are OPTIONAL — only include if justified by core loop.
 
+## Project Asset Repository (`assets/`)
+- ALWAYS search the root `assets/` directory (`assets/kenney_*`, etc.) when designing, building, and polishing games.
+- Prioritize using, composing, and adapting existing high-quality assets (sprites, UI, SFX, audio) from `assets/` whenever they fit the game's aesthetic and theme.
+- Art Director, Builder, and Polisher agents MUST check `assets/` during planning and asset creation.
+
 ---
 
 ## Pipeline Execution (Follow This Order)

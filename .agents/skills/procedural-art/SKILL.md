@@ -22,6 +22,9 @@ The Art Director must develop a unique visual language for every game. Do NOT si
    - Futuristic neon glassmorphism with subtle glow.
    - Aquatic seashell/pearl badges with organic borders.
 
+## 1.1 Checking the Local Asset Repository (`assets/`)
+Before generating purely procedural shapes, always check the root `assets/` directory (`assets/kenney_*`, etc.). If pre-made curated sprite sheets, UI icons, or SFX packs match the game theme, prioritize loading and drawing those assets or combining them with procedural vector shaders.
+
 ---
 
 ## 2. Procedural Shape Primitives
