@@ -298,12 +298,59 @@ canvas {
   gap: 6px;
 }
 
+/* Embedded SVG Vector Icons */
+.ui-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.deck-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  flex-shrink: 0;
+  color: var(--cyan);
+}
+
+.btn-surge .deck-icon {
+  color: var(--cyan);
+}
+
+.btn-repair .deck-icon {
+  color: var(--emerald);
+}
+
+.btn-workshop .deck-icon {
+  color: var(--gold);
+}
+
+.summon-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.coin-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--gold);
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 .deck-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px 4px;
+  gap: 8px;
+  padding: 6px 6px;
   border-radius: 6px;
   background: var(--bg-card);
   border: 1.5px solid var(--border-subtle);
@@ -321,10 +368,6 @@ canvas {
 .deck-btn:active {
   transform: translateY(2px);
   border-bottom-width: 1px;
-}
-
-.deck-btn .btn-icon {
-  font-size: 1.05rem;
 }
 
 .deck-btn .btn-text-block {
@@ -799,7 +842,21 @@ canvas {
 }
 
 .guide-step-icon {
-  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: #0B0E14;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.guide-step-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .guide-step-text h4 {

@@ -20,7 +20,11 @@
     <header id="top-control-bar" class="top-control-bar">
       <!-- Left Controls (Mute & Speed) -->
       <div class="header-left">
-        <button id="btn-mute" class="ctrl-btn btn-mute" aria-label="Toggle Audio" title="Mute / Unmute">VOL</button>
+        <button id="btn-mute" class="ctrl-btn btn-mute" aria-label="Toggle Audio" title="Mute / Unmute">
+          <svg class="ui-icon icon-vol" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+        </button>
         <button id="btn-speed" class="ctrl-btn btn-speed" aria-label="Game Speed" title="Toggle Speed (1x, 2x, 3x)">1x</button>
       </div>
 
@@ -42,15 +46,29 @@
         </div>
 
         <div class="hud-pill gold-pill" title="Treasury Credits">
-          <span class="gold-symbol">CREDITS</span>
+          <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+            <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2" fill="rgba(245, 158, 11, 0.25)"/>
+            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+          </svg>
           <span id="hud-gold-val" class="pill-num">30</span>
         </div>
       </div>
 
       <!-- Right Controls (Air Drop & Pause) -->
       <div class="header-right">
-        <button id="btn-airdrop" class="ctrl-btn btn-airdrop hidden" aria-label="Supply Drop" title="Watch short ad to receive +120 Credits Supply Drop">SUPPLY</button>
-        <button id="btn-pause" class="ctrl-btn btn-pause" aria-label="Pause" title="Pause Game">II</button>
+        <button id="btn-airdrop" class="ctrl-btn btn-airdrop hidden" aria-label="Supply Drop" title="Watch short ad to receive +120 Credits Supply Drop">
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a8 8 0 0 0-8 8c0 4.42 8 12 8 12s8-7.58 8-12a8 8 0 0 0-8-8z"/>
+            <rect x="9" y="15" width="6" height="6" rx="1"/>
+            <line x1="12" y1="10" x2="12" y2="15"/>
+          </svg>
+        </button>
+        <button id="btn-pause" class="ctrl-btn btn-pause" aria-label="Pause" title="Pause Game">
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="5" width="4" height="14" rx="1"/>
+            <rect x="14" y="5" width="4" height="14" rx="1"/>
+          </svg>
+        </button>
       </div>
     </header>
 
@@ -59,6 +77,9 @@
       <!-- Tactical Row (Surge, Repair, Workshop) -->
       <div class="tactical-deck-row">
         <button id="btn-surge" class="deck-btn btn-surge" title="Orbital Ion Strike">
+          <svg class="deck-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13 2L3 14h8l-2 8 10-12h-8l2-8z"/>
+          </svg>
           <div class="btn-text-block">
             <span class="btn-label">ION STRIKE</span>
             <span id="hud-surge-meter" class="btn-subtext">READY</span>
@@ -66,13 +87,20 @@
         </button>
 
         <button id="btn-repair" class="deck-btn btn-repair" title="Emergency Core Hull Repair (+25% HP)">
+          <svg class="deck-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
           <div class="btn-text-block">
             <span class="btn-label">REPAIR CORE</span>
-            <span id="hud-repair-cost" class="btn-subtext">50 CREDITS</span>
+            <span id="hud-repair-cost" class="btn-subtext">50 G</span>
           </div>
         </button>
 
         <button id="btn-open-workshop-hud" class="deck-btn btn-workshop" title="Celestial Workshop">
+          <svg class="deck-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
           <div class="btn-text-block">
             <span class="btn-label">TECH LAB</span>
             <span class="btn-subtext">UPGRADES</span>
@@ -84,6 +112,11 @@
       <div class="primary-deck-row">
         <button id="btn-buy" class="btn-summon-main">
           <div class="summon-content">
+            <svg class="summon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <line x1="12" y1="8" x2="12" y2="16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
             <span class="summon-title">DEPLOY SENTINEL</span>
             <span id="hud-buy-cost" class="summon-badge">15 G</span>
           </div>
@@ -119,14 +152,25 @@
 
         <div class="title-cta-group">
           <button id="btn-start-game" class="btn-hero-play" autofocus>
+            <svg class="ui-icon" style="margin-right: 8px;" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
             START DEFENSE
           </button>
           
           <div class="title-secondary-row">
             <button id="btn-open-workshop-title" class="btn-secondary-action">
+              <svg class="ui-icon" style="margin-right: 6px; width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
               TECH LAB
             </button>
             <button id="btn-open-tutorial-title" class="btn-secondary-action">
+              <svg class="ui-icon" style="margin-right: 6px; width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
               TACTICAL BRIEFING
             </button>
           </div>
@@ -148,6 +192,10 @@
             <p class="modal-subheading">Permanent Core and Combat Upgrades</p>
           </div>
           <div class="modal-gold-chip">
+            <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+              <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2" fill="rgba(245, 158, 11, 0.25)"/>
+              <circle cx="12" cy="12" r="3" fill="currentColor"/>
+            </svg>
             <span id="workshop-gold-val">30</span> G
           </div>
         </div>
@@ -180,7 +228,14 @@
 
         <div class="tutorial-step-list">
           <div class="guide-step">
-            <div class="guide-step-icon">01</div>
+            <div class="guide-step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="17 1 21 5 17 9"/>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                <polyline points="7 23 3 19 7 15"/>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+              </svg>
+            </div>
             <div class="guide-step-text">
               <h4>DRAG TO MERGE</h4>
               <p>Drag one sentinel on top of another identical sentinel (same class and tier) to ascend them to higher tiers (T1 to T6) with multiplied firepower.</p>
@@ -188,7 +243,11 @@
           </div>
 
           <div class="guide-step">
-            <div class="guide-step-icon">02</div>
+            <div class="guide-step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2L3 14h8l-2 8 10-12h-8l2-8z" fill="rgba(245, 158, 11, 0.25)"/>
+              </svg>
+            </div>
             <div class="guide-step-text">
               <h4>ELEMENTAL SYNERGIES</h4>
               <p>Combine Cryo and Tesla to trigger Superconductor electrical blasts (+100% DMG), or Mortar and Railgun for Thermal Detonations.</p>
@@ -196,7 +255,11 @@
           </div>
 
           <div class="guide-step">
-            <div class="guide-step-icon">03</div>
+            <div class="guide-step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(16, 185, 129, 0.25)"/>
+              </svg>
+            </div>
             <div class="guide-step-text">
               <h4>DEFEND THE NEXUS</h4>
               <p>Hostiles spawn at the north warp gate and spiral inward. Prevent them from breaching the red Core perimeter. Use Ion Strike when overwhelmed.</p>
@@ -204,7 +267,12 @@
           </div>
 
           <div class="guide-step">
-            <div class="guide-step-icon">04</div>
+            <div class="guide-step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--crimson)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18"/>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              </svg>
+            </div>
             <div class="guide-step-text">
               <h4>BENCH AND RECYCLE</h4>
               <p>Store reserve units on the bottom standby bench. Drag unwanted units to the right Recycler slot for an immediate 70% Credit refund.</p>
