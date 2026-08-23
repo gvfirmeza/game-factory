@@ -152,16 +152,25 @@ export class AssetManager {
     return !!(img.naturalWidth > 0 || (img.complete && img.width > 0));
   }
 
-  drawSprite(ctx, key, x, y, width, height, rotation = 0, alpha = 1.0) {
+  drawSprite(ctx, key, x, y, width = 36, height = 36, rotation = 0, alpha = 1.0) {
     if (!this.isLoaded(key) || typeof ctx.drawImage !== 'function') return false;
     const img = this.get(key);
     if (!img) return false;
+
+    let renderW = width;
+    let renderH = height;
+    if (width <= 2.0) {
+      const baseW = img.naturalWidth || img.width || 64;
+      const baseH = img.naturalHeight || img.height || 64;
+      renderW = baseW * width;
+      renderH = baseH * (height || width);
+    }
 
     ctx.save();
     ctx.translate(x, y);
     if (rotation !== 0) ctx.rotate(rotation);
     if (alpha < 1.0) ctx.globalAlpha = Math.max(0, Math.min(1, ctx.globalAlpha * alpha));
-    ctx.drawImage(img, -width / 2, -height / 2, width, height);
+    ctx.drawImage(img, -renderW / 2, -renderH / 2, renderW, renderH);
     ctx.restore();
     return true;
   }
@@ -2452,22 +2461,35 @@ export class OrbitGuardGame {
       ctx.translate(ship.x, ship.y);
       ctx.rotate(ship.angle);
 
+      const size = Math.round(72 * ship.scale); // 32px to 48px
+
       // Atmospheric engine thrust glow
-      const glowGrad = ctx.createRadialGradient(0, 10 * ship.scale, 2, 0, 10 * ship.scale, 18 * ship.scale);
+      const glowGrad = ctx.createRadialGradient(0, 8, 2, 0, 8, size * 0.6);
       glowGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
       glowGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
       ctx.fillStyle = glowGrad;
       ctx.beginPath();
-      ctx.arc(0, 10 * ship.scale, 18 * ship.scale, 0, Math.PI * 2);
+      ctx.arc(0, 8, size * 0.6, 0, Math.PI * 2);
       ctx.fill();
 
-      // Render ship sprite with fallback
+      // Render high-definition curated ship sprite with fallback
       if (this.assets && this.assets.isLoaded(ship.spriteKey)) {
-        this.assets.drawSprite(ctx, ship.spriteKey, 0, 0, ship.scale, ship.scale, 0);
+        const img = this.assets.get(ship.spriteKey);
+        ctx.drawImage(img, -size / 2, -size / 2, size, size);
       } else {
+        // High quality procedural vector spaceship
         ctx.fillStyle = '#38BDF8';
         ctx.beginPath();
-        ctx.arc(0, 0, 14 * ship.scale, 0, Math.PI * 2);
+        ctx.moveTo(0, -size / 2);
+        ctx.lineTo(size * 0.45, size * 0.45);
+        ctx.lineTo(0, size * 0.25);
+        ctx.lineTo(-size * 0.45, size * 0.45);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.arc(0, -size * 0.1, size * 0.15, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -2705,27 +2727,72 @@ export class OrbitGuardGame {
     // In-game HUD buttons
     const btnBuy = document.getElementById('btn-buy');
     if (btnBuy) {
-      btnBuy.addEventListener('click', () => this.buySentinel());
+      const handleBuy = (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        this.audio.init();
+        this.buySentinel();
+      };
+      btnBuy.addEventListener('click', handleBuy);
+      btnBuy.addEventListener('pointerdown', (e) => e.stopPropagation());
     }
 
     const btnRepair = document.getElementById('btn-repair');
     if (btnRepair) {
-      btnRepair.addEventListener('click', () => this.repairCore());
+      const handleRepair = (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        this.audio.init();
+        this.repairCore();
+      };
+      btnRepair.addEventListener('click', handleRepair);
+      btnRepair.addEventListener('pointerdown', (e) => e.stopPropagation());
     }
 
     const btnSurge = document.getElementById('btn-surge');
     if (btnSurge) {
-      btnSurge.addEventListener('click', () => this.triggerOverchargeSurge());
+      const handleSurge = (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        this.audio.init();
+        this.triggerOverchargeSurge();
+      };
+      btnSurge.addEventListener('click', handleSurge);
+      btnSurge.addEventListener('pointerdown', (e) => e.stopPropagation());
     }
 
     const btnPause = document.getElementById('btn-pause');
     if (btnPause) {
-      btnPause.addEventListener('click', () => this.togglePause());
+      const handlePause = (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        this.audio.init();
+        this.togglePause();
+      };
+      btnPause.addEventListener('click', handlePause);
+      btnPause.addEventListener('pointerdown', (e) => e.stopPropagation());
     }
 
     const btnOpenWorkshopHud = document.getElementById('btn-open-workshop-hud');
     if (btnOpenWorkshopHud) {
-      btnOpenWorkshopHud.addEventListener('click', () => this.openWorkshopModal());
+      const handleOpenWorkshop = (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        this.audio.init();
+        this.openWorkshopModal();
+      };
+      btnOpenWorkshopHud.addEventListener('click', handleOpenWorkshop);
+      btnOpenWorkshopHud.addEventListener('pointerdown', (e) => e.stopPropagation());
     }
 
     // Modal close buttons
