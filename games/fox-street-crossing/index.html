@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Fox Street Crossing — Endless Arcade Hopper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Playgama Bridge SDK v2 -->
+  <script src="https://bridge.playgama.com/v2/stable/playgama-bridge.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+/* Immediate inlined styles for clean zero-scroll embedding */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.hidden { display: none !important; }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #10160d;
+  font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #141f12;
+}
+canvas {
+  display: block;
+  background-color: #24381e;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+}
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Top Master HUD -->
+    <header class="top-hud">
+      <div class="hud-group">
+        <button id="btn-mute" class="hud-btn" aria-label="Toggle Audio" title="Mute / Unmute">🔊</button>
+        <div class="hud-badge score-badge">
+          <span>🏆</span>
+          <span id="hud-score-val">0</span>
+        </div>
+        <div class="hud-badge apple-badge">
+          <span>🍎</span>
+          <span id="hud-apples-val">0</span>
+        </div>
+        <div class="hud-badge coin-badge">
+          <span>🪙</span>
+          <span id="hud-coins-val">0</span>
+        </div>
+      </div>
+
+      <div class="hud-group">
+        <button id="btn-wardrobe" class="hud-btn" title="Fox Wardrobe & Skins">🦊</button>
+        <button id="btn-airdrop" class="hud-badge airdrop-badge" title="Watch short ad to receive +100 Coins">
+          <span>🎁 +100🪙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- On-Screen Touch D-Pad for Mobile (Hidden on Desktop) -->
+    <div id="touch-dpad" class="touch-dpad">
+      <button id="dpad-up" class="dpad-btn dpad-up" aria-label="Move Up">▲</button>
+      <div class="dpad-row">
+        <button id="dpad-left" class="dpad-btn dpad-left" aria-label="Move Left">◀</button>
+        <button id="dpad-down" class="dpad-btn dpad-down" aria-label="Move Down">▼</button>
+        <button id="dpad-right" class="dpad-btn dpad-right" aria-label="Move Right">▶</button>
+      </div>
+    </div>
+
+    <!-- Wardrobe / Skins Modal -->
+    <div id="wardrobe-modal" class="modal-overlay hidden">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title-stack">
+            <h2>🦊 FOX WARDROBE</h2>
+            <p>Unlock stylish skins with collected gold coins</p>
+          </div>
+          <button id="btn-close-wardrobe" class="btn-close">&times;</button>
+        </div>
+        <div id="skins-list" class="modal-list">
+          <!-- Populated dynamically by game.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="gameover-modal" class="modal-overlay hidden">
+      <div class="modal-window modal-gameover">
+        <div class="gameover-icon">💥</div>
+        <h2 class="gameover-title">SPLAT!</h2>
+        <p class="gameover-subtitle" id="gameover-reason">Watch out for speeding traffic!</p>
+
+        <div class="gameover-stats">
+          <div class="stat-card">
+            <span class="stat-label">DISTANCE</span>
+            <span class="stat-val" id="go-score">0 m</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">BEST RECORD</span>
+            <span class="stat-val stat-best" id="go-best">0 m</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">APPLES</span>
+            <span class="stat-val" id="go-apples">0 🍎</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">COINS EARNED</span>
+            <span class="stat-val" id="go-coins">+0 🪙</span>
+          </div>
+        </div>
+
+        <button id="btn-restart" class="btn-primary-action">
+          ▶ PLAY AGAIN
+        </button>
+      </div>
+    </div>
+
+    <!-- Title Screen Overlay -->
+    <div id="title-overlay" class="title-overlay">
+      <div class="title-logo-icon">🦊🛣️🍎</div>
+      <h1 class="title-headline">FOX STREET CROSSING</h1>
+      <p class="title-subhead">Hop Across Endless Traffic, Rivers & Train Tracks!</p>
+
+      <button id="btn-title-play" class="btn-title-play">
+        ▶ START HOPPING
+      </button>
+
+      <div class="title-guide">
+        <span>🎮 Desktop: [W/A/S/D] or [Arrow Keys] or [Space]</span>
+        <span>📱 Mobile: Swipe in any direction or Tap to Hop forward</span>
+        <span>🍎 Grab Red Apples & Golden Berries for high scores</span>
+        <span>🪵 Ride floating logs across rivers without falling in</span>
+        <span>🦅 Keep moving forward before the eagle swoops down!</span>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>

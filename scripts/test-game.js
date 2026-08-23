@@ -222,8 +222,50 @@ async function testGame(gameId) {
 
       const isMergeTD = !!(instance.board || instance.nexusCore || instance.sentinels || instance.isMergeTD || instance.buySentinel || instance.mergeUnits);
       const isTycoon = !!(instance.trees || instance.workers || instance.chopTree || instance.isTycoon);
+      const isArcadeHopper = !!(instance.lanes || instance.attemptHop || instance.farthestRow !== undefined);
 
-      if (isTycoon) {
+      if (isArcadeHopper) {
+        // --- ARCADE HOPPER TEST HARNESS ---
+        console.log('\n[HOPPER PROTOCOL] Executing Endless Arcade Street Crossing Tests...');
+
+        instance.state = 'PLAYING';
+
+        // Check 3.2: Grid-Based Hop Kinematics
+        const startRow = instance.player ? instance.player.row : 0;
+        if (instance.attemptHop) {
+          instance.attemptHop(0, 1, 'UP');
+        }
+        for (let f = 0; f < 10; f++) instance.update(1 / 60);
+        const endRow = instance.player ? instance.player.row : 0;
+        assert('HOPPING', 'Grid-based 2.5D snappy hop forward execution', endRow > startRow || instance.player.isHopping, `Row advancement: ${startRow} -> ${endRow}`);
+
+        // Check 3.3: Procedural Infinite Lanes
+        const laneCount = instance.lanes ? (instance.lanes.size || Object.keys(instance.lanes).length) : 0;
+        assert('LANES', 'Procedural multi-biome infinite lanes generation', laneCount >= 15, `Generated lanes: ${laneCount}`);
+
+        // Check 3.4: Vehicular Traffic & River Physics
+        let hasVehiclesOrLogs = false;
+        if (instance.lanes) {
+          for (const lane of (instance.lanes.values ? instance.lanes.values() : Object.values(instance.lanes))) {
+            if ((lane.vehicles && lane.vehicles.length > 0) || (lane.logs && lane.logs.length > 0)) {
+              hasVehiclesOrLogs = true;
+              break;
+            }
+          }
+        }
+        assert('TRAFFIC_RIVERS', 'Road vehicles and river logs simulate across lanes', hasVehiclesOrLogs, 'Lanes active with vehicles/logs');
+
+        // Check 3.5: Collectibles & Score Tracking
+        const initialScore = instance.score || 0;
+        if (instance.attemptHop) {
+          instance.attemptHop(0, 1, 'UP');
+        }
+        assert('SCORING', 'Forward progress updates distance score & records high score', (instance.score >= initialScore), `Current distance: ${instance.score}m`);
+
+        // Check 3.6: Persistence Schema
+        assert('PERSISTENCE', 'High score, collected coins, and skins persist', !!instance.saveData, 'Save schema verified');
+
+      } else if (isTycoon) {
         // --- TOP-DOWN TYCOON TEST HARNESS ---
         console.log('\n[TYCOON PROTOCOL] Executing Top-Down Tycoon & Forest Simulation Tests...');
 

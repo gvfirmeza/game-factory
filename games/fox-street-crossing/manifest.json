@@ -1,0 +1,17 @@
+{
+  "name": "Fox Street Crossing",
+  "short_name": "FoxCrossing",
+  "description": "Cross endless roads, rivers, and train tracks as a cute fox collecting apples and coins!",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1B2618",
+  "theme_color": "#FF6D00",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

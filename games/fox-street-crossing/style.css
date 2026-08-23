@@ -1,0 +1,492 @@
+/* ============================================================================
+ * FOX STREET CROSSING — ARCADE HOPPER STYLING
+ * ============================================================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hidden {
+  display: none !important;
+}
+
+:root {
+  --primary-orange: #ff6d00;
+  --secondary-amber: #ffab00;
+  --grass-green: #43a047;
+  --road-asphalt: #263238;
+  --water-blue: #0288d1;
+  --gold-coin: #ffd600;
+  --apple-red: #e53935;
+  --text-white: #ffffff;
+  --text-dim: #cfd8dc;
+  --ui-bg: rgba(18, 24, 15, 0.95);
+  --ui-border: rgba(255, 171, 0, 0.45);
+  --glass-card: rgba(30, 42, 28, 0.90);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #10160d;
+  font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #10160d;
+}
+
+canvas {
+  display: block;
+  background-color: #2e7d32;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+}
+
+/* ============================================================================
+ * 1. TOP MASTER HUD
+ * ============================================================================ */
+.top-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 15, 8, 0.88) 0%, rgba(10, 15, 8, 0) 100%);
+}
+
+.hud-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.hud-badge {
+  background: var(--glass-card);
+  border: 1.5px solid var(--ui-border);
+  border-radius: 12px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.score-badge {
+  border-color: #ffab00;
+  color: #ffe082;
+}
+
+.apple-badge {
+  border-color: #e53935;
+  color: #ff8a80;
+}
+
+.coin-badge {
+  border-color: #ffd600;
+  color: #fff59d;
+}
+
+.airdrop-badge {
+  background: linear-gradient(135deg, rgba(171, 71, 188, 0.4), rgba(255, 171, 0, 0.4));
+  border: 1.5px solid var(--gold-coin);
+  color: #fff9c4;
+  cursor: pointer;
+  animation: pulseAirdrop 2.2s infinite ease-in-out;
+  transition: transform 0.12s ease;
+}
+
+.airdrop-badge:hover {
+  transform: scale(1.06);
+}
+
+@keyframes pulseAirdrop {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 6px rgba(255, 214, 0, 0.3); }
+  50% { transform: scale(1.06); box-shadow: 0 0 16px rgba(255, 214, 0, 0.7); }
+}
+
+.hud-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--glass-card);
+  border: 1.5px solid var(--ui-border);
+  color: var(--text-white);
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.12s ease;
+  pointer-events: auto;
+}
+
+.hud-btn:hover {
+  transform: scale(1.08);
+}
+
+.hud-btn:active {
+  transform: scale(0.92);
+}
+
+/* ============================================================================
+ * 2. TOUCH D-PAD (MOBILE ONLY)
+ * ============================================================================ */
+.touch-dpad {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  .touch-dpad {
+    display: flex;
+  }
+}
+
+.dpad-row {
+  display: flex;
+  gap: 6px;
+}
+
+.dpad-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(30, 42, 28, 0.82);
+  border: 2px solid rgba(255, 171, 0, 0.5);
+  color: #ffe082;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.dpad-btn:active {
+  background: rgba(255, 171, 0, 0.4);
+  transform: scale(0.92);
+}
+
+/* ============================================================================
+ * 3. MODALS & POPUPS
+ * ============================================================================ */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 8, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-window {
+  width: 100%;
+  max-width: 440px;
+  max-height: 85vh;
+  background: var(--ui-bg);
+  border: 2px solid var(--ui-border);
+  border-radius: 24px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 171, 0, 0.25);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+.modal-title-stack h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffe082;
+}
+
+.modal-title-stack p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.6rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+
+.btn-close:hover {
+  color: #ff5252;
+}
+
+.modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-right: 4px;
+  max-height: 380px;
+}
+
+.skin-card {
+  background: var(--glass-card);
+  border: 1.5px solid var(--ui-border);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.skin-card.equipped {
+  border-color: #00e676;
+  background: rgba(0, 230, 118, 0.15);
+}
+
+.skin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.skin-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-white);
+}
+
+.skin-desc {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.btn-skin {
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ffab00, #ff6d00);
+  border: none;
+  color: #1a0f00;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-skin.equipped {
+  background: #00e676;
+  color: #003300;
+  cursor: default;
+}
+
+.btn-skin:disabled {
+  background: #424242;
+  color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+ * 4. GAME OVER MODAL
+ * ============================================================================ */
+.modal-gameover {
+  text-align: center;
+  align-items: center;
+}
+
+.gameover-icon {
+  font-size: 3.5rem;
+  animation: bounceOver 0.6s ease-out;
+}
+
+@keyframes bounceOver {
+  0% { transform: scale(0.2); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.gameover-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ff5252;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+}
+
+.gameover-subtitle {
+  font-size: 0.9rem;
+  color: #cfd8dc;
+  margin-bottom: 8px;
+}
+
+.gameover-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.stat-card {
+  background: rgba(20, 28, 18, 0.9);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #90a4ae;
+}
+
+.stat-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.stat-best {
+  color: #ffd600;
+}
+
+.btn-primary-action {
+  width: 100%;
+  height: 50px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ffab00 0%, #ff6d00 100%);
+  border: none;
+  color: #1a0f00;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 109, 0, 0.5);
+  transition: transform 0.12s ease;
+}
+
+.btn-primary-action:hover {
+  transform: scale(1.04);
+}
+
+/* ============================================================================
+ * 5. TITLE OVERLAY
+ * ============================================================================ */
+.title-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(30, 42, 28, 0.90) 0%, rgba(10, 15, 8, 0.98) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 120;
+  text-align: center;
+}
+
+.title-logo-icon {
+  font-size: 3.5rem;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 20px rgba(255, 171, 0, 0.6));
+}
+
+.title-headline {
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: #ffe082;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 171, 0, 0.5);
+}
+
+.title-subhead {
+  font-size: 0.95rem;
+  color: #cfd8dc;
+  margin-bottom: 24px;
+}
+
+.btn-title-play {
+  width: 230px;
+  height: 54px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffab00 0%, #ff6d00 100%);
+  border: 2px solid #ffffff;
+  color: #1a0f00;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 109, 0, 0.5);
+  transition: transform 0.12s ease;
+}
+
+.btn-title-play:hover {
+  transform: scale(1.06);
+}
+
+.title-guide {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #b0bec5;
+}
