@@ -3123,9 +3123,31 @@ export class OrbitGuardGame {
       }
     }
 
+    let finalDmg = rawDamage;
+
+    // --- ELEMENTAL COMBO REACTIONS ---
+    // 1. SUPERCONDUCTOR (Cryo + Tesla Chain)
+    if (damageType === 'tesla_chain' && enemy.chilledTimer > 0) {
+      finalDmg *= 2.0; // +100% damage bonus
+      this.particles.burst(enemy.x, enemy.y, 16, '#00F5D4');
+      this.juice.spawnFloatingText('⚡ SUPERCONDUCTOR (+100%)!', enemy.x, enemy.y - 18, { color: '#00F5D4', size: 15 });
+      this.audio.playTeslaCrackle();
+      enemy.stunTimer = Math.max(enemy.stunTimer || 0, 0.4);
+    }
+
+    // 2. THERMAL DETONATION (Burn + Kinetic Railgun)
+    if (damageType === 'kinetic' && enemy.burnTimer > 0) {
+      const burnBurst = (enemy.burnDPS || 25) * (enemy.burnTimer || 1.5) * 2.0;
+      finalDmg += burnBurst;
+      enemy.burnTimer = 0;
+      this.particles.burst(enemy.x, enemy.y, 20, '#FF9E00');
+      this.juice.spawnFloatingText('🔥 THERMAL DETONATION!', enemy.x, enemy.y - 22, { color: '#FF9E00', size: 15 });
+      this.juice.screenShake(4);
+    }
+
     // Armor damage reduction
     const effectiveArmor = Math.max(0, (enemy.armor || 0) - armorShred);
-    const damage = rawDamage * (1.0 - effectiveArmor);
+    const damage = finalDmg * (1.0 - effectiveArmor);
 
     enemy.hp -= damage;
     enemy.hitFlashTimer = 0.08;
@@ -3330,7 +3352,11 @@ export class OrbitGuardGame {
             const d = MathUtils.distance(p.targetX, p.targetY, e.x, e.y);
             if (d <= p.splash) {
               const falloff = 1.0 - (d / p.splash) * 0.4;
-              this.applyDamageToEnemy(e, p.damage * falloff, false, 'explosive');
+              if (p.burnDPS > 0) {
+                e.burnTimer = 2.5;
+                e.burnDPS = p.damage * p.burnDPS;
+              }
+              this.applyDamageToEnemy(e, p.damage * falloff, false, 'mortar_fire');
             }
           }
 
@@ -3366,7 +3392,7 @@ export class OrbitGuardGame {
     for (let c = 0; c < p.maxChains && currentTarget; c++) {
       hitList.add(currentTarget.id);
       arcs.push({ x1: currentSource.x, y1: currentSource.y, x2: currentTarget.x, y2: currentTarget.y });
-      this.applyDamageToEnemy(currentTarget, p.damage, false, 'energy');
+      this.applyDamageToEnemy(currentTarget, p.damage, false, 'tesla_chain');
 
       if (p.microStun > 0) currentTarget.stunTimer = p.microStun;
 
