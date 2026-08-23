@@ -407,6 +407,95 @@ export const DIRECTIVES = [
  * 2. PROCEDURAL WEB AUDIO SYNTHESIZER
  * ============================================================================ */
 
+export const ACHIEVEMENTS = [
+  {
+    id: 'first_defense',
+    name: 'First Defense',
+    desc: 'Destroy your first void invader',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>`,
+    reward: 50,
+    check: (game) => (game.saveData?.totalKills || 0) >= 1 || (game.totalKills || 0) >= 1
+  },
+  {
+    id: 'fusion_initiate',
+    name: 'Fusion Initiate',
+    desc: 'Merge two identical sentinels',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
+    reward: 100,
+    check: (game) => (game.saveData?.totalMerges || 0) >= 1 || (game.totalMerges || 0) >= 1
+  },
+  {
+    id: 'tier4_unit',
+    name: 'Plasma Overclock',
+    desc: 'Ascend any sentinel to Tier 4 (Plasma)',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+    reward: 150,
+    check: (game) => (game.maxTierAchieved || 1) >= 4
+  },
+  {
+    id: 'tier6_unit',
+    name: 'Celestial Apex',
+    desc: 'Ascend any sentinel to Tier 6 (Radiant)',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#FFD166" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
+    reward: 300,
+    check: (game) => (game.maxTierAchieved || 1) >= 6
+  },
+  {
+    id: 'colossus_slayer',
+    name: 'Colossus Shatterer',
+    desc: 'Defeat the Wave 5 Iron Colossus Boss',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    reward: 200,
+    check: (game) => (game.bossesDefeated && game.bossesDefeated.includes('colossus')) || (game.wave > 5)
+  },
+  {
+    id: 'hydra_slayer',
+    name: 'Hydra Brood Slayer',
+    desc: 'Defeat the Wave 10 Hydra Queen Boss',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`,
+    reward: 300,
+    check: (game) => (game.bossesDefeated && game.bossesDefeated.includes('hydra')) || (game.wave > 10)
+  },
+  {
+    id: 'chrono_slayer',
+    name: 'Chrono Phantom Slayer',
+    desc: 'Defeat the Wave 15 Chrono Wraith Boss',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    reward: 500,
+    check: (game) => (game.bossesDefeated && game.bossesDefeated.includes('chrono')) || (game.wave > 15)
+  },
+  {
+    id: 'ion_surge',
+    name: 'Ion Devastation',
+    desc: 'Trigger Orbital Ion Strike in combat',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M13 2L3 14h8l-2 8 10-12h-8l2-8z"/></svg>`,
+    reward: 100,
+    check: (game) => (game.surgesUsed || 0) >= 1
+  },
+  {
+    id: 'full_perimeter',
+    name: 'Full Perimeter Lock',
+    desc: 'Deploy sentinels in all 8 orbit slots simultaneously',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg>`,
+    reward: 150,
+    check: (game) => {
+      let orbitCount = 0;
+      for (let i = 0; i < 8; i++) {
+        if (game.sentinels && game.sentinels.has(`slot_${i}`)) orbitCount++;
+      }
+      return orbitCount >= 8;
+    }
+  },
+  {
+    id: 'treasury_tycoon',
+    name: 'Treasury Tycoon',
+    desc: 'Accumulate 250+ Credits in treasury',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 6v12M15 9.5a3 3 0 0 0-3-1.5H9.5a2.5 2.5 0 0 0 0 5H14.5a2.5 2.5 0 0 1 0 5H9a3 3 0 0 1-3-1.5"/></svg>`,
+    reward: 200,
+    check: (game) => (game.gold || 0) >= 250
+  }
+];
+
 export class OrbitAudioSynthesizer {
   constructor() {
     this.ctx = null;
@@ -2273,6 +2362,10 @@ export class SaveManager {
         hyper_crit: 0,
         salvage_efficiency: 0
       },
+      achievements: {
+        unlocked: [],
+        claimed: []
+      },
       settings: {
         isMuted: false
       }
@@ -2719,6 +2812,11 @@ export class OrbitGuardGame {
       btnOpenWorkshopTitle.addEventListener('click', () => this.openWorkshopModal());
     }
 
+    const btnOpenAchievementsTitle = document.getElementById('btn-open-achievements-title');
+    if (btnOpenAchievementsTitle) {
+      btnOpenAchievementsTitle.addEventListener('click', () => this.openAchievementsModal());
+    }
+
     const btnOpenTutorialTitle = document.getElementById('btn-open-tutorial-title');
     if (btnOpenTutorialTitle) {
       btnOpenTutorialTitle.addEventListener('click', () => this.openTutorialModal());
@@ -2801,6 +2899,11 @@ export class OrbitGuardGame {
       btnCloseWorkshop.addEventListener('click', () => this.closeWorkshopModal());
     }
 
+    const btnCloseAchievements = document.getElementById('btn-close-achievements');
+    if (btnCloseAchievements) {
+      btnCloseAchievements.addEventListener('click', () => this.closeAchievementsModal());
+    }
+
     const btnCloseTutorial = document.getElementById('btn-close-tutorial');
     if (btnCloseTutorial) {
       btnCloseTutorial.addEventListener('click', () => this.closeTutorialModal());
@@ -2809,6 +2912,11 @@ export class OrbitGuardGame {
     const btnResume = document.getElementById('btn-resume-game');
     if (btnResume) {
       btnResume.addEventListener('click', () => this.togglePause());
+    }
+
+    const btnOpenAchievementsPause = document.getElementById('btn-open-achievements-pause');
+    if (btnOpenAchievementsPause) {
+      btnOpenAchievementsPause.addEventListener('click', () => this.openAchievementsModal());
     }
 
     const btnRestart = document.getElementById('btn-restart-run');
@@ -2900,6 +3008,14 @@ export class OrbitGuardGame {
       });
     }
 
+    const btnGoAchievements = document.getElementById('btn-go-achievements');
+    if (btnGoAchievements) {
+      btnGoAchievements.addEventListener('click', () => {
+        document.getElementById('game-over-modal')?.classList.add('hidden');
+        this.openAchievementsModal();
+      });
+    }
+
     const btnGoTitle = document.getElementById('btn-go-title');
     if (btnGoTitle) {
       btnGoTitle.addEventListener('click', async () => {
@@ -2931,7 +3047,9 @@ export class OrbitGuardGame {
   setupEvents() {
     this.events.on('SENTINEL_MERGED', ({ newTier }) => {
       this.saveData.totalMerges = (this.saveData.totalMerges || 0) + 1;
+      this.maxTierAchieved = Math.max(this.maxTierAchieved || 1, newTier);
       this.score += 100 * newTier;
+      this.checkAchievements();
       SaveManager.save(this.playgama, this.saveData);
     });
 
@@ -2943,6 +3061,7 @@ export class OrbitGuardGame {
       this.audio.playCoinDrop();
       this.particles.burst(x, y, 10, '#FFD166');
       this.juice.spawnFloatingText(`+${goldReward} G`, x, y - 10, { color: '#FFD166', size: 14 });
+      this.checkAchievements();
       SaveManager.save(this.playgama, this.saveData);
     });
   }
@@ -3106,6 +3225,7 @@ export class OrbitGuardGame {
   closeAllModals() {
     document.getElementById('directive-modal')?.classList.add('hidden');
     document.getElementById('workshop-modal')?.classList.add('hidden');
+    document.getElementById('achievements-modal')?.classList.add('hidden');
     document.getElementById('tutorial-modal')?.classList.add('hidden');
     document.getElementById('pause-modal')?.classList.add('hidden');
     document.getElementById('game-over-modal')?.classList.add('hidden');
@@ -3154,6 +3274,115 @@ export class OrbitGuardGame {
 
       list.appendChild(card);
     });
+  }
+
+  checkAchievements() {
+    if (!this.saveData) return;
+    if (!this.saveData.achievements) {
+      this.saveData.achievements = { unlocked: [], claimed: [] };
+    }
+    const unlocked = new Set(this.saveData.achievements.unlocked || []);
+    let newUnlock = false;
+
+    for (const ach of ACHIEVEMENTS) {
+      if (!unlocked.has(ach.id)) {
+        if (ach.check(this)) {
+          unlocked.add(ach.id);
+          this.saveData.achievements.unlocked = Array.from(unlocked);
+          newUnlock = true;
+          this.audio.playVictoryFanfare();
+          this.particles.burst(ARENA.center.x, ARENA.center.y, 40, '#FFD166');
+          this.juice.spawnFloatingText(`🏆 AWARD: ${ach.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 50, { color: '#FFD166', size: 20 });
+        }
+      }
+    }
+
+    if (newUnlock) {
+      SaveManager.save(this.playgama, this.saveData);
+    }
+  }
+
+  openAchievementsModal() {
+    this.closeAllModals();
+    this.checkAchievements();
+    this.renderAchievementsUI();
+    document.getElementById('achievements-modal')?.classList.remove('hidden');
+    this.playgama.showBanner();
+  }
+
+  closeAchievementsModal() {
+    document.getElementById('achievements-modal')?.classList.add('hidden');
+    this.updateHUD();
+    this.updateTitleRecords();
+  }
+
+  renderAchievementsUI() {
+    const list = document.getElementById('achievements-list');
+    const goldVal = document.getElementById('achievements-gold-val');
+    if (goldVal) goldVal.textContent = this.gold;
+    if (!list) return;
+
+    list.innerHTML = '';
+    const achData = this.saveData.achievements || { unlocked: [], claimed: [] };
+    const unlocked = new Set(achData.unlocked || []);
+    const claimed = new Set(achData.claimed || []);
+
+    ACHIEVEMENTS.forEach((ach) => {
+      const isUnlocked = unlocked.has(ach.id);
+      const isClaimed = claimed.has(ach.id);
+
+      const item = document.createElement('div');
+      item.className = `ach-item ${isUnlocked ? 'unlocked' : ''} ${isClaimed ? 'claimed' : ''}`;
+      
+      let actionHtml = '';
+      if (isClaimed) {
+        actionHtml = `<span class="ach-status-badge claimed">✓ CLAIMED</span>`;
+      } else if (isUnlocked) {
+        actionHtml = `<button class="ach-claim-btn" data-id="${ach.id}">CLAIM +${ach.reward} G</button>`;
+      } else {
+        actionHtml = `<span class="ach-status-badge">+${ach.reward} G</span>`;
+      }
+
+      item.innerHTML = `
+        <div class="ach-left-stack">
+          <div class="ach-icon-box">${ach.iconSvg}</div>
+          <div class="ach-info">
+            <div class="ach-name">${ach.name}</div>
+            <div class="ach-desc">${ach.desc}</div>
+          </div>
+        </div>
+        ${actionHtml}
+      `;
+
+      if (isUnlocked && !isClaimed) {
+        const btn = item.querySelector('.ach-claim-btn');
+        btn.addEventListener('click', (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          this.claimAchievement(ach.id, ach.reward);
+        });
+      }
+
+      list.appendChild(item);
+    });
+  }
+
+  claimAchievement(achId, reward) {
+    if (!this.saveData.achievements) this.saveData.achievements = { unlocked: [], claimed: [] };
+    const claimed = new Set(this.saveData.achievements.claimed || []);
+    if (claimed.has(achId)) return;
+
+    claimed.add(achId);
+    this.saveData.achievements.claimed = Array.from(claimed);
+    this.addGold(reward);
+    this.audio.playCoinDrop();
+    this.particles.burst(ARENA.center.x, ARENA.center.y, 30, '#FFD166');
+    this.juice.spawnFloatingText(`+${reward} CREDITS CLAIMED!`, ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 18 });
+    SaveManager.save(this.playgama, this.saveData);
+    this.renderAchievementsUI();
+    this.updateHUD();
   }
 
   /* ==========================================================================
@@ -3226,6 +3455,8 @@ export class OrbitGuardGame {
       attackRate: tierData.rate,
       tierData
     });
+
+    this.checkAchievements();
   }
 
   canMerge(unitA, unitB) {
@@ -3437,6 +3668,7 @@ export class OrbitGuardGame {
 
     this.surgeCooldown = this.surgeCooldownMax;
     this.surgeBuffTimer = 5.0; // 5 seconds of 50% attack speed buff
+    this.surgesUsed = (this.surgesUsed || 0) + 1;
 
     // Active Expanding Shockwave Ring
     this.activeShockwave = {
@@ -3458,6 +3690,7 @@ export class OrbitGuardGame {
     this.juice.screenShake(10);
     this.particles.confetti(ARENA.center.x, ARENA.center.y, 40);
     this.juice.spawnFloatingText('OVERCHARGE!', ARENA.center.x, ARENA.center.y - 40, { color: '#F59E0B', size: 24 });
+    this.checkAchievements();
     this.updateHUD();
   }
 
@@ -4092,6 +4325,14 @@ export class OrbitGuardGame {
           hitFlashTimer: 0
         });
       }
+    }
+
+    if (enemy.isBoss) {
+      if (!this.bossesDefeated) this.bossesDefeated = [];
+      if (enemy.type === 'iron_colossus') this.bossesDefeated.push('colossus');
+      else if (enemy.type === 'hydra_queen') this.bossesDefeated.push('hydra');
+      else if (enemy.type === 'chrono_wraith') this.bossesDefeated.push('chrono');
+      this.checkAchievements();
     }
 
     this.events.emit('ENEMY_KILLED', {

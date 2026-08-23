@@ -159,18 +159,25 @@
           
           <div class="title-secondary-row">
             <button id="btn-open-workshop-title" class="btn-secondary-action">
-              <svg class="ui-icon" style="margin-right: 6px; width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="ui-icon" style="margin-right: 5px; width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="3"/>
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
               </svg>
               UPGRADES
             </button>
+            <button id="btn-open-achievements-title" class="btn-secondary-action">
+              <svg class="ui-icon" style="margin-right: 5px; width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="8" r="6"/>
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+              </svg>
+              AWARDS
+            </button>
             <button id="btn-open-tutorial-title" class="btn-secondary-action">
-              <svg class="ui-icon" style="margin-right: 6px; width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="ui-icon" style="margin-right: 5px; width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
               </svg>
-              HOW TO PLAY
+              GUIDE
             </button>
           </div>
         </div>
@@ -209,6 +216,35 @@
 
         <div class="modal-bottom">
           <button id="btn-close-workshop" class="btn-modal-primary">
+            CONFIRM AND RETURN
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div id="achievements-modal" class="modal-overlay hidden">
+      <div class="modal-card achievements-card">
+        <div class="modal-top">
+          <div class="modal-title-stack">
+            <h2 class="modal-heading">COMBAT AWARDS</h2>
+            <p class="modal-subheading">Complete combat missions to claim Gold rewards</p>
+          </div>
+          <div class="modal-gold-chip">
+            <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+              <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2" fill="rgba(245, 158, 11, 0.25)"/>
+              <circle cx="12" cy="12" r="3" fill="currentColor"/>
+            </svg>
+            <span id="achievements-gold-val">30</span> G
+          </div>
+        </div>
+
+        <div id="achievements-list" class="achievements-scroll-list">
+          <!-- Populated dynamically by game.js -->
+        </div>
+
+        <div class="modal-bottom">
+          <button id="btn-close-achievements" class="btn-modal-primary">
             CONFIRM AND RETURN
           </button>
         </div>
@@ -326,6 +362,9 @@
           <button id="btn-resume-game" class="btn-modal-primary">
             RESUME GAME
           </button>
+          <button id="btn-open-achievements-pause" class="btn-modal-secondary">
+            AWARDS & ACHIEVEMENTS
+          </button>
           <button id="btn-restart-run" class="btn-modal-secondary">
             RESTART
           </button>
@@ -373,6 +412,9 @@
           </button>
           <button id="btn-go-workshop" class="btn-modal-secondary">
             PERMANENT UPGRADES
+          </button>
+          <button id="btn-go-achievements" class="btn-modal-secondary">
+            AWARDS & ACHIEVEMENTS
           </button>
           <button id="btn-go-title" class="btn-modal-secondary">
             MAIN MENU
