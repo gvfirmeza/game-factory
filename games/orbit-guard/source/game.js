@@ -489,14 +489,6 @@ export function drawRoundRect(ctx, x, y, width, height, radius = 4) {
 }
 
 export function drawCosmicBackground(ctx, width, height, animTime, stars) {
-  // Deep Cosmic Indigo/Charcoal Gradient
-  const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
-  bgGrad.addColorStop(0, '#090C16');
-  bgGrad.addColorStop(0.5, '#0E1324');
-  bgGrad.addColorStop(1, '#131A32');
-  ctx.fillStyle = bgGrad;
-  ctx.fillRect(0, 0, width, height);
-
   // Distant Deep Space Tactical Starfield
   ctx.save();
   const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
