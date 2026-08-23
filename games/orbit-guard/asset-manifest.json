@@ -1,8 +1,9 @@
 {
   "gameId": "orbit-guard",
   "title": "Orbit Guard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "genre": "tower-defense-merge",
+  "renderMode": "hybrid_sprite_procedural",
   "viewport": {
     "width": 450,
     "height": 720,
@@ -46,12 +47,72 @@
       "crimsonBright": "#F43F5E"
     },
     "tierAscension": [
-      { "tier": 1, "name": "Bronze Recruit", "border": "#CD7F32", "fill": "#78350F", "glow": "rgba(205, 127, 50, 0.35)", "badge": "★", "multiplier": 1.0 },
-      { "tier": 2, "name": "Silver Veteran", "border": "#E2E8F0", "fill": "#475569", "glow": "rgba(226, 232, 240, 0.45)", "badge": "★★", "multiplier": 2.25 },
-      { "tier": 3, "name": "Gold Master", "border": "#FFD166", "fill": "#B45309", "glow": "rgba(255, 209, 102, 0.60)", "badge": "★★★", "multiplier": 5.1 },
-      { "tier": 4, "name": "Plasma Overclock", "border": "#00E5FF", "fill": "#0369A1", "glow": "rgba(0, 229, 255, 0.70)", "badge": "◆", "multiplier": 11.5 },
-      { "tier": 5, "name": "Void Champion", "border": "#C084FC", "fill": "#581C87", "glow": "rgba(192, 132, 252, 0.80)", "badge": "❖", "multiplier": 26.0 },
-      { "tier": 6, "name": "Celestial Radiant", "border": "#FFFFFF", "fill": "#BE185D", "glow": "rgba(255, 255, 255, 0.95)", "badge": "👑", "multiplier": 60.0 }
+      {
+        "tier": 1,
+        "name": "Bronze Recruit",
+        "border": "#CD7F32",
+        "fill": "#78350F",
+        "glow": "rgba(205, 127, 50, 0.35)",
+        "badge": "★",
+        "multiplier": 1.0,
+        "auraRadius": 22,
+        "particleCount": 0
+      },
+      {
+        "tier": 2,
+        "name": "Silver Veteran",
+        "border": "#E2E8F0",
+        "fill": "#475569",
+        "glow": "rgba(226, 232, 240, 0.45)",
+        "badge": "★★",
+        "multiplier": 2.25,
+        "auraRadius": 24,
+        "particleCount": 2
+      },
+      {
+        "tier": 3,
+        "name": "Gold Master",
+        "border": "#FFD166",
+        "fill": "#B45309",
+        "glow": "rgba(255, 209, 102, 0.60)",
+        "badge": "★★★",
+        "multiplier": 5.1,
+        "auraRadius": 26,
+        "particleCount": 4
+      },
+      {
+        "tier": 4,
+        "name": "Plasma Overclock",
+        "border": "#00E5FF",
+        "fill": "#0369A1",
+        "glow": "rgba(0, 229, 255, 0.70)",
+        "badge": "◆",
+        "multiplier": 11.5,
+        "auraRadius": 28,
+        "particleCount": 6
+      },
+      {
+        "tier": 5,
+        "name": "Void Champion",
+        "border": "#C084FC",
+        "fill": "#581C87",
+        "glow": "rgba(192, 132, 252, 0.80)",
+        "badge": "❖",
+        "multiplier": 26.0,
+        "auraRadius": 30,
+        "particleCount": 8
+      },
+      {
+        "tier": 6,
+        "name": "Celestial Radiant",
+        "border": "#FFFFFF",
+        "fill": "#BE185D",
+        "glow": "rgba(255, 255, 255, 0.95)",
+        "badge": "👑",
+        "multiplier": 60.0,
+        "auraRadius": 33,
+        "particleCount": 12
+      }
     ],
     "sentinels": {
       "ballistaArcher": {
@@ -132,8 +193,7 @@
         "tripodLegs": "#475569",
         "chassis": "#1E1B4B",
         "plasmaMortar": "#C084FC",
-        "plasmaCore": "#FFFFFF",
-        "sightLaser": "rgba(192, 132, 252, 0.50)"
+        "plasmaCore": "#FFFFFF"
       }
     },
     "bosses": {
@@ -182,6 +242,614 @@
       "synergyLinkBeam": "#FFD166"
     }
   },
+  "curatedAssets": [
+    {
+      "id": "sentinel_ballista",
+      "file": "sentinel_ballista.png",
+      "sourcePath": "assets/sentinel_ballista.png",
+      "category": "sentinels",
+      "archetype": "ballistaArcher",
+      "targetRole": "Ballista Archer / Kinetic Railgun Strike Craft - Long-range precision sniper with twin linear accelerators",
+      "dimensions": {
+        "nativeWidth": 99,
+        "nativeHeight": 75,
+        "renderWidth": 42,
+        "renderHeight": 32
+      },
+      "renderScale": 0.42,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": true,
+        "platformBase": true,
+        "tierBadge": true,
+        "glowOverlay": true,
+        "accentColor": "#00E5FF"
+      },
+      "proceduralEnhancements": [
+        "Dynamic aim rotation facing target invader",
+        "Recoil translation pulse (-5px along barrel axis)",
+        "Dotted cyan laser targeting sight guide",
+        "Charging muzzle spark capacitor glow",
+        "Procedural tier ascension aura ring and badge"
+      ],
+      "animationStates": ["idle_hover", "target_lock", "fire_recoil", "merge_ascend", "drag_selected"]
+    },
+    {
+      "id": "sentinel_cannon",
+      "file": "sentinel_cannon.png",
+      "sourcePath": "assets/sentinel_cannon.png",
+      "category": "sentinels",
+      "archetype": "heavyCannon",
+      "targetRole": "Heavy Cannon / Plasma Mortar Cruiser - Heavy armored artillery dealing high-splash explosive damage",
+      "dimensions": {
+        "nativeWidth": 112,
+        "nativeHeight": 75,
+        "renderWidth": 47,
+        "renderHeight": 32
+      },
+      "renderScale": 0.42,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": true,
+        "platformBase": true,
+        "tierBadge": true,
+        "glowOverlay": true,
+        "accentColor": "#FF9E00"
+      },
+      "proceduralEnhancements": [
+        "Dynamic aim rotation facing cluster target",
+        "Heavy barrel kickback animation with smoke puffs",
+        "Pulsating orange-hot magma reactor glow in core chamber",
+        "Shockwave compression halo on shell discharge",
+        "Procedural tier ascension aura ring and badge"
+      ],
+      "animationStates": ["idle_hover", "chamber_heat", "fire_kickback", "merge_ascend", "drag_selected"]
+    },
+    {
+      "id": "sentinel_mage",
+      "file": "sentinel_mage.png",
+      "sourcePath": "assets/sentinel_mage.png",
+      "category": "sentinels",
+      "archetype": "arcaneMage",
+      "targetRole": "Arcane Mage / Tesla Caster Spire Frigate - High-tech storm obelisk discharging branching chain lightning",
+      "dimensions": {
+        "nativeWidth": 91,
+        "nativeHeight": 91,
+        "renderWidth": 38,
+        "renderHeight": 38
+      },
+      "renderScale": 0.42,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": true,
+        "platformBase": true,
+        "tierBadge": true,
+        "glowOverlay": true,
+        "accentColor": "#C084FC"
+      },
+      "proceduralEnhancements": [
+        "Floating levitation bobbing (sinusoidal y-offset)",
+        "Counter-rotating violet runic energy rings",
+        "Branching electrostatic ion sparks around obelisk crystal",
+        "Overload discharge flash when jumping between 4+ targets",
+        "Procedural tier ascension aura ring and badge"
+      ],
+      "animationStates": ["idle_hover", "channel_energy", "arc_discharge", "merge_ascend", "drag_selected"]
+    },
+    {
+      "id": "sentinel_frost",
+      "file": "sentinel_frost.png",
+      "sourcePath": "assets/sentinel_frost.png",
+      "category": "sentinels",
+      "archetype": "frostWarden",
+      "targetRole": "Frost Warden / Cryo Emitter Frigate - Sub-zero perimeter guardian projecting wide-area cryogenic slow auras",
+      "dimensions": {
+        "nativeWidth": 98,
+        "nativeHeight": 75,
+        "renderWidth": 41,
+        "renderHeight": 32
+      },
+      "renderScale": 0.42,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": true,
+        "platformBase": true,
+        "tierBadge": true,
+        "glowOverlay": true,
+        "accentColor": "#38BDF8"
+      },
+      "proceduralEnhancements": [
+        "Continuous ambient cryogenic mist particle emitter",
+        "Spinning glacial gyroscopic ring with snowflake glyphs",
+        "Expanding radial ice wave pulse on chilling activation",
+        "Frostbite diamond aura overlay on slowed enemy units",
+        "Procedural tier ascension aura ring and badge"
+      ],
+      "animationStates": ["idle_hover", "pulse_cryo", "freeze_nova", "merge_ascend", "drag_selected"]
+    },
+    {
+      "id": "sentinel_assassin",
+      "file": "sentinel_assassin.png",
+      "sourcePath": "assets/sentinel_assassin.png",
+      "category": "sentinels",
+      "archetype": "shadowAssassin",
+      "targetRole": "Shadow Assassin / Void Ripper Stealth Interceptor - Hyper-rapid dual chakram slasher with critical strikes",
+      "dimensions": {
+        "nativeWidth": 93,
+        "nativeHeight": 84,
+        "renderWidth": 39,
+        "renderHeight": 35
+      },
+      "renderScale": 0.42,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": true,
+        "platformBase": true,
+        "tierBadge": true,
+        "glowOverlay": true,
+        "accentColor": "#EF4444"
+      },
+      "proceduralEnhancements": [
+        "Twin orbitally spinning crimson vibro-chakrams",
+        "Semi-translucent phase stealth shimmer when charging strikes",
+        "High-velocity crimson slash trails across target coordinate",
+        "Critical hit multi-ray flash burst",
+        "Procedural tier ascension aura ring and badge"
+      ],
+      "animationStates": ["idle_hover", "blade_spin", "slash_burst", "merge_ascend", "drag_selected"]
+    },
+    {
+      "id": "enemy_crawler",
+      "file": "enemy_crawler.png",
+      "sourcePath": "assets/enemy_crawler.png",
+      "category": "enemies",
+      "archetype": "voidCrawler",
+      "targetRole": "Void Crawler / Insectoid Bio-Scout - Basic balanced melee walker advancing inexorably toward the Nexus Core",
+      "dimensions": {
+        "nativeWidth": 82,
+        "nativeHeight": 84,
+        "renderWidth": 31,
+        "renderHeight": 32
+      },
+      "renderScale": 0.38,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": false,
+        "accentColor": "#EF4444"
+      },
+      "proceduralEnhancements": [
+        "Tangential forward orientation along spiral approach vector",
+        "Pulsing crimson optic sensor eye",
+        "Miniature scuttling leg animation cadence",
+        "Chilled status blue-ice tint shader overlay",
+        "Overhead floating HP status arc"
+      ],
+      "animationStates": ["walk_inward", "chilled_slow", "hit_flash", "death_dissolve"]
+    },
+    {
+      "id": "enemy_dart",
+      "file": "enemy_dart.png",
+      "sourcePath": "assets/enemy_dart.png",
+      "category": "enemies",
+      "archetype": "swiftDart",
+      "targetRole": "Swift Dart / Manta-Wing Sprinter - Fragile hyper-speed raider requiring swift kinetic interception",
+      "dimensions": {
+        "nativeWidth": 104,
+        "nativeHeight": 84,
+        "renderWidth": 37,
+        "renderHeight": 30
+      },
+      "renderScale": 0.36,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": false,
+        "accentColor": "#00F5D4"
+      },
+      "proceduralEnhancements": [
+        "Twin energetic cyan thruster trails with additive glow",
+        "Aerodynamic banking tilt during orbital curve navigation",
+        "High-frequency wing shimmer glint",
+        "Chilled status blue-ice tint shader overlay",
+        "Overhead floating HP status arc"
+      ],
+      "animationStates": ["sprint_inward", "chilled_slow", "hit_flash", "death_dissolve"]
+    },
+    {
+      "id": "enemy_bruiser",
+      "file": "enemy_bruiser.png",
+      "sourcePath": "assets/enemy_bruiser.png",
+      "category": "enemies",
+      "archetype": "armoredBruiser",
+      "targetRole": "Armored Bruiser / Heavy Chitin Vanguard Tank - High-HP armored juggernaut absorbing massive kinetic fire",
+      "dimensions": {
+        "nativeWidth": 103,
+        "nativeHeight": 84,
+        "renderWidth": 49,
+        "renderHeight": 40
+      },
+      "renderScale": 0.48,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": false,
+        "accentColor": "#F59E0B"
+      },
+      "proceduralEnhancements": [
+        "Heavy lumbering step cadence with ground vibration ripple",
+        "Internal glowing molten core pulsating through dorsal vents",
+        "Deflective armor plate metallic sheen",
+        "Chilled status blue-ice tint shader overlay",
+        "Segmented armor health bar with armor icon"
+      ],
+      "animationStates": ["march_inward", "armor_deflect", "chilled_slow", "hit_flash", "death_dissolve"]
+    },
+    {
+      "id": "enemy_swarm",
+      "file": "enemy_swarm.png",
+      "sourcePath": "assets/enemy_swarm.png",
+      "category": "enemies",
+      "archetype": "swarmPod",
+      "targetRole": "Swarm Pod / Brood Sac Carrier - Volatile bio-pod that splits into multiple fast Void Mites on death",
+      "dimensions": {
+        "nativeWidth": 91,
+        "nativeHeight": 91,
+        "renderWidth": 38,
+        "renderHeight": 38
+      },
+      "renderScale": 0.42,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": false,
+        "accentColor": "#10B981"
+      },
+      "proceduralEnhancements": [
+        "Pulsating biological breathing scale animation",
+        "Glowing emerald internal bio-luminescent eggs",
+        "Trailing toxic spore particle wisps",
+        "Violent green rupture burst spawning 3-5 procedural Void Mites",
+        "Overhead floating HP status arc"
+      ],
+      "animationStates": ["drift_inward", "sac_pulse", "chilled_slow", "rupture_burst"]
+    },
+    {
+      "id": "enemy_slinger",
+      "file": "enemy_slinger.png",
+      "sourcePath": "assets/enemy_slinger.png",
+      "category": "enemies",
+      "archetype": "voidSlinger",
+      "targetRole": "Void Slinger / Perimeter Artillery Bio-Tripod - Ranged siege unit halting on outer ring to bombard Core",
+      "dimensions": {
+        "nativeWidth": 97,
+        "nativeHeight": 84,
+        "renderWidth": 41,
+        "renderHeight": 35
+      },
+      "renderScale": 0.42,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": false,
+        "accentColor": "#C084FC"
+      },
+      "proceduralEnhancements": [
+        "Anchoring tripod brace deployment on outer combat orbit",
+        "Charging violet bio-plasma sphere atop dorsal mortar cavity",
+        "Pulsing dotted targeting trajectory guide pointing at Nexus Core",
+        "Ballistic bio-mortar projectile launch arc",
+        "Overhead floating HP status arc"
+      ],
+      "animationStates": ["move_to_orbit", "deploy_siege", "charge_mortar", "fire_bombardment", "hit_flash", "death_dissolve"]
+    },
+    {
+      "id": "boss_colossus",
+      "file": "boss_colossus.png",
+      "sourcePath": "assets/boss_colossus.png",
+      "category": "bosses",
+      "archetype": "ironColossus",
+      "targetRole": "Iron Colossus / Fortified Shield Titan (Wave 5) - Massive armored dreadnought with 120-degree rotating energy barrier",
+      "dimensions": {
+        "nativeWidth": 103,
+        "nativeHeight": 84,
+        "renderWidth": 88,
+        "renderHeight": 71
+      },
+      "renderScale": 0.85,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#00E5FF"
+      },
+      "proceduralEnhancements": [
+        "Dynamic 120-degree rotating cyan energy deflector shield arc",
+        "Twin blazing orange heavy thruster exhaust cones",
+        "Pulsing central cybernetic optic eye with laser scanner",
+        "Screen-shake seismic impact steps",
+        "Large segmented boss boss-bar with phase markers"
+      ],
+      "animationStates": ["titan_enter", "shield_deflect", "thruster_flare", "phase_overload", "titan_death_explosion"]
+    },
+    {
+      "id": "boss_hydra",
+      "file": "boss_hydra.png",
+      "sourcePath": "assets/boss_hydra.png",
+      "category": "bosses",
+      "archetype": "hydraQueen",
+      "targetRole": "Hydra Queen / Broodmother Leviathan (Wave 10) - Serpentine bio-colossus continuously spawning brood minions and toxic bile",
+      "dimensions": {
+        "nativeWidth": 103,
+        "nativeHeight": 84,
+        "renderWidth": 91,
+        "renderHeight": 74
+      },
+      "renderScale": 0.88,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#10B981"
+      },
+      "proceduralEnhancements": [
+        "Sinusoidal multi-segmented bio-serpent neck oscillation",
+        "Pulsating emerald bio-sac with internal embryonic motion",
+        "Radial toxic spit barrage projectiles",
+        "Phase 2 mitosis split visual telegraph",
+        "Large segmented boss boss-bar with phase markers"
+      ],
+      "animationStates": ["titan_enter", "brood_spawn", "toxic_vomit", "mitosis_split", "titan_death_explosion"]
+    },
+    {
+      "id": "boss_chrono",
+      "file": "boss_chrono.png",
+      "sourcePath": "assets/boss_chrono.png",
+      "category": "bosses",
+      "archetype": "chronoWraith",
+      "targetRole": "Chrono Wraith / Spacetime Phantom (Wave 15) - Eldritch spacetime anomaly blinking across orbits and rewinding minion damage",
+      "dimensions": {
+        "nativeWidth": 103,
+        "nativeHeight": 84,
+        "renderWidth": 88,
+        "renderHeight": 71
+      },
+      "renderScale": 0.85,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#C084FC"
+      },
+      "proceduralEnhancements": [
+        "Ethereal violet spacetime distortion halo and afterimages",
+        "Counter-rotating temporal chronometer rings",
+        "Phase blink teleport effect with particle implosion and explosion",
+        "Temporal rewind aura reversing invader positions",
+        "Large segmented boss boss-bar with phase markers"
+      ],
+      "animationStates": ["titan_enter", "chrono_phase", "temporal_rewind", "teleport_blink", "titan_death_explosion"]
+    },
+    {
+      "id": "laser_blue",
+      "file": "laser_blue.png",
+      "sourcePath": "assets/laser_blue.png",
+      "category": "projectiles",
+      "archetype": "railgunBeam",
+      "targetRole": "Cyan Kinetic Railgun Bolt - Piercing high-velocity kinetic projectile fired by Ballista Archers",
+      "dimensions": {
+        "nativeWidth": 9,
+        "nativeHeight": 54,
+        "renderWidth": 5,
+        "renderHeight": 32
+      },
+      "renderScale": 0.60,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#00E5FF"
+      },
+      "proceduralEnhancements": [
+        "Additive blending (`globalCompositeOperation = 'lighter'`)",
+        "Trailing cyan glow ribbon",
+        "Impact spark burst on target penetration"
+      ],
+      "animationStates": ["flight", "penetrate", "spark_burst"]
+    },
+    {
+      "id": "laser_red",
+      "file": "laser_red.png",
+      "sourcePath": "assets/laser_red.png",
+      "category": "projectiles",
+      "archetype": "assassinGlaive",
+      "targetRole": "Crimson Void Glaive / Bio-Dart - Razor energy blade cast by Shadow Assassins and enemy scouts",
+      "dimensions": {
+        "nativeWidth": 9,
+        "nativeHeight": 54,
+        "renderWidth": 5,
+        "renderHeight": 32
+      },
+      "renderScale": 0.60,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#EF4444"
+      },
+      "proceduralEnhancements": [
+        "Rapid axial rotation (15 rad/sec)",
+        "Crimson motion streak trail",
+        "Critical slash spark flare on hit"
+      ],
+      "animationStates": ["spin_flight", "critical_slice", "spark_burst"]
+    },
+    {
+      "id": "laser_green",
+      "file": "laser_green.png",
+      "sourcePath": "assets/laser_green.png",
+      "category": "projectiles",
+      "archetype": "plasmaBurstCore",
+      "targetRole": "Emerald Bio-Spore Bomb / Plasma Mortar Burst Core - Spherical explosive ordnance dealing area damage",
+      "dimensions": {
+        "nativeWidth": 37,
+        "nativeHeight": 38,
+        "renderWidth": 24,
+        "renderHeight": 25
+      },
+      "renderScale": 0.65,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#10B981"
+      },
+      "proceduralEnhancements": [
+        "Parabolic altitude elevation offset during ballistic flight",
+        "Expanding ground shadow scaling with height",
+        "Nova burst fireball shockwave with trailing embers"
+      ],
+      "animationStates": ["arc_flight", "ground_impact", "nova_shockwave"]
+    },
+    {
+      "id": "powerup_star",
+      "file": "powerup_star.png",
+      "sourcePath": "assets/powerup_star.png",
+      "category": "powerups",
+      "archetype": "ascensionStar",
+      "targetRole": "Ascension Star / Celestial Multiplier Core - Golden pickup granting instant unit tier promotion and score surge",
+      "dimensions": {
+        "nativeWidth": 34,
+        "nativeHeight": 33,
+        "renderWidth": 26,
+        "renderHeight": 25
+      },
+      "renderScale": 0.75,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#FFD166"
+      },
+      "proceduralEnhancements": [
+        "Continuous 360-degree rotation with bobbing float",
+        "Pulsating solar gold radial glow halo",
+        "8-ray starburst light flare on collection"
+      ],
+      "animationStates": ["floating_idle", "magnetic_attract", "collect_starburst"]
+    },
+    {
+      "id": "powerup_shield",
+      "file": "powerup_shield.png",
+      "sourcePath": "assets/powerup_shield.png",
+      "category": "powerups",
+      "archetype": "aegisMatrix",
+      "targetRole": "Aegis Matrix / Core Barrier Pickup - Restores planetary shield HP and triggers emergency invulnerability field",
+      "dimensions": {
+        "nativeWidth": 34,
+        "nativeHeight": 33,
+        "renderWidth": 26,
+        "renderHeight": 25
+      },
+      "renderScale": 0.75,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#00E5FF"
+      },
+      "proceduralEnhancements": [
+        "Pulsing translucent cyan energy sphere",
+        "Rotating hexagonal forcefield mesh lattice",
+        "Radial shield pulse wave expanding toward arena edge"
+      ],
+      "animationStates": ["floating_idle", "magnetic_attract", "shield_pulse"]
+    },
+    {
+      "id": "powerup_bolt",
+      "file": "powerup_bolt.png",
+      "sourcePath": "assets/powerup_bolt.png",
+      "category": "powerups",
+      "archetype": "overclockTurbo",
+      "targetRole": "Overclock Turbo / Lightning Catalyst - Boosts all sentinels to max fire rate with chain lightning arcs",
+      "dimensions": {
+        "nativeWidth": 34,
+        "nativeHeight": 33,
+        "renderWidth": 26,
+        "renderHeight": 25
+      },
+      "renderScale": 0.75,
+      "anchor": { "x": 0.5, "y": 0.5 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": true,
+        "accentColor": "#C084FC"
+      },
+      "proceduralEnhancements": [
+        "Crackling electrostatic arcs orbiting the icon",
+        "High-frequency strobe flash intensity",
+        "Full-screen peripheral purple lightning flash on trigger"
+      ],
+      "animationStates": ["floating_idle", "magnetic_attract", "overcharge_surge"]
+    },
+    {
+      "id": "bg_cosmic",
+      "file": "bg_cosmic.png",
+      "sourcePath": "assets/bg_cosmic.png",
+      "category": "environment",
+      "archetype": "nebulaBackdrop",
+      "targetRole": "Deep Space Cosmic Starfield Tile - Seamless deep cosmic dust backdrop with parallax star layers",
+      "dimensions": {
+        "nativeWidth": 256,
+        "nativeHeight": 256,
+        "renderWidth": 256,
+        "renderHeight": 256
+      },
+      "renderScale": 1.0,
+      "anchor": { "x": 0, "y": 0 },
+      "visualTiering": {
+        "supportsAscension": false,
+        "platformBase": false,
+        "tierBadge": false,
+        "glowOverlay": false,
+        "accentColor": "#0D1127"
+      },
+      "proceduralEnhancements": [
+        "Dual-speed vertical parallax slow scroll",
+        "Dynamic procedural twinkling star overlay (80+ star points)",
+        "Radial cosmic vignette centered on Nexus Core"
+      ],
+      "animationStates": ["parallax_scroll", "nebula_breathe"]
+    }
+  ],
   "proceduralSprites": [
     {
       "id": "nexus_core",

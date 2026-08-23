@@ -22,6 +22,158 @@ import {
 } from '../../../engine/index.js';
 
 /* ============================================================================
+ * 0. SPRITE & ASSET MANAGER (ASYNCHRONOUS LOADER WITH PROCEDURAL FALLBACK)
+ * ============================================================================ */
+
+export const ASSET_PATHS = {
+  // Sentinels
+  sentinel_ballista: 'assets/sentinel_ballista.png',
+  sentinel_cannon: 'assets/sentinel_cannon.png',
+  sentinel_mage: 'assets/sentinel_mage.png',
+  sentinel_frost: 'assets/sentinel_frost.png',
+  sentinel_assassin: 'assets/sentinel_assassin.png',
+
+  // Enemies
+  enemy_crawler: 'assets/enemy_crawler.png',
+  enemy_dart: 'assets/enemy_dart.png',
+  enemy_bruiser: 'assets/enemy_bruiser.png',
+  enemy_swarm: 'assets/enemy_swarm.png',
+  enemy_slinger: 'assets/enemy_slinger.png',
+
+  // Bosses
+  boss_colossus: 'assets/boss_colossus.png',
+  boss_hydra: 'assets/boss_hydra.png',
+  boss_chrono: 'assets/boss_chrono.png',
+
+  // Lasers & Background
+  bg_cosmic: 'assets/bg_cosmic.png',
+  laser_blue: 'assets/laser_blue.png',
+  laser_red: 'assets/laser_red.png',
+  laser_green: 'assets/laser_green.png',
+
+  // Powerups
+  powerup_bolt: 'assets/powerup_bolt.png',
+  powerup_shield: 'assets/powerup_shield.png',
+  powerup_star: 'assets/powerup_star.png'
+};
+
+export class AssetManager {
+  constructor() {
+    this.images = new Map();
+    this.loading = new Map();
+    this.loaded = new Map();
+    this.errors = new Map();
+  }
+
+  load(key, src) {
+    if (this.images.has(key) && this.loaded.get(key)) {
+      return Promise.resolve(this.images.get(key));
+    }
+    if (this.loading.has(key)) {
+      return this.loading.get(key);
+    }
+
+    const promise = new Promise((resolve) => {
+      let timer = null;
+      if (typeof setTimeout !== 'undefined') {
+        timer = setTimeout(() => {
+          onError(new Error(`Timeout loading asset: ${key}`));
+        }, 1500);
+        if (timer && timer.unref) timer.unref();
+      }
+
+      const onLoad = () => {
+        if (timer) clearTimeout(timer);
+        this.loaded.set(key, true);
+        this.images.set(key, img);
+        this.loading.delete(key);
+        resolve(img);
+      };
+
+      const onError = (err) => {
+        if (timer) clearTimeout(timer);
+        this.errors.set(key, true);
+        this.loading.delete(key);
+        resolve(null);
+      };
+
+      if (typeof Image === 'undefined') {
+        // Node / headless test environment fallback
+        if (timer) clearTimeout(timer);
+        resolve(null);
+        return;
+      }
+
+      let img;
+      try {
+        img = new Image();
+      } catch (e) {
+        onError(e);
+        return;
+      }
+
+      if (img && img.addEventListener) {
+        img.addEventListener('load', onLoad, { once: true });
+        img.addEventListener('error', onError, { once: true });
+      } else if (img && typeof img === 'object') {
+        img.onload = onLoad;
+        img.onerror = onError;
+      }
+
+      try {
+        if (img) img.src = src;
+      } catch (e) {
+        onError(e);
+        return;
+      }
+
+      if (img && img.complete && (img.naturalWidth > 0 || img.width > 0)) {
+        onLoad();
+      }
+    });
+
+    this.loading.set(key, promise);
+    return promise;
+  }
+
+  async loadAll(assetMap = ASSET_PATHS) {
+    const entries = Object.entries(assetMap);
+    await Promise.all(entries.map(([k, path]) => this.load(k, path)));
+    return this;
+  }
+
+  get(key) {
+    return this.images.get(key) || null;
+  }
+
+  isLoaded(key) {
+    const img = this.images.get(key);
+    if (!img || !this.loaded.get(key)) return false;
+    return !!(img.naturalWidth > 0 || (img.complete && img.width > 0));
+  }
+
+  drawSprite(ctx, key, x, y, width, height, rotation = 0, alpha = 1.0) {
+    if (!this.isLoaded(key) || typeof ctx.drawImage !== 'function') return false;
+    const img = this.get(key);
+    if (!img) return false;
+
+    ctx.save();
+    ctx.translate(x, y);
+    if (rotation !== 0) ctx.rotate(rotation);
+    if (alpha < 1.0) ctx.globalAlpha = Math.max(0, Math.min(1, ctx.globalAlpha * alpha));
+    ctx.drawImage(img, -width / 2, -height / 2, width, height);
+    ctx.restore();
+    return true;
+  }
+}
+
+export const assets = new AssetManager();
+// Preload immediately in background
+if (typeof window !== 'undefined' || typeof document !== 'undefined') {
+  assets.loadAll(ASSET_PATHS).catch(() => {});
+}
+
+/* ============================================================================
  * 1. GAME DATA & CONFIGURATION SCHEMAS
  * ============================================================================ */
 
@@ -555,7 +707,7 @@ export function drawRoundRect(ctx, x, y, width, height, radius = 4) {
   }
 }
 
-export function drawCosmicBackground(ctx, width, height, animTime, stars) {
+export function drawCosmicBackground(ctx, width, height, animTime, stars, assetMgr = assets) {
   // Distant Deep Space Tactical Starfield
   ctx.save();
   const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
@@ -564,6 +716,25 @@ export function drawCosmicBackground(ctx, width, height, animTime, stars) {
   bgGrad.addColorStop(1, '#080C14');
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, width, height);
+
+  // Curated Kenney Cosmic Sprite Background Texture Overlay
+  if (assetMgr && assetMgr.isLoaded('bg_cosmic') && typeof ctx.drawImage === 'function') {
+    const bgImg = assetMgr.get('bg_cosmic');
+    ctx.save();
+    ctx.globalAlpha = 0.35;
+    try {
+      const bgPattern = ctx.createPattern ? ctx.createPattern(bgImg, 'repeat') : null;
+      if (bgPattern) {
+        ctx.fillStyle = bgPattern;
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        ctx.drawImage(bgImg, 0, 0, width, height);
+      }
+    } catch (e) {
+      ctx.drawImage(bgImg, 0, 0, width, height);
+    }
+    ctx.restore();
+  }
 
   // Subtle tactical coordinate grid
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
@@ -583,12 +754,14 @@ export function drawCosmicBackground(ctx, width, height, animTime, stars) {
   }
 
   // Tactical star dust
-  for (let i = 0; i < stars.length; i++) {
-    const s = stars[i];
-    const twinkle = 0.3 + Math.sin(animTime * s.speed + s.phase) * 0.3;
-    ctx.fillStyle = '#94A3B8';
-    ctx.globalAlpha = twinkle * 0.7;
-    ctx.fillRect(s.x, s.y, s.size, s.size);
+  if (Array.isArray(stars)) {
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i];
+      const twinkle = 0.3 + Math.sin(animTime * (s.speed || 1) + (s.phase || 0)) * 0.3;
+      ctx.fillStyle = s.color || '#94A3B8';
+      ctx.globalAlpha = twinkle * 0.7;
+      ctx.fillRect(s.x, s.y, s.size || 1, s.size || 1);
+    }
   }
   ctx.restore();
 }
@@ -991,32 +1164,55 @@ export function drawBallistaArcher(ctx, x, y, state = {}) {
   const tierInfo = TIERS[Math.min(tier - 1, 5)];
   const kick = recoil * 5;
 
-  // Angular Sentry Chassis
-  ctx.fillStyle = '#1E293B';
-  ctx.strokeStyle = tierInfo.border;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(-10 - kick, -12);
-  ctx.lineTo(6 - kick, -8);
-  ctx.lineTo(10 - kick, 0);
-  ctx.lineTo(6 - kick, 8);
-  ctx.lineTo(-10 - kick, 12);
-  ctx.lineTo(-14 - kick, 0);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
+  // Curated Sprite with Tier Glow Tint
+  const spriteLoaded = assets.isLoaded('sentinel_ballista') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    // Soft tier aura
+    ctx.save();
+    ctx.fillStyle = tierInfo.glow || 'rgba(217, 119, 6, 0.25)';
+    ctx.beginPath();
+    ctx.arc(-kick, 0, 18, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
 
-  // Dual Rails
+    // Sprite centered and rotated (+90 deg to face right along angle)
+    ctx.save();
+    ctx.translate(-kick, 0);
+    ctx.rotate(Math.PI / 2);
+    const img = assets.get('sentinel_ballista');
+    ctx.drawImage(img, -17, -17, 34, 34);
+    ctx.restore();
+  } else {
+    // Procedural Angular Sentry Chassis Fallback
+    ctx.fillStyle = '#1E293B';
+    ctx.strokeStyle = tierInfo.border;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(-10 - kick, -12);
+    ctx.lineTo(6 - kick, -8);
+    ctx.lineTo(10 - kick, 0);
+    ctx.lineTo(6 - kick, 8);
+    ctx.lineTo(-10 - kick, 12);
+    ctx.lineTo(-14 - kick, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Dual Rails
+    const barrelLength = 16 + Math.min(tier, 5) * 2;
+    ctx.fillStyle = '#334155';
+    ctx.strokeStyle = '#64748B';
+    ctx.lineWidth = 1.2;
+    drawRoundRect(ctx, 0 - kick, -6, barrelLength, 3.5, 1);
+    ctx.fill();
+    ctx.stroke();
+    drawRoundRect(ctx, 0 - kick, 2.5, barrelLength, 3.5, 1);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  // Procedural Weapon Energy Effects (Preserved on both Sprite & Procedural)
   const barrelLength = 16 + Math.min(tier, 5) * 2;
-  ctx.fillStyle = '#334155';
-  ctx.strokeStyle = '#64748B';
-  ctx.lineWidth = 1.2;
-  drawRoundRect(ctx, 0 - kick, -6, barrelLength, 3.5, 1);
-  ctx.fill();
-  ctx.stroke();
-  drawRoundRect(ctx, 0 - kick, 2.5, barrelLength, 3.5, 1);
-  ctx.fill();
-  ctx.stroke();
 
   // Amber Magnetic Acceleration Coils
   const coilCount = 2 + Math.min(tier, 4);
@@ -1067,30 +1263,50 @@ export function drawHeavyCannon(ctx, x, y, state = {}) {
   ctx.rotate(angle);
   const tierInfo = TIERS[Math.min(tier - 1, 5)];
   const kick = recoil * 6;
-
-  // Armored Chassis
-  ctx.fillStyle = '#1E293B';
-  ctx.strokeStyle = tierInfo.border;
-  ctx.lineWidth = 2.2;
-  drawRoundRect(ctx, -12 - kick, -14, 22, 28, 4);
-  ctx.fill();
-  ctx.stroke();
-
-  // Cylindrical Mortar Barrel
   const barrelLen = 14 + Math.min(tier, 5) * 2;
   const barrelRadius = 6 + Math.min(tier, 4) * 0.8;
-  const barrelGrad = ctx.createLinearGradient(0, -barrelRadius, 0, barrelRadius);
-  barrelGrad.addColorStop(0, '#64748B');
-  barrelGrad.addColorStop(0.5, '#1E293B');
-  barrelGrad.addColorStop(1, '#0F172A');
-  ctx.fillStyle = barrelGrad;
-  ctx.strokeStyle = '#475569';
-  ctx.lineWidth = 1.8;
-  drawRoundRect(ctx, -2 - kick, -barrelRadius, barrelLen, barrelRadius * 2, 3);
-  ctx.fill();
-  ctx.stroke();
 
-  // Magma Core
+  // Curated Sprite with Tier Glow Tint
+  const spriteLoaded = assets.isLoaded('sentinel_cannon') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    // Soft tier aura
+    ctx.save();
+    ctx.fillStyle = tierInfo.glow || 'rgba(234, 88, 12, 0.25)';
+    ctx.beginPath();
+    ctx.arc(-kick, 0, 19, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Sprite centered and rotated (+90 deg to face right along angle)
+    ctx.save();
+    ctx.translate(-kick, 0);
+    ctx.rotate(Math.PI / 2);
+    const img = assets.get('sentinel_cannon');
+    ctx.drawImage(img, -18, -18, 36, 36);
+    ctx.restore();
+  } else {
+    // Procedural Armored Chassis Fallback
+    ctx.fillStyle = '#1E293B';
+    ctx.strokeStyle = tierInfo.border;
+    ctx.lineWidth = 2.2;
+    drawRoundRect(ctx, -12 - kick, -14, 22, 28, 4);
+    ctx.fill();
+    ctx.stroke();
+
+    // Cylindrical Mortar Barrel
+    const barrelGrad = ctx.createLinearGradient(0, -barrelRadius, 0, barrelRadius);
+    barrelGrad.addColorStop(0, '#64748B');
+    barrelGrad.addColorStop(0.5, '#1E293B');
+    barrelGrad.addColorStop(1, '#0F172A');
+    ctx.fillStyle = barrelGrad;
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 1.8;
+    drawRoundRect(ctx, -2 - kick, -barrelRadius, barrelLen, barrelRadius * 2, 3);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  // Procedural Magma Core & Heat Effects (Preserved on both Sprite & Procedural)
   const heatPulse = 0.7 + Math.sin(animTime * 6) * 0.3;
   const magmaGrad = ctx.createRadialGradient(-3 - kick, 0, 1, -3 - kick, 0, 7);
   magmaGrad.addColorStop(0, '#FFFBEB');
@@ -1134,7 +1350,7 @@ export function drawArcaneMage(ctx, x, y, state = {}) {
   ctx.fill();
   ctx.stroke();
 
-  // Revolving Glyphs
+  // Preserved Revolving Glyphs / Shards
   const shardCount = 2 + Math.min(tier, 4);
   for (let i = 0; i < shardCount; i++) {
     const shardAngle = animTime * 2.5 + (i * Math.PI * 2) / shardCount;
@@ -1153,28 +1369,45 @@ export function drawArcaneMage(ctx, x, y, state = {}) {
     ctx.stroke();
   }
 
-  // Floating Obelisk
+  // Floating Obelisk / Curated Sprite
   ctx.save();
   ctx.translate(0, -6 + hoverBob);
   ctx.rotate(angle * 0.2);
-  const obeliskGrad = ctx.createLinearGradient(-7, -16, 7, 16);
-  obeliskGrad.addColorStop(0, '#EEF2FF');
-  obeliskGrad.addColorStop(0.4, '#818CF8');
-  obeliskGrad.addColorStop(0.8, '#4338CA');
-  obeliskGrad.addColorStop(1, '#312E81');
-  ctx.fillStyle = obeliskGrad;
-  ctx.strokeStyle = tierInfo.border;
-  ctx.lineWidth = 1.8;
-  ctx.beginPath();
-  ctx.moveTo(0, -16);
-  ctx.lineTo(8, -2);
-  ctx.lineTo(5, 12);
-  ctx.lineTo(0, 15);
-  ctx.lineTo(-5, 12);
-  ctx.lineTo(-8, -2);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
+
+  const spriteLoaded = assets.isLoaded('sentinel_mage') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    // Arcane aura
+    ctx.fillStyle = tierInfo.glow || 'rgba(99, 102, 241, 0.3)';
+    ctx.beginPath();
+    ctx.arc(0, 0, 18, 0, Math.PI * 2);
+    ctx.fill();
+
+    const img = assets.get('sentinel_mage');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -16, -16, 32, 32);
+    ctx.restore();
+  } else {
+    // Procedural Floating Obelisk Fallback
+    const obeliskGrad = ctx.createLinearGradient(-7, -16, 7, 16);
+    obeliskGrad.addColorStop(0, '#EEF2FF');
+    obeliskGrad.addColorStop(0.4, '#818CF8');
+    obeliskGrad.addColorStop(0.8, '#4338CA');
+    obeliskGrad.addColorStop(1, '#312E81');
+    ctx.fillStyle = obeliskGrad;
+    ctx.strokeStyle = tierInfo.border;
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(0, -16);
+    ctx.lineTo(8, -2);
+    ctx.lineTo(5, 12);
+    ctx.lineTo(0, 15);
+    ctx.lineTo(-5, 12);
+    ctx.lineTo(-8, -2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
 
   if (isFiring) {
     ctx.strokeStyle = '#E0E7FF';
@@ -1231,23 +1464,38 @@ export function drawFrostWarden(ctx, x, y, state = {}) {
   }
   ctx.restore();
 
-  // Center Crystal Diamond
-  const iceGrad = ctx.createRadialGradient(-2, -2, 1, 0, 0, 8);
-  iceGrad.addColorStop(0, '#FFFFFF');
-  iceGrad.addColorStop(0.4, '#7DD3FC');
-  iceGrad.addColorStop(0.8, '#0284C7');
-  iceGrad.addColorStop(1, '#0C4A6E');
-  ctx.fillStyle = iceGrad;
-  ctx.strokeStyle = tierInfo.border;
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(0, -8);
-  ctx.lineTo(6, 0);
-  ctx.lineTo(0, 8);
-  ctx.lineTo(-6, 0);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
+  // Curated Sprite or Crystal Diamond
+  const spriteLoaded = assets.isLoaded('sentinel_frost') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    ctx.fillStyle = tierInfo.glow || 'rgba(56, 189, 248, 0.3)';
+    ctx.beginPath();
+    ctx.arc(0, 0, 18, 0, Math.PI * 2);
+    ctx.fill();
+
+    const img = assets.get('sentinel_frost');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -17, -17, 34, 34);
+    ctx.restore();
+  } else {
+    // Center Crystal Diamond Fallback
+    const iceGrad = ctx.createRadialGradient(-2, -2, 1, 0, 0, 8);
+    iceGrad.addColorStop(0, '#FFFFFF');
+    iceGrad.addColorStop(0.4, '#7DD3FC');
+    iceGrad.addColorStop(0.8, '#0284C7');
+    iceGrad.addColorStop(1, '#0C4A6E');
+    ctx.fillStyle = iceGrad;
+    ctx.strokeStyle = tierInfo.border;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, -8);
+    ctx.lineTo(6, 0);
+    ctx.lineTo(0, 8);
+    ctx.lineTo(-6, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
 
   drawTierBadge(ctx, 0, 0, tier);
   ctx.restore();
@@ -1266,24 +1514,39 @@ export function drawShadowAssassin(ctx, x, y, state = {}) {
   const tierInfo = TIERS[Math.min(tier - 1, 5)];
   const spinAngle = animTime * 14;
 
-  // Stealth Delta Wing (Carbon Fiber)
-  ctx.fillStyle = '#0F172A';
-  ctx.strokeStyle = tierInfo.border;
-  ctx.lineWidth = 1.8;
-  ctx.beginPath();
-  ctx.moveTo(12, 0);
-  ctx.lineTo(-6, -11);
-  ctx.lineTo(-4, -4);
-  ctx.lineTo(-12, -5);
-  ctx.lineTo(-10, 0);
-  ctx.lineTo(-12, 5);
-  ctx.lineTo(-4, 4);
-  ctx.lineTo(-6, 11);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('sentinel_assassin') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    // Shadow tier glow
+    ctx.fillStyle = tierInfo.glow || 'rgba(225, 29, 72, 0.35)';
+    ctx.beginPath();
+    ctx.arc(0, 0, 18, 0, Math.PI * 2);
+    ctx.fill();
 
-  // Spinning Vibro Chakrams
+    const img = assets.get('sentinel_assassin');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -17, -17, 34, 34);
+    ctx.restore();
+  } else {
+    // Stealth Delta Wing (Carbon Fiber) Fallback
+    ctx.fillStyle = '#0F172A';
+    ctx.strokeStyle = tierInfo.border;
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(12, 0);
+    ctx.lineTo(-6, -11);
+    ctx.lineTo(-4, -4);
+    ctx.lineTo(-12, -5);
+    ctx.lineTo(-10, 0);
+    ctx.lineTo(-12, 5);
+    ctx.lineTo(-4, 4);
+    ctx.lineTo(-6, 11);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  // Spinning Vibro Chakrams (Preserved on both)
   for (let side of [-1, 1]) {
     ctx.save();
     ctx.translate(2, side * 11);
@@ -1331,6 +1594,42 @@ export function drawShadowAssassin(ctx, x, y, state = {}) {
   ctx.restore();
 }
 
+export function drawSentinelTurret(ctx, x, y, archetype, state = {}) {
+  // Support flexible signature (ctx, sentinel, animTime, isSelected, isMergeTarget)
+  if (typeof x === 'object' && x !== null) {
+    const sentinel = x;
+    const animTime = y || 0;
+    const isSelected = !!archetype;
+    const isMergeTarget = !!state;
+    return drawSentinel(ctx, sentinel, animTime, isSelected, isMergeTarget);
+  }
+
+  const sState = {
+    angle: state.angle || 0,
+    tier: state.tier || 1,
+    recoil: state.recoil || 0,
+    charging: state.charging || 0,
+    animTime: state.animTime || 0,
+    isFiring: state.isFiring || false,
+    isSlashing: state.isSlashing || false,
+    isSelected: state.isSelected || false,
+    isMergeTarget: state.isMergeTarget || false,
+    scaleAnim: state.scaleAnim || 1.0
+  };
+
+  switch (archetype) {
+    case 'ballista_archer': drawBallistaArcher(ctx, x, y, sState); break;
+    case 'heavy_cannon':    drawHeavyCannon(ctx, x, y, sState); break;
+    case 'arcane_mage':     drawArcaneMage(ctx, x, y, sState); break;
+    case 'frost_warden':    drawFrostWarden(ctx, x, y, sState); break;
+    case 'shadow_assassin': drawShadowAssassin(ctx, x, y, sState); break;
+    default:
+      drawSentinelPlatform(ctx, x, y, sState.tier, sState.isSelected, sState.isMergeTarget);
+      drawTierBadge(ctx, x, y, sState.tier);
+      break;
+  }
+}
+
 export function drawSentinel(ctx, sentinel, animTime, isSelected = false, isMergeTarget = false) {
   const state = {
     angle: sentinel.angle || 0,
@@ -1345,13 +1644,7 @@ export function drawSentinel(ctx, sentinel, animTime, isSelected = false, isMerg
     scaleAnim: sentinel.scaleAnim || 1.0
   };
 
-  switch (sentinel.archetype) {
-    case 'ballista_archer': drawBallistaArcher(ctx, sentinel.x, sentinel.y, state); break;
-    case 'heavy_cannon':    drawHeavyCannon(ctx, sentinel.x, sentinel.y, state); break;
-    case 'arcane_mage':     drawArcaneMage(ctx, sentinel.x, sentinel.y, state); break;
-    case 'frost_warden':    drawFrostWarden(ctx, sentinel.x, sentinel.y, state); break;
-    case 'shadow_assassin': drawShadowAssassin(ctx, sentinel.x, sentinel.y, state); break;
-  }
+  drawSentinelTurret(ctx, sentinel.x, sentinel.y, sentinel.archetype, state);
 }
 
 /* Void Invaders Renderers */
@@ -1361,7 +1654,7 @@ export function drawVoidCrawler(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Scuttling Legs
+  // Scuttling Legs (Preserved on both)
   ctx.strokeStyle = isChilled ? '#38BDF8' : '#57534E';
   ctx.lineWidth = 1.6;
   const legSpeed = isChilled ? 6 : 14;
@@ -1380,13 +1673,29 @@ export function drawVoidCrawler(ctx, x, y, state = {}) {
     ctx.stroke();
   }
 
-  // Dark Chitin Carapace
-  ctx.fillStyle = '#292524';
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#78716C';
-  ctx.lineWidth = 1.6;
-  drawRoundRect(ctx, -10, -8, 20, 16, 5);
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('enemy_crawler') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('enemy_crawler');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -13, -13, 26, 26);
+    ctx.restore();
+
+    if (isChilled) {
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.35)';
+      ctx.beginPath();
+      ctx.arc(0, 0, 13, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else {
+    // Dark Chitin Carapace Fallback
+    ctx.fillStyle = '#292524';
+    ctx.strokeStyle = isChilled ? '#38BDF8' : '#78716C';
+    ctx.lineWidth = 1.6;
+    drawRoundRect(ctx, -10, -8, 20, 16, 5);
+    ctx.fill();
+    ctx.stroke();
+  }
 
   // Amber Optic Sensor
   ctx.fillStyle = '#F59E0B';
@@ -1403,7 +1712,7 @@ export function drawSwiftDart(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Twin Thruster Trails
+  // Twin Thruster Plasma Trails (Preserved on both)
   const jetFlicker = 6 + Math.sin(animTime * 25) * 3;
   ctx.fillStyle = isChilled ? 'rgba(56, 189, 248, 0.5)' : 'rgba(234, 88, 12, 0.65)';
   ctx.beginPath();
@@ -1419,20 +1728,36 @@ export function drawSwiftDart(ctx, x, y, state = {}) {
   ctx.closePath();
   ctx.fill();
 
-  // Aerodynamic Chitin Body
-  ctx.fillStyle = '#4C0519';
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#BE123C';
-  ctx.lineWidth = 1.6;
-  ctx.beginPath();
-  ctx.moveTo(14, 0);
-  ctx.lineTo(-8, -12);
-  ctx.lineTo(-4, -4);
-  ctx.lineTo(-12, 0);
-  ctx.lineTo(-4, 4);
-  ctx.lineTo(-8, 12);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('enemy_dart') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('enemy_dart');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -14, -14, 28, 28);
+    ctx.restore();
+
+    if (isChilled) {
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.35)';
+      ctx.beginPath();
+      ctx.arc(0, 0, 14, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else {
+    // Aerodynamic Chitin Body Fallback
+    ctx.fillStyle = '#4C0519';
+    ctx.strokeStyle = isChilled ? '#38BDF8' : '#BE123C';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(14, 0);
+    ctx.lineTo(-8, -12);
+    ctx.lineTo(-4, -4);
+    ctx.lineTo(-12, 0);
+    ctx.lineTo(-4, 4);
+    ctx.lineTo(-8, 12);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
 
   ctx.restore();
 }
@@ -1443,25 +1768,41 @@ export function drawArmoredBruiser(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Heavy Chitin Armored Shell
-  ctx.fillStyle = '#1C1917';
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#78716C';
-  ctx.lineWidth = 2.2;
-  drawRoundRect(ctx, -16, -14, 30, 28, 8);
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('enemy_bruiser') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('enemy_bruiser');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -17, -17, 34, 34);
+    ctx.restore();
 
-  // Segmented Carapace Ridge
-  ctx.strokeStyle = '#44403C';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(-8, -12);
-  ctx.lineTo(-8, 12);
-  ctx.moveTo(2, -12);
-  ctx.lineTo(2, 12);
-  ctx.stroke();
+    if (isChilled) {
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.35)';
+      ctx.beginPath();
+      ctx.arc(0, 0, 17, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else {
+    // Heavy Chitin Armored Shell Fallback
+    ctx.fillStyle = '#1C1917';
+    ctx.strokeStyle = isChilled ? '#38BDF8' : '#78716C';
+    ctx.lineWidth = 2.2;
+    drawRoundRect(ctx, -16, -14, 30, 28, 8);
+    ctx.fill();
+    ctx.stroke();
 
-  // Amber Weakpoint Core
+    // Segmented Carapace Ridge
+    ctx.strokeStyle = '#44403C';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(-8, -12);
+    ctx.lineTo(-8, 12);
+    ctx.moveTo(2, -12);
+    ctx.lineTo(2, 12);
+    ctx.stroke();
+  }
+
+  // Amber Weakpoint Core (Preserved)
   const corePulse = 0.6 + Math.sin(animTime * 4) * 0.4;
   ctx.fillStyle = `rgba(217, 119, 6, ${corePulse})`;
   ctx.beginPath();
@@ -1493,15 +1834,33 @@ export function drawSwarmPod(ctx, x, y, state = {}) {
   ctx.rotate(angle);
 
   const pulse = Math.sin(animTime * 6) * 1.2;
-  ctx.fillStyle = '#14532D';
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#15803D';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.ellipse(0, 0, 14 + pulse, 11 - pulse * 0.4, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('enemy_swarm') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('enemy_swarm');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    const sz = 28 + pulse;
+    ctx.drawImage(img, -sz / 2, -sz / 2, sz, sz);
+    ctx.restore();
 
-  // Embryo pods
+    if (isChilled) {
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.35)';
+      ctx.beginPath();
+      ctx.arc(0, 0, 14, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else {
+    // Green Carapace Fallback
+    ctx.fillStyle = '#14532D';
+    ctx.strokeStyle = isChilled ? '#38BDF8' : '#15803D';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 14 + pulse, 11 - pulse * 0.4, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  // Preserved Embryo pods
   ctx.fillStyle = '#F59E0B';
   for (let [ex, ey] of [[-5, -3], [0, -4], [4, -2], [-2, 2], [3, 3]]) {
     ctx.beginPath();
@@ -1518,13 +1877,22 @@ export function drawVoidMite(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  ctx.fillStyle = '#15803D';
-  ctx.strokeStyle = '#052E16';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('enemy_crawler') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('enemy_crawler');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -7, -7, 14, 14);
+    ctx.restore();
+  } else {
+    ctx.fillStyle = '#15803D';
+    ctx.strokeStyle = '#052E16';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
 
   ctx.fillStyle = '#D97706';
   ctx.beginPath();
@@ -1540,7 +1908,7 @@ export function drawVoidSlinger(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Tentacles
+  // Waving Tentacles (Preserved on both)
   ctx.strokeStyle = '#475569';
   ctx.lineWidth = 1.8;
   for (let a of [-0.6, 0.6, Math.PI]) {
@@ -1550,14 +1918,30 @@ export function drawVoidSlinger(ctx, x, y, state = {}) {
     ctx.stroke();
   }
 
-  ctx.fillStyle = '#1E1B4B';
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#6366F1';
-  ctx.lineWidth = 2;
-  drawRoundRect(ctx, -9, -9, 18, 18, 4);
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('enemy_slinger') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('enemy_slinger');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -14, -14, 28, 28);
+    ctx.restore();
 
-  // Charging Plasma
+    if (isChilled) {
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.35)';
+      ctx.beginPath();
+      ctx.arc(0, 0, 14, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else {
+    ctx.fillStyle = '#1E1B4B';
+    ctx.strokeStyle = isChilled ? '#38BDF8' : '#6366F1';
+    ctx.lineWidth = 2;
+    drawRoundRect(ctx, -9, -9, 18, 18, 4);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  // Preserved Charging Plasma Orb
   const ballSize = 2.5 + chargeProgress * 4.5;
   ctx.fillStyle = '#818CF8';
   ctx.beginPath();
@@ -1573,28 +1957,44 @@ export function drawIronColossus(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Heavy Fortress Hull
-  ctx.fillStyle = '#0F172A';
-  ctx.strokeStyle = hpPercent > 0.5 ? '#64748B' : '#EF4444';
-  ctx.lineWidth = 3;
-  drawRoundRect(ctx, -24, -22, 48, 44, 8);
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('boss_colossus') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('boss_colossus');
+    ctx.save();
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -27, -27, 54, 54);
+    ctx.restore();
 
-  // Blast Vents
+    if (hpPercent < 0.5) {
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.25)';
+      ctx.beginPath();
+      ctx.arc(0, 0, 26, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else {
+    // Heavy Fortress Hull Fallback
+    ctx.fillStyle = '#0F172A';
+    ctx.strokeStyle = hpPercent > 0.5 ? '#64748B' : '#EF4444';
+    ctx.lineWidth = 3;
+    drawRoundRect(ctx, -24, -22, 48, 44, 8);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  // Preserved Blast Vents Fiery Exhaust
   const heatFlicker = 0.6 + Math.sin(animTime * 8) * 0.4;
   ctx.fillStyle = `rgba(234, 88, 12, ${heatFlicker})`;
   for (let dy of [-12, -4, 4, 12]) {
     ctx.fillRect(-18, dy, 8, 3);
   }
 
-  // Heavy Power Core
+  // Preserved Heavy Power Core
   ctx.fillStyle = '#D97706';
   ctx.beginPath();
   ctx.arc(4, 0, 8, 0, Math.PI * 2);
   ctx.fill();
 
-  // Rotating Kinetic Barrier
+  // Preserved Rotating Kinetic Barrier Shield
   if (shieldActive) {
     ctx.save();
     ctx.rotate(shieldAngle - angle);
@@ -1615,16 +2015,26 @@ export function drawHydraQueen(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Ovipositor Sac
-  ctx.fillStyle = '#064E3B';
-  ctx.strokeStyle = '#059669';
-  ctx.lineWidth = 2.2;
-  ctx.beginPath();
-  ctx.ellipse(-18, 0, 24, 18, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('boss_hydra') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('boss_hydra');
+    ctx.save();
+    ctx.translate(-10, 0);
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -26, -26, 52, 52);
+    ctx.restore();
+  } else {
+    // Ovipositor Sac Fallback
+    ctx.fillStyle = '#064E3B';
+    ctx.strokeStyle = '#059669';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.ellipse(-18, 0, 24, 18, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
 
-  // Twin Serpentine Heads
+  // Preserved Twin Serpentine Animated Heads
   const s1 = Math.sin(animTime * 3) * 5;
   const s2 = Math.cos(animTime * 3) * 5;
   for (let head of [-1, 1]) {
@@ -1656,6 +2066,7 @@ export function drawChronoWraith(ctx, x, y, state = {}) {
   ctx.save();
   ctx.translate(x, y);
 
+  // Preserved Rotating Chrono Distortion Ring
   if (!isBlinking) {
     ctx.save();
     ctx.rotate(animTime * 1.5);
@@ -1668,16 +2079,26 @@ export function drawChronoWraith(ctx, x, y, state = {}) {
     ctx.restore();
   }
 
-  // Shroud
-  ctx.fillStyle = '#312E81';
-  ctx.strokeStyle = '#6366F1';
-  ctx.lineWidth = 1.8;
-  ctx.beginPath();
-  ctx.arc(0, 0, 22, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
+  const spriteLoaded = assets.isLoaded('boss_chrono') && typeof ctx.drawImage === 'function';
+  if (spriteLoaded) {
+    const img = assets.get('boss_chrono');
+    ctx.save();
+    if (isBlinking) ctx.globalAlpha = 0.4;
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, -24, -24, 48, 48);
+    ctx.restore();
+  } else {
+    // Shroud Fallback
+    ctx.fillStyle = '#312E81';
+    ctx.strokeStyle = '#6366F1';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.arc(0, 0, 22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
 
-  // Hourglass Core
+  // Preserved Hourglass Core
   ctx.fillStyle = '#E0E7FF';
   ctx.beginPath();
   ctx.moveTo(-6, -9);
@@ -1690,12 +2111,12 @@ export function drawChronoWraith(ctx, x, y, state = {}) {
   ctx.restore();
 }
 
-export function drawEnemy(ctx, enemy, animTime) {
+export function drawEnemyOnPath(ctx, enemy, animTime) {
   const state = {
     angle: enemy.angle || 0,
     animTime,
-    hpPercent: Math.max(0, enemy.hp / enemy.maxHp),
-    isChilled: enemy.chilledTimer > 0,
+    hpPercent: Math.max(0, enemy.hp / (enemy.maxHp || 1)),
+    isChilled: (enemy.chilledTimer || 0) > 0,
     shieldAngle: enemy.shieldAngle || 0,
     shieldActive: enemy.shieldActive !== false,
     chargeProgress: enemy.chargeProgress || 0,
@@ -1709,15 +2130,39 @@ export function drawEnemy(ctx, enemy, animTime) {
     case 'swarm_pod':       drawSwarmPod(ctx, enemy.x, enemy.y, state); break;
     case 'void_mite':       drawVoidMite(ctx, enemy.x, enemy.y, state); break;
     case 'void_slinger':    drawVoidSlinger(ctx, enemy.x, enemy.y, state); break;
-    case 'iron_colossus':   drawIronColossus(ctx, enemy.x, enemy.y, state); break;
-    case 'hydra_queen':     drawHydraQueen(ctx, enemy.x, enemy.y, state); break;
-    case 'chrono_wraith':   drawChronoWraith(ctx, enemy.x, enemy.y, state); break;
     default:
-      ctx.fillStyle = enemy.color || '#EF4444';
-      ctx.beginPath();
-      ctx.arc(enemy.x, enemy.y, enemy.radius || 12, 0, Math.PI * 2);
-      ctx.fill();
+      drawVoidCrawler(ctx, enemy.x, enemy.y, state);
       break;
+  }
+}
+
+export function drawBossOnArena(ctx, boss, animTime) {
+  const state = {
+    angle: boss.angle || 0,
+    animTime,
+    hpPercent: Math.max(0, boss.hp / (boss.maxHp || 1)),
+    isChilled: (boss.chilledTimer || 0) > 0,
+    shieldAngle: boss.shieldAngle || 0,
+    shieldActive: boss.shieldActive !== false,
+    chargeProgress: boss.chargeProgress || 0,
+    isBlinking: boss.isBlinking || false
+  };
+
+  switch (boss.type) {
+    case 'iron_colossus': drawIronColossus(ctx, boss.x, boss.y, state); break;
+    case 'hydra_queen':   drawHydraQueen(ctx, boss.x, boss.y, state); break;
+    case 'chrono_wraith': drawChronoWraith(ctx, boss.x, boss.y, state); break;
+    default:
+      drawIronColossus(ctx, boss.x, boss.y, state);
+      break;
+  }
+}
+
+export function drawEnemy(ctx, enemy, animTime) {
+  if (enemy.isBoss || enemy.type === 'iron_colossus' || enemy.type === 'hydra_queen' || enemy.type === 'chrono_wraith') {
+    drawBossOnArena(ctx, enemy, animTime);
+  } else {
+    drawEnemyOnPath(ctx, enemy, animTime);
   }
 
   // Enemy Mini Health Bar
@@ -1841,6 +2286,7 @@ export class OrbitGuardGame {
     this.particles = new ParticleSystem(400);
     this.juice = new JuiceEffects();
     this.events = new EventBus();
+    this.assets = assets;
 
     // Query parameters
     const searchStr = (typeof window !== 'undefined' && window.location && window.location.search) ? window.location.search : '';
@@ -2040,6 +2486,12 @@ export class OrbitGuardGame {
   }
 
   async init() {
+    try {
+      await this.assets.loadAll(ASSET_PATHS);
+    } catch (e) {
+      console.warn('Asset preloading note:', e);
+    }
+
     await this.playgama.init();
     this.saveData = await SaveManager.load(this.playgama);
 
@@ -3818,7 +4270,24 @@ export class OrbitGuardGame {
       for (const p of this.projectiles) {
         if (p.type === 'laser') {
           c.save();
-          c.strokeStyle = 'rgba(245, 158, 11, 0.4)';
+          const dx = p.x2 - p.x1;
+          const dy = p.y2 - p.y1;
+          const dist = Math.hypot(dx, dy);
+          const angle = Math.atan2(dy, dx);
+
+          // Curated Laser Sprite Texture Overlay
+          const laserKey = p.color === '#EF4444' ? 'laser_red' : (p.color === '#10B981' ? 'laser_green' : 'laser_blue');
+          if (this.assets && this.assets.isLoaded(laserKey) && typeof c.drawImage === 'function') {
+            const img = this.assets.get(laserKey);
+            c.save();
+            c.translate(p.x1, p.y1);
+            c.rotate(angle - Math.PI / 2);
+            c.drawImage(img, -4, 0, 8, dist);
+            c.restore();
+          }
+
+          // Procedural glowing beam core (Preserved)
+          c.strokeStyle = p.color ? `${p.color}66` : 'rgba(245, 158, 11, 0.4)';
           c.lineWidth = 4;
           c.beginPath();
           c.moveTo(p.x1, p.y1);
