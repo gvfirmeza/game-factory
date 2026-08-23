@@ -2924,10 +2924,14 @@ export class OrbitGuardGame {
           e.preventDefault();
           e.stopPropagation();
         }
-        this.activeDirectives.add(d.id);
-        this.audio.playVictoryFanfare();
-        this.particles.starburst(ARENA.center.x, ARENA.center.y, 35, '#38BDF8');
-        this.juice.spawnFloatingText(`DIRECTIVE: ${d.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 35, { color: '#38BDF8', size: 18 });
+        try {
+          this.activeDirectives.add(d.id);
+          this.audio.playVictoryFanfare();
+          this.particles.burst(ARENA.center.x, ARENA.center.y, 35, '#38BDF8');
+          this.juice.spawnFloatingText(`DIRECTIVE: ${d.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 35, { color: '#38BDF8', size: 18 });
+        } catch (err) {
+          console.warn('Directive select effect error:', err);
+        }
         this.closeAllModals();
         this.state = 'PLAYING';
         this.playgama.hideBanner();

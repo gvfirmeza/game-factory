@@ -105,6 +105,10 @@ export class ParticleSystem {
     });
   }
 
+  starburst(x, y, arg1 = '#FFD93D', arg2 = 24) {
+    this.burst(x, y, arg1, arg2);
+  }
+
   dust(x, y, count = 6, color = 'rgba(255, 255, 255, 0.75)') {
     this.emit({
       x,

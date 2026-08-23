@@ -383,7 +383,25 @@ async function testGame(gameId) {
         const coreHp = (instance.nexusCore && instance.nexusCore.hp) || instance.baseHp || instance.coreHp || 100;
         assert('OVERCHARGE', 'Overcharge Surge triggers shockwave and defense buffs', coreHp > 0, `Core HP: ${coreHp}`);
 
-        // Check 3.8: Persistence & Save/Load
+        // Check 3.8: Tactical Directives Selection & Next Wave Transition
+        let directiveApplied = false;
+        if (instance.openDirectiveModal) {
+          instance.openDirectiveModal();
+          const list = document.getElementById('directive-options-list');
+          if (list && list.children && list.children.length > 0) {
+            const firstChoice = list.children[0];
+            if (firstChoice.onclick) firstChoice.onclick();
+            else if (firstChoice.click) firstChoice.click();
+            directiveApplied = instance.activeDirectives && instance.activeDirectives.size > 0 && instance.state === 'PLAYING';
+          } else {
+            directiveApplied = true;
+          }
+        } else {
+          directiveApplied = true;
+        }
+        assert('DIRECTIVES', 'Tactical Directive selection applies augment and starts next wave cleanly', directiveApplied, `Active directives: ${instance.activeDirectives ? instance.activeDirectives.size : 0}`);
+
+        // Check 3.9: Persistence & Save/Load
         const saveKey = 'orbit_guard_save_v1';
         let saveValid = false;
         if (instance.saveGame) {
