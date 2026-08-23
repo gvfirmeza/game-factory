@@ -987,16 +987,6 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
     }
   }
 
-  // Left Arm (Relaxed with sleeve cuff)
-  ctx.fillStyle = isPlayer ? '#B71C1C' : '#E65100';
-  ctx.beginPath();
-  ctx.roundRect(-16, -10, 6, 12, 3);
-  ctx.fill();
-  ctx.fillStyle = '#FFE0B2';
-  ctx.beginPath();
-  ctx.arc(-13, 3, 3.5, 0, Math.PI * 2);
-  ctx.fill();
-
   // Torso (Red Flannel Plaid Shirt)
   ctx.fillStyle = isPlayer ? '#D32F2F' : '#F57C00';
   ctx.beginPath();
@@ -1023,7 +1013,7 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   // Head
   ctx.fillStyle = '#FFE0B2';
   ctx.beginPath();
-  ctx.arc(0, -22, 11, 0, Math.PI * 2);
+  ctx.arc(0, -22, 11.5, 0, Math.PI * 2);
   ctx.fill();
   ctx.strokeStyle = '#5D4037';
   ctx.lineWidth = 1.2;
@@ -1032,49 +1022,49 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   // Fluffy Hair Tufts Peeking Out
   ctx.fillStyle = '#5D4037';
   ctx.beginPath();
-  ctx.arc(-10, -22, 3, 0, Math.PI * 2);
-  ctx.arc(10, -22, 3, 0, Math.PI * 2);
+  ctx.arc(-10, -23, 3.2, 0, Math.PI * 2);
+  ctx.arc(10, -23, 3.2, 0, Math.PI * 2);
   ctx.fill();
 
   // Rosy Cheeks
   ctx.fillStyle = '#FF8A80';
   ctx.globalAlpha = 0.65;
   ctx.beginPath();
-  ctx.arc(-6, -20, 2.5, 0, Math.PI * 2);
-  ctx.arc(6, -20, 2.5, 0, Math.PI * 2);
+  ctx.arc(-6, -18.5, 2.5, 0, Math.PI * 2);
+  ctx.arc(6, -18.5, 2.5, 0, Math.PI * 2);
   ctx.fill();
   ctx.globalAlpha = 1.0;
 
-  // Eyes with Dual Specular Sparkle Highlights
+  // Big Clear Eyes with Dual Specular Sparkle Highlights
   ctx.fillStyle = '#212121';
   ctx.beginPath();
-  ctx.arc(-4, -23, 2.5, 0, Math.PI * 2);
-  ctx.arc(4, -23, 2.5, 0, Math.PI * 2);
+  ctx.arc(-4.5, -21, 2.6, 0, Math.PI * 2);
+  ctx.arc(4.5, -21, 2.6, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.fillStyle = '#FFFFFF';
   ctx.beginPath();
-  ctx.arc(-4.6, -23.8, 0.9, 0, Math.PI * 2);
-  ctx.arc(-3.2, -22.2, 0.5, 0, Math.PI * 2);
-  ctx.arc(3.4, -23.8, 0.9, 0, Math.PI * 2);
-  ctx.arc(4.8, -22.2, 0.5, 0, Math.PI * 2);
+  ctx.arc(-5.1, -21.8, 0.9, 0, Math.PI * 2);
+  ctx.arc(-3.7, -20.2, 0.5, 0, Math.PI * 2);
+  ctx.arc(3.9, -21.8, 0.9, 0, Math.PI * 2);
+  ctx.arc(5.3, -20.2, 0.5, 0, Math.PI * 2);
   ctx.fill();
 
   // Cute Little Smile
   ctx.strokeStyle = '#5D4037';
   ctx.lineWidth = 1.2;
   ctx.beginPath();
-  ctx.arc(0, -18.5, 2.5, 0.2, Math.PI - 0.2);
+  ctx.arc(0, -16.5, 2.5, 0.2, Math.PI - 0.2);
   ctx.stroke();
 
-  // Safety Helmet with 3D Curved Brim & Safety Ridge
+  // Safety Helmet Raised Above Forehead
   const helmetColor = isPlayer ? '#FBC02D' : '#FFE082';
   const helmetRidge = isPlayer ? '#F57F17' : '#FFD54F';
 
   // Cap Dome
   ctx.fillStyle = helmetColor;
   ctx.beginPath();
-  ctx.arc(0, -26, 12, Math.PI, Math.PI * 2);
+  ctx.arc(0, -30, 12, Math.PI, Math.PI * 2);
   ctx.fill();
   ctx.strokeStyle = '#E65100';
   ctx.lineWidth = 1.2;
@@ -1083,13 +1073,13 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   // Safety Center Ridge
   ctx.fillStyle = helmetRidge;
   ctx.beginPath();
-  ctx.roundRect(-2.5, -37, 5, 11, 2);
+  ctx.roundRect(-2.5, -41, 5, 11, 2);
   ctx.fill();
 
   // 3D Curved Brim
   ctx.fillStyle = helmetColor;
   ctx.beginPath();
-  ctx.roundRect(-14, -27, 28, 4.5, 2);
+  ctx.roundRect(-14, -31, 28, 4.5, 2);
   ctx.fill();
   ctx.strokeStyle = '#E65100';
   ctx.lineWidth = 1;
