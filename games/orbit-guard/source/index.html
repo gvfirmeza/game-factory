@@ -20,7 +20,7 @@
     <header id="top-control-bar" class="top-control-bar">
       <!-- Left Controls (Mute & Speed) -->
       <div class="header-left">
-        <button id="btn-mute" class="ctrl-btn btn-mute" aria-label="Toggle Audio" title="Mute / Unmute">🔊</button>
+        <button id="btn-mute" class="ctrl-btn btn-mute" aria-label="Toggle Audio" title="Mute / Unmute">VOL</button>
         <button id="btn-speed" class="ctrl-btn btn-speed" aria-label="Game Speed" title="Toggle Speed (1x, 2x, 3x)">1x</button>
       </div>
 
@@ -41,16 +41,16 @@
           </div>
         </div>
 
-        <div class="hud-pill gold-pill" title="Treasury Gold">
-          <span class="gold-symbol">💰</span>
+        <div class="hud-pill gold-pill" title="Treasury Credits">
+          <span class="gold-symbol">CREDITS</span>
           <span id="hud-gold-val" class="pill-num">30</span>
         </div>
       </div>
 
       <!-- Right Controls (Air Drop & Pause) -->
       <div class="header-right">
-        <button id="btn-airdrop" class="ctrl-btn btn-airdrop hidden" aria-label="Supply Drop" title="Watch short ad to receive +120 Gold Supply Drop">🎁</button>
-        <button id="btn-pause" class="ctrl-btn btn-pause" aria-label="Pause" title="Pause Game">⏸</button>
+        <button id="btn-airdrop" class="ctrl-btn btn-airdrop hidden" aria-label="Supply Drop" title="Watch short ad to receive +120 Credits Supply Drop">SUPPLY</button>
+        <button id="btn-pause" class="ctrl-btn btn-pause" aria-label="Pause" title="Pause Game">II</button>
       </div>
     </header>
 
@@ -59,7 +59,6 @@
       <!-- Tactical Row (Surge, Repair, Workshop) -->
       <div class="tactical-deck-row">
         <button id="btn-surge" class="deck-btn btn-surge" title="Orbital Ion Strike">
-          <span class="btn-icon">⚡</span>
           <div class="btn-text-block">
             <span class="btn-label">ION STRIKE</span>
             <span id="hud-surge-meter" class="btn-subtext">READY</span>
@@ -67,18 +66,16 @@
         </button>
 
         <button id="btn-repair" class="deck-btn btn-repair" title="Emergency Core Hull Repair (+25% HP)">
-          <span class="btn-icon">🛠️</span>
           <div class="btn-text-block">
-            <span class="btn-label">REPAIR</span>
-            <span id="hud-repair-cost" class="btn-subtext">50 💰</span>
+            <span class="btn-label">REPAIR CORE</span>
+            <span id="hud-repair-cost" class="btn-subtext">50 CREDITS</span>
           </div>
         </button>
 
         <button id="btn-open-workshop-hud" class="deck-btn btn-workshop" title="Celestial Workshop">
-          <span class="btn-icon">⚙️</span>
           <div class="btn-text-block">
-            <span class="btn-label">UPGRADES</span>
-            <span class="btn-subtext">WORKSHOP</span>
+            <span class="btn-label">TECH LAB</span>
+            <span class="btn-subtext">UPGRADES</span>
           </div>
         </button>
       </div>
@@ -87,8 +84,8 @@
       <div class="primary-deck-row">
         <button id="btn-buy" class="btn-summon-main">
           <div class="summon-content">
-            <span class="summon-title">➕ DEPLOY SENTINEL</span>
-            <span id="hud-buy-cost" class="summon-badge">15 💰</span>
+            <span class="summon-title">DEPLOY SENTINEL</span>
+            <span id="hud-buy-cost" class="summon-badge">15 G</span>
           </div>
         </button>
       </div>
@@ -122,22 +119,22 @@
 
         <div class="title-cta-group">
           <button id="btn-start-game" class="btn-hero-play" autofocus>
-            ▶ START DEFENSE
+            START DEFENSE
           </button>
           
           <div class="title-secondary-row">
             <button id="btn-open-workshop-title" class="btn-secondary-action">
-              ⚙️ TECH LAB
+              TECH LAB
             </button>
             <button id="btn-open-tutorial-title" class="btn-secondary-action">
-              📖 HOW TO PLAY
+              TACTICAL BRIEFING
             </button>
           </div>
         </div>
 
         <div class="title-guide-chips">
-          <span class="chip">🖐️ Drag & Drop same-tier sentinels to Merge</span>
-          <span class="chip">⚡ Cryo + Tesla triggers Superconductor combos</span>
+          <span class="chip">Drag and drop identical tier units to merge</span>
+          <span class="chip">Cryo and Tesla units trigger Superconductor combos</span>
         </div>
       </div>
     </div>
@@ -148,11 +145,10 @@
         <div class="modal-top">
           <div class="modal-title-stack">
             <h2 class="modal-heading">TECH LAB</h2>
-            <p class="modal-subheading">Permanent Core & Combat Upgrades</p>
+            <p class="modal-subheading">Permanent Core and Combat Upgrades</p>
           </div>
           <div class="modal-gold-chip">
-            <span>💰</span>
-            <span id="workshop-gold-val">30</span>
+            <span id="workshop-gold-val">30</span> G
           </div>
         </div>
 
@@ -161,12 +157,12 @@
         </div>
 
         <button id="btn-workshop-free-gold" class="workshop-ad-grant-btn">
-          🎁 +100 💰 TECH GRANT (WATCH AD)
+          CLAIM +100 CREDITS (TECH GRANT)
         </button>
 
         <div class="modal-bottom">
           <button id="btn-close-workshop" class="btn-modal-primary">
-            CONFIRM & RETURN
+            CONFIRM AND RETURN
           </button>
         </div>
       </div>
@@ -177,48 +173,48 @@
       <div class="modal-card tutorial-card">
         <div class="modal-top">
           <div class="modal-title-stack">
-            <h2 class="modal-heading">MISSION BRIEFING</h2>
-            <p class="modal-subheading">Tactical Defense Guide</p>
+            <h2 class="modal-heading">TACTICAL BRIEFING</h2>
+            <p class="modal-subheading">Orbital Defense Standard Protocol</p>
           </div>
         </div>
 
         <div class="tutorial-step-list">
           <div class="guide-step">
-            <div class="guide-step-icon">🔄</div>
+            <div class="guide-step-icon">01</div>
             <div class="guide-step-text">
-              <h4>1. DRAG TO MERGE</h4>
-              <p>Drag one sentinel on top of another identical sentinel (same class and tier) to ascend them to higher tiers (T1 to T6) with multiplied DPS.</p>
+              <h4>DRAG TO MERGE</h4>
+              <p>Drag one sentinel on top of another identical sentinel (same class and tier) to ascend them to higher tiers (T1 to T6) with multiplied firepower.</p>
             </div>
           </div>
 
           <div class="guide-step">
-            <div class="guide-step-icon">⚡</div>
+            <div class="guide-step-icon">02</div>
             <div class="guide-step-text">
-              <h4>2. ELEMENTAL SYNERGIES</h4>
-              <p>Combine Cryo + Tesla to trigger Superconductor electrical blasts (+100% DMG), or Mortar + Railgun for Thermal Detonations.</p>
+              <h4>ELEMENTAL SYNERGIES</h4>
+              <p>Combine Cryo and Tesla to trigger Superconductor electrical blasts (+100% DMG), or Mortar and Railgun for Thermal Detonations.</p>
             </div>
           </div>
 
           <div class="guide-step">
-            <div class="guide-step-icon">🛡️</div>
+            <div class="guide-step-icon">03</div>
             <div class="guide-step-text">
-              <h4>3. DEFEND THE NEXUS</h4>
-              <p>Enemies spawn at the north warp gate and spiral inward. Prevent them from breaching the red Core perimeter. Use Ion Strike when overwhelmed.</p>
+              <h4>DEFEND THE NEXUS</h4>
+              <p>Hostiles spawn at the north warp gate and spiral inward. Prevent them from breaching the red Core perimeter. Use Ion Strike when overwhelmed.</p>
             </div>
           </div>
 
           <div class="guide-step">
-            <div class="guide-step-icon">♻️</div>
+            <div class="guide-step-icon">04</div>
             <div class="guide-step-text">
-              <h4>4. BENCH & RECYCLE</h4>
-              <p>Store extra units on the bottom standby bench. Drag unwanted units to the right Recycler slot for an immediate 70% Gold refund.</p>
+              <h4>BENCH AND RECYCLE</h4>
+              <p>Store reserve units on the bottom standby bench. Drag unwanted units to the right Recycler slot for an immediate 70% Credit refund.</p>
             </div>
           </div>
         </div>
 
         <div class="modal-bottom">
           <button id="btn-close-tutorial" class="btn-modal-primary">
-            UNDERSTOOD
+            ACKNOWLEDGE
           </button>
         </div>
       </div>
@@ -230,13 +226,13 @@
         <h2 class="modal-heading">DEFENSE PAUSED</h2>
         <div class="pause-button-stack">
           <button id="btn-resume-game" class="btn-modal-primary">
-            ▶ RESUME DEFENSE
+            RESUME DEFENSE
           </button>
           <button id="btn-restart-run" class="btn-modal-secondary">
-            🔄 RESTART WAVE 1
+            RESTART WAVE 1
           </button>
           <button id="btn-quit-to-title" class="btn-modal-secondary">
-            🏠 QUIT TO TITLE
+            QUIT TO TITLE
           </button>
         </div>
       </div>
@@ -262,26 +258,26 @@
             <span id="go-merges-val" class="cell-number">0</span>
           </div>
           <div class="summary-cell">
-            <span class="cell-label">VOID DEFEATED</span>
+            <span class="cell-label">HOSTILES NEUTRALIZED</span>
             <span id="go-kills-val" class="cell-number">0</span>
           </div>
         </div>
 
         <div class="go-cta-stack">
           <button id="btn-go-revive" class="btn-modal-revive">
-            ❤️ REVIVE & CONTINUE (+50 HP)
+            EMERGENCY REBOOT (+50% HP)
           </button>
           <button id="btn-go-double-gold" class="btn-modal-reward">
-            🎁 2X RUN GOLD (WATCH AD)
+            2X RUN CREDITS (AIRDROP)
           </button>
           <button id="btn-retry-game" class="btn-modal-primary">
-            ⚡ RE-ENGAGE DEFENSE
+            RE-ENGAGE DEFENSE
           </button>
           <button id="btn-go-workshop" class="btn-modal-secondary">
-            ⚙️ UPGRADE IN TECH LAB
+            UPGRADE IN TECH LAB
           </button>
           <button id="btn-go-title" class="btn-modal-secondary">
-            🏠 TITLE SCREEN
+            TITLE SCREEN
           </button>
         </div>
       </div>

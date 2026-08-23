@@ -57,12 +57,12 @@ export const ARENA = {
 };
 
 export const TIERS = [
-  { tier: 1, badge: '★',   border: '#D97706', glow: 'rgba(217, 119, 6, 0.40)',   dpsMult: 1.00, rangeBonus: 0,  label: 'T1 Bronze' },
-  { tier: 2, badge: '★★',  border: '#E2E8F0', glow: 'rgba(226, 232, 240, 0.45)', dpsMult: 2.25, rangeBonus: 15, label: 'T2 Silver' },
-  { tier: 3, badge: '★★★', border: '#F59E0B', glow: 'rgba(245, 158, 11, 0.60)',  dpsMult: 5.10, rangeBonus: 30, label: 'T3 Gold' },
-  { tier: 4, badge: '◆',   border: '#10B981', glow: 'rgba(16, 185, 129, 0.70)',  dpsMult: 11.5, rangeBonus: 45, label: 'T4 Emerald' },
-  { tier: 5, badge: '❖',   border: '#A855F7', glow: 'rgba(168, 85, 247, 0.80)',  dpsMult: 26.0, rangeBonus: 60, label: 'T5 Void' },
-  { tier: 6, badge: '👑',  border: '#00F5D4', glow: 'rgba(0, 245, 212, 0.95)',   dpsMult: 60.0, rangeBonus: 80, label: 'T6 Celestial' }
+  { tier: 1, badge: 'T1', border: '#D97706', glow: 'rgba(217, 119, 6, 0.40)',   dpsMult: 1.00, rangeBonus: 0,  label: 'T1 Bronze' },
+  { tier: 2, badge: 'T2', border: '#E2E8F0', glow: 'rgba(226, 232, 240, 0.45)', dpsMult: 2.25, rangeBonus: 15, label: 'T2 Silver' },
+  { tier: 3, badge: 'T3', border: '#F59E0B', glow: 'rgba(245, 158, 11, 0.60)',  dpsMult: 5.10, rangeBonus: 30, label: 'T3 Gold' },
+  { tier: 4, badge: 'T4', border: '#10B981', glow: 'rgba(16, 185, 129, 0.70)',  dpsMult: 11.5, rangeBonus: 45, label: 'T4 Emerald' },
+  { tier: 5, badge: 'T5', border: '#A855F7', glow: 'rgba(168, 85, 247, 0.80)',  dpsMult: 26.0, rangeBonus: 60, label: 'T5 Void' },
+  { tier: 6, badge: 'T6', border: '#00F5D4', glow: 'rgba(0, 245, 212, 0.95)',   dpsMult: 60.0, rangeBonus: 80, label: 'T6 Celestial' }
 ];
 
 export const ARCHETYPES = {
@@ -646,7 +646,7 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
 
   ctx.fillStyle = 'rgba(239, 68, 68, 0.85)';
   ctx.textAlign = 'right';
-  ctx.fillText('RECYCLE 70% ♻️', 414, 492);
+  ctx.fillText('RECYCLE 70%', 414, 492);
 
   // Subtle separator line
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
@@ -785,10 +785,11 @@ export function drawSlotPad(ctx, slot, isOccupied = false, isHighlighted = false
     ctx.fill();
     ctx.stroke();
 
-    ctx.font = '15px sans-serif';
+    ctx.font = 'bold 9px Orbitron, sans-serif';
+    ctx.fillStyle = isHovered ? '#FF5252' : '#EF4444';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('♻️', 0, 0);
+    ctx.fillText('SCRAP', 0, 0);
     ctx.restore();
     return;
   }
@@ -1922,7 +1923,7 @@ export class OrbitGuardGame {
   updateMuteButtonUI() {
     const btnMute = document.getElementById('btn-mute');
     if (btnMute) {
-      btnMute.textContent = this.audio.isMuted ? '🔇' : '🔊';
+      btnMute.textContent = this.audio.isMuted ? 'MUTE' : 'VOL';
     }
   }
 
@@ -2008,14 +2009,14 @@ export class OrbitGuardGame {
     // Mute button
     const btnMute = document.getElementById('btn-mute');
     if (btnMute) {
-      btnMute.textContent = this.audio.isMuted ? '🔇' : '🔊';
+      btnMute.textContent = this.audio.isMuted ? 'MUTE' : 'VOL';
       btnMute.addEventListener('click', () => {
         this.audio.init();
         const nextMuted = !this.audio.isMuted;
         this.audio.setMuted(nextMuted);
         this.playgama.setMuted(nextMuted);
         this.saveData.settings = { ...this.saveData.settings, isMuted: nextMuted };
-        btnMute.textContent = nextMuted ? '🔇' : '🔊';
+        btnMute.textContent = nextMuted ? 'MUTE' : 'VOL';
         SaveManager.save(this.playgama, this.saveData);
       });
     }
@@ -2118,7 +2119,7 @@ export class OrbitGuardGame {
           this.addGold(120);
           this.audio.playCoinDrop();
           this.particles.burst(ARENA.center.x, ARENA.center.y, 30, '#FFD166');
-          this.juice.spawnFloatingText('+120 💰 AIR DROP!', ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 20 });
+          this.juice.spawnFloatingText('+120 CREDITS!', ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 20 });
           this.updateHUD();
         });
       });
@@ -2133,7 +2134,7 @@ export class OrbitGuardGame {
           this.audio.playCoinDrop();
           this.renderWorkshopUI();
           this.updateHUD();
-          this.juice.spawnFloatingText('+100 💰 TECH GRANT!', ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 18 });
+          this.juice.spawnFloatingText('+100 CREDITS!', ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 18 });
         });
       });
     }
@@ -2157,8 +2158,8 @@ export class OrbitGuardGame {
           this.addGold(bonus);
           this.audio.playCoinDrop();
           btnDoubleGold.disabled = true;
-          btnDoubleGold.textContent = '✓ GOLD DOUBLED!';
-          this.juice.spawnFloatingText(`+${bonus} 💰 BONUS!`, ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 18 });
+          btnDoubleGold.textContent = 'CREDITS DOUBLED';
+          this.juice.spawnFloatingText(`+${bonus} CREDITS!`, ARENA.center.x, ARENA.center.y - 40, { color: '#FFD166', size: 18 });
         });
       });
     }
@@ -2222,7 +2223,7 @@ export class OrbitGuardGame {
       this.surgeCooldown = Math.max(0, this.surgeCooldown - 0.5); // Kills accelerate Overcharge meter
       this.audio.playCoinDrop();
       this.particles.burst(x, y, 10, '#FFD166');
-      this.juice.spawnFloatingText(`+${goldReward}💰`, x, y - 10, { color: '#FFD166', size: 14 });
+      this.juice.spawnFloatingText(`+${goldReward} G`, x, y - 10, { color: '#FFD166', size: 14 });
       SaveManager.save(this.playgama, this.saveData);
     });
   }
@@ -2359,7 +2360,7 @@ export class OrbitGuardGame {
           <div class="ws-desc">${upg.effect > 0 ? '+' : ''}${upg.effect * (upg.unit.includes('%') ? 100 : 1)}${upg.unit} per level</div>
         </div>
         <button class="ws-buy-btn" ${!canAfford ? 'disabled' : ''}>
-          ${isMax ? 'MAX' : `${cost} 💰`}
+          ${isMax ? 'MAX' : `${cost} G`}
         </button>
       `;
 
@@ -2491,7 +2492,7 @@ export class OrbitGuardGame {
 
     this.audio.playCoinDrop();
     this.particles.burst(ARENA.recycleSlot.x, ARENA.recycleSlot.y, 14, '#FFD166');
-    this.juice.spawnFloatingText(`+${refund} 💰`, ARENA.recycleSlot.x, ARENA.recycleSlot.y - 20, { color: '#FFD166', size: 16 });
+    this.juice.spawnFloatingText(`+${refund} G`, ARENA.recycleSlot.x, ARENA.recycleSlot.y - 20, { color: '#FFD166', size: 16 });
   }
 
   /* ==========================================================================
@@ -2697,7 +2698,7 @@ export class OrbitGuardGame {
       if (waveNum === 10) bossName = 'HYDRA QUEEN';
       else if (waveNum === 15) bossName = 'CHRONO WRAITH';
       else if (waveNum > 15) bossName = 'OVERDRIVE TITAN';
-      this.showWaveBanner(`⚠️ BOSS WAVE ${waveNum}`, `${bossName} INCOMING`, 2.8);
+      this.showWaveBanner(`BOSS WAVE ${waveNum}`, `${bossName} DETECTED`, 2.8);
       this.audio.playBossRoar();
       this.juice.screenShake(6);
     } else {
@@ -2876,7 +2877,7 @@ export class OrbitGuardGame {
       const finalBounty = Math.floor(bounty * this.getWorkshopStat('goldBonus'));
       this.addGold(finalBounty);
       this.audio.playVictoryFanfare();
-      this.showWaveBanner(`WAVE ${this.wave} CLEARED!`, `+${finalBounty} 💰 BOUNTY`, 2.5);
+      this.showWaveBanner(`WAVE ${this.wave} CLEARED!`, `+${finalBounty} CREDITS`, 2.5);
     }
 
     if (this.waveState === 'WAVE_CLEARED') {
@@ -3130,7 +3131,7 @@ export class OrbitGuardGame {
     if (damageType === 'tesla_chain' && enemy.chilledTimer > 0) {
       finalDmg *= 2.0; // +100% damage bonus
       this.particles.burst(enemy.x, enemy.y, 16, '#00F5D4');
-      this.juice.spawnFloatingText('⚡ SUPERCONDUCTOR (+100%)!', enemy.x, enemy.y - 18, { color: '#00F5D4', size: 15 });
+      this.juice.spawnFloatingText('SUPERCONDUCTOR (+100%)!', enemy.x, enemy.y - 18, { color: '#00F5D4', size: 15 });
       this.audio.playTeslaCrackle();
       enemy.stunTimer = Math.max(enemy.stunTimer || 0, 0.4);
     }
@@ -3141,7 +3142,7 @@ export class OrbitGuardGame {
       finalDmg += burnBurst;
       enemy.burnTimer = 0;
       this.particles.burst(enemy.x, enemy.y, 20, '#FF9E00');
-      this.juice.spawnFloatingText('🔥 THERMAL DETONATION!', enemy.x, enemy.y - 22, { color: '#FF9E00', size: 15 });
+      this.juice.spawnFloatingText('THERMAL DETONATION!', enemy.x, enemy.y - 22, { color: '#FF9E00', size: 15 });
       this.juice.screenShake(4);
     }
 
@@ -3321,7 +3322,7 @@ export class OrbitGuardGame {
     const btnDoubleGold = document.getElementById('btn-go-double-gold');
     if (btnDoubleGold) {
       btnDoubleGold.disabled = false;
-      btnDoubleGold.textContent = '🎁 2X RUN GOLD (WATCH AD)';
+      btnDoubleGold.textContent = 'DOUBLE CREDITS (AIRDROP)';
     }
 
     document.getElementById('game-over-modal')?.classList.remove('hidden');
@@ -3449,8 +3450,8 @@ export class OrbitGuardGame {
       else if (pct < 60) hpFill.classList.add('warning');
     }
 
-    if (buyCost) buyCost.textContent = `${this.getSummonCost()} 💰`;
-    if (repairCost) repairCost.textContent = `${this.getRepairCost()} 💰`;
+    if (buyCost) buyCost.textContent = `${this.getSummonCost()} G`;
+    if (repairCost) repairCost.textContent = `${this.getRepairCost()} G`;
 
     if (surgeMeter && btnSurge) {
       if (this.surgeCooldown <= 0) {
