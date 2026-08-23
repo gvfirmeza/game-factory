@@ -1,6 +1,7 @@
 /* =========================================================================
    ORBIT GUARD — TACTICAL COMMAND DECK UI STYLESHEET
-   Handcrafted, Solid-State Sci-Fi UI (Zero AI Glassmorphism / Zero Blur Slop)
+   Authentic Military/Tactical Sci-Fi Aesthetic (Grounded Gunmetal & Amber Gold)
+   Zero Neon Wireframe Slop / Zero AI Glassmorphism
    ========================================================================= */
 
 * {
@@ -11,7 +12,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   scrollbar-width: thin;
-  scrollbar-color: #00E5FF #161B26;
+  scrollbar-color: #D97706 #141B2B;
 }
 
 .hidden {
@@ -24,40 +25,42 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B0E14;
+  background: #080B11;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2563EB;
+  background: #334155;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00E5FF;
+  background: #F59E0B;
 }
 
 :root {
-  --bg-deep: #06080E;
-  --bg-panel: #0E131F;
-  --bg-card: #151D2C;
-  --bg-card-hover: #1C273A;
+  --bg-deep: #080B11;
+  --bg-panel: #0E1420;
+  --bg-card: #141B2B;
+  --bg-card-hover: #1A2438;
   
-  --border-subtle: #222F46;
-  --border-focus: #00E5FF;
-  --border-gold: #F59E0B;
+  --border-subtle: #243047;
+  --border-focus: #F59E0B;
+  --border-steel: #38BDF8;
   
-  --cyan: #00E5FF;
-  --cyan-dark: #0891B2;
+  --primary: #F59E0B;
+  --primary-hover: #D97706;
+  --steel: #38BDF8;
+  --steel-dark: #0284C7;
   --emerald: #10B981;
   --gold: #F59E0B;
-  --gold-light: #FCD34D;
+  --gold-light: #FDE68A;
   --crimson: #EF4444;
-  --purple: #A855F7;
+  --indigo: #6366F1;
   
-  --text-main: #F8FAFC;
+  --text-main: #F1F5F9;
   --text-muted: #94A3B8;
-  --text-dark: #0B0E14;
+  --text-dark: #080B11;
 }
 
 html, body {
@@ -85,7 +88,7 @@ html, body {
 canvas {
   display: block;
   background-color: var(--bg-deep);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.9), 0 0 0 1px #1E293B;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.95), 0 0 0 1px #1E293B;
   border-radius: 4px;
 }
 
@@ -104,7 +107,7 @@ canvas {
   padding: 6px 10px;
   z-index: 50;
   pointer-events: none;
-  background: #0B0E14;
+  background: #0A0E17;
   border-bottom: 2px solid var(--border-subtle);
   box-sizing: border-box;
 }
@@ -123,9 +126,9 @@ canvas {
   border-radius: 6px;
   background: var(--bg-card);
   border: 1.5px solid var(--border-subtle);
-  border-bottom: 3px solid #0B0E14;
-  color: var(--cyan);
-  font-size: 0.90rem;
+  border-bottom: 3px solid #080B11;
+  color: var(--steel);
+  font-size: 0.85rem;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   display: flex;
@@ -138,7 +141,7 @@ canvas {
 
 .ctrl-btn:hover {
   background: var(--bg-card-hover);
-  border-color: var(--cyan);
+  border-color: var(--gold);
 }
 
 .ctrl-btn:active {
@@ -152,8 +155,8 @@ canvas {
 }
 
 .btn-speed.speed-2x {
-  color: var(--cyan);
-  border-color: var(--cyan);
+  color: var(--steel);
+  border-color: var(--steel);
 }
 
 .btn-speed.speed-3x {
@@ -164,7 +167,7 @@ canvas {
 .btn-airdrop {
   border-color: var(--gold);
   color: var(--gold);
-  background: #271E0B;
+  background: #241A0B;
 }
 
 /* Header Center Info Display */
@@ -203,7 +206,7 @@ canvas {
 }
 
 .wave-pill .pill-num {
-  color: var(--cyan);
+  color: var(--gold);
 }
 
 .gold-pill .gold-symbol {
@@ -246,7 +249,7 @@ canvas {
 .core-track-bg {
   width: 100%;
   height: 6px;
-  background: #0B0E14;
+  background: #080B11;
   border-radius: 2px;
   overflow: hidden;
 }
@@ -280,7 +283,7 @@ canvas {
   padding: 8px 10px 12px 10px;
   z-index: 40;
   pointer-events: auto;
-  background: #0B0E14;
+  background: #0A0E17;
   border-top: 2px solid var(--border-subtle);
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
@@ -312,11 +315,11 @@ canvas {
   height: 20px;
   display: block;
   flex-shrink: 0;
-  color: var(--cyan);
+  color: var(--steel);
 }
 
 .btn-surge .deck-icon {
-  color: var(--cyan);
+  color: var(--gold);
 }
 
 .btn-repair .deck-icon {
@@ -324,7 +327,7 @@ canvas {
 }
 
 .btn-workshop .deck-icon {
-  color: var(--gold);
+  color: var(--steel);
 }
 
 .summon-icon {
@@ -354,7 +357,7 @@ canvas {
   border-radius: 6px;
   background: var(--bg-card);
   border: 1.5px solid var(--border-subtle);
-  border-bottom: 3px solid #06080E;
+  border-bottom: 3px solid #080B11;
   color: var(--text-main);
   cursor: pointer;
   transition: transform 0.08s ease, background 0.08s ease, border-color 0.08s ease;
@@ -362,7 +365,7 @@ canvas {
 
 .deck-btn:hover {
   background: var(--bg-card-hover);
-  border-color: var(--cyan);
+  border-color: var(--gold);
 }
 
 .deck-btn:active {
@@ -391,8 +394,8 @@ canvas {
 }
 
 .btn-surge.ready {
-  border-color: var(--cyan);
-  background: #0C212E;
+  border-color: var(--gold);
+  background: #251B0B;
 }
 
 /* Primary Big Summon Sentinel Button */
@@ -404,16 +407,16 @@ canvas {
   width: 100%;
   height: 46px;
   border-radius: 8px;
-  background: #0284C7;
-  border: 2px solid var(--cyan);
-  border-bottom: 4px solid #0369A1;
+  background: #D97706;
+  border: 2px solid #F59E0B;
+  border-bottom: 4px solid #92400E;
   color: #FFFFFF;
   cursor: pointer;
   transition: transform 0.08s ease, background 0.08s ease;
 }
 
 .btn-summon-main:hover {
-  background: #0369A1;
+  background: #B45309;
 }
 
 .btn-summon-main:active {
@@ -425,103 +428,99 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  font-family: 'Orbitron', monospace;
-  font-weight: 900;
-  font-size: 0.90rem;
-  letter-spacing: 0.5px;
+  gap: 8px;
 }
 
 .summon-title {
-  color: #FFFFFF;
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
 }
 
 .summon-badge {
-  background: #0B0E14;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: #78350F;
   border: 1px solid var(--gold);
   border-radius: 4px;
-  padding: 2px 6px;
-  color: var(--gold);
-  font-size: 0.80rem;
+  padding: 2px 8px;
 }
 
 /* =========================================================================
-   3. WAVE BANNER (Clean Banner)
+   3. WAVE BANNER NOTIFICATION (Matte Alert Panel)
    ========================================================================= */
 .wave-banner {
   position: absolute;
-  top: 140px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  z-index: 70;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .wave-banner.hidden {
   opacity: 0;
-  transform: scale(0.9);
+  transform: translateX(-50%) translateY(-15px);
 }
 
 .wave-banner-content {
-  background: #0E131F;
-  border: 2px solid var(--cyan);
-  border-radius: 8px;
-  padding: 8px 20px;
+  background: #0E1420;
+  border: 1.5px solid var(--gold);
+  border-radius: 6px;
+  padding: 8px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  gap: 2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
 }
 
 .banner-sub {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.80rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: var(--cyan);
+  font-family: 'Orbitron', monospace;
+  font-size: 0.60rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
 }
 
 .banner-title {
   font-family: 'Orbitron', monospace;
   font-size: 1.25rem;
   font-weight: 900;
-  color: #FFFFFF;
+  color: var(--gold);
+  letter-spacing: 1px;
 }
 
 /* =========================================================================
-   4. MODALS & TITLE OVERLAYS (Solid Slate Command Panels)
+   4. MODALS & TITLE OVERLAYS (Solid Matte Dark Cards)
    ========================================================================= */
 .modal-overlay, .title-overlay {
   position: absolute;
-  inset: 0;
-  background: rgba(6, 8, 14, 0.92);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 11, 17, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
-  z-index: 80;
-  transition: opacity 0.2s ease;
-}
-
-.modal-overlay.hidden, .title-overlay.hidden {
-  opacity: 0;
-  pointer-events: none;
+  z-index: 100;
 }
 
 .modal-card, .title-card {
+  background: #0E1420;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 10px;
   width: 100%;
   max-width: 380px;
-  background: #0E131F;
-  border: 2px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 20px 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95);
 }
 
 .title-card {
@@ -534,8 +533,8 @@ canvas {
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 1px;
-  color: var(--cyan);
-  background: #151D2C;
+  color: var(--gold);
+  background: #141B2B;
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   padding: 3px 10px;
@@ -563,7 +562,7 @@ canvas {
 }
 
 .rec-card {
-  background: #151D2C;
+  background: #141B2B;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 8px;
@@ -606,6 +605,9 @@ canvas {
   font-size: 0.95rem;
   letter-spacing: 1px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.08s ease, background 0.08s ease;
 }
 
@@ -628,20 +630,23 @@ canvas {
 .btn-secondary-action {
   height: 38px;
   border-radius: 6px;
-  background: #151D2C;
+  background: #141B2B;
   border: 1.5px solid var(--border-subtle);
-  border-bottom: 3px solid #0B0E14;
+  border-bottom: 3px solid #080B11;
   color: var(--text-main);
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   font-size: 0.74rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.08s ease, background 0.08s ease, border-color 0.08s ease;
 }
 
 .btn-secondary-action:hover {
   background: var(--bg-card-hover);
-  border-color: var(--cyan);
+  border-color: var(--gold);
 }
 
 .btn-secondary-action:active {
@@ -656,13 +661,13 @@ canvas {
   width: 100%;
 }
 
-.chip {
-  background: #151D2C;
+.title-guide-chips .chip {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: #141B2B;
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
-  padding: 5px 8px;
-  font-size: 0.76rem;
-  color: var(--text-muted);
+  padding: 4px 8px;
 }
 
 /* Modal Headers */
@@ -670,6 +675,14 @@ canvas {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  border-bottom: 1.5px solid var(--border-subtle);
+  padding-bottom: 10px;
+}
+
+.modal-title-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .modal-heading {
@@ -680,33 +693,36 @@ canvas {
 }
 
 .modal-subheading {
-  font-size: 0.80rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 
 .modal-gold-chip {
-  background: #151D2C;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #241A0B;
   border: 1px solid var(--gold);
   border-radius: 6px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
+  font-size: 0.85rem;
   color: var(--gold);
-  font-size: 0.80rem;
 }
 
-/* Workshop Scrollable List */
+/* Workshop Upgrade Scroll List */
 .workshop-scroll-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   max-height: 280px;
   overflow-y: auto;
   padding-right: 4px;
 }
 
 .ws-item {
-  background: #151D2C;
+  background: #141B2B;
   border: 1.5px solid var(--border-subtle);
   border-radius: 6px;
   padding: 8px 10px;
@@ -737,9 +753,9 @@ canvas {
 .ws-buy-btn {
   padding: 6px 10px;
   border-radius: 4px;
-  background: #0284C7;
-  border: 1px solid var(--cyan);
-  border-bottom: 2px solid #0369A1;
+  background: #D97706;
+  border: 1px solid var(--gold);
+  border-bottom: 2px solid #92400E;
   color: #FFFFFF;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
@@ -749,7 +765,7 @@ canvas {
 }
 
 .ws-buy-btn:hover:not(:disabled) {
-  background: #0369A1;
+  background: #B45309;
 }
 
 .ws-buy-btn:active:not(:disabled) {
@@ -764,14 +780,38 @@ canvas {
   color: var(--text-muted);
 }
 
+.workshop-ad-grant-btn {
+  width: 100%;
+  height: 38px;
+  border-radius: 6px;
+  background: #241A0B;
+  border: 1.5px solid var(--gold);
+  border-bottom: 3px solid #92400E;
+  color: var(--gold);
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.08s ease;
+}
+
+.workshop-ad-grant-btn:hover {
+  background: #3B280E;
+}
+
+.workshop-ad-grant-btn:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
 /* Modal Bottom Primary Button */
 .btn-modal-primary {
   width: 100%;
   height: 42px;
   border-radius: 6px;
-  background: #0284C7;
-  border: 1.5px solid var(--cyan);
-  border-bottom: 3px solid #0369A1;
+  background: #D97706;
+  border: 1.5px solid var(--gold);
+  border-bottom: 3px solid #92400E;
   color: #FFFFFF;
   font-family: 'Orbitron', monospace;
   font-weight: 900;
@@ -781,7 +821,7 @@ canvas {
 }
 
 .btn-modal-primary:hover {
-  background: #0369A1;
+  background: #B45309;
 }
 
 .btn-modal-primary:active {
@@ -793,9 +833,9 @@ canvas {
   width: 100%;
   height: 38px;
   border-radius: 6px;
-  background: #151D2C;
+  background: #141B2B;
   border: 1.5px solid var(--border-subtle);
-  border-bottom: 3px solid #0B0E14;
+  border-bottom: 3px solid #080B11;
   color: var(--text-main);
   font-family: 'Orbitron', monospace;
   font-weight: 700;
@@ -806,7 +846,7 @@ canvas {
 
 .btn-modal-secondary:hover {
   background: var(--bg-card-hover);
-  border-color: var(--cyan);
+  border-color: var(--gold);
 }
 
 .btn-modal-secondary:active {
@@ -834,7 +874,7 @@ canvas {
 .guide-step {
   display: flex;
   gap: 10px;
-  background: #151D2C;
+  background: #141B2B;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 8px 10px;
@@ -847,7 +887,7 @@ canvas {
   justify-content: center;
   width: 34px;
   height: 34px;
-  background: #0B0E14;
+  background: #080B11;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   flex-shrink: 0;
@@ -862,7 +902,7 @@ canvas {
 .guide-step-text h4 {
   font-family: 'Orbitron', monospace;
   font-size: 0.76rem;
-  color: var(--cyan);
+  color: var(--gold);
   margin-bottom: 2px;
 }
 
@@ -901,7 +941,7 @@ canvas {
 }
 
 .summary-cell {
-  background: #151D2C;
+  background: #141B2B;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 6px 8px;
@@ -924,54 +964,55 @@ canvas {
   color: var(--gold);
 }
 
-/* Rewarded Ad / Action Buttons */
-.workshop-ad-grant-btn {
-  background: #1F192C;
-  border: 1.5px solid var(--purple);
-  border-bottom: 3px solid #0B0E14;
+.btn-modal-revive {
+  width: 100%;
+  height: 42px;
   border-radius: 6px;
-  padding: 8px 10px;
+  background: #10B981;
+  border: 1.5px solid #34D399;
+  border-bottom: 3px solid #059669;
+  color: #FFFFFF;
   font-family: 'Orbitron', monospace;
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: var(--gold);
+  font-weight: 900;
+  font-size: 0.85rem;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
+  transition: transform 0.08s ease;
 }
 
-.btn-modal-revive {
-  background: #10B981;
-  border: 2px solid #34D399;
-  border-bottom: 4px solid #059669;
-  border-radius: 6px;
-  padding: 10px 12px;
-  font-family: 'Orbitron', monospace;
-  font-size: 0.82rem;
-  font-weight: 900;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
+.btn-modal-revive:hover {
+  background: #059669;
+}
+
+.btn-modal-revive:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
 }
 
 .btn-modal-reward {
-  background: #271E0B;
-  border: 1.5px solid var(--gold);
-  border-bottom: 3px solid #0B0E14;
+  width: 100%;
+  height: 40px;
   border-radius: 6px;
-  padding: 8px 10px;
-  font-family: 'Orbitron', monospace;
-  font-size: 0.78rem;
-  font-weight: 800;
+  background: #241A0B;
+  border: 1.5px solid var(--gold);
+  border-bottom: 3px solid #92400E;
   color: var(--gold);
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 0.82rem;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
+  transition: transform 0.08s ease;
+}
+
+.btn-modal-reward:hover {
+  background: #3B280E;
+}
+
+.btn-modal-reward:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
+.btn-modal-reward:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

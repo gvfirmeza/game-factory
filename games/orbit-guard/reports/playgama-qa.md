@@ -1,7 +1,7 @@
 # Playgama QA Report: orbit-guard
 
-**Timestamp:** 2026-08-23T17:20:57.429Z  
-**Status:** **PLAYGAMA_READY: YES**
+**Timestamp:** 2026-08-23T17:43:08.927Z  
+**Status:** **PLAYGAMA_READY: NO**
 
 ---
 
@@ -19,7 +19,7 @@
 - File size: PASS
 - Asset integrity: PASS
 - External dependencies: PASS
-- Runtime stability: PASS
+- Runtime stability: FAIL
 
 ## User Experience (UX)
 - Responsive: PASS
@@ -39,10 +39,10 @@
 
 ## Final Verdict
 
-**PLAYGAMA_READY:** **YES**
+**PLAYGAMA_READY:** **NO**
 
 ### Blocking Issues:
-- None (0 blocking issues)
+- ❌ Runtime execution exception in extracted build: Identifier 'bgGrad' has already been declared
 
 ### Warnings:
 - None

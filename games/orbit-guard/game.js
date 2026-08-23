@@ -57,20 +57,20 @@ export const ARENA = {
 };
 
 export const TIERS = [
-  { tier: 1, badge: 'T1', border: '#D97706', glow: 'rgba(217, 119, 6, 0.40)',   dpsMult: 1.00, rangeBonus: 0,  label: 'T1 Bronze' },
-  { tier: 2, badge: 'T2', border: '#E2E8F0', glow: 'rgba(226, 232, 240, 0.45)', dpsMult: 2.25, rangeBonus: 15, label: 'T2 Silver' },
-  { tier: 3, badge: 'T3', border: '#F59E0B', glow: 'rgba(245, 158, 11, 0.60)',  dpsMult: 5.10, rangeBonus: 30, label: 'T3 Gold' },
-  { tier: 4, badge: 'T4', border: '#10B981', glow: 'rgba(16, 185, 129, 0.70)',  dpsMult: 11.5, rangeBonus: 45, label: 'T4 Emerald' },
-  { tier: 5, badge: 'T5', border: '#A855F7', glow: 'rgba(168, 85, 247, 0.80)',  dpsMult: 26.0, rangeBonus: 60, label: 'T5 Void' },
-  { tier: 6, badge: 'T6', border: '#00F5D4', glow: 'rgba(0, 245, 212, 0.95)',   dpsMult: 60.0, rangeBonus: 80, label: 'T6 Celestial' }
+  { tier: 1, badge: 'T1', border: '#D97706', glow: 'rgba(217, 119, 6, 0.20)',   dpsMult: 1.00, rangeBonus: 0,  label: 'T1 Bronze' },
+  { tier: 2, badge: 'T2', border: '#94A3B8', glow: 'rgba(148, 163, 184, 0.22)', dpsMult: 2.25, rangeBonus: 15, label: 'T2 Steel' },
+  { tier: 3, badge: 'T3', border: '#F59E0B', glow: 'rgba(245, 158, 11, 0.25)',  dpsMult: 5.10, rangeBonus: 30, label: 'T3 Gold' },
+  { tier: 4, badge: 'T4', border: '#38BDF8', glow: 'rgba(56, 189, 248, 0.30)',  dpsMult: 11.5, rangeBonus: 45, label: 'T4 Cobalt' },
+  { tier: 5, badge: 'T5', border: '#818CF8', glow: 'rgba(129, 140, 248, 0.35)', dpsMult: 26.0, rangeBonus: 60, label: 'T5 Void' },
+  { tier: 6, badge: 'T6', border: '#F43F5E', glow: 'rgba(244, 63, 94, 0.40)',   dpsMult: 60.0, rangeBonus: 80, label: 'T6 Overdrive' }
 ];
 
 export const ARCHETYPES = {
   ballista_archer: {
     id: 'ballista_archer',
-    name: 'Ballista Archer',
-    role: 'Solar Sniper',
-    color: '#F59E0B',
+    name: 'Ballista Railgun',
+    role: 'Tungsten Sniper',
+    color: '#D97706',
     baseRange: 240,
     baseDamage: 18,
     baseRate: 1.6,
@@ -87,9 +87,9 @@ export const ARCHETYPES = {
   },
   heavy_cannon: {
     id: 'heavy_cannon',
-    name: 'Heavy Cannon',
-    role: 'Crimson Plasma Mortar',
-    color: '#EF4444',
+    name: 'Siege Mortar',
+    role: 'Artillery Plasma',
+    color: '#EA580C',
     baseRange: 200,
     baseDamage: 45,
     baseRate: 0.6,
@@ -106,9 +106,9 @@ export const ARCHETYPES = {
   },
   arcane_mage: {
     id: 'arcane_mage',
-    name: 'Arcane Mage',
-    role: 'Arcane Tesla Caster',
-    color: '#A855F7',
+    name: 'Tesla Pylon',
+    role: 'Superconductor Arcs',
+    color: '#6366F1',
     baseRange: 170,
     baseDamage: 22,
     baseRate: 1.1,
@@ -125,9 +125,9 @@ export const ARCHETYPES = {
   },
   frost_warden: {
     id: 'frost_warden',
-    name: 'Frost Warden',
-    role: 'Glacial Cryo Emitter',
-    color: '#06B6D4',
+    name: 'Cryo Emitter',
+    role: 'Permafrost Field',
+    color: '#38BDF8',
     baseRange: 140,
     baseDamage: 8,
     baseRate: 1.0,
@@ -144,9 +144,9 @@ export const ARCHETYPES = {
   },
   shadow_assassin: {
     id: 'shadow_assassin',
-    name: 'Shadow Assassin',
-    role: 'Jade Critical Shredder',
-    color: '#10B981',
+    name: 'Vibro Interceptor',
+    role: 'Carbon Armor Shredder',
+    color: '#E11D48',
     baseRange: 100,
     baseDamage: 32,
     baseRate: 2.2,
@@ -164,15 +164,15 @@ export const ARCHETYPES = {
 };
 
 export const ENEMY_TYPES = {
-  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 110,  speedDeg: 42, armor: 0.00, coreDmg: 15, gold: 4,   radius: 12, color: '#76FF03' },
-  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 65,   speedDeg: 85, armor: 0.00, coreDmg: 12, gold: 5,   radius: 10, color: '#FFD600' },
-  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 420,  speedDeg: 26, armor: 0.40, coreDmg: 35, gold: 14,  radius: 18, color: '#D50000' },
-  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 240,  speedDeg: 36, armor: 0.00, coreDmg: 20, gold: 12,  radius: 16, color: '#AA00FF', splitCount: 5 },
-  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 35,   speedDeg: 72, armor: 0.00, coreDmg: 6,  gold: 2,   radius: 6,  color: '#00E676' },
-  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 300,  speedDeg: 28, armor: 0.10, coreDmg: 25, gold: 16,  radius: 14, color: '#00B0FF', shootCooldown: 4.5 },
-  iron_colossus:  { id: 'iron_colossus',  name: 'Iron Colossus',  baseHp: 5500, speedDeg: 20, armor: 0.25, coreDmg: 60, gold: 80,  radius: 30, color: '#EF4444' },
-  hydra_queen:    { id: 'hydra_queen',    name: 'Hydra Queen',    baseHp: 14000,speedDeg: 24, armor: 0.00, coreDmg: 70, gold: 140, radius: 32, color: '#10B981' },
-  chrono_wraith:  { id: 'chrono_wraith',  name: 'Chrono Wraith',  baseHp: 32000,speedDeg: 28, armor: 0.00, coreDmg: 80, gold: 200, radius: 34, color: '#A855F7' }
+  void_crawler:   { id: 'void_crawler',   name: 'Void Crawler',   baseHp: 110,  speedDeg: 42, armor: 0.00, coreDmg: 15, gold: 4,   radius: 12, color: '#78716C' },
+  swift_dart:     { id: 'swift_dart',     name: 'Swift Dart',     baseHp: 65,   speedDeg: 85, armor: 0.00, coreDmg: 12, gold: 5,   radius: 10, color: '#BE123C' },
+  armored_bruiser:{ id: 'armored_bruiser',name: 'Armored Bruiser',baseHp: 420,  speedDeg: 26, armor: 0.40, coreDmg: 35, gold: 14,  radius: 18, color: '#B45309' },
+  swarm_pod:      { id: 'swarm_pod',      name: 'Swarm Pod',      baseHp: 240,  speedDeg: 36, armor: 0.00, coreDmg: 20, gold: 12,  radius: 16, color: '#4D7C0F', splitCount: 5 },
+  void_mite:      { id: 'void_mite',      name: 'Void Mite',      baseHp: 35,   speedDeg: 72, armor: 0.00, coreDmg: 6,  gold: 2,   radius: 6,  color: '#65A30D' },
+  void_slinger:   { id: 'void_slinger',   name: 'Void Slinger',   baseHp: 300,  speedDeg: 28, armor: 0.10, coreDmg: 25, gold: 16,  radius: 14, color: '#4338CA', shootCooldown: 4.5 },
+  iron_colossus:  { id: 'iron_colossus',  name: 'Iron Colossus',  baseHp: 5500, speedDeg: 20, armor: 0.25, coreDmg: 60, gold: 80,  radius: 30, color: '#334155' },
+  hydra_queen:    { id: 'hydra_queen',    name: 'Hydra Queen',    baseHp: 14000,speedDeg: 24, armor: 0.00, coreDmg: 70, gold: 140, radius: 32, color: '#065F46' },
+  chrono_wraith:  { id: 'chrono_wraith',  name: 'Chrono Wraith',  baseHp: 32000,speedDeg: 28, armor: 0.00, coreDmg: 80, gold: 200, radius: 34, color: '#312E81' }
 };
 
 export const WORKSHOP_DEFS = [
@@ -497,30 +497,38 @@ export function drawCosmicBackground(ctx, width, height, animTime, stars) {
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, width, height);
 
-  // Distant Nebula Gas Clouds
+  // Distant Deep Space Tactical Starfield
   ctx.save();
-  const neb1 = ctx.createRadialGradient(width * 0.3, height * 0.35, 10, width * 0.3, height * 0.35, 180);
-  neb1.addColorStop(0, 'rgba(168, 85, 247, 0.16)');
-  neb1.addColorStop(0.6, 'rgba(59, 130, 246, 0.08)');
-  neb1.addColorStop(1, 'rgba(0, 0, 0, 0)');
-  ctx.fillStyle = neb1;
+  const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
+  bgGrad.addColorStop(0, '#06090F');
+  bgGrad.addColorStop(0.5, '#0A0E17');
+  bgGrad.addColorStop(1, '#080C14');
+  ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, width, height);
 
-  const neb2 = ctx.createRadialGradient(width * 0.7, height * 0.55, 10, width * 0.7, height * 0.55, 190);
-  neb2.addColorStop(0, 'rgba(0, 229, 255, 0.15)');
-  neb2.addColorStop(0.5, 'rgba(16, 185, 129, 0.07)');
-  neb2.addColorStop(1, 'rgba(0, 0, 0, 0)');
-  ctx.fillStyle = neb2;
-  ctx.fillRect(0, 0, width, height);
-  ctx.restore();
+  // Subtle tactical coordinate grid
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+  ctx.lineWidth = 1;
+  const gridSize = 45;
+  for (let x = 0; x < width; x += gridSize) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, height);
+    ctx.stroke();
+  }
+  for (let y = 0; y < height; y += gridSize) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(width, y);
+    ctx.stroke();
+  }
 
-  // Twinkling Starfield
-  ctx.save();
+  // Tactical star dust
   for (let i = 0; i < stars.length; i++) {
     const s = stars[i];
-    const twinkle = 0.4 + Math.sin(animTime * s.speed + s.phase) * 0.4;
-    ctx.fillStyle = s.color;
-    ctx.globalAlpha = twinkle;
+    const twinkle = 0.3 + Math.sin(animTime * s.speed + s.phase) * 0.3;
+    ctx.fillStyle = '#94A3B8';
+    ctx.globalAlpha = twinkle * 0.7;
     ctx.fillRect(s.x, s.y, s.size, s.size);
   }
   ctx.restore();
@@ -529,15 +537,15 @@ export function drawCosmicBackground(ctx, width, height, animTime, stars) {
 export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.save();
 
-  // 1. Cosmic Orbital Incursion Highway (Outer Path - stays cleanly outside defenders)
+  // 1. Orbital Defense Incursion Track (Subtle industrial spiral)
   ctx.save();
   const startAngle = -Math.PI / 2; // North Warp Gate (225, 105)
   const totalRotations = 1.35 * Math.PI * 2; // ~485 degrees loop
   const steps = 80;
 
-  // A. Soft Translucent Highway Corridor
-  ctx.lineWidth = 16;
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.05)';
+  // A. Matte Highway Track
+  ctx.lineWidth = 14;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
   ctx.beginPath();
   for (let i = 0; i <= steps; i++) {
     const t = i / steps;
@@ -550,11 +558,11 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   }
   ctx.stroke();
 
-  // B. Sleek Neon Guide Rail with smooth flowing energy pulse
-  ctx.lineWidth = 1.6;
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.35)';
-  ctx.setLineDash([8, 12]);
-  ctx.lineDashOffset = -animTime * 24;
+  // B. Tactical Guide Rail with subtle tick marks
+  ctx.lineWidth = 1.4;
+  ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+  ctx.setLineDash([6, 10]);
+  ctx.lineDashOffset = -animTime * 18;
   ctx.beginPath();
   for (let i = 0; i <= steps; i++) {
     const t = i / steps;
@@ -570,14 +578,14 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.restore();
 
   // 2. Defense Bastion Perimeter Ring (Connecting the 8 Defense Slots)
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.22)';
+  ctx.strokeStyle = 'rgba(148, 163, 184, 0.20)';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.arc(xc, yc, ARENA.orbitRadius, 0, Math.PI * 2);
   ctx.stroke();
 
   // 3. Inner Core Breach Danger Ring
-  ctx.strokeStyle = 'rgba(239, 68, 68, 0.40)';
+  ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
   ctx.lineWidth = 1.2;
   ctx.setLineDash([4, 4]);
   ctx.beginPath();
@@ -585,66 +593,55 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // Soft Danger Glow at Core
-  const dangerGrad = ctx.createRadialGradient(xc, yc, ARENA.coreRadius - 5, xc, yc, ARENA.coreRadius + 12);
-  dangerGrad.addColorStop(0, 'rgba(239, 68, 68, 0.25)');
-  dangerGrad.addColorStop(1, 'rgba(239, 68, 68, 0)');
-  ctx.fillStyle = dangerGrad;
-  ctx.beginPath();
-  ctx.arc(xc, yc, ARENA.coreRadius + 12, 0, Math.PI * 2);
-  ctx.fill();
-
-  // 4. Single North Spawn Warp Gate - Sleek Cosmic Singularity Gate
+  // 4. North Spawn Warp Gate - Heavy Industrial Ring
   const portal = ARENA.portals[0];
   if (portal) {
-    const pulse = 0.5 + Math.sin(animTime * 3) * 0.5;
-    
-    // Soft outer nebula beacon
-    const pGrad = ctx.createRadialGradient(portal.x, portal.y, 2, portal.x, portal.y, 18);
-    pGrad.addColorStop(0, 'rgba(239, 68, 68, 0.6)');
-    pGrad.addColorStop(0.6, 'rgba(168, 85, 247, 0.25)');
-    pGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = pGrad;
-    ctx.beginPath();
-    ctx.arc(portal.x, portal.y, 18, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Rotating Hologram Ring
     ctx.save();
     ctx.translate(portal.x, portal.y);
-    ctx.rotate(animTime * 2.0);
-    ctx.strokeStyle = '#EF4444';
-    ctx.lineWidth = 1.8;
+    
+    // Heavy gunmetal collar
+    ctx.fillStyle = '#141B2B';
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(0, 0, 9, 0, Math.PI * 0.65);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(0, 0, 9, Math.PI, Math.PI * 1.65);
+    ctx.arc(0, 0, 14, 0, Math.PI * 2);
+    ctx.fill();
     ctx.stroke();
 
-    // Core pulsing singularity
-    ctx.fillStyle = '#00F5D4';
+    // Rotating containment ring
+    ctx.rotate(animTime * 1.5);
+    ctx.strokeStyle = '#D97706';
+    ctx.lineWidth = 1.8;
     ctx.beginPath();
-    ctx.arc(0, 0, 3 + pulse * 1.5, 0, Math.PI * 2);
+    ctx.arc(0, 0, 10, 0, Math.PI * 0.7);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, 10, Math.PI, Math.PI * 1.7);
+    ctx.stroke();
+
+    // Core singularity
+    ctx.fillStyle = '#F59E0B';
+    ctx.beginPath();
+    ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
 
   // 5. Standby Bench Rail (Bottom)
-  ctx.fillStyle = 'rgba(16, 22, 40, 0.85)';
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.32)';
+  ctx.fillStyle = '#0E1420';
+  ctx.strokeStyle = '#243047';
   ctx.lineWidth = 1.5;
-  drawRoundRect(ctx, 24, 478, 402, 74, 14);
+  drawRoundRect(ctx, 24, 478, 402, 74, 10);
   ctx.fill();
   ctx.stroke();
 
   // Bench Header Strip
   ctx.font = 'bold 8.5px Orbitron, sans-serif';
-  ctx.fillStyle = 'rgba(0, 229, 255, 0.85)';
+  ctx.fillStyle = '#94A3B8';
   ctx.textAlign = 'left';
   ctx.fillText('STANDBY BENCH', 36, 492);
 
-  ctx.fillStyle = 'rgba(239, 68, 68, 0.85)';
+  ctx.fillStyle = '#F59E0B';
   ctx.textAlign = 'right';
   ctx.fillText('RECYCLE 70%', 414, 492);
 
@@ -664,108 +661,84 @@ export function drawNexusCore(ctx, x, y, state = {}) {
   ctx.save();
   ctx.translate(x, y);
 
-  // 1. Ambient Cosmic Glow Halo
-  const pulseRadius = 52 + Math.sin(animTime * 3) * 6;
-  const coreGlow = ctx.createRadialGradient(0, 0, 10, 0, 0, pulseRadius + 15);
-  const glowColor = isDamaged ? 'rgba(239, 68, 68, ' : isSurging ? 'rgba(0, 245, 212, ' : 'rgba(0, 229, 255, ';
-  coreGlow.addColorStop(0, glowColor + '0.65)');
-  coreGlow.addColorStop(0.5, glowColor + '0.25)');
-  coreGlow.addColorStop(1, glowColor + '0)');
-  ctx.fillStyle = coreGlow;
+  // 1. Heavy Tokamak Generator Base
+  ctx.fillStyle = '#0F172A';
+  ctx.strokeStyle = isDamaged ? '#EF4444' : '#334155';
+  ctx.lineWidth = 2.5;
   ctx.beginPath();
-  ctx.arc(0, 0, pulseRadius + 15, 0, Math.PI * 2);
+  ctx.arc(0, 0, 42, 0, Math.PI * 2);
   ctx.fill();
+  ctx.stroke();
 
-  // 2. Outer Rotating Segmented Armor Ring (Counter-Clockwise)
+  // 2. Rotating Segmented Armor Brackets
   ctx.save();
-  ctx.rotate(-animTime * 0.4);
+  ctx.rotate(-animTime * 0.3);
   const outerSegments = 6;
-  ctx.lineWidth = 3.2;
-  ctx.strokeStyle = isDamaged ? '#EF4444' : '#1E293B';
+  ctx.lineWidth = 3.5;
+  ctx.strokeStyle = isDamaged ? '#DC2626' : '#1E293B';
   for (let i = 0; i < outerSegments; i++) {
     const startAngle = (i * Math.PI * 2) / outerSegments + 0.12;
     const endAngle = ((i + 1) * Math.PI * 2) / outerSegments - 0.12;
     ctx.beginPath();
-    ctx.arc(0, 0, 42, startAngle, endAngle);
+    ctx.arc(0, 0, 38, startAngle, endAngle);
     ctx.stroke();
 
     const midAngle = (startAngle + endAngle) / 2;
-    ctx.fillStyle = '#FFD166';
+    ctx.fillStyle = isSurging ? '#F59E0B' : '#64748B';
     ctx.beginPath();
-    ctx.arc(Math.cos(midAngle) * 42, Math.sin(midAngle) * 42, 2, 0, Math.PI * 2);
+    ctx.arc(Math.cos(midAngle) * 38, Math.sin(midAngle) * 38, 2, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.restore();
 
-  // 3. Inner Rotating Glyphic Ring (Clockwise)
+  // 3. Inner Magnetic Containment Torus
   ctx.save();
-  ctx.rotate(animTime * 0.7);
+  ctx.rotate(animTime * 0.5);
   const innerSegments = 4;
-  ctx.lineWidth = 2.2;
-  ctx.strokeStyle = '#00E5FF';
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = isSurging ? '#F59E0B' : '#94A3B8';
   for (let i = 0; i < innerSegments; i++) {
     const startAngle = (i * Math.PI * 2) / innerSegments + 0.18;
     const endAngle = ((i + 1) * Math.PI * 2) / innerSegments - 0.18;
     ctx.beginPath();
-    ctx.arc(0, 0, 30, startAngle, endAngle);
+    ctx.arc(0, 0, 26, startAngle, endAngle);
     ctx.stroke();
   }
   ctx.restore();
 
-  // 4. Central Celestial Crystal Generator (Faceted Diamond/Octagon)
-  const crystalGrad = ctx.createRadialGradient(-5, -5, 2, 0, 0, 22);
+  // 4. Central Solar Fusion Core
+  const coreGrad = ctx.createRadialGradient(-3, -3, 1, 0, 0, 18);
   if (hpPercent > 0.3) {
-    crystalGrad.addColorStop(0, '#FFFFFF');
-    crystalGrad.addColorStop(0.3, '#00F5D4');
-    crystalGrad.addColorStop(0.7, '#00E5FF');
-    crystalGrad.addColorStop(1, '#0891B2');
+    coreGrad.addColorStop(0, '#FFFBEB');
+    coreGrad.addColorStop(0.4, '#FDE68A');
+    coreGrad.addColorStop(0.7, '#F59E0B');
+    coreGrad.addColorStop(1, '#B45309');
   } else {
-    crystalGrad.addColorStop(0, '#FEE2E2');
-    crystalGrad.addColorStop(0.4, '#F87171');
-    crystalGrad.addColorStop(0.8, '#EF4444');
-    crystalGrad.addColorStop(1, '#7F1D1D');
+    coreGrad.addColorStop(0, '#FEE2E2');
+    coreGrad.addColorStop(0.4, '#F87171');
+    coreGrad.addColorStop(0.8, '#DC2626');
+    coreGrad.addColorStop(1, '#7F1D1D');
   }
 
-  ctx.fillStyle = crystalGrad;
+  ctx.fillStyle = coreGrad;
   ctx.strokeStyle = '#FFFFFF';
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
-  const points = 8;
-  const outerR = 20 + Math.sin(animTime * 5) * 1.5;
-  const innerR = outerR * 0.78;
-  for (let i = 0; i < points * 2; i++) {
-    const r = i % 2 === 0 ? outerR : innerR;
-    const angle = (i * Math.PI) / points;
-    const px = Math.cos(angle) * r;
-    const py = Math.sin(angle) * r;
-    if (i === 0) ctx.moveTo(px, py);
-    else ctx.lineTo(px, py);
-  }
-  ctx.closePath();
+  ctx.arc(0, 0, 16 + Math.sin(animTime * 4) * 1, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
-  // Facet Gleam Highlights
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
-  ctx.lineWidth = 1.2;
-  ctx.beginPath();
-  ctx.moveTo(0, -outerR);
-  ctx.lineTo(0, outerR);
-  ctx.moveTo(-outerR, 0);
-  ctx.lineTo(outerR, 0);
-  ctx.stroke();
-
   // 5. HP Arc Indicator Ring
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(15, 23, 42, 0.8)';
+  ctx.lineWidth = 3.5;
+  ctx.strokeStyle = 'rgba(30, 41, 59, 0.9)';
   ctx.beginPath();
-  ctx.arc(0, 0, 46, 0, Math.PI * 2);
+  ctx.arc(0, 0, 45, 0, Math.PI * 2);
   ctx.stroke();
 
   const hpArcLength = Math.PI * 2 * Math.max(0, Math.min(1, hpPercent));
   ctx.strokeStyle = hpPercent > 0.5 ? '#10B981' : hpPercent > 0.25 ? '#F59E0B' : '#EF4444';
   ctx.beginPath();
-  ctx.arc(0, 0, 46, -Math.PI / 2, -Math.PI / 2 + hpArcLength);
+  ctx.arc(0, 0, 45, -Math.PI / 2, -Math.PI / 2 + hpArcLength);
   ctx.stroke();
 
   ctx.restore();
@@ -777,16 +750,16 @@ export function drawSlotPad(ctx, slot, isOccupied = false, isHighlighted = false
 
   if (slot.id === 'recycle') {
     // Recycle Bin Pad
-    ctx.fillStyle = isHovered ? 'rgba(239, 68, 68, 0.45)' : 'rgba(15, 23, 42, 0.85)';
-    ctx.strokeStyle = isHovered ? '#FF5252' : 'rgba(239, 68, 68, 0.65)';
-    ctx.lineWidth = 2;
+    ctx.fillStyle = isHovered ? 'rgba(239, 68, 68, 0.25)' : '#0E1420';
+    ctx.strokeStyle = isHovered ? '#EF4444' : '#7F1D1D';
+    ctx.lineWidth = 1.8;
     ctx.beginPath();
     ctx.arc(0, 0, slot.radius || 24, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
     ctx.font = 'bold 9px Orbitron, sans-serif';
-    ctx.fillStyle = isHovered ? '#FF5252' : '#EF4444';
+    ctx.fillStyle = isHovered ? '#EF4444' : '#DC2626';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('SCRAP', 0, 0);
@@ -794,32 +767,28 @@ export function drawSlotPad(ctx, slot, isOccupied = false, isHighlighted = false
     return;
   }
 
-  // Regular Slot Pad
-  if (isHighlighted || isHovered) {
-    const glowR = 26 + Math.sin(Date.now() * 0.008) * 3;
-    const glow = ctx.createRadialGradient(0, 0, 8, 0, 0, glowR);
-    glow.addColorStop(0, isHovered ? 'rgba(0, 245, 212, 0.7)' : 'rgba(255, 209, 102, 0.5)');
-    glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = glow;
-    ctx.beginPath();
-    ctx.arc(0, 0, glowR, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  ctx.fillStyle = isOccupied ? 'rgba(15, 23, 42, 0.9)' : 'rgba(15, 23, 42, 0.5)';
-  ctx.strokeStyle = isHovered ? '#00F5D4' : isHighlighted ? '#FFD166' : 'rgba(56, 189, 248, 0.3)';
-  ctx.lineWidth = isHovered ? 2.5 : 1.5;
+  // Regular Slot Pad (Machined Tungsten Launch Pad)
+  ctx.fillStyle = isOccupied ? '#141B2B' : '#0E1420';
+  ctx.strokeStyle = isHovered ? '#F59E0B' : isHighlighted ? '#D97706' : '#243047';
+  ctx.lineWidth = isHovered ? 2.2 : 1.5;
   ctx.beginPath();
   ctx.arc(0, 0, 22, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
+  // Corner Rivets on Pad
+  ctx.fillStyle = '#64748B';
+  for (let i = 0; i < 4; i++) {
+    const a = (i * Math.PI) / 2 + Math.PI / 4;
+    ctx.fillRect(Math.cos(a) * 16 - 1, Math.sin(a) * 16 - 1, 2, 2);
+  }
+
   if (!isOccupied) {
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.18)';
     ctx.lineWidth = 1;
     ctx.setLineDash([2, 2]);
     ctx.beginPath();
-    ctx.arc(0, 0, 16, 0, Math.PI * 2);
+    ctx.arc(0, 0, 14, 0, Math.PI * 2);
     ctx.stroke();
     ctx.setLineDash([]);
   }
@@ -832,29 +801,20 @@ export function drawSentinelPlatform(ctx, x, y, tier = 1, isSelected = false, is
   ctx.save();
   ctx.translate(x, y);
 
-  if (isSelected || isMergeTarget) {
-    const glowR = 28 + Math.sin(Date.now() * 0.008) * 3;
-    const selectGlow = ctx.createRadialGradient(0, 0, 10, 0, 0, glowR);
-    selectGlow.addColorStop(0, isMergeTarget ? 'rgba(255, 209, 102, 0.65)' : 'rgba(0, 229, 255, 0.65)');
-    selectGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = selectGlow;
-    ctx.beginPath();
-    ctx.arc(0, 0, glowR, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  ctx.fillStyle = '#0F172A';
+  ctx.fillStyle = '#141B2B';
   ctx.strokeStyle = tierInfo.border;
-  ctx.lineWidth = 2.2;
+  ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.arc(0, 0, 20, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
-  ctx.fillStyle = tierInfo.glow;
+  // Inner mechanical ring
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+  ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.arc(0, 0, 15, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.stroke();
 
   ctx.restore();
 }
@@ -911,7 +871,7 @@ export function drawBallistaArcher(ctx, x, y, state = {}) {
   // Dual Rails
   const barrelLength = 16 + Math.min(tier, 5) * 2;
   ctx.fillStyle = '#334155';
-  ctx.strokeStyle = '#94A3B8';
+  ctx.strokeStyle = '#64748B';
   ctx.lineWidth = 1.2;
   drawRoundRect(ctx, 0 - kick, -6, barrelLength, 3.5, 1);
   ctx.fill();
@@ -920,39 +880,35 @@ export function drawBallistaArcher(ctx, x, y, state = {}) {
   ctx.fill();
   ctx.stroke();
 
-  // Cyan Magnetic Acceleration Coils
+  // Amber Magnetic Acceleration Coils
   const coilCount = 2 + Math.min(tier, 4);
-  ctx.fillStyle = tier >= 4 ? '#00E5FF' : '#38BDF8';
+  ctx.fillStyle = '#D97706';
   for (let i = 0; i < coilCount; i++) {
     const cx = 4 + i * 4 - kick;
-    ctx.fillRect(cx, -7, 2, 14);
+    ctx.fillRect(cx, -6.5, 1.8, 13);
   }
 
-  // Power Core Crystal
-  const coreGrad = ctx.createRadialGradient(0 - kick, 0, 1, 0 - kick, 0, 5);
-  coreGrad.addColorStop(0, '#FFFFFF');
-  coreGrad.addColorStop(0.5, tier >= 4 ? '#00F5D4' : '#00E5FF');
-  coreGrad.addColorStop(1, '#0284C7');
-  ctx.fillStyle = coreGrad;
+  // Power Core
+  ctx.fillStyle = '#F59E0B';
   ctx.beginPath();
-  ctx.arc(0 - kick, 0, 4, 0, Math.PI * 2);
+  ctx.arc(0 - kick, 0, 3.5, 0, Math.PI * 2);
   ctx.fill();
 
   // Laser Sight Beam
-  ctx.strokeStyle = 'rgba(0, 229, 255, 0.45)';
+  ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
   ctx.lineWidth = 1;
   ctx.setLineDash([4, 4]);
   ctx.beginPath();
   ctx.moveTo(barrelLength - kick, 0);
-  ctx.lineTo(barrelLength + 80, 0);
+  ctx.lineTo(barrelLength + 70, 0);
   ctx.stroke();
   ctx.setLineDash([]);
 
   // Recoil Flash
   if (recoil > 0.1) {
-    ctx.fillStyle = '#00F5D4';
+    ctx.fillStyle = '#F59E0B';
     ctx.beginPath();
-    ctx.arc(barrelLength - kick + 2, 0, 3 + recoil * 3, 0, Math.PI * 2);
+    ctx.arc(barrelLength - kick + 2, 0, 3 + recoil * 2.5, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.restore();
@@ -972,7 +928,7 @@ export function drawHeavyCannon(ctx, x, y, state = {}) {
   ctx.save();
   ctx.rotate(angle);
   const tierInfo = TIERS[Math.min(tier - 1, 5)];
-  const kick = recoil * 7;
+  const kick = recoil * 6;
 
   // Armored Chassis
   ctx.fillStyle = '#1E293B';
@@ -990,9 +946,9 @@ export function drawHeavyCannon(ctx, x, y, state = {}) {
   barrelGrad.addColorStop(0.5, '#1E293B');
   barrelGrad.addColorStop(1, '#0F172A');
   ctx.fillStyle = barrelGrad;
-  ctx.strokeStyle = '#94A3B8';
+  ctx.strokeStyle = '#475569';
   ctx.lineWidth = 1.8;
-  drawRoundRect(ctx, -2 - kick, -barrelRadius, barrelLen, barrelRadius * 2, 4);
+  drawRoundRect(ctx, -2 - kick, -barrelRadius, barrelLen, barrelRadius * 2, 3);
   ctx.fill();
   ctx.stroke();
 
@@ -1000,18 +956,18 @@ export function drawHeavyCannon(ctx, x, y, state = {}) {
   const heatPulse = 0.7 + Math.sin(animTime * 6) * 0.3;
   const magmaGrad = ctx.createRadialGradient(-3 - kick, 0, 1, -3 - kick, 0, 7);
   magmaGrad.addColorStop(0, '#FFFBEB');
-  magmaGrad.addColorStop(0.3, '#FFD166');
+  magmaGrad.addColorStop(0.3, '#F59E0B');
   magmaGrad.addColorStop(0.7, `rgba(234, 88, 12, ${heatPulse})`);
   magmaGrad.addColorStop(1, 'rgba(180, 83, 9, 0)');
   ctx.fillStyle = magmaGrad;
   ctx.beginPath();
-  ctx.arc(-3 - kick, 0, 6.5, 0, Math.PI * 2);
+  ctx.arc(-3 - kick, 0, 6, 0, Math.PI * 2);
   ctx.fill();
 
   if (recoil > 0.1) {
-    ctx.fillStyle = '#FF9E00';
+    ctx.fillStyle = '#EA580C';
     ctx.beginPath();
-    ctx.arc(barrelLen + 4 - kick, 0, 5 + recoil * 6, 0, Math.PI * 2);
+    ctx.arc(barrelLen + 3 - kick, 0, 4 + recoil * 5, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.restore();
@@ -1033,7 +989,7 @@ export function drawArcaneMage(ctx, x, y, state = {}) {
 
   // Levitation Emitter Base
   ctx.fillStyle = '#1E1B4B';
-  ctx.strokeStyle = '#C084FC';
+  ctx.strokeStyle = '#6366F1';
   ctx.lineWidth = 1.8;
   ctx.beginPath();
   ctx.ellipse(0, 6, 14, 7, 0, 0, Math.PI * 2);
@@ -1044,16 +1000,16 @@ export function drawArcaneMage(ctx, x, y, state = {}) {
   const shardCount = 2 + Math.min(tier, 4);
   for (let i = 0; i < shardCount; i++) {
     const shardAngle = animTime * 2.5 + (i * Math.PI * 2) / shardCount;
-    const sx = Math.cos(shardAngle) * 16;
-    const sy = Math.sin(shardAngle) * 8 - 4 + hoverBob;
-    ctx.fillStyle = '#E9D5FF';
-    ctx.strokeStyle = '#9333EA';
+    const sx = Math.cos(shardAngle) * 15;
+    const sy = Math.sin(shardAngle) * 7 - 4 + hoverBob;
+    ctx.fillStyle = '#C7D2FE';
+    ctx.strokeStyle = '#4F46E5';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(sx, sy - 4);
-    ctx.lineTo(sx + 3, sy);
-    ctx.lineTo(sx, sy + 4);
-    ctx.lineTo(sx - 3, sy);
+    ctx.moveTo(sx, sy - 3.5);
+    ctx.lineTo(sx + 2.5, sy);
+    ctx.lineTo(sx, sy + 3.5);
+    ctx.lineTo(sx - 2.5, sy);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
@@ -1064,10 +1020,10 @@ export function drawArcaneMage(ctx, x, y, state = {}) {
   ctx.translate(0, -6 + hoverBob);
   ctx.rotate(angle * 0.2);
   const obeliskGrad = ctx.createLinearGradient(-7, -16, 7, 16);
-  obeliskGrad.addColorStop(0, '#FAF5FF');
-  obeliskGrad.addColorStop(0.3, '#C084FC');
-  obeliskGrad.addColorStop(0.7, '#7E22CE');
-  obeliskGrad.addColorStop(1, '#3B0764');
+  obeliskGrad.addColorStop(0, '#EEF2FF');
+  obeliskGrad.addColorStop(0.4, '#818CF8');
+  obeliskGrad.addColorStop(0.8, '#4338CA');
+  obeliskGrad.addColorStop(1, '#312E81');
   ctx.fillStyle = obeliskGrad;
   ctx.strokeStyle = tierInfo.border;
   ctx.lineWidth = 1.8;
@@ -1083,11 +1039,11 @@ export function drawArcaneMage(ctx, x, y, state = {}) {
   ctx.stroke();
 
   if (isFiring) {
-    ctx.strokeStyle = '#F3E8FF';
+    ctx.strokeStyle = '#E0E7FF';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(0, -14);
-    ctx.lineTo((Math.random() - 0.5) * 12, -22);
+    ctx.lineTo((Math.random() - 0.5) * 10, -20);
     ctx.stroke();
   }
   ctx.restore();
@@ -1106,18 +1062,7 @@ export function drawFrostWarden(ctx, x, y, state = {}) {
 
   const tierInfo = TIERS[Math.min(tier - 1, 5)];
 
-  // Mist Preview
-  const auraPulse = 16 + Math.sin(animTime * 3) * 3;
-  const mistGrad = ctx.createRadialGradient(0, 0, 6, 0, 0, auraPulse + 8);
-  mistGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
-  mistGrad.addColorStop(0.6, 'rgba(125, 211, 252, 0.18)');
-  mistGrad.addColorStop(1, 'rgba(224, 242, 254, 0)');
-  ctx.fillStyle = mistGrad;
-  ctx.beginPath();
-  ctx.arc(0, 0, auraPulse + 8, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Rotating Gyro Ring
+  // Rotating Cryo Torus
   ctx.save();
   ctx.rotate(animTime * 0.8);
   ctx.strokeStyle = '#38BDF8';
@@ -1125,8 +1070,8 @@ export function drawFrostWarden(ctx, x, y, state = {}) {
   ctx.beginPath();
   for (let i = 0; i < 6; i++) {
     const angle = (i * Math.PI * 2) / 6;
-    const px = Math.cos(angle) * 16;
-    const py = Math.sin(angle) * 16;
+    const px = Math.cos(angle) * 15;
+    const py = Math.sin(angle) * 15;
     if (i === 0) ctx.moveTo(px, py);
     else ctx.lineTo(px, py);
   }
@@ -1137,19 +1082,19 @@ export function drawFrostWarden(ctx, x, y, state = {}) {
   // Snowflake Core
   ctx.save();
   ctx.rotate(-animTime * 1.2);
-  ctx.strokeStyle = '#FFFFFF';
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = '#F0F9FF';
+  ctx.lineWidth = 1.4;
   for (let i = 0; i < 3; i++) {
     const a = (i * Math.PI) / 3;
     ctx.beginPath();
-    ctx.moveTo(Math.cos(a) * -12, Math.sin(a) * -12);
-    ctx.lineTo(Math.cos(a) * 12, Math.sin(a) * 12);
+    ctx.moveTo(Math.cos(a) * -11, Math.sin(a) * -11);
+    ctx.lineTo(Math.cos(a) * 11, Math.sin(a) * 11);
     ctx.stroke();
   }
   ctx.restore();
 
-  // Center Diamond
-  const iceGrad = ctx.createRadialGradient(-3, -3, 1, 0, 0, 9);
+  // Center Crystal Diamond
+  const iceGrad = ctx.createRadialGradient(-2, -2, 1, 0, 0, 8);
   iceGrad.addColorStop(0, '#FFFFFF');
   iceGrad.addColorStop(0.4, '#7DD3FC');
   iceGrad.addColorStop(0.8, '#0284C7');
@@ -1158,10 +1103,10 @@ export function drawFrostWarden(ctx, x, y, state = {}) {
   ctx.strokeStyle = tierInfo.border;
   ctx.lineWidth = 1.5;
   ctx.beginPath();
-  ctx.moveTo(0, -9);
-  ctx.lineTo(7, 0);
-  ctx.lineTo(0, 9);
-  ctx.lineTo(-7, 0);
+  ctx.moveTo(0, -8);
+  ctx.lineTo(6, 0);
+  ctx.lineTo(0, 8);
+  ctx.lineTo(-6, 0);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
@@ -1183,7 +1128,7 @@ export function drawShadowAssassin(ctx, x, y, state = {}) {
   const tierInfo = TIERS[Math.min(tier - 1, 5)];
   const spinAngle = animTime * 14;
 
-  // Stealth Delta Wing
+  // Stealth Delta Wing (Carbon Fiber)
   ctx.fillStyle = '#0F172A';
   ctx.strokeStyle = tierInfo.border;
   ctx.lineWidth = 1.8;
@@ -1200,25 +1145,25 @@ export function drawShadowAssassin(ctx, x, y, state = {}) {
   ctx.fill();
   ctx.stroke();
 
-  // Spinning Ruby Chakrams
+  // Spinning Vibro Chakrams
   for (let side of [-1, 1]) {
     ctx.save();
     ctx.translate(2, side * 11);
     ctx.rotate(spinAngle * side);
-    const bladeGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, 7);
+    const bladeGrad = ctx.createRadialGradient(0, 0, 1, 0, 0, 6);
     bladeGrad.addColorStop(0, '#FFE4E6');
-    bladeGrad.addColorStop(0.5, '#F43F5E');
-    bladeGrad.addColorStop(1, '#9F1239');
+    bladeGrad.addColorStop(0.5, '#E11D48');
+    bladeGrad.addColorStop(1, '#881337');
     ctx.fillStyle = bladeGrad;
     ctx.strokeStyle = '#FFFFFF';
     ctx.lineWidth = 1;
     ctx.beginPath();
     for (let p = 0; p < 3; p++) {
       const pa = (p * Math.PI * 2) / 3;
-      const ox = Math.cos(pa) * 6.5;
-      const oy = Math.sin(pa) * 6.5;
-      const ix = Math.cos(pa + Math.PI / 3) * 2.5;
-      const iy = Math.sin(pa + Math.PI / 3) * 2.5;
+      const ox = Math.cos(pa) * 6;
+      const oy = Math.sin(pa) * 6;
+      const ix = Math.cos(pa + Math.PI / 3) * 2;
+      const iy = Math.sin(pa + Math.PI / 3) * 2;
       if (p === 0) ctx.moveTo(ox, oy);
       else ctx.lineTo(ox, oy);
       ctx.lineTo(ix, iy);
@@ -1232,12 +1177,12 @@ export function drawShadowAssassin(ctx, x, y, state = {}) {
   // Red Eye
   ctx.fillStyle = '#EF4444';
   ctx.beginPath();
-  ctx.ellipse(4, 0, 4, 2, 0, 0, Math.PI * 2);
+  ctx.ellipse(4, 0, 3.5, 1.8, 0, 0, Math.PI * 2);
   ctx.fill();
 
   if (isSlashing) {
-    ctx.strokeStyle = 'rgba(244, 63, 94, 0.8)';
-    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = 'rgba(225, 29, 72, 0.75)';
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(0, 0, 18, -Math.PI * 0.4, Math.PI * 0.4);
     ctx.stroke();
@@ -1279,36 +1224,36 @@ export function drawVoidCrawler(ctx, x, y, state = {}) {
   ctx.rotate(angle);
 
   // Scuttling Legs
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#64748B';
-  ctx.lineWidth = 1.8;
+  ctx.strokeStyle = isChilled ? '#38BDF8' : '#57534E';
+  ctx.lineWidth = 1.6;
   const legSpeed = isChilled ? 6 : 14;
   for (let i = 0; i < 3; i++) {
     const sideOffset = (i - 1) * 6;
     const legPhase = Math.sin(animTime * legSpeed + i * 1.8);
     ctx.beginPath();
     ctx.moveTo(-4 + sideOffset, -6);
-    ctx.lineTo(-10 + sideOffset, -12 + legPhase * 3);
-    ctx.lineTo(-16 + sideOffset, -8 + legPhase * 4);
+    ctx.lineTo(-10 + sideOffset, -11 + legPhase * 2.5);
+    ctx.lineTo(-15 + sideOffset, -7 + legPhase * 3.5);
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(-4 + sideOffset, 6);
-    ctx.lineTo(-10 + sideOffset, 12 - legPhase * 3);
-    ctx.lineTo(-16 + sideOffset, 8 - legPhase * 4);
+    ctx.lineTo(-10 + sideOffset, 11 - legPhase * 2.5);
+    ctx.lineTo(-15 + sideOffset, 7 - legPhase * 3.5);
     ctx.stroke();
   }
 
-  // Carapace
-  ctx.fillStyle = '#1E293B';
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#EF4444';
-  ctx.lineWidth = 1.5;
-  drawRoundRect(ctx, -10, -8, 20, 16, 6);
+  // Dark Chitin Carapace
+  ctx.fillStyle = '#292524';
+  ctx.strokeStyle = isChilled ? '#38BDF8' : '#78716C';
+  ctx.lineWidth = 1.6;
+  drawRoundRect(ctx, -10, -8, 20, 16, 5);
   ctx.fill();
   ctx.stroke();
 
-  // Red Eye
-  ctx.fillStyle = '#EF4444';
+  // Amber Optic Sensor
+  ctx.fillStyle = '#F59E0B';
   ctx.beginPath();
-  ctx.arc(6, 0, 3.2, 0, Math.PI * 2);
+  ctx.arc(6, 0, 2.8, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.restore();
@@ -1320,33 +1265,33 @@ export function drawSwiftDart(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Twin Plasma Trails
-  const jetFlicker = 8 + Math.sin(animTime * 25) * 4;
-  ctx.fillStyle = isChilled ? 'rgba(56, 189, 248, 0.6)' : 'rgba(0, 245, 212, 0.7)';
+  // Twin Thruster Trails
+  const jetFlicker = 6 + Math.sin(animTime * 25) * 3;
+  ctx.fillStyle = isChilled ? 'rgba(56, 189, 248, 0.5)' : 'rgba(234, 88, 12, 0.65)';
   ctx.beginPath();
-  ctx.moveTo(-10, -5);
-  ctx.lineTo(-10 - jetFlicker, -5);
-  ctx.lineTo(-8, -3);
+  ctx.moveTo(-9, -4);
+  ctx.lineTo(-9 - jetFlicker, -4);
+  ctx.lineTo(-7, -2);
   ctx.closePath();
   ctx.fill();
   ctx.beginPath();
-  ctx.moveTo(-10, 5);
-  ctx.lineTo(-10 - jetFlicker, 5);
-  ctx.lineTo(-8, 3);
+  ctx.moveTo(-9, 4);
+  ctx.lineTo(-9 - jetFlicker, 4);
+  ctx.lineTo(-7, 2);
   ctx.closePath();
   ctx.fill();
 
-  // Body
-  ctx.fillStyle = '#0F172A';
-  ctx.strokeStyle = isChilled ? '#7DD3FC' : '#00E5FF';
+  // Aerodynamic Chitin Body
+  ctx.fillStyle = '#4C0519';
+  ctx.strokeStyle = isChilled ? '#38BDF8' : '#BE123C';
   ctx.lineWidth = 1.6;
   ctx.beginPath();
   ctx.moveTo(14, 0);
-  ctx.lineTo(-8, -13);
+  ctx.lineTo(-8, -12);
   ctx.lineTo(-4, -4);
   ctx.lineTo(-12, 0);
   ctx.lineTo(-4, 4);
-  ctx.lineTo(-8, 13);
+  ctx.lineTo(-8, 12);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
@@ -1360,33 +1305,43 @@ export function drawArmoredBruiser(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Armored Shell
-  ctx.fillStyle = '#1E293B';
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#F59E0B';
-  ctx.lineWidth = 2.4;
-  drawRoundRect(ctx, -16, -14, 30, 28, 10);
+  // Heavy Chitin Armored Shell
+  ctx.fillStyle = '#1C1917';
+  ctx.strokeStyle = isChilled ? '#38BDF8' : '#78716C';
+  ctx.lineWidth = 2.2;
+  drawRoundRect(ctx, -16, -14, 30, 28, 8);
   ctx.fill();
   ctx.stroke();
 
-  // Weakpoint Core
-  const corePulse = 0.6 + Math.sin(animTime * 4) * 0.4;
-  ctx.fillStyle = `rgba(220, 38, 38, ${corePulse})`;
+  // Segmented Carapace Ridge
+  ctx.strokeStyle = '#44403C';
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
-  ctx.arc(0, 0, 6, 0, Math.PI * 2);
+  ctx.moveTo(-8, -12);
+  ctx.lineTo(-8, 12);
+  ctx.moveTo(2, -12);
+  ctx.lineTo(2, 12);
+  ctx.stroke();
+
+  // Amber Weakpoint Core
+  const corePulse = 0.6 + Math.sin(animTime * 4) * 0.4;
+  ctx.fillStyle = `rgba(217, 119, 6, ${corePulse})`;
+  ctx.beginPath();
+  ctx.arc(0, 0, 5.5, 0, Math.PI * 2);
   ctx.fill();
 
-  // Ram Horns
-  ctx.fillStyle = '#94A3B8';
+  // Heavy Mandible Horns
+  ctx.fillStyle = '#57534E';
   ctx.beginPath();
-  ctx.moveTo(12, -10);
-  ctx.lineTo(20, -14);
-  ctx.lineTo(14, -6);
+  ctx.moveTo(12, -9);
+  ctx.lineTo(19, -13);
+  ctx.lineTo(13, -5);
   ctx.closePath();
   ctx.fill();
   ctx.beginPath();
-  ctx.moveTo(12, 10);
-  ctx.lineTo(20, 14);
-  ctx.lineTo(14, 6);
+  ctx.moveTo(12, 9);
+  ctx.lineTo(19, 13);
+  ctx.lineTo(13, 5);
   ctx.closePath();
   ctx.fill();
 
@@ -1399,20 +1354,20 @@ export function drawSwarmPod(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  const pulse = Math.sin(animTime * 6) * 1.5;
-  ctx.fillStyle = '#065F46';
-  ctx.strokeStyle = isChilled ? '#7DD3FC' : '#34D399';
+  const pulse = Math.sin(animTime * 6) * 1.2;
+  ctx.fillStyle = '#14532D';
+  ctx.strokeStyle = isChilled ? '#38BDF8' : '#15803D';
   ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.ellipse(0, 0, 15 + pulse, 12 - pulse * 0.5, 0, 0, Math.PI * 2);
+  ctx.ellipse(0, 0, 14 + pulse, 11 - pulse * 0.4, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
-  // Embryos
-  ctx.fillStyle = '#FDE047';
-  for (let [ex, ey] of [[-6, -4], [0, -5], [5, -3], [-3, 3], [4, 4]]) {
+  // Embryo pods
+  ctx.fillStyle = '#F59E0B';
+  for (let [ex, ey] of [[-5, -3], [0, -4], [4, -2], [-2, 2], [3, 3]]) {
     ctx.beginPath();
-    ctx.arc(ex, ey, 2.2, 0, Math.PI * 2);
+    ctx.arc(ex, ey, 1.8, 0, Math.PI * 2);
     ctx.fill();
   }
 
@@ -1425,17 +1380,17 @@ export function drawVoidMite(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  ctx.fillStyle = '#10B981';
-  ctx.strokeStyle = '#022C22';
+  ctx.fillStyle = '#15803D';
+  ctx.strokeStyle = '#052E16';
   ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.arc(0, 0, 5, 0, Math.PI * 2);
+  ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
-  ctx.fillStyle = '#EF4444';
+  ctx.fillStyle = '#D97706';
   ctx.beginPath();
-  ctx.arc(2, 0, 1.6, 0, Math.PI * 2);
+  ctx.arc(1.5, 0, 1.4, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.restore();
@@ -1449,26 +1404,26 @@ export function drawVoidSlinger(ctx, x, y, state = {}) {
 
   // Tentacles
   ctx.strokeStyle = '#475569';
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 1.8;
   for (let a of [-0.6, 0.6, Math.PI]) {
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(Math.cos(a) * 16, Math.sin(a) * 16);
+    ctx.lineTo(Math.cos(a) * 15, Math.sin(a) * 15);
     ctx.stroke();
   }
 
   ctx.fillStyle = '#1E1B4B';
-  ctx.strokeStyle = isChilled ? '#38BDF8' : '#A855F7';
+  ctx.strokeStyle = isChilled ? '#38BDF8' : '#6366F1';
   ctx.lineWidth = 2;
-  drawRoundRect(ctx, -10, -10, 20, 20, 5);
+  drawRoundRect(ctx, -9, -9, 18, 18, 4);
   ctx.fill();
   ctx.stroke();
 
-  // Charging Ball
-  const ballSize = 3 + chargeProgress * 5;
-  ctx.fillStyle = '#C084FC';
+  // Charging Plasma
+  const ballSize = 2.5 + chargeProgress * 4.5;
+  ctx.fillStyle = '#818CF8';
   ctx.beginPath();
-  ctx.arc(4, 0, ballSize, 0, Math.PI * 2);
+  ctx.arc(3.5, 0, ballSize, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.restore();
@@ -1480,35 +1435,33 @@ export function drawIronColossus(ctx, x, y, state = {}) {
   ctx.translate(x, y);
   ctx.rotate(angle);
 
-  // Hull
-  ctx.fillStyle = '#1E293B';
-  ctx.strokeStyle = hpPercent > 0.5 ? '#00E5FF' : '#EF4444';
+  // Heavy Fortress Hull
+  ctx.fillStyle = '#0F172A';
+  ctx.strokeStyle = hpPercent > 0.5 ? '#64748B' : '#EF4444';
   ctx.lineWidth = 3;
-  drawRoundRect(ctx, -24, -22, 48, 44, 10);
+  drawRoundRect(ctx, -24, -22, 48, 44, 8);
   ctx.fill();
   ctx.stroke();
 
-  // Molten Vents
+  // Blast Vents
   const heatFlicker = 0.6 + Math.sin(animTime * 8) * 0.4;
   ctx.fillStyle = `rgba(234, 88, 12, ${heatFlicker})`;
   for (let dy of [-12, -4, 4, 12]) {
     ctx.fillRect(-18, dy, 8, 3);
   }
 
-  // Core
-  ctx.fillStyle = '#00E5FF';
+  // Heavy Power Core
+  ctx.fillStyle = '#D97706';
   ctx.beginPath();
-  ctx.arc(4, 0, 9, 0, Math.PI * 2);
+  ctx.arc(4, 0, 8, 0, Math.PI * 2);
   ctx.fill();
 
-  // Rotating Shield Barrier
+  // Rotating Kinetic Barrier
   if (shieldActive) {
     ctx.save();
     ctx.rotate(shieldAngle - angle);
-    ctx.strokeStyle = '#00E5FF';
-    ctx.lineWidth = 5;
-    ctx.shadowColor = '#00F5D4';
-    ctx.shadowBlur = 10;
+    ctx.strokeStyle = '#38BDF8';
+    ctx.lineWidth = 4;
     ctx.beginPath();
     ctx.arc(0, 0, 36, -Math.PI / 3, Math.PI / 3);
     ctx.stroke();
@@ -1526,20 +1479,20 @@ export function drawHydraQueen(ctx, x, y, state = {}) {
 
   // Ovipositor Sac
   ctx.fillStyle = '#064E3B';
-  ctx.strokeStyle = '#34D399';
-  ctx.lineWidth = 2.5;
+  ctx.strokeStyle = '#059669';
+  ctx.lineWidth = 2.2;
   ctx.beginPath();
   ctx.ellipse(-18, 0, 24, 18, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
-  // Twin Heads
-  const s1 = Math.sin(animTime * 3) * 6;
-  const s2 = Math.cos(animTime * 3) * 6;
+  // Twin Serpentine Heads
+  const s1 = Math.sin(animTime * 3) * 5;
+  const s2 = Math.cos(animTime * 3) * 5;
   for (let head of [-1, 1]) {
     const hy = head * 16 + (head === -1 ? s1 : s2);
     ctx.strokeStyle = '#047857';
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.moveTo(-6, head * 8);
     ctx.quadraticCurveTo(8, hy * 0.6, 22, hy);
@@ -1547,13 +1500,13 @@ export function drawHydraQueen(ctx, x, y, state = {}) {
 
     ctx.fillStyle = '#064E3B';
     ctx.beginPath();
-    ctx.arc(22, hy, 8, 0, Math.PI * 2);
+    ctx.arc(22, hy, 7, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = '#FDE047';
+    ctx.fillStyle = '#F59E0B';
     ctx.beginPath();
-    ctx.arc(24, hy - 2, 2, 0, Math.PI * 2);
-    ctx.arc(24, hy + 2, 2, 0, Math.PI * 2);
+    ctx.arc(24, hy - 2, 1.8, 0, Math.PI * 2);
+    ctx.arc(24, hy + 2, 1.8, 0, Math.PI * 2);
     ctx.fill();
   }
 
@@ -1567,29 +1520,32 @@ export function drawChronoWraith(ctx, x, y, state = {}) {
 
   if (!isBlinking) {
     ctx.save();
-    ctx.rotate(animTime * 1.8);
-    ctx.strokeStyle = 'rgba(192, 132, 252, 0.75)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6, 4]);
+    ctx.rotate(animTime * 1.5);
+    ctx.strokeStyle = 'rgba(129, 140, 248, 0.6)';
+    ctx.lineWidth = 1.8;
+    ctx.setLineDash([5, 4]);
     ctx.beginPath();
-    ctx.arc(0, 0, 32, 0, Math.PI * 2);
+    ctx.arc(0, 0, 30, 0, Math.PI * 2);
     ctx.stroke();
     ctx.restore();
   }
 
   // Shroud
-  ctx.fillStyle = '#581C87';
+  ctx.fillStyle = '#312E81';
+  ctx.strokeStyle = '#6366F1';
+  ctx.lineWidth = 1.8;
   ctx.beginPath();
-  ctx.arc(0, 0, 24, 0, Math.PI * 2);
+  ctx.arc(0, 0, 22, 0, Math.PI * 2);
   ctx.fill();
+  ctx.stroke();
 
   // Hourglass Core
-  ctx.fillStyle = '#FFFFFF';
+  ctx.fillStyle = '#E0E7FF';
   ctx.beginPath();
-  ctx.moveTo(-7, -10);
-  ctx.lineTo(7, -10);
-  ctx.lineTo(-7, 10);
-  ctx.lineTo(7, 10);
+  ctx.moveTo(-6, -9);
+  ctx.lineTo(6, -9);
+  ctx.lineTo(-6, 9);
+  ctx.lineTo(6, 9);
   ctx.closePath();
   ctx.fill();
 
@@ -1630,10 +1586,10 @@ export function drawEnemy(ctx, enemy, animTime) {
   if (enemy.hp < enemy.maxHp) {
     const barW = Math.max(20, (enemy.radius || 12) * 2);
     const hpW = barW * Math.max(0, enemy.hp / enemy.maxHp);
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-    ctx.fillRect(enemy.x - barW / 2, enemy.y - (enemy.radius || 12) - 8, barW, 4);
-    ctx.fillStyle = enemy.isBoss ? '#A855F7' : '#EF4444';
-    ctx.fillRect(enemy.x - barW / 2, enemy.y - (enemy.radius || 12) - 8, hpW, 4);
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+    ctx.fillRect(enemy.x - barW / 2, enemy.y - (enemy.radius || 12) - 8, barW, 3.5);
+    ctx.fillStyle = enemy.isBoss ? '#D97706' : '#EF4444';
+    ctx.fillRect(enemy.x - barW / 2, enemy.y - (enemy.radius || 12) - 8, hpW, 3.5);
   }
 }
 
@@ -1807,7 +1763,7 @@ export class OrbitGuardGame {
         x: Math.random() * ARENA.width,
         y: Math.random() * ARENA.height,
         size: Math.random() < 0.2 ? 2 : 1,
-        color: Math.random() < 0.3 ? '#00E5FF' : Math.random() < 0.6 ? '#FFD166' : '#FFFFFF',
+        color: Math.random() < 0.3 ? '#94A3B8' : Math.random() < 0.6 ? '#F59E0B' : '#FFFFFF',
         speed: 1 + Math.random() * 2,
         phase: Math.random() * Math.PI * 2
       });
@@ -2289,8 +2245,8 @@ export class OrbitGuardGame {
     this.closeAllModals();
     this.playgama.hideBanner();
     this.audio.playVictoryFanfare();
-    this.particles.burst(ARENA.center.x, ARENA.center.y, 40, '#00F5D4');
-    this.juice.spawnFloatingText('CORE REVIVED (+50% HP)!', ARENA.center.x, ARENA.center.y - 40, { color: '#00F5D4', size: 20 });
+    this.particles.burst(ARENA.center.x, ARENA.center.y, 40, '#F59E0B');
+    this.juice.spawnFloatingText('CORE REVIVED (+50% HP)!', ARENA.center.x, ARENA.center.y - 40, { color: '#F59E0B', size: 20 });
     this.showWaveBanner(`WAVE ${this.wave}`, 'DEFENSE RESUMED', 2.0);
     this.updateHUD();
   }
@@ -2436,7 +2392,7 @@ export class OrbitGuardGame {
 
     this.placeSentinel(targetSlot.id, chosenArchetype, 1);
     this.audio.playSummonPop();
-    this.particles.burst(targetSlot.x, targetSlot.y, 14, '#00E5FF');
+    this.particles.burst(targetSlot.x, targetSlot.y, 14, '#D97706');
     this.updateHUD();
   }
 
@@ -2681,7 +2637,7 @@ export class OrbitGuardGame {
     this.audio.playSurgeShockwave();
     this.juice.screenShake(10);
     this.particles.confetti(ARENA.center.x, ARENA.center.y, 40);
-    this.juice.spawnFloatingText('OVERCHARGE!', ARENA.center.x, ARENA.center.y - 40, { color: '#00F5D4', size: 24 });
+    this.juice.spawnFloatingText('OVERCHARGE!', ARENA.center.x, ARENA.center.y - 40, { color: '#F59E0B', size: 24 });
     this.updateHUD();
   }
 
@@ -3028,7 +2984,7 @@ export class OrbitGuardGame {
           x2: target.x,
           y2: target.y,
           life: 0.1,
-          color: '#00E5FF',
+          color: '#F59E0B',
           damage: dmg,
           targetId: target.id,
           pierce: s.tierData.pierce || 0
@@ -3131,9 +3087,9 @@ export class OrbitGuardGame {
         const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
         if (!enemy.lastBlockedTextTime || (now - enemy.lastBlockedTextTime > 2000)) {
           enemy.lastBlockedTextTime = now;
-          this.juice.spawnFloatingText('BLOCKED!', enemy.x, enemy.y - 20, { color: '#00E5FF', size: 14 });
+          this.juice.spawnFloatingText('BLOCKED!', enemy.x, enemy.y - 20, { color: '#38BDF8', size: 14 });
         }
-        this.particles.burst(enemy.x, enemy.y, 4, '#00E5FF');
+        this.particles.burst(enemy.x, enemy.y, 4, '#38BDF8');
         return;
       }
     }
@@ -3144,8 +3100,8 @@ export class OrbitGuardGame {
     // 1. SUPERCONDUCTOR (Cryo + Tesla Chain)
     if (damageType === 'tesla_chain' && enemy.chilledTimer > 0) {
       finalDmg *= 2.0; // +100% damage bonus
-      this.particles.burst(enemy.x, enemy.y, 16, '#00F5D4');
-      this.juice.spawnFloatingText('SUPERCONDUCTOR (+100%)!', enemy.x, enemy.y - 18, { color: '#00F5D4', size: 15 });
+      this.particles.burst(enemy.x, enemy.y, 16, '#818CF8');
+      this.juice.spawnFloatingText('SUPERCONDUCTOR (+100%)!', enemy.x, enemy.y - 18, { color: '#818CF8', size: 15 });
       this.audio.playTeslaCrackle();
       enemy.stunTimer = Math.max(enemy.stunTimer || 0, 0.4);
     }
@@ -3155,8 +3111,8 @@ export class OrbitGuardGame {
       const burnBurst = (enemy.burnDPS || 25) * (enemy.burnTimer || 1.5) * 2.0;
       finalDmg += burnBurst;
       enemy.burnTimer = 0;
-      this.particles.burst(enemy.x, enemy.y, 20, '#FF9E00');
-      this.juice.spawnFloatingText('THERMAL DETONATION!', enemy.x, enemy.y - 22, { color: '#FF9E00', size: 15 });
+      this.particles.burst(enemy.x, enemy.y, 20, '#EA580C');
+      this.juice.spawnFloatingText('THERMAL DETONATION!', enemy.x, enemy.y - 22, { color: '#EA580C', size: 15 });
       this.juice.screenShake(4);
     }
 
@@ -3540,14 +3496,11 @@ export class OrbitGuardGame {
       }
 
       if (this.activeShockwave) {
-        c.strokeStyle = '#00F5D4';
-        c.lineWidth = 4;
-        c.shadowColor = '#00E5FF';
-        c.shadowBlur = 12;
+        c.strokeStyle = '#F59E0B';
+        c.lineWidth = 3.5;
         c.beginPath();
         c.arc(this.activeShockwave.x, this.activeShockwave.y, this.activeShockwave.radius, 0, Math.PI * 2);
         c.stroke();
-        c.shadowBlur = 0;
       }
     });
 
@@ -3564,15 +3517,14 @@ export class OrbitGuardGame {
       for (const p of this.projectiles) {
         if (p.type === 'laser') {
           c.save();
-          c.globalCompositeOperation = 'lighter';
-          c.strokeStyle = 'rgba(0, 229, 255, 0.5)';
-          c.lineWidth = 6;
+          c.strokeStyle = 'rgba(245, 158, 11, 0.4)';
+          c.lineWidth = 4;
           c.beginPath();
           c.moveTo(p.x1, p.y1);
           c.lineTo(p.x2, p.y2);
           c.stroke();
-          c.strokeStyle = '#FFFFFF';
-          c.lineWidth = 2;
+          c.strokeStyle = '#FFFBEB';
+          c.lineWidth = 1.6;
           c.beginPath();
           c.moveTo(p.x1, p.y1);
           c.lineTo(p.x2, p.y2);
@@ -3585,9 +3537,9 @@ export class OrbitGuardGame {
           c.ellipse(p.x, p.y, 6, 3, 0, 0, Math.PI * 2);
           c.fill();
 
-          c.fillStyle = '#FF9E00';
+          c.fillStyle = '#EA580C';
           c.beginPath();
-          c.arc(p.x, p.y - height, 5, 0, Math.PI * 2);
+          c.arc(p.x, p.y - height, 4.5, 0, Math.PI * 2);
           c.fill();
         }
       }
@@ -3595,15 +3547,13 @@ export class OrbitGuardGame {
       // Tesla Arcs
       for (const arcGroup of this.teslaArcs) {
         c.save();
-        c.strokeStyle = '#F3E8FF';
-        c.lineWidth = 2;
-        c.shadowColor = '#C084FC';
-        c.shadowBlur = 8;
+        c.strokeStyle = '#EEF2FF';
+        c.lineWidth = 1.8;
         for (const arc of arcGroup.arcs) {
           c.beginPath();
           c.moveTo(arc.x1, arc.y1);
-          const midX = (arc.x1 + arc.x2) / 2 + (Math.random() - 0.5) * 16;
-          const midY = (arc.y1 + arc.y2) / 2 + (Math.random() - 0.5) * 16;
+          const midX = (arc.x1 + arc.x2) / 2 + (Math.random() - 0.5) * 12;
+          const midY = (arc.y1 + arc.y2) / 2 + (Math.random() - 0.5) * 12;
           c.lineTo(midX, midY);
           c.lineTo(arc.x2, arc.y2);
           c.stroke();
