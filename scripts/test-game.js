@@ -56,10 +56,14 @@ class MockElement {
   constructor(id = '') {
     this.id = id;
     this.style = {};
+    this.children = [];
+    this.innerHTML = '';
+    this.textContent = '';
     this.classList = {
       add() {},
       remove() {},
-      toggle() {}
+      toggle() {},
+      contains() { return false; }
     };
     this.clientWidth = 720;
     this.clientHeight = 450;
@@ -73,6 +77,13 @@ class MockElement {
   }
   removeEventListener(event, fn) {}
   getBoundingClientRect() { return { left: 0, top: 0, width: 720, height: 450 }; }
+  appendChild(child) {
+    this.children.push(child);
+    if (child) child.parentElement = this;
+    return child;
+  }
+  querySelector(sel) { return new MockElement(sel); }
+  querySelectorAll(sel) { return [new MockElement(sel)]; }
 }
 
 global.window = {
