@@ -1,6 +1,6 @@
 /* =========================================================================
    ORBIT GUARD — TACTICAL COMMAND DECK UI STYLESHEET
-   Authentic Military/Tactical Sci-Fi Aesthetic (Grounded Gunmetal & Amber Gold)
+   Refined Titanium Slate & Cobalt Blue Aesthetic (Zero Orange Dominance)
    Zero Neon Wireframe Slop / Zero AI Glassmorphism
    ========================================================================= */
 
@@ -12,7 +12,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   scrollbar-width: thin;
-  scrollbar-color: #D97706 #141B2B;
+  scrollbar-color: #2563EB #111827;
 }
 
 .hidden {
@@ -35,21 +35,21 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #F59E0B;
+  background: #2563EB;
 }
 
 :root {
-  --bg-deep: #080B11;
-  --bg-panel: #0E1420;
-  --bg-card: #141B2B;
-  --bg-card-hover: #1A2438;
+  --bg-deep: #080C14;
+  --bg-panel: #0E1422;
+  --bg-card: #141C2E;
+  --bg-card-hover: #1E293B;
   
-  --border-subtle: #243047;
-  --border-focus: #F59E0B;
+  --border-subtle: #243048;
+  --border-focus: #38BDF8;
   --border-steel: #38BDF8;
   
-  --primary: #F59E0B;
-  --primary-hover: #D97706;
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
   --steel: #38BDF8;
   --steel-dark: #0284C7;
   --emerald: #10B981;
@@ -58,9 +58,9 @@
   --crimson: #EF4444;
   --indigo: #6366F1;
   
-  --text-main: #F1F5F9;
+  --text-main: #F8FAFC;
   --text-muted: #94A3B8;
-  --text-dark: #080B11;
+  --text-dark: #080C14;
 }
 
 html, body {
@@ -141,7 +141,7 @@ canvas {
 
 .ctrl-btn:hover {
   background: var(--bg-card-hover);
-  border-color: var(--gold);
+  border-color: var(--steel);
 }
 
 .ctrl-btn:active {
@@ -151,12 +151,12 @@ canvas {
 
 .btn-speed {
   font-size: 0.75rem;
-  color: var(--gold);
+  color: var(--steel);
 }
 
 .btn-speed.speed-2x {
-  color: var(--steel);
-  border-color: var(--steel);
+  color: #60A5FA;
+  border-color: #60A5FA;
 }
 
 .btn-speed.speed-3x {
@@ -165,9 +165,9 @@ canvas {
 }
 
 .btn-airdrop {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: #241A0B;
+  border-color: var(--steel);
+  color: var(--steel);
+  background: #0E1A30;
 }
 
 /* Header Center Info Display */
@@ -206,7 +206,7 @@ canvas {
 }
 
 .wave-pill .pill-num {
-  color: var(--gold);
+  color: var(--steel);
 }
 
 .gold-pill .gold-symbol {
@@ -319,7 +319,7 @@ canvas {
 }
 
 .btn-surge .deck-icon {
-  color: var(--gold);
+  color: var(--steel);
 }
 
 .btn-repair .deck-icon {
@@ -327,7 +327,7 @@ canvas {
 }
 
 .btn-workshop .deck-icon {
-  color: var(--steel);
+  color: #60A5FA;
 }
 
 .summon-icon {
@@ -365,7 +365,7 @@ canvas {
 
 .deck-btn:hover {
   background: var(--bg-card-hover);
-  border-color: var(--gold);
+  border-color: var(--steel);
 }
 
 .deck-btn:active {
@@ -390,12 +390,12 @@ canvas {
   font-family: 'Rajdhani', sans-serif;
   font-size: 0.70rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--steel);
 }
 
 .btn-surge.ready {
-  border-color: var(--gold);
-  background: #251B0B;
+  border-color: var(--steel);
+  background: #0E1F3D;
 }
 
 /* Primary Big Summon Sentinel Button */
@@ -407,16 +407,16 @@ canvas {
   width: 100%;
   height: 46px;
   border-radius: 8px;
-  background: #D97706;
-  border: 2px solid #F59E0B;
-  border-bottom: 4px solid #92400E;
+  background: #2563EB;
+  border: 2px solid #60A5FA;
+  border-bottom: 4px solid #1E40AF;
   color: #FFFFFF;
   cursor: pointer;
   transition: transform 0.08s ease, background 0.08s ease;
 }
 
 .btn-summon-main:hover {
-  background: #B45309;
+  background: #1D4ED8;
 }
 
 .btn-summon-main:active {
@@ -442,8 +442,8 @@ canvas {
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
-  background: #78350F;
-  border: 1px solid var(--gold);
+  background: #1E3A8A;
+  border: 1px solid var(--steel);
   border-radius: 4px;
   padding: 2px 8px;
 }
@@ -467,8 +467,8 @@ canvas {
 }
 
 .wave-banner-content {
-  background: #0E1420;
-  border: 1.5px solid var(--gold);
+  background: #0E1422;
+  border: 1.5px solid var(--steel);
   border-radius: 6px;
   padding: 8px 24px;
   display: flex;
@@ -489,7 +489,7 @@ canvas {
   font-family: 'Orbitron', monospace;
   font-size: 1.25rem;
   font-weight: 900;
-  color: var(--gold);
+  color: var(--steel);
   letter-spacing: 1px;
 }
 
@@ -502,7 +502,7 @@ canvas {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(8, 11, 17, 0.88);
+  background: rgba(8, 12, 20, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -511,7 +511,7 @@ canvas {
 }
 
 .modal-card, .title-card {
-  background: #0E1420;
+  background: #0E1422;
   border: 1.5px solid var(--border-subtle);
   border-radius: 10px;
   width: 100%;
@@ -533,8 +533,8 @@ canvas {
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 1px;
-  color: var(--gold);
-  background: #141B2B;
+  color: var(--steel);
+  background: #141C2E;
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   padding: 3px 10px;
@@ -562,7 +562,7 @@ canvas {
 }
 
 .rec-card {
-  background: #141B2B;
+  background: #141C2E;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 8px;
@@ -582,7 +582,7 @@ canvas {
   font-family: 'Orbitron', monospace;
   font-size: 1.15rem;
   font-weight: 900;
-  color: var(--gold);
+  color: var(--steel);
 }
 
 .title-cta-group {
@@ -596,9 +596,9 @@ canvas {
   width: 100%;
   height: 48px;
   border-radius: 6px;
-  background: #10B981;
-  border: 2px solid #34D399;
-  border-bottom: 4px solid #059669;
+  background: #2563EB;
+  border: 2px solid #60A5FA;
+  border-bottom: 4px solid #1E40AF;
   color: #FFFFFF;
   font-family: 'Orbitron', monospace;
   font-weight: 900;
@@ -612,7 +612,7 @@ canvas {
 }
 
 .btn-hero-play:hover {
-  background: #059669;
+  background: #1D4ED8;
 }
 
 .btn-hero-play:active {
@@ -630,7 +630,7 @@ canvas {
 .btn-secondary-action {
   height: 38px;
   border-radius: 6px;
-  background: #141B2B;
+  background: #141C2E;
   border: 1.5px solid var(--border-subtle);
   border-bottom: 3px solid #080B11;
   color: var(--text-main);
@@ -646,7 +646,7 @@ canvas {
 
 .btn-secondary-action:hover {
   background: var(--bg-card-hover);
-  border-color: var(--gold);
+  border-color: var(--steel);
 }
 
 .btn-secondary-action:active {
@@ -664,7 +664,7 @@ canvas {
 .title-guide-chips .chip {
   font-size: 0.75rem;
   color: var(--text-muted);
-  background: #141B2B;
+  background: #141C2E;
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   padding: 4px 8px;
@@ -701,14 +701,99 @@ canvas {
   display: flex;
   align-items: center;
   gap: 5px;
-  background: #241A0B;
-  border: 1px solid var(--gold);
+  background: #141C2E;
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 4px 10px;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   font-size: 0.85rem;
   color: var(--gold);
+}
+
+/* Tactical Directive Augments List */
+.directive-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.directive-item {
+  background: #141C2E;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.08s ease, border-color 0.1s ease, background 0.1s ease;
+}
+
+.directive-item:hover {
+  background: #1E293B;
+  border-color: var(--steel);
+  transform: translateY(-2px);
+}
+
+.directive-item:active {
+  transform: translateY(1px);
+}
+
+.directive-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  background: #0E1422;
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--steel);
+}
+
+.directive-icon-box svg {
+  width: 22px;
+  height: 22px;
+}
+
+.directive-text-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-grow: 1;
+}
+
+.directive-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.directive-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.80rem;
+  font-weight: 900;
+  color: #FFFFFF;
+}
+
+.directive-tag {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--steel);
+  background: #0E1F3D;
+  border: 1px solid var(--steel);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+.directive-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.3;
 }
 
 /* Workshop Upgrade Scroll List */
@@ -722,7 +807,7 @@ canvas {
 }
 
 .ws-item {
-  background: #141B2B;
+  background: #141C2E;
   border: 1.5px solid var(--border-subtle);
   border-radius: 6px;
   padding: 8px 10px;
@@ -753,9 +838,9 @@ canvas {
 .ws-buy-btn {
   padding: 6px 10px;
   border-radius: 4px;
-  background: #D97706;
-  border: 1px solid var(--gold);
-  border-bottom: 2px solid #92400E;
+  background: #2563EB;
+  border: 1px solid #60A5FA;
+  border-bottom: 2px solid #1E40AF;
   color: #FFFFFF;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
@@ -765,7 +850,7 @@ canvas {
 }
 
 .ws-buy-btn:hover:not(:disabled) {
-  background: #B45309;
+  background: #1D4ED8;
 }
 
 .ws-buy-btn:active:not(:disabled) {
@@ -784,10 +869,10 @@ canvas {
   width: 100%;
   height: 38px;
   border-radius: 6px;
-  background: #241A0B;
-  border: 1.5px solid var(--gold);
-  border-bottom: 3px solid #92400E;
-  color: var(--gold);
+  background: #0E1F3D;
+  border: 1.5px solid var(--steel);
+  border-bottom: 3px solid #1E40AF;
+  color: var(--steel);
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   font-size: 0.76rem;
@@ -796,7 +881,7 @@ canvas {
 }
 
 .workshop-ad-grant-btn:hover {
-  background: #3B280E;
+  background: #162B50;
 }
 
 .workshop-ad-grant-btn:active {
@@ -809,9 +894,9 @@ canvas {
   width: 100%;
   height: 42px;
   border-radius: 6px;
-  background: #D97706;
-  border: 1.5px solid var(--gold);
-  border-bottom: 3px solid #92400E;
+  background: #2563EB;
+  border: 1.5px solid #60A5FA;
+  border-bottom: 3px solid #1E40AF;
   color: #FFFFFF;
   font-family: 'Orbitron', monospace;
   font-weight: 900;
@@ -821,7 +906,7 @@ canvas {
 }
 
 .btn-modal-primary:hover {
-  background: #B45309;
+  background: #1D4ED8;
 }
 
 .btn-modal-primary:active {
@@ -833,7 +918,7 @@ canvas {
   width: 100%;
   height: 38px;
   border-radius: 6px;
-  background: #141B2B;
+  background: #141C2E;
   border: 1.5px solid var(--border-subtle);
   border-bottom: 3px solid #080B11;
   color: var(--text-main);
@@ -846,7 +931,7 @@ canvas {
 
 .btn-modal-secondary:hover {
   background: var(--bg-card-hover);
-  border-color: var(--gold);
+  border-color: var(--steel);
 }
 
 .btn-modal-secondary:active {
@@ -874,7 +959,7 @@ canvas {
 .guide-step {
   display: flex;
   gap: 10px;
-  background: #141B2B;
+  background: #141C2E;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 8px 10px;
@@ -902,7 +987,7 @@ canvas {
 .guide-step-text h4 {
   font-family: 'Orbitron', monospace;
   font-size: 0.76rem;
-  color: var(--gold);
+  color: var(--steel);
   margin-bottom: 2px;
 }
 
@@ -941,7 +1026,7 @@ canvas {
 }
 
 .summary-cell {
-  background: #141B2B;
+  background: #141C2E;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 6px 8px;
@@ -961,7 +1046,7 @@ canvas {
   font-family: 'Orbitron', monospace;
   font-size: 1.05rem;
   font-weight: 900;
-  color: var(--gold);
+  color: var(--steel);
 }
 
 .btn-modal-revive {
@@ -992,10 +1077,10 @@ canvas {
   width: 100%;
   height: 40px;
   border-radius: 6px;
-  background: #241A0B;
-  border: 1.5px solid var(--gold);
-  border-bottom: 3px solid #92400E;
-  color: var(--gold);
+  background: #0E1F3D;
+  border: 1.5px solid var(--steel);
+  border-bottom: 3px solid #1E40AF;
+  color: var(--steel);
   font-family: 'Orbitron', monospace;
   font-weight: 700;
   font-size: 0.82rem;
@@ -1004,7 +1089,7 @@ canvas {
 }
 
 .btn-modal-reward:hover {
-  background: #3B280E;
+  background: #162B50;
 }
 
 .btn-modal-reward:active {

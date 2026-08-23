@@ -183,6 +183,65 @@ export const WORKSHOP_DEFS = [
   { id: 'salvage_efficiency', name: 'Salvage Efficiency',   baseCost: 100, costScale: 1.50, maxLevel: 5,  effect: 0.05, stat: 'goldBonus',   unit: '% Gold' }
 ];
 
+export const DIRECTIVES = [
+  {
+    id: 'cryo_shatter',
+    name: 'Cryo Shatter',
+    desc: 'Frozen enemies shatter on defeat, dealing 60 AoE Cryo DMG to nearby hostiles and slowing them.',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>`,
+    tag: 'OFFENSIVE'
+  },
+  {
+    id: 'tesla_cascade',
+    name: 'Tesla Overload',
+    desc: 'Tesla Pylons chain to +2 additional targets and trigger an electric micro-shockwave.',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h8l-2 8 10-12h-8l2-8z"/></svg>`,
+    tag: 'SYNERGY'
+  },
+  {
+    id: 'rail_piercer',
+    name: 'Depleted Core',
+    desc: 'Ballista Railguns gain +1 permanent pierce and ignore 50% of enemy armor.',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>`,
+    tag: 'OFFENSIVE'
+  },
+  {
+    id: 'napalm_cluster',
+    name: 'Napalm Shells',
+    desc: 'Siege Mortar leaves burning napalm pools on impact for 4.0s with +50% burn DPS.',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`,
+    tag: 'OFFENSIVE'
+  },
+  {
+    id: 'shadow_vortex',
+    name: 'Vibro Phase Drive',
+    desc: 'Vibro Interceptors gain +35% attack speed and +15% critical strike chance.',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+    tag: 'CRITICAL'
+  },
+  {
+    id: 'interest_treasury',
+    name: 'Compound Treasury',
+    desc: 'Earn +10% interest on unspent Credits at the end of each wave (up to +25G).',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+    tag: 'ECONOMY'
+  },
+  {
+    id: 'overclock_protocol',
+    name: 'Kinetic Overclock',
+    desc: 'All Sentinels attack 20% faster, and Ion Strike cooldown is reduced by 4.0s.',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+    tag: 'TACTICAL'
+  },
+  {
+    id: 'aegis_emergency',
+    name: 'Aegis Deflector',
+    desc: 'When Core HP drops below 35%, automatically deploys a barrier absorbing 100 DMG.',
+    iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    tag: 'DEFENSE'
+  }
+];
+
 /* ============================================================================
  * 2. PROCEDURAL WEB AUDIO SYNTHESIZER
  * ============================================================================ */
@@ -786,6 +845,85 @@ export function drawSlotPad(ctx, slot, isOccupied = false, isHighlighted = false
   }
 
   ctx.restore();
+}
+
+export function drawTargetReticle(ctx, enemy, animTime) {
+  if (!enemy || enemy.hp <= 0) return;
+  ctx.save();
+  ctx.translate(enemy.x, enemy.y);
+  ctx.rotate(animTime * 2.8);
+
+  ctx.strokeStyle = '#38BDF8';
+  ctx.lineWidth = 2.0;
+  const r = (enemy.radius || 12) + 8;
+  
+  // 4 corner reticle brackets
+  for (let i = 0; i < 4; i++) {
+    const a = (i * Math.PI) / 2;
+    ctx.save();
+    ctx.rotate(a);
+    ctx.beginPath();
+    ctx.arc(0, 0, r, -0.3, 0.3);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(r - 4, 0);
+    ctx.lineTo(r + 5, 0);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  ctx.fillStyle = '#EF4444';
+  ctx.beginPath();
+  ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+export function drawResonanceLinks(ctx, sentinels, animTime) {
+  // Check adjacent ring slots
+  for (let i = 0; i < 8; i++) {
+    const slotA = `slot_${i}`;
+    const slotB = `slot_${(i + 1) % 8}`;
+    const s1 = sentinels.get(slotA);
+    const s2 = sentinels.get(slotB);
+    if (!s1 || !s2) continue;
+
+    const combo = [s1.archetype, s2.archetype].sort().join('+');
+    let linkColor = null;
+
+    if (combo === 'arcane_mage+ballista_archer') {
+      linkColor = 'rgba(56, 189, 248, ';
+    } else if (combo === 'frost_warden+heavy_cannon') {
+      linkColor = 'rgba(96, 165, 250, ';
+    } else if (combo === 'ballista_archer+shadow_assassin') {
+      linkColor = 'rgba(244, 63, 94, ';
+    } else if (combo === 'arcane_mage+frost_warden') {
+      linkColor = 'rgba(129, 140, 248, ';
+    }
+
+    if (linkColor) {
+      const pulse = 0.5 + Math.sin(animTime * 8 + i) * 0.35;
+      ctx.save();
+      ctx.strokeStyle = linkColor + pulse + ')';
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(s1.x, s1.y);
+      ctx.lineTo(s2.x, s2.y);
+      ctx.stroke();
+
+      // Energy particles along the link
+      const midT = (animTime * 2.2 + i * 0.25) % 1;
+      const px = s1.x + (s2.x - s1.x) * midT;
+      const py = s1.y + (s2.y - s1.y) * midT;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+  }
 }
 
 export function drawSentinelPlatform(ctx, x, y, tier = 1, isSelected = false, isMergeTarget = false) {
@@ -1727,6 +1865,9 @@ export class OrbitGuardGame {
 
     // Sentinels Board (8 orbit slots + 4 bench slots)
     this.sentinels = new Map(); // key: slotId -> sentinel object
+    this.activeDirectives = new Set(); // Roguelike build directives
+    this.lockedTargetId = null; // Manual focus-fire target lock
+    this.hasTriggeredEmergencyAegis = false; // 1x per run shield
 
     // Drag-and-drop / Tap interaction
     this.dragState = 'IDLE'; // IDLE, DRAGGING, SNAPPING
@@ -1741,6 +1882,7 @@ export class OrbitGuardGame {
     this.projectiles = []; // lasers, mortar shells, shockwaves
     this.burningPools = [];
     this.teslaArcs = [];
+    this.resonanceLaserTimer = 0;
 
     this.waveState = 'PRE_WAVE'; // PRE_WAVE, SPAWNING, WAVE_ACTIVE, WAVE_CLEARED
     this.waveTimer = 2.0;
@@ -2291,7 +2433,50 @@ export class OrbitGuardGame {
     }
   }
 
+  openDirectiveModal() {
+    this.state = 'PAUSED';
+    const list = document.getElementById('directive-options-list');
+    if (!list) return;
+
+    list.innerHTML = '';
+    const available = DIRECTIVES.filter((d) => !this.activeDirectives.has(d.id));
+    const pool = available.length >= 3 ? available : DIRECTIVES;
+    const shuffled = [...pool].sort(() => 0.5 - Math.random());
+    const choices = shuffled.slice(0, 3);
+
+    choices.forEach((d) => {
+      const item = document.createElement('div');
+      item.className = 'directive-item';
+      item.innerHTML = `
+        <div class="directive-icon-box">${d.iconSvg}</div>
+        <div class="directive-text-stack">
+          <div class="directive-name-row">
+            <span class="directive-name">${d.name}</span>
+            <span class="directive-tag">${d.tag}</span>
+          </div>
+          <p class="directive-desc">${d.desc}</p>
+        </div>
+      `;
+
+      item.addEventListener('click', () => {
+        this.activeDirectives.add(d.id);
+        this.audio.playMergeChime(3);
+        this.particles.starburst(ARENA.center.x, ARENA.center.y, 30, '#38BDF8');
+        this.juice.spawnFloatingText(`DIRECTIVE: ${d.name}!`, ARENA.center.x, ARENA.center.y - 35, { color: '#38BDF8', size: 16 });
+        this.closeAllModals();
+        this.state = 'PLAYING';
+        this.playgama.hideBanner();
+      });
+
+      list.appendChild(item);
+    });
+
+    this.playgama.showBanner();
+    document.getElementById('directive-modal')?.classList.remove('hidden');
+  }
+
   closeAllModals() {
+    document.getElementById('directive-modal')?.classList.add('hidden');
     document.getElementById('workshop-modal')?.classList.add('hidden');
     document.getElementById('tutorial-modal')?.classList.add('hidden');
     document.getElementById('pause-modal')?.classList.add('hidden');
@@ -2483,7 +2668,22 @@ export class OrbitGuardGame {
     const clientY = (e.clientY - rect.top) / this.renderer.scale;
 
     const slot = this.getSlotAt(clientX, clientY);
-    if (!slot) return;
+    if (!slot) {
+      // Check if clicking directly on a hostile enemy to lock target!
+      const tappedEnemy = this.enemies.find((en) => {
+        if (en.hp <= 0) return false;
+        return MathUtils.distance(clientX, clientY, en.x, en.y) <= (en.radius || 12) + 16;
+      });
+
+      if (tappedEnemy) {
+        this.lockedTargetId = tappedEnemy.id;
+        this.audio.playCritSlash();
+        this.juice.spawnFloatingText('TARGET LOCKED', tappedEnemy.x, tappedEnemy.y - 25, { color: '#38BDF8', size: 14 });
+      } else {
+        this.lockedTargetId = null;
+      }
+      return;
+    }
 
     const unit = this.sentinels.get(slot.id);
     if (unit) {
@@ -2840,6 +3040,20 @@ export class OrbitGuardGame {
       this.addGold(finalBounty);
       this.audio.playVictoryFanfare();
       this.showWaveBanner(`WAVE ${this.wave} CLEARED!`, `+${finalBounty} CREDITS`, 2.5);
+
+      // Compound interest perk
+      if (this.activeDirectives.has('interest_treasury')) {
+        const interest = Math.min(25, Math.floor(this.gold * 0.10));
+        if (interest > 0) {
+          this.addGold(interest);
+          this.juice.spawnFloatingText(`+${interest} G INTEREST`, ARENA.center.x, ARENA.center.y - 20, { color: '#F59E0B', size: 14 });
+        }
+      }
+
+      // Trigger Roguelike Tactical Directive Choice on waves 3, 6, 9, 12, 15...
+      if (this.wave % 3 === 0) {
+        this.openDirectiveModal();
+      }
     }
 
     if (this.waveState === 'WAVE_CLEARED') {
@@ -2869,7 +3083,34 @@ export class OrbitGuardGame {
   }
 
   updateSentinels(dt) {
-    const globalSpeedBuff = this.getWorkshopStat('attackSpeed') * (this.surgeBuffTimer > 0 ? 1.5 : 1.0);
+    let globalSpeedBuff = this.getWorkshopStat('attackSpeed') * (this.surgeBuffTimer > 0 ? 1.5 : 1.0);
+    if (this.activeDirectives.has('overclock_protocol')) globalSpeedBuff *= 1.20;
+
+    // Check Orbital Resonance Links between adjacent ring slots
+    for (let i = 0; i < 8; i++) {
+      const slotA = `slot_${i}`;
+      const slotB = `slot_${(i + 1) % 8}`;
+      const s1 = this.sentinels.get(slotA);
+      const s2 = this.sentinels.get(slotB);
+      if (!s1 || !s2) continue;
+
+      const combo = [s1.archetype, s2.archetype].sort().join('+');
+      if (combo === 'arcane_mage+ballista_archer') {
+        // Overcharge Conductor Beam (25 DPS + 30% slow to enemies crossing line)
+        for (const enemy of this.enemies) {
+          if (enemy.hp <= 0) continue;
+          const distToBeam = CollisionUtils.pointToLineDistance(enemy.x, enemy.y, s1.x, s1.y, s2.x, s2.y);
+          if (distToBeam <= (enemy.radius || 12) + 6) {
+            enemy.hp -= 28 * dt;
+            enemy.slowPercent = Math.max(enemy.slowPercent || 0, 0.30);
+            enemy.chilledTimer = 0.2;
+            if (Math.random() < 0.15) {
+              this.particles.burst(enemy.x, enemy.y, 2, '#38BDF8');
+            }
+          }
+        }
+      }
+    }
 
     for (const [slotId, s] of this.sentinels) {
       // Standby / Bench units do NOT attack
@@ -2881,9 +3122,14 @@ export class OrbitGuardGame {
       if (s.recoil > 0) s.recoil = Math.max(0, s.recoil - dt * 5);
       s.isFiring = false;
       s.isSlashing = false;
-      s.cooldown -= dt * globalSpeedBuff;
 
-      // Select Target
+      let sentinelSpeed = globalSpeedBuff;
+      if (s.archetype === 'shadow_assassin' && this.activeDirectives.has('shadow_vortex')) {
+        sentinelSpeed *= 1.35;
+      }
+      s.cooldown -= dt * sentinelSpeed;
+
+      // Select Target (checks manual target lock first!)
       const target = this.selectTargetForSentinel(s);
       if (target) {
         // Track target with turret angle
@@ -2900,6 +3146,13 @@ export class OrbitGuardGame {
   }
 
   selectTargetForSentinel(s) {
+    if (this.lockedTargetId) {
+      const lockedEnemy = this.enemies.find((e) => e.id === this.lockedTargetId && e.hp > 0);
+      if (lockedEnemy && MathUtils.distance(s.x, s.y, lockedEnemy.x, lockedEnemy.y) <= s.currentRange) {
+        return lockedEnemy;
+      }
+    }
+
     const inRange = this.enemies.filter((e) => {
       if (e.hp <= 0) return false;
       const d = MathUtils.distance(s.x, s.y, e.x, e.y);
@@ -3130,6 +3383,23 @@ export class OrbitGuardGame {
 
   killEnemy(enemy) {
     enemy.hp = 0;
+    if (enemy.id === this.lockedTargetId) {
+      this.lockedTargetId = null;
+    }
+
+    // Cryo Shatter Directive AoE explosion
+    if (this.activeDirectives.has('cryo_shatter') && enemy.chilledTimer > 0) {
+      this.particles.burst(enemy.x, enemy.y, 18, '#38BDF8');
+      this.audio.playFrostHum();
+      for (const other of this.enemies) {
+        if (other.id !== enemy.id && other.hp > 0 && MathUtils.distance(enemy.x, enemy.y, other.x, other.y) <= 65) {
+          other.hp -= 60;
+          other.chilledTimer = 1.5;
+          other.slowPercent = 0.40;
+        }
+      }
+      this.juice.spawnFloatingText('CRYO SHATTER!', enemy.x, enemy.y - 20, { color: '#38BDF8', size: 14 });
+    }
 
     // Swarm Pod Splitting Mechanic
     if (enemy.type === 'swarm_pod') {
@@ -3228,22 +3498,22 @@ export class OrbitGuardGame {
       e.polarAngle += effectiveAngularSpeed * dt;
 
       // Inward radial drift
-      e.polarRadius -= radialDriftRate * speedScale * dt;
+      e.polarRadius = Math.max(ARENA.innerHazardRadius, e.polarRadius - radialDriftRate * speedScale * dt);
 
       // Convert polar coordinates to Cartesian
       e.x = ARENA.center.x + Math.cos(e.polarAngle) * e.polarRadius;
       e.y = ARENA.center.y + Math.sin(e.polarAngle) * e.polarRadius;
       e.angle = e.polarAngle + Math.PI / 2;
 
-      // Boss Specific Mechanics
+      // Boss Specific Behaviors
       if (e.type === 'iron_colossus') {
-        e.shieldAngle += dt * 1.5; // Revolving kinetic shield
+        e.shieldAngle += 0.8 * dt;
       } else if (e.type === 'chrono_wraith') {
         e.phaseBlinkTimer -= dt;
         if (e.phaseBlinkTimer <= 0) {
-          e.phaseBlinkTimer = 5.0;
-          e.polarAngle += (75 * Math.PI / 180); // Teleport 75 degrees forward
-          this.particles.burst(e.x, e.y, 20, '#D500F9');
+          e.phaseBlinkTimer = 4.5;
+          e.polarAngle += (Math.PI / 3);
+          this.particles.burst(e.x, e.y, 16, '#C084FC');
           this.audio.playTeslaCrackle();
         }
       }
@@ -3268,6 +3538,16 @@ export class OrbitGuardGame {
     this.particles.burst(ARENA.center.x, ARENA.center.y, 25, '#EF4444');
     this.juice.spawnFloatingText(`-${enemy.coreDmg} HP`, ARENA.center.x, ARENA.center.y - 20, { color: '#EF4444', size: 22 });
 
+    // Emergency Aegis Deflector Directive
+    if (this.coreHp > 0 && this.coreHp <= this.coreMaxHp * 0.35 && !this.hasTriggeredEmergencyAegis && this.activeDirectives.has('aegis_emergency')) {
+      this.hasTriggeredEmergencyAegis = true;
+      this.coreHp = Math.min(this.coreMaxHp, this.coreHp + 100);
+      this.juice.screenShake(8);
+      this.particles.burst(ARENA.center.x, ARENA.center.y, 35, '#38BDF8');
+      this.juice.spawnFloatingText('AEGIS BARRIER (+100 HP)!', ARENA.center.x, ARENA.center.y - 35, { color: '#38BDF8', size: 18 });
+      this.audio.playSurgeShockwave();
+    }
+    
     if (this.coreHp <= 0) {
       this.handleGameOver();
     }
@@ -3475,8 +3755,11 @@ export class OrbitGuardGame {
       });
     });
 
-    // Layer 30: Burning Plasma Pools & Shockwaves
+    // Layer 30: Burning Plasma Pools, Resonance Links & Shockwaves
     this.layeredRenderer.draw(RenderLayers.EFFECTS, (c) => {
+      // Orbital Resonance Synergy Beams between adjacent sentinels
+      drawResonanceLinks(c, this.sentinels, this.animTime);
+
       for (const pool of this.burningPools) {
         c.strokeStyle = 'rgba(239, 68, 68, 0.45)';
         c.lineWidth = 1.5;
@@ -3488,7 +3771,7 @@ export class OrbitGuardGame {
       }
 
       if (this.activeShockwave) {
-        c.strokeStyle = '#F59E0B';
+        c.strokeStyle = '#38BDF8';
         c.lineWidth = 3.5;
         c.beginPath();
         c.arc(this.activeShockwave.x, this.activeShockwave.y, this.activeShockwave.radius, 0, Math.PI * 2);
@@ -3496,10 +3779,18 @@ export class OrbitGuardGame {
       }
     });
 
-    // Layer 40: Void Invaders Horde
+    // Layer 40: Void Invaders Horde & Target Lock Reticle
     this.layeredRenderer.draw(RenderLayers.CHARACTERS, (c) => {
       for (const enemy of this.enemies) {
         drawEnemy(c, enemy, this.animTime);
+      }
+
+      // Tactical Focus-Fire Target Crosshair
+      if (this.lockedTargetId) {
+        const lockedEnemy = this.enemies.find((e) => e.id === this.lockedTargetId && e.hp > 0);
+        if (lockedEnemy) {
+          drawTargetReticle(c, lockedEnemy, this.animTime);
+        }
       }
     });
 

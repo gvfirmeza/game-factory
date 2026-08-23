@@ -268,6 +268,34 @@
 
           <div class="guide-step">
             <div class="guide-step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--steel)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="22" y1="12" x2="18" y2="12"/>
+                <line x1="6" y1="12" x2="2" y2="12"/>
+                <line x1="12" y1="6" x2="12" y2="2"/>
+                <line x1="12" y1="22" x2="12" y2="18"/>
+              </svg>
+            </div>
+            <div class="guide-step-text">
+              <h4>TACTICAL TARGET LOCK</h4>
+              <p>Tap any elite hostile or boss in the arena to focus-fire all active sentinels onto that target immediately.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="guide-step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--steel)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="guide-step-text">
+              <h4>ORBITAL RESONANCE LINKS</h4>
+              <p>Place complementary sentinels in adjacent ring slots to ignite energy barrier beams that zap and slow passing invaders.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="guide-step-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="var(--crimson)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 6h18"/>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
@@ -284,6 +312,21 @@
           <button id="btn-close-tutorial" class="btn-modal-primary">
             ACKNOWLEDGE
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tactical Directive Modal (Roguelite Augment Choice every 3 waves) -->
+    <div id="directive-modal" class="modal-overlay hidden">
+      <div class="modal-card directive-card">
+        <div class="modal-top">
+          <div class="modal-title-stack">
+            <h2 class="modal-heading">TACTICAL DIRECTIVE</h2>
+            <span class="modal-subheading">Select 1 combat enhancement protocol</span>
+          </div>
+        </div>
+        <div id="directive-options-list" class="directive-options-list">
+          <!-- Dynamic 3 Directive Cards injected via JS -->
         </div>
       </div>
     </div>
