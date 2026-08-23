@@ -982,12 +982,32 @@ export class LumberTycoonGame {
     this.unlockedZones = new Set(['oak']);
     this.tutorialStep = 0;
 
+    // Playgama Interstitial Ad Cooldown (60s minimum interval)
+    this.lastInterstitialTime = Date.now();
+    this.interstitialCooldown = 60000;
+
     this.update = this.update.bind(this);
     this.render = this.render.bind(this);
 
     if (typeof window !== 'undefined') {
       window.__gameInstance = this;
       window.__lumberTycoonInstance = this;
+    }
+  }
+
+  async triggerInterstitial(placement = 'general') {
+    const now = Date.now();
+    if (now - this.lastInterstitialTime < this.interstitialCooldown) {
+      return false;
+    }
+    this.lastInterstitialTime = now;
+    console.log(`[Playgama] Triggering Interstitial Ad: placement=${placement}`);
+    try {
+      await this.playgama.showInterstitial();
+      return true;
+    } catch (err) {
+      console.warn('[Playgama] Interstitial ad error:', err);
+      return false;
     }
   }
 
@@ -1188,9 +1208,11 @@ export class LumberTycoonGame {
     document.getElementById('btn-open-workers')?.addEventListener('click', () => this.openWorkerModal());
     document.getElementById('btn-close-shop')?.addEventListener('click', () => {
       document.getElementById('shop-modal')?.classList.add('hidden');
+      this.triggerInterstitial('shop_exit');
     });
     document.getElementById('btn-close-workers')?.addEventListener('click', () => {
       document.getElementById('workers-modal')?.classList.add('hidden');
+      this.triggerInterstitial('workers_exit');
     });
 
     document.getElementById('btn-airdrop')?.addEventListener('click', () => this.showRewardedCashGrant());
@@ -1653,19 +1675,29 @@ export class LumberTycoonGame {
         this.tutorialStep = 4;
         this.saveData.tutorialStep = 4;
       }
+      if (this.player.axeTier >= 3) {
+        this.triggerInterstitial('major_upgrade');
+      }
     } else if (pad.type === 'CAPACITY') {
       this.player.capacityIndex++;
       this.saveData.capacityIndex = this.player.capacityIndex;
       pad.targetCost = CAPACITY_TIERS[this.player.capacityIndex + 1]?.cost || 0;
+      if (this.player.capacityIndex >= 3) {
+        this.triggerInterstitial('major_upgrade');
+      }
     } else if (pad.type === 'WORKER') {
       this.saveData.workerCount = this.workers.length + 1;
       this.spawnWorkers(this.saveData.workerCount);
       pad.targetCost = Math.floor(250 * Math.pow(1.8, this.workers.length));
+      if (this.workers.length >= 2) {
+        this.triggerInterstitial('worker_hired');
+      }
     } else if (pad.type.startsWith('ZONE_')) {
       const zoneId = pad.type.replace('ZONE_', '').toLowerCase();
       this.unlockedZones.add(zoneId);
       this.saveData.unlockedZones = Array.from(this.unlockedZones);
       pad.targetCost = 0;
+      this.triggerInterstitial('zone_unlock');
     }
 
     SaveManager.save(this.playgama, this.saveData);

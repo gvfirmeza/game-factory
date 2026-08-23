@@ -38,13 +38,12 @@
     "rewarded": {
       "supported": true,
       "placements": [
-        { "id": "airdrop_cash", "reward": "+$1,000 Cash Grant", "location": "in_game_hud" },
-        { "id": "turbo_rush", "reward": "60s 2X Speed Turbo Rush", "location": "action_deck" }
+        { "id": "airdrop_cash", "reward": "+$500 Cash Grant", "location": "in_game_hud" }
       ]
     },
     "interstitial": {
       "supported": true,
-      "placements": ["zone_unlock", "shop_exit"]
+      "placements": ["zone_unlock", "shop_exit", "workers_exit", "major_upgrade"]
     }
   }
 }
