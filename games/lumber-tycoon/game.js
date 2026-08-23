@@ -1031,23 +1031,38 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   ctx.globalAlpha = 0.65;
   ctx.beginPath();
   ctx.arc(-6, -18.5, 2.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
   ctx.arc(6, -18.5, 2.5, 0, Math.PI * 2);
   ctx.fill();
   ctx.globalAlpha = 1.0;
 
-  // Big Clear Eyes with Dual Specular Sparkle Highlights
+  // Left Eye Pupil
   ctx.fillStyle = '#212121';
   ctx.beginPath();
   ctx.arc(-4.5, -21, 2.6, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Right Eye Pupil
+  ctx.beginPath();
   ctx.arc(4.5, -21, 2.6, 0, Math.PI * 2);
   ctx.fill();
 
+  // Left Eye Sparkles (Separate paths to prevent connecting line)
   ctx.fillStyle = '#FFFFFF';
   ctx.beginPath();
-  ctx.arc(-5.1, -21.8, 0.9, 0, Math.PI * 2);
-  ctx.arc(-3.7, -20.2, 0.5, 0, Math.PI * 2);
-  ctx.arc(3.9, -21.8, 0.9, 0, Math.PI * 2);
-  ctx.arc(5.3, -20.2, 0.5, 0, Math.PI * 2);
+  ctx.arc(-5.2, -21.8, 0.9, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(-3.8, -20.2, 0.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Right Eye Sparkles (Separate paths to prevent connecting line)
+  ctx.beginPath();
+  ctx.arc(3.8, -21.8, 0.9, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(5.2, -20.2, 0.5, 0, Math.PI * 2);
   ctx.fill();
 
   // Cute Little Smile
