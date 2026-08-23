@@ -524,6 +524,14 @@ export class OrbitAudioSynthesizer {
  * 3. PROCEDURAL VECTOR RENDERERS (Canvas 2D)
  * ============================================================================ */
 
+export function distanceToLineSegment(px, py, x1, y1, x2, y2) {
+  const l2 = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+  if (l2 === 0) return MathUtils.distance(px, py, x1, y1);
+  let t = ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / l2;
+  t = Math.max(0, Math.min(1, t));
+  return MathUtils.distance(px, py, x1 + t * (x2 - x1), y1 + t * (y2 - y1));
+}
+
 export function drawRoundRect(ctx, x, y, width, height, radius = 4) {
   let r = typeof radius === 'number' ? radius : (Array.isArray(radius) ? radius[0] : 4);
   if (width < 2 * r) r = width / 2;
@@ -3099,7 +3107,7 @@ export class OrbitGuardGame {
         // Overcharge Conductor Beam (25 DPS + 30% slow to enemies crossing line)
         for (const enemy of this.enemies) {
           if (enemy.hp <= 0) continue;
-          const distToBeam = CollisionUtils.pointToLineDistance(enemy.x, enemy.y, s1.x, s1.y, s2.x, s2.y);
+          const distToBeam = distanceToLineSegment(enemy.x, enemy.y, s1.x, s1.y, s2.x, s2.y);
           if (distToBeam <= (enemy.radius || 12) + 6) {
             enemy.hp -= 28 * dt;
             enemy.slowPercent = Math.max(enemy.slowPercent || 0, 0.30);

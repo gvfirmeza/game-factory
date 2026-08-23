@@ -320,8 +320,17 @@ async function testGame(gameId) {
           return 0;
         };
         const initialTroopCount = getTroopCount();
-        if (instance.buySentinel) instance.buySentinel();
-        else if (instance.summonUnit) instance.summonUnit();
+        if (instance.buySentinel) {
+          // Buy multiple sentinels to fill board and test all adjacent resonance link combinations
+          instance.isGodMode = true;
+          for (let b = 0; b < 10; b++) {
+            instance.buySentinel();
+          }
+          // Simulate 60 frames with filled board
+          for (let f = 0; f < 60; f++) {
+            instance.update(1 / 60);
+          }
+        } else if (instance.summonUnit) instance.summonUnit();
         else if (instance.buyTroop) instance.buyTroop();
         const afterTroopCount = getTroopCount();
         assert('SUMMON', 'Sentinel purchase creates unit in valid slot and deducts gold', afterTroopCount >= initialTroopCount, `Troops on board: ${afterTroopCount}`);
