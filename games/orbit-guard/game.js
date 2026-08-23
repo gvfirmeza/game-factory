@@ -218,12 +218,12 @@ export const ARENA = {
 };
 
 export const TIERS = [
-  { tier: 1, badge: 'T1', border: '#D97706', glow: 'rgba(217, 119, 6, 0.20)',   dpsMult: 1.00, rangeBonus: 0,  label: 'T1 Bronze' },
-  { tier: 2, badge: 'T2', border: '#94A3B8', glow: 'rgba(148, 163, 184, 0.22)', dpsMult: 2.25, rangeBonus: 15, label: 'T2 Steel' },
-  { tier: 3, badge: 'T3', border: '#F59E0B', glow: 'rgba(245, 158, 11, 0.25)',  dpsMult: 5.10, rangeBonus: 30, label: 'T3 Gold' },
-  { tier: 4, badge: 'T4', border: '#38BDF8', glow: 'rgba(56, 189, 248, 0.30)',  dpsMult: 11.5, rangeBonus: 45, label: 'T4 Cobalt' },
-  { tier: 5, badge: 'T5', border: '#818CF8', glow: 'rgba(129, 140, 248, 0.35)', dpsMult: 26.0, rangeBonus: 60, label: 'T5 Void' },
-  { tier: 6, badge: 'T6', border: '#F43F5E', glow: 'rgba(244, 63, 94, 0.40)',   dpsMult: 60.0, rangeBonus: 80, label: 'T6 Overdrive' }
+  { tier: 1, badge: 'LV.1', stars: '★',       border: '#94A3B8', bg: '#0F172A', glow: 'rgba(148, 163, 184, 0.20)', dpsMult: 1.00, rangeBonus: 0,  label: 'Lv.1 Steel' },
+  { tier: 2, badge: 'LV.2', stars: '★★',      border: '#10B981', bg: '#06281E', glow: 'rgba(16, 185, 129, 0.32)',  dpsMult: 2.25, rangeBonus: 15, label: 'Lv.2 Emerald' },
+  { tier: 3, badge: 'LV.3', stars: '★★★',     border: '#F59E0B', bg: '#291804', glow: 'rgba(245, 158, 11, 0.42)',  dpsMult: 5.10, rangeBonus: 30, label: 'Lv.3 Gold' },
+  { tier: 4, badge: 'LV.4', stars: '★★★★',    border: '#00E5FF', bg: '#04222E', glow: 'rgba(0, 229, 255, 0.50)',   dpsMult: 11.5, rangeBonus: 45, label: 'Lv.4 Plasma' },
+  { tier: 5, badge: 'LV.5', stars: '★★★★★',   border: '#C084FC', bg: '#1E0B36', glow: 'rgba(192, 132, 252, 0.55)', dpsMult: 26.0, rangeBonus: 60, label: 'Lv.5 Dark Matter' },
+  { tier: 6, badge: 'MAX',  stars: '👑MAX👑', border: '#FF0055', bg: '#2B0414', glow: 'rgba(255, 0, 85, 0.65)',    dpsMult: 60.0, rangeBonus: 80, label: 'Lv.6 Radiant' }
 ];
 
 export const ARCHETYPES = {
@@ -1210,20 +1210,67 @@ export function drawSentinelPlatform(ctx, x, y, tier = 1, isSelected = false, is
   ctx.save();
   ctx.translate(x, y);
 
-  ctx.fillStyle = '#141B2B';
+  // Outer Tier Halo (Significantly distinct for each tier!)
+  if (tier > 1) {
+    const haloRadius = 20 + tier * 2;
+    const grad = ctx.createRadialGradient(0, 0, 10, 0, 0, haloRadius);
+    grad.addColorStop(0, tierInfo.glow);
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(0, 0, haloRadius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Base platform circle with distinct tier-colored fill & thick border
+  ctx.fillStyle = tierInfo.bg || '#141B2B';
   ctx.strokeStyle = tierInfo.border;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = tier >= 3 ? 2.5 : 1.8;
   ctx.beginPath();
-  ctx.arc(0, 0, 20, 0, Math.PI * 2);
+  ctx.arc(0, 0, 20 + (tier >= 4 ? 2 : 0), 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
-  // Inner mechanical ring
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.arc(0, 0, 15, 0, Math.PI * 2);
-  ctx.stroke();
+  // Tier 3+ Special Visual Flourishes:
+  if (tier >= 3) {
+    // Golden / Plasma / Radiant Accent Ring
+    ctx.strokeStyle = tierInfo.border;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(0, 0, 24, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // Tier 4+ Energy Corner Pips (Rotating energy dots)
+  if (tier >= 4) {
+    const pips = tier === 4 ? 4 : (tier === 5 ? 6 : 8);
+    ctx.fillStyle = tierInfo.border;
+    for (let i = 0; i < pips; i++) {
+      const pAngle = (i * Math.PI * 2) / pips;
+      const px = Math.cos(pAngle) * 24;
+      const py = Math.sin(pAngle) * 24;
+      ctx.beginPath();
+      ctx.arc(px, py, 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // Selection / Merge Target highlight
+  if (isSelected) {
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.arc(0, 0, 28, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  } else if (isMergeTarget) {
+    ctx.strokeStyle = '#10B981';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(0, 0, 29, 0, Math.PI * 2);
+    ctx.stroke();
+  }
 
   ctx.restore();
 }
@@ -1231,20 +1278,36 @@ export function drawSentinelPlatform(ctx, x, y, tier = 1, isSelected = false, is
 export function drawTierBadge(ctx, x, y, tier = 1) {
   const tierInfo = TIERS[Math.min(tier - 1, 5)];
   ctx.save();
-  ctx.translate(x, y + 16);
+  ctx.translate(x, y + 17);
 
-  ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
+  // High contrast solid pill badge
+  const badgeW = tier >= 6 ? 36 : (tier >= 4 ? 32 : 28);
+  const badgeH = 13;
+
+  ctx.fillStyle = 'rgba(8, 12, 20, 0.96)';
   ctx.strokeStyle = tierInfo.border;
-  ctx.lineWidth = 1.2;
-  drawRoundRect(ctx, -14, -6, 28, 12, 6);
+  ctx.lineWidth = 1.6;
+  drawRoundRect(ctx, -badgeW / 2, -badgeH / 2, badgeW, badgeH, 5);
   ctx.fill();
   ctx.stroke();
 
-  ctx.font = 'bold 9px sans-serif';
+  // Tier text (Bold and clear)
+  ctx.font = 'bold 9px "Orbitron", monospace, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = tierInfo.border;
-  ctx.fillText(tierInfo.badge, 0, 0);
+  ctx.fillText(tierInfo.badge, 0, 0.5);
+
+  // Star pips above for instant visual tier recognition!
+  if (tier >= 2 && tier <= 5) {
+    ctx.font = '8px sans-serif';
+    ctx.fillStyle = tierInfo.border;
+    ctx.fillText(tierInfo.stars, 0, -10);
+  } else if (tier === 6) {
+    ctx.font = '9px sans-serif';
+    ctx.fillStyle = '#FFD166';
+    ctx.fillText('👑', 0, -10);
+  }
 
   ctx.restore();
 }
