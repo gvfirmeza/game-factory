@@ -20,9 +20,9 @@
     "submission_manifest": "pending"
   },
   "build": {
-    "timestamp": "2026-08-24T00:03:39.642Z",
+    "timestamp": "2026-08-24T10:14:57.051Z",
     "zipFile": "build/orbit-guard.zip",
-    "sizeBytes": 1667585,
+    "sizeBytes": 1412526,
     "success": true
   }
 }
