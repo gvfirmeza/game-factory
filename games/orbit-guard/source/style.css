@@ -1463,31 +1463,6 @@ canvas {
   transform: scale(1.15);
 }
 
-.volume-preset-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
-}
-
-.btn-vol-preset {
-  height: 24px;
-  border-radius: 4px;
-  background: #0D1526;
-  border: 1px solid var(--border-subtle);
-  color: var(--text-muted);
-  font-family: 'Orbitron', monospace;
-  font-size: 0.60rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.08s ease, color 0.08s ease, border-color 0.08s ease;
-}
-
-.btn-vol-preset:hover {
-  background: var(--steel);
-  color: #FFFFFF;
-  border-color: var(--steel);
-}
-
 .title-volume-row {
   display: flex;
   align-items: center;

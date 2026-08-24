@@ -192,11 +192,11 @@ export const ARENA = {
   center: { x: 225, y: 280 },
   coreRadius: 36,
   orbitRadius: 72,
-  innerHazardRadius: 48,
-  midOrbitRadius: 130,
+  innerHazardRadius: 90, // Threat perimeter line enclosing the defense sentinels
+  midOrbitRadius: 135,
   spawnRadius: 175,
   spiralStartAngle: -Math.PI / 2,
-  spiralTotalRotations: 1.45 * Math.PI * 2, // 522 degrees continuous spiral
+  spiralTotalRotations: 2.0 * Math.PI * 2, // 720 degrees (2 full strategic orbits)
   slots: [
     { id: 'slot_0', index: 0, angleDeg: 0,   angleRad: 0.0000, x: 297.00, y: 280.00, compass: 'E' },
     { id: 'slot_1', index: 1, angleDeg: 45,  angleRad: 0.7854, x: 275.91, y: 330.91, compass: 'SE' },
@@ -578,7 +578,7 @@ export class OrbitAudioSynthesizer {
     try {
       this.ctx = new AudioContextClass();
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.16, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.55, this.ctx.currentTime);
       this.masterGain.connect(this.ctx.destination);
     } catch (e) {}
   }
@@ -599,7 +599,7 @@ export class OrbitAudioSynthesizer {
     this.ensureContext();
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
-      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.16, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.55, this.ctx.currentTime);
     }
   }
 
@@ -608,7 +608,7 @@ export class OrbitAudioSynthesizer {
     this.ensureContext();
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
-      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.16, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.55, this.ctx.currentTime);
     }
   }
 
@@ -645,7 +645,7 @@ export class OrbitAudioSynthesizer {
     if (!this.ctx || !this.masterGain) return;
     this.resume();
 
-    if (this.playBuffer('merge', 0.15)) return;
+    if (this.playBuffer('merge', 0.30)) return;
 
     const freqs = [523.25, 659.25, 783.99, 1046.50];
     const baseT = this.ctx.currentTime;
@@ -655,7 +655,7 @@ export class OrbitAudioSynthesizer {
       const gain = this.ctx.createGain();
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(f * (1 + (tier - 1) * 0.06), t);
-      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.setValueAtTime(0.18, t);
       gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
       osc.connect(gain);
       gain.connect(this.masterGain);
@@ -674,7 +674,7 @@ export class OrbitAudioSynthesizer {
     if (now - this.lastSoundTimes.laser < 70) return;
     this.lastSoundTimes.laser = now;
 
-    if (this.playBuffer('laser', 0.08)) return;
+    if (this.playBuffer('laser', 0.22)) return;
 
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -682,7 +682,7 @@ export class OrbitAudioSynthesizer {
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(800, t);
     osc.frequency.exponentialRampToValueAtTime(180, t + 0.05);
-    gain.gain.setValueAtTime(0.04, t);
+    gain.gain.setValueAtTime(0.12, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
     osc.connect(gain);
     gain.connect(this.masterGain);
@@ -696,7 +696,7 @@ export class OrbitAudioSynthesizer {
     if (!this.ctx || !this.masterGain) return;
     this.resume();
 
-    if (this.playBuffer('cannon', 0.12)) return;
+    if (this.playBuffer('cannon', 0.35)) return;
 
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -704,7 +704,7 @@ export class OrbitAudioSynthesizer {
     osc.type = 'sine';
     osc.frequency.setValueAtTime(100, t);
     osc.frequency.exponentialRampToValueAtTime(25, t + 0.20);
-    gain.gain.setValueAtTime(0.12, t);
+    gain.gain.setValueAtTime(0.24, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.20);
     osc.connect(gain);
     gain.connect(this.masterGain);
@@ -722,7 +722,7 @@ export class OrbitAudioSynthesizer {
     if (now - this.lastSoundTimes.tesla < 90) return;
     this.lastSoundTimes.tesla = now;
 
-    if (this.playBuffer('tesla', 0.08)) return;
+    if (this.playBuffer('tesla', 0.20)) return;
 
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -730,7 +730,7 @@ export class OrbitAudioSynthesizer {
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(380, t);
     osc.frequency.setValueAtTime(460, t + 0.03);
-    gain.gain.setValueAtTime(0.04, t);
+    gain.gain.setValueAtTime(0.12, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
     osc.connect(gain);
     gain.connect(this.masterGain);
@@ -748,14 +748,14 @@ export class OrbitAudioSynthesizer {
     if (now - this.lastSoundTimes.frost < 220) return;
     this.lastSoundTimes.frost = now;
 
-    // Extremely gentle, soft, low-volume chilling whisper (no harsh high-pitch audio)
+    // Extremely gentle, soft, low-volume chilling whisper
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'sine';
     osc.frequency.setValueAtTime(320, t);
     osc.frequency.exponentialRampToValueAtTime(180, t + 0.08);
-    gain.gain.setValueAtTime(0.025, t);
+    gain.gain.setValueAtTime(0.05, t);
     gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
     osc.connect(gain);
     gain.connect(this.masterGain);
@@ -775,7 +775,7 @@ export class OrbitAudioSynthesizer {
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(650, t);
     osc.frequency.exponentialRampToValueAtTime(140, t + 0.08);
-    gain.gain.setValueAtTime(0.08, t);
+    gain.gain.setValueAtTime(0.20, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
     osc.connect(gain);
     gain.connect(this.masterGain);
@@ -799,7 +799,7 @@ export class OrbitAudioSynthesizer {
     osc.type = 'square';
     osc.frequency.setValueAtTime(587.33, t);
     osc.frequency.setValueAtTime(440.00, t + 0.12);
-    gain.gain.setValueAtTime(0.08, t);
+    gain.gain.setValueAtTime(0.20, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.20);
     osc.connect(gain);
     gain.connect(this.masterGain);
@@ -813,7 +813,7 @@ export class OrbitAudioSynthesizer {
     if (!this.ctx || !this.masterGain) return;
     this.resume();
 
-    if (this.playBuffer('boss_roar', 0.18)) return;
+    if (this.playBuffer('boss_roar', 0.40)) return;
 
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -822,7 +822,7 @@ export class OrbitAudioSynthesizer {
     osc.frequency.setValueAtTime(65, t);
     osc.frequency.linearRampToValueAtTime(110, t + 0.15);
     osc.frequency.exponentialRampToValueAtTime(30, t + 0.40);
-    gain.gain.setValueAtTime(0.12, t);
+    gain.gain.setValueAtTime(0.28, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.40);
     osc.connect(gain);
     gain.connect(this.masterGain);
@@ -836,19 +836,17 @@ export class OrbitAudioSynthesizer {
     if (!this.ctx || !this.masterGain) return;
     this.resume();
 
-    // Throttle: max 1 coin audio chime per 90ms to prevent spam
     const now = performance.now();
     if (now - this.lastSoundTimes.coin < 90) return;
     this.lastSoundTimes.coin = now;
 
-    // Ultra-soft 4% volume sine chime
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'sine';
     osc.frequency.setValueAtTime(1174.66, t);
     osc.frequency.exponentialRampToValueAtTime(1760.00, t + 0.04);
-    gain.gain.setValueAtTime(0.04, t);
+    gain.gain.setValueAtTime(0.12, t);
     gain.gain.exponentialRampToValueAtTime(0.0005, t + 0.04);
     osc.connect(gain);
     gain.connect(this.masterGain);
@@ -862,21 +860,21 @@ export class OrbitAudioSynthesizer {
     if (!this.ctx || !this.masterGain) return;
     this.resume();
 
-    // Deep cinematic sub-bass cosmic pulse (no harsh grating noise)
+    // Deep cinematic sub-bass cosmic pulse (clean, punchy, no grating noise)
     const t = this.ctx.currentTime;
     const osc1 = this.ctx.createOscillator();
     const osc2 = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
 
     osc1.type = 'sine';
-    osc1.frequency.setValueAtTime(85, t);
+    osc1.frequency.setValueAtTime(90, t);
     osc1.frequency.exponentialRampToValueAtTime(30, t + 0.38);
 
     osc2.type = 'triangle';
-    osc2.frequency.setValueAtTime(130, t);
-    osc2.frequency.exponentialRampToValueAtTime(40, t + 0.22);
+    osc2.frequency.setValueAtTime(140, t);
+    osc2.frequency.exponentialRampToValueAtTime(45, t + 0.22);
 
-    gain.gain.setValueAtTime(0.16, t);
+    gain.gain.setValueAtTime(0.30, t);
     gain.gain.exponentialRampToValueAtTime(0.0005, t + 0.38);
 
     osc1.connect(gain);
@@ -903,7 +901,7 @@ export class OrbitAudioSynthesizer {
       const gain = this.ctx.createGain();
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(f, t);
-      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.setValueAtTime(0.20, t);
       gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
       osc.connect(gain);
       gain.connect(this.masterGain);
@@ -1013,12 +1011,12 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   // 1. Orbital Defense Incursion Track (100% Math-Aligned Archimedean Spiral)
   ctx.save();
   const startAngle = ARENA.spiralStartAngle || (-Math.PI / 2);
-  const totalRotations = ARENA.spiralTotalRotations || (1.45 * Math.PI * 2);
-  const steps = 100;
+  const totalRotations = ARENA.spiralTotalRotations || (2.0 * Math.PI * 2);
+  const steps = 120;
 
   // A. Matte Highway Track Underlay
   ctx.lineWidth = 18;
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
   ctx.beginPath();
   for (let i = 0; i <= steps; i++) {
     const t = i / steps;
@@ -1032,8 +1030,8 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.stroke();
 
   // B. Tactical Glowing Guide Rail with animated speed chevrons
-  ctx.lineWidth = 1.8;
-  ctx.strokeStyle = 'rgba(56, 189, 248, 0.40)';
+  ctx.lineWidth = 2.0;
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
   ctx.setLineDash([8, 12]);
   ctx.lineDashOffset = -animTime * 24;
   ctx.beginPath();
@@ -1057,10 +1055,10 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.arc(xc, yc, ARENA.orbitRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // 3. Inner Core Breach Danger Ring (at 48px)
-  ctx.strokeStyle = 'rgba(239, 68, 68, 0.50)';
-  ctx.lineWidth = 1.4;
-  ctx.setLineDash([4, 4]);
+  // 3. Defense Perimeter Threat Barrier (Dotted Hazard Ring enclosing sentinels at 90px)
+  ctx.strokeStyle = 'rgba(239, 68, 68, 0.70)';
+  ctx.lineWidth = 1.8;
+  ctx.setLineDash([5, 6]);
   ctx.beginPath();
   ctx.arc(xc, yc, ARENA.innerHazardRadius, 0, Math.PI * 2);
   ctx.stroke();
@@ -4897,7 +4895,7 @@ export class OrbitGuardGame {
 
   updateEnemies(dt) {
     const startAngle = ARENA.spiralStartAngle || (-Math.PI / 2);
-    const totalRotations = ARENA.spiralTotalRotations || (1.45 * Math.PI * 2);
+    const totalRotations = ARENA.spiralTotalRotations || (2.0 * Math.PI * 2);
 
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const e = this.enemies[i];
