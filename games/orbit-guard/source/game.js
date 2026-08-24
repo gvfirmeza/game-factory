@@ -3066,16 +3066,18 @@ export class OrbitGuardGame {
     setupVolumeControl('title-volume-slider', 'title-volume-val');
 
     // Preset volume buttons
-    document.querySelectorAll('.btn-vol-preset').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        const vol = Number(btn.getAttribute('data-vol') || 0);
-        const slider = document.getElementById('volume-slider');
-        if (slider) {
-          slider.value = vol;
-          slider.dispatchEvent(new Event('input'));
-        }
+    if (typeof document !== 'undefined' && typeof document.querySelectorAll === 'function') {
+      document.querySelectorAll('.btn-vol-preset').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const vol = Number(btn.getAttribute('data-vol') || 0);
+          const slider = document.getElementById('volume-slider');
+          if (slider) {
+            slider.value = vol;
+            slider.dispatchEvent(new Event('input'));
+          }
+        });
       });
-    });
+    }
 
     // Update notification badges for unclaimed achievements
     this.updateUnclaimedBadges();
