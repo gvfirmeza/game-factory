@@ -218,12 +218,12 @@ export const ARENA = {
 };
 
 export const TIERS = [
-  { tier: 1, badge: 'LV.1', stars: '★',       border: '#94A3B8', bg: '#0F172A', glow: 'rgba(148, 163, 184, 0.20)', dpsMult: 1.00, rangeBonus: 0,  label: 'Lv.1 Steel' },
-  { tier: 2, badge: 'LV.2', stars: '★★',      border: '#10B981', bg: '#06281E', glow: 'rgba(16, 185, 129, 0.32)',  dpsMult: 2.25, rangeBonus: 15, label: 'Lv.2 Emerald' },
-  { tier: 3, badge: 'LV.3', stars: '★★★',     border: '#F59E0B', bg: '#291804', glow: 'rgba(245, 158, 11, 0.42)',  dpsMult: 5.10, rangeBonus: 30, label: 'Lv.3 Gold' },
-  { tier: 4, badge: 'LV.4', stars: '★★★★',    border: '#00E5FF', bg: '#04222E', glow: 'rgba(0, 229, 255, 0.50)',   dpsMult: 11.5, rangeBonus: 45, label: 'Lv.4 Plasma' },
-  { tier: 5, badge: 'LV.5', stars: '★★★★★',   border: '#C084FC', bg: '#1E0B36', glow: 'rgba(192, 132, 252, 0.55)', dpsMult: 26.0, rangeBonus: 60, label: 'Lv.5 Dark Matter' },
-  { tier: 6, badge: 'MAX',  stars: '👑MAX👑', border: '#FF0055', bg: '#2B0414', glow: 'rgba(255, 0, 85, 0.65)',    dpsMult: 60.0, rangeBonus: 80, label: 'Lv.6 Radiant' }
+  { tier: 1, badge: 'LV.1', border: '#94A3B8', bg: '#0F172A', glow: 'rgba(148, 163, 184, 0.20)', dpsMult: 1.00, rangeBonus: 0,  label: 'Lv.1 Steel' },
+  { tier: 2, badge: 'LV.2', border: '#10B981', bg: '#06281E', glow: 'rgba(16, 185, 129, 0.32)',  dpsMult: 2.25, rangeBonus: 15, label: 'Lv.2 Emerald' },
+  { tier: 3, badge: 'LV.3', border: '#F59E0B', bg: '#291804', glow: 'rgba(245, 158, 11, 0.42)',  dpsMult: 5.10, rangeBonus: 30, label: 'Lv.3 Gold' },
+  { tier: 4, badge: 'LV.4', border: '#00E5FF', bg: '#04222E', glow: 'rgba(0, 229, 255, 0.50)',   dpsMult: 11.5, rangeBonus: 45, label: 'Lv.4 Plasma' },
+  { tier: 5, badge: 'LV.5', border: '#C084FC', bg: '#1E0B36', glow: 'rgba(192, 132, 252, 0.55)', dpsMult: 26.0, rangeBonus: 60, label: 'Lv.5 Dark Matter' },
+  { tier: 6, badge: 'MAX',  border: '#FF0055', bg: '#2B0414', glow: 'rgba(255, 0, 85, 0.65)',    dpsMult: 60.0, rangeBonus: 80, label: 'Lv.6 Radiant' }
 ];
 
 export const ARCHETYPES = {
@@ -349,7 +349,7 @@ export const DIRECTIVES = [
     id: 'napalm_cluster',
     name: 'Napalm Artillery',
     unitName: 'Orange Cannon',
-    unitTag: '🟠 ORANGE CANNON',
+    unitTag: 'ORANGE CANNON',
     unitColor: '#F97316',
     sprite: 'assets/sentinel_cannon.png',
     desc: 'Orange Cannons leave burning magma pools on impact for 4.0s dealing +50% Burn DMG over time.',
@@ -359,7 +359,7 @@ export const DIRECTIVES = [
     id: 'rail_piercer',
     name: 'Armor Piercer',
     unitName: 'Blue Sniper',
-    unitTag: '🔵 BLUE SNIPER',
+    unitTag: 'BLUE SNIPER',
     unitColor: '#38BDF8',
     sprite: 'assets/sentinel_ballista.png',
     desc: 'Blue Snipers pierce through +1 additional enemy along their laser path and ignore 50% of armor.',
@@ -369,7 +369,7 @@ export const DIRECTIVES = [
     id: 'tesla_cascade',
     name: 'Tesla Overload',
     unitName: 'Yellow Mage',
-    unitTag: '🟡 YELLOW MAGE',
+    unitTag: 'YELLOW MAGE',
     unitColor: '#FACC15',
     sprite: 'assets/sentinel_mage.png',
     desc: 'Yellow Mage lightning chains to +2 extra enemies and triggers an electric micro-stun shockwave.',
@@ -379,7 +379,7 @@ export const DIRECTIVES = [
     id: 'cryo_shatter',
     name: 'Cryo Shatter',
     unitName: 'Green Frost',
-    unitTag: '🟢 GREEN FROST',
+    unitTag: 'GREEN FROST',
     unitColor: '#10B981',
     sprite: 'assets/sentinel_frost.png',
     desc: 'Enemies frozen by Green Frost turrets explode into ice shards on defeat, dealing 60 AoE Cryo DMG.',
@@ -389,7 +389,7 @@ export const DIRECTIVES = [
     id: 'shadow_vortex',
     name: 'Shadow Overdrive',
     unitName: 'Red Assassin',
-    unitTag: '🔴 RED ASSASSIN',
+    unitTag: 'RED ASSASSIN',
     unitColor: '#EF4444',
     sprite: 'assets/sentinel_assassin.png',
     desc: 'Red Assassins attack +35% faster and gain +15% critical strike chance on every spinning strike.',
@@ -399,7 +399,7 @@ export const DIRECTIVES = [
     id: 'overclock_protocol',
     name: 'Orbital Overclock',
     unitName: 'All Sentinels',
-    unitTag: '⚡ ALL UNITS',
+    unitTag: 'ALL UNITS',
     unitColor: '#A855F7',
     iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
     desc: 'All 5 sentinel types attack +20% faster, and Orbital Ion Strike cooldown is reduced by 4.0s.',
@@ -409,7 +409,7 @@ export const DIRECTIVES = [
     id: 'interest_treasury',
     name: 'Compound Treasury',
     unitName: 'Gold Bank',
-    unitTag: '💰 ECONOMY',
+    unitTag: 'ECONOMY',
     unitColor: '#F59E0B',
     iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
     desc: 'Earn +10% interest on unspent Credits at the end of each wave (up to +25 bonus Gold per wave).',
@@ -419,7 +419,7 @@ export const DIRECTIVES = [
     id: 'aegis_emergency',
     name: 'Emergency Aegis',
     unitName: 'Nexus Core',
-    unitTag: '🛡️ BASE CORE',
+    unitTag: 'BASE CORE',
     unitColor: '#38BDF8',
     iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
     desc: 'When Nexus Core HP drops below 35%, instantly deploys an energy shield absorbing 100 DMG.',
@@ -525,6 +525,48 @@ export class OrbitAudioSynthesizer {
     this.ctx = null;
     this.isMuted = false;
     this.masterGain = null;
+    this.audioClips = {};
+    this.loadAudioClips();
+  }
+
+  loadAudioClips() {
+    if (typeof Audio === 'undefined') return;
+    const clipManifest = {
+      laser: 'assets/audio/sfx_laser.ogg',
+      cannon: 'assets/audio/sfx_cannon.ogg',
+      tesla: 'assets/audio/sfx_tesla.ogg',
+      frost: 'assets/audio/sfx_frost.ogg',
+      merge: 'assets/audio/sfx_merge.ogg',
+      explosion: 'assets/audio/sfx_explosion.ogg',
+      boss_roar: 'assets/audio/sfx_boss_roar.ogg',
+      surge: 'assets/audio/sfx_surge.ogg',
+      upgrade: 'assets/audio/sfx_upgrade.ogg',
+      buy: 'assets/audio/sfx_buy.ogg',
+      victory: 'assets/audio/sfx_victory.ogg'
+    };
+
+    for (const [key, src] of Object.entries(clipManifest)) {
+      try {
+        const audio = new Audio();
+        audio.src = src;
+        audio.preload = 'auto';
+        this.audioClips[key] = audio;
+      } catch (e) {}
+    }
+  }
+
+  playClip(key, volume = 0.5) {
+    if (this.isMuted) return false;
+    const clip = this.audioClips[key];
+    if (clip) {
+      try {
+        const clone = clip.cloneNode();
+        clone.volume = Math.max(0, Math.min(1, volume * 0.65));
+        clone.play().catch(() => {});
+        return true;
+      } catch (e) {}
+    }
+    return false;
   }
 
   init() {
@@ -555,7 +597,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playSummonPop() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('buy', 0.55)) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -572,7 +616,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playMergeChime(tier = 2) {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('merge', 0.6)) return;
+    if (!this.ctx) return;
     this.resume();
     const freqs = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
     const baseT = this.ctx.currentTime;
@@ -592,7 +638,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playLaserPew() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('laser', 0.45)) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -609,7 +657,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playCannonBlast() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('cannon', 0.6)) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -626,7 +676,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playTeslaCrackle() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('tesla', 0.5)) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -644,7 +696,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playFrostHum() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('frost', 0.5)) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -661,7 +715,8 @@ export class OrbitAudioSynthesizer {
   }
 
   playCritSlash() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -678,7 +733,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playPop() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('buy', 0.4)) return;
+    if (!this.ctx) return;
     try {
       this.resume();
       const t = this.ctx.currentTime;
@@ -699,7 +756,8 @@ export class OrbitAudioSynthesizer {
   }
 
   playCoreAlarm() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -716,7 +774,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playBossRoar() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('boss_roar', 0.7)) return;
+    if (!this.ctx) return;
     try {
       this.resume();
       const t = this.ctx.currentTime;
@@ -738,7 +798,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playCoinDrop() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('upgrade', 0.5)) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     [1046.5, 1318.5].forEach((f, i) => {
@@ -756,7 +818,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playSurgeShockwave() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('surge', 0.65)) return;
+    if (!this.ctx) return;
     this.resume();
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -774,7 +838,9 @@ export class OrbitAudioSynthesizer {
   }
 
   playVictoryFanfare() {
-    if (!this.ctx || this.isMuted) return;
+    if (this.isMuted) return;
+    if (this.playClip('victory', 0.6)) return;
+    if (!this.ctx) return;
     this.resume();
     const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
     const baseT = this.ctx.currentTime;
@@ -1322,15 +1388,23 @@ export function drawTierBadge(ctx, x, y, tier = 1) {
   ctx.fillStyle = tierInfo.border;
   ctx.fillText(tierInfo.badge, 0, 0.5);
 
-  // Star pips above for instant visual tier recognition!
-  if (tier >= 2 && tier <= 5) {
-    ctx.font = '8px sans-serif';
+  // Clean geometric vector pips above badge for instant tier recognition (no emojis)
+  if (tier >= 2) {
+    const pipCount = Math.min(tier, 5);
+    const spacing = 5;
+    const startX = -((pipCount - 1) * spacing) / 2;
     ctx.fillStyle = tierInfo.border;
-    ctx.fillText(tierInfo.stars, 0, -10);
-  } else if (tier === 6) {
-    ctx.font = '9px sans-serif';
-    ctx.fillStyle = '#FFD166';
-    ctx.fillText('👑', 0, -10);
+    for (let p = 0; p < pipCount; p++) {
+      const px = startX + p * spacing;
+      const py = -9;
+      ctx.beginPath();
+      ctx.moveTo(px, py - 2.5);
+      ctx.lineTo(px + 2, py);
+      ctx.lineTo(px, py + 2.5);
+      ctx.lineTo(px - 2, py);
+      ctx.closePath();
+      ctx.fill();
+    }
   }
 
   ctx.restore();
@@ -3452,7 +3526,7 @@ export class OrbitGuardGame {
           newUnlock = true;
           this.audio.playVictoryFanfare();
           this.particles.burst(ARENA.center.x, ARENA.center.y, 40, '#FFD166');
-          this.juice.spawnFloatingText(`🏆 AWARD: ${ach.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 50, { color: '#FFD166', size: 20 });
+          this.juice.spawnFloatingText(`AWARD: ${ach.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 50, { color: '#FFD166', size: 20 });
         }
       }
     }
@@ -3628,7 +3702,7 @@ export class OrbitGuardGame {
       const rankClass = rank === 1 ? 'rank-1' : (rank === 2 ? 'rank-2' : (rank === 3 ? 'rank-3' : ''));
       item.className = `lb-item ${rankClass} ${isPlayer ? 'current-player' : ''}`;
 
-      const rankSymbol = rank === 1 ? '🥇' : (rank === 2 ? '🥈' : (rank === 3 ? '🥉' : `#${rank}`));
+      const rankSymbol = `#${rank}`;
 
       item.innerHTML = `
         <div class="lb-left-stack">
@@ -4919,9 +4993,8 @@ export class OrbitGuardGame {
     });
 
     if (this.state === 'TITLE') {
-      // Draw dynamic floating space fleet around the title screen
-      this.layeredRenderer.draw(RenderLayers.CHARACTERS, (c) => {
-        this.drawTitleFloatingFleet(c);
+      this.layeredRenderer.draw(RenderLayers.WORLD_BACK, (c) => {
+        drawArenaGrid(c, ARENA.center.x, ARENA.center.y, this.animTime);
       });
 
       this.layeredRenderer.draw(RenderLayers.OVERLAY, (c) => {
