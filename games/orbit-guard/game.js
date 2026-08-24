@@ -192,9 +192,11 @@ export const ARENA = {
   center: { x: 225, y: 280 },
   coreRadius: 36,
   orbitRadius: 72,
-  innerHazardRadius: 108,
-  midOrbitRadius: 140,
+  innerHazardRadius: 48,
+  midOrbitRadius: 130,
   spawnRadius: 175,
+  spiralStartAngle: -Math.PI / 2,
+  spiralTotalRotations: 1.45 * Math.PI * 2, // 522 degrees continuous spiral
   slots: [
     { id: 'slot_0', index: 0, angleDeg: 0,   angleRad: 0.0000, x: 297.00, y: 280.00, compass: 'E' },
     { id: 'slot_1', index: 1, angleDeg: 45,  angleRad: 0.7854, x: 275.91, y: 330.91, compass: 'SE' },
@@ -524,6 +526,7 @@ export class OrbitAudioSynthesizer {
   constructor() {
     this.ctx = null;
     this.isMuted = false;
+    this.userVolume = 0.70;
     this.masterGain = null;
     this.audioBuffers = {};
     this.lastSoundTimes = {
@@ -544,8 +547,7 @@ export class OrbitAudioSynthesizer {
       tesla: 'assets/audio/sfx_tesla.ogg',
       merge: 'assets/audio/sfx_merge.ogg',
       explosion: 'assets/audio/sfx_explosion.ogg',
-      boss_roar: 'assets/audio/sfx_boss_roar.ogg',
-      surge: 'assets/audio/sfx_surge.ogg'
+      boss_roar: 'assets/audio/sfx_boss_roar.ogg'
     };
 
     if (typeof fetch === 'undefined') return;
@@ -576,7 +578,7 @@ export class OrbitAudioSynthesizer {
     try {
       this.ctx = new AudioContextClass();
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 0.14, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.16, this.ctx.currentTime);
       this.masterGain.connect(this.ctx.destination);
     } catch (e) {}
   }
@@ -592,12 +594,21 @@ export class OrbitAudioSynthesizer {
     }
   }
 
+  setVolume(volumeFraction) {
+    this.userVolume = Math.max(0, Math.min(1, Number(volumeFraction) || 0));
+    this.ensureContext();
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.16, this.ctx.currentTime);
+    }
+  }
+
   setMuted(muted) {
     this.isMuted = !!muted;
     this.ensureContext();
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
-      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 0.14, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.userVolume * 0.16, this.ctx.currentTime);
     }
   }
 
@@ -851,21 +862,31 @@ export class OrbitAudioSynthesizer {
     if (!this.ctx || !this.masterGain) return;
     this.resume();
 
-    if (this.playBuffer('surge', 0.18)) return;
-
+    // Deep cinematic sub-bass cosmic pulse (no harsh grating noise)
     const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
+    const osc1 = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(60, t);
-    osc.frequency.exponentialRampToValueAtTime(160, t + 0.12);
-    osc.frequency.exponentialRampToValueAtTime(35, t + 0.35);
-    gain.gain.setValueAtTime(0.15, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
-    osc.connect(gain);
+
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(85, t);
+    osc1.frequency.exponentialRampToValueAtTime(30, t + 0.38);
+
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(130, t);
+    osc2.frequency.exponentialRampToValueAtTime(40, t + 0.22);
+
+    gain.gain.setValueAtTime(0.16, t);
+    gain.gain.exponentialRampToValueAtTime(0.0005, t + 0.38);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
     gain.connect(this.masterGain);
-    osc.start(t);
-    osc.stop(t + 0.35);
+
+    osc1.start(t);
+    osc2.start(t);
+    osc1.stop(t + 0.38);
+    osc2.stop(t + 0.38);
   }
 
   playVictoryFanfare() {
@@ -989,15 +1010,15 @@ export function drawCosmicBackground(ctx, width, height, animTime, stars, assetM
 export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.save();
 
-  // 1. Orbital Defense Incursion Track (Subtle industrial spiral)
+  // 1. Orbital Defense Incursion Track (100% Math-Aligned Archimedean Spiral)
   ctx.save();
-  const startAngle = -Math.PI / 2; // North Warp Gate (225, 105)
-  const totalRotations = 1.35 * Math.PI * 2; // ~485 degrees loop
-  const steps = 80;
+  const startAngle = ARENA.spiralStartAngle || (-Math.PI / 2);
+  const totalRotations = ARENA.spiralTotalRotations || (1.45 * Math.PI * 2);
+  const steps = 100;
 
-  // A. Matte Highway Track
-  ctx.lineWidth = 14;
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+  // A. Matte Highway Track Underlay
+  ctx.lineWidth = 18;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
   ctx.beginPath();
   for (let i = 0; i <= steps; i++) {
     const t = i / steps;
@@ -1010,11 +1031,11 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   }
   ctx.stroke();
 
-  // B. Tactical Guide Rail with subtle tick marks
-  ctx.lineWidth = 1.4;
-  ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
-  ctx.setLineDash([6, 10]);
-  ctx.lineDashOffset = -animTime * 18;
+  // B. Tactical Glowing Guide Rail with animated speed chevrons
+  ctx.lineWidth = 1.8;
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.40)';
+  ctx.setLineDash([8, 12]);
+  ctx.lineDashOffset = -animTime * 24;
   ctx.beginPath();
   for (let i = 0; i <= steps; i++) {
     const t = i / steps;
@@ -1029,16 +1050,16 @@ export function drawArenaGrid(ctx, xc, yc, animTime) {
   ctx.setLineDash([]);
   ctx.restore();
 
-  // 2. Defense Bastion Perimeter Ring (Connecting the 8 Defense Slots)
-  ctx.strokeStyle = 'rgba(148, 163, 184, 0.20)';
+  // 2. Defense Bastion Perimeter Ring (Connecting the 8 Defense Slots at 72px)
+  ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.arc(xc, yc, ARENA.orbitRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // 3. Inner Core Breach Danger Ring
-  ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
-  ctx.lineWidth = 1.2;
+  // 3. Inner Core Breach Danger Ring (at 48px)
+  ctx.strokeStyle = 'rgba(239, 68, 68, 0.50)';
+  ctx.lineWidth = 1.4;
   ctx.setLineDash([4, 4]);
   ctx.beginPath();
   ctx.arc(xc, yc, ARENA.innerHazardRadius, 0, Math.PI * 2);
@@ -2984,6 +3005,10 @@ export class OrbitGuardGame {
   }
 
   setupDOM() {
+    // Initial volume setup from settings
+    const savedVol = this.saveData.settings?.volume ?? 0.70;
+    this.audio.setVolume(savedVol);
+
     // Mute button
     const btnMute = document.getElementById('btn-mute');
     if (btnMute) {
@@ -2998,6 +3023,62 @@ export class OrbitGuardGame {
         SaveManager.save(this.playgama, this.saveData);
       });
     }
+
+    // Volume Sliders (Pause Modal & Title Screen)
+    const setupVolumeControl = (sliderId, valId) => {
+      const slider = document.getElementById(sliderId);
+      const valEl = document.getElementById(valId);
+      if (slider) {
+        const initVol = Math.round((this.saveData.settings?.volume ?? 0.70) * 100);
+        slider.value = initVol;
+        if (valEl) valEl.textContent = `${initVol}%`;
+
+        const updateVol = (val) => {
+          const num = Math.max(0, Math.min(100, Number(val) || 0));
+          slider.value = num;
+          if (valEl) valEl.textContent = `${num}%`;
+          const frac = num / 100;
+          this.audio.init();
+          this.audio.setVolume(frac);
+          if (num === 0) {
+            this.audio.setMuted(true);
+          } else if (this.audio.isMuted) {
+            this.audio.setMuted(false);
+          }
+          this.saveData.settings = { ...this.saveData.settings, volume: frac, isMuted: this.audio.isMuted };
+          this.updateMuteButtonUI();
+          SaveManager.save(this.playgama, this.saveData);
+
+          // Synchronize alternate slider
+          const altId = sliderId === 'volume-slider' ? 'title-volume-slider' : 'volume-slider';
+          const altValId = sliderId === 'volume-slider' ? 'title-volume-val' : 'volume-val';
+          const altSlider = document.getElementById(altId);
+          const altVal = document.getElementById(altValId);
+          if (altSlider) altSlider.value = num;
+          if (altVal) altVal.textContent = `${num}%`;
+        };
+
+        slider.addEventListener('input', (e) => updateVol(e.target.value));
+      }
+    };
+
+    setupVolumeControl('volume-slider', 'volume-val');
+    setupVolumeControl('title-volume-slider', 'title-volume-val');
+
+    // Preset volume buttons
+    document.querySelectorAll('.btn-vol-preset').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const vol = Number(btn.getAttribute('data-vol') || 0);
+        const slider = document.getElementById('volume-slider');
+        if (slider) {
+          slider.value = vol;
+          slider.dispatchEvent(new Event('input'));
+        }
+      });
+    });
+
+    // Update notification badges for unclaimed achievements
+    this.updateUnclaimedBadges();
 
     // Speed button
     const btnSpeed = document.getElementById('btn-speed');
@@ -3542,6 +3623,48 @@ export class OrbitGuardGame {
     });
   }
 
+  getUnclaimedAchievementsCount() {
+    const achData = this.saveData?.achievements || { unlocked: [], claimed: [] };
+    const unlocked = new Set(achData.unlocked || []);
+    const claimed = new Set(achData.claimed || []);
+    let count = 0;
+    for (const id of unlocked) {
+      if (!claimed.has(id)) count++;
+    }
+    return count;
+  }
+
+  updateUnclaimedBadges() {
+    const count = this.getUnclaimedAchievementsCount();
+    const titleBadge = document.getElementById('title-ach-badge');
+    const pauseBadge = document.getElementById('pause-ach-badge');
+    const goBadge = document.getElementById('go-ach-badge');
+
+    [titleBadge, pauseBadge, goBadge].forEach((b) => {
+      if (b) {
+        if (count > 0) {
+          b.textContent = count;
+          b.classList.remove('hidden');
+        } else {
+          b.classList.add('hidden');
+        }
+      }
+    });
+  }
+
+  showAchievementToast(name, reward) {
+    const toast = document.getElementById('achievement-toast');
+    const msg = document.getElementById('toast-message');
+    if (toast && msg) {
+      msg.textContent = `${name} (+${reward} G in Awards)`;
+      toast.classList.remove('hidden');
+      if (this.toastTimeout) clearTimeout(this.toastTimeout);
+      this.toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+  }
+
   checkAchievements() {
     if (!this.saveData) return;
     if (!this.saveData.achievements) {
@@ -3559,11 +3682,13 @@ export class OrbitGuardGame {
           this.audio.playVictoryFanfare();
           this.particles.burst(ARENA.center.x, ARENA.center.y, 40, '#FFD166');
           this.juice.spawnFloatingText(`AWARD: ${ach.name.toUpperCase()}!`, ARENA.center.x, ARENA.center.y - 50, { color: '#FFD166', size: 20 });
+          this.showAchievementToast(ach.name.toUpperCase(), ach.reward);
         }
       }
     }
 
     if (newUnlock) {
+      this.updateUnclaimedBadges();
       SaveManager.save(this.playgama, this.saveData);
     }
   }
@@ -3577,6 +3702,7 @@ export class OrbitGuardGame {
 
     this.checkAchievements();
     this.renderAchievementsUI();
+    this.updateUnclaimedBadges();
     document.getElementById('achievements-modal')?.classList.remove('hidden');
     this.playgama.showBanner();
   }
@@ -3585,6 +3711,7 @@ export class OrbitGuardGame {
     document.getElementById('achievements-modal')?.classList.add('hidden');
     this.updateHUD();
     this.updateTitleRecords();
+    this.updateUnclaimedBadges();
 
     if (this.achievementsCaller === 'PAUSED' && this.state === 'PAUSED') {
       document.getElementById('pause-modal')?.classList.remove('hidden');
@@ -3664,6 +3791,7 @@ export class OrbitGuardGame {
     SaveManager.save(this.playgama, this.saveData);
     this.renderAchievementsUI();
     this.updateHUD();
+    this.updateUnclaimedBadges();
   }
 
   openLeaderboardModal(caller = null) {
@@ -3724,12 +3852,30 @@ export class OrbitGuardGame {
       console.warn('Leaderboard fetch warning:', e);
     }
 
-    list.innerHTML = '';
-
-    if (!entries || entries.length === 0) {
-      list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px 10px; font-family: 'Orbitron', monospace; font-size: 0.72rem;">NO RECORDED DATA YET. DEFEND THE NEXUS TO CLAIM #1!</div>`;
-      return;
+    if (!entries || !Array.isArray(entries) || entries.length === 0) {
+      entries = [
+        { id: 'bot_1', name: 'Nova Commander', score: 48500, rank: 1 },
+        { id: 'bot_2', name: 'Aegis Sentinel', score: 36200, rank: 2 },
+        { id: 'bot_3', name: 'Solaris VII', score: 27800, rank: 3 },
+        { id: 'bot_4', name: 'Vortex Pilot', score: 19400, rank: 4 },
+        { id: 'bot_5', name: 'Cosmic Guard', score: 12500, rank: 5 },
+        { id: 'bot_6', name: 'Star Defender', score: 8400, rank: 6 },
+        { id: 'player_local', name: 'Commander (You)', score: currentHighScore, rank: 7 }
+      ];
+      entries.sort((a, b) => b.score - a.score);
+      entries.forEach((e, idx) => e.rank = idx + 1);
+    } else if (!entries.some(e => e.id === 'player_local')) {
+      entries.push({
+        id: 'player_local',
+        name: 'Commander (You)',
+        score: currentHighScore,
+        rank: entries.length + 1
+      });
+      entries.sort((a, b) => b.score - a.score);
+      entries.forEach((e, idx) => e.rank = idx + 1);
     }
+
+    list.innerHTML = '';
 
     let foundPlayerRank = null;
 
@@ -3761,7 +3907,7 @@ export class OrbitGuardGame {
     });
 
     if (playerRankEl) {
-      playerRankEl.textContent = foundPlayerRank ? `#${foundPlayerRank}` : (currentHighScore > 0 ? '#1' : '#--');
+      playerRankEl.textContent = foundPlayerRank ? `#${foundPlayerRank}` : '#1';
     }
   }
 
@@ -4748,7 +4894,8 @@ export class OrbitGuardGame {
   }
 
   updateEnemies(dt) {
-    const radialDriftRate = (ARENA.spawnRadius - ARENA.innerHazardRadius) / 16.0; // Dynamic 16s inward drift for engaging arcade pacing
+    const startAngle = ARENA.spiralStartAngle || (-Math.PI / 2);
+    const totalRotations = ARENA.spiralTotalRotations || (1.45 * Math.PI * 2);
 
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const e = this.enemies[i];
@@ -4775,10 +4922,11 @@ export class OrbitGuardGame {
       const effectiveAngularSpeed = (e.baseSpeedDeg * Math.PI / 180) * speedScale;
       e.polarAngle += effectiveAngularSpeed * dt;
 
-      // Inward radial drift
-      e.polarRadius = Math.max(ARENA.innerHazardRadius, e.polarRadius - radialDriftRate * speedScale * dt);
+      // Mathematical progress along spiral: 0.0 at North Warp Gate -> 1.0 at Core Danger Perimeter
+      const progress = (e.polarAngle - startAngle) / totalRotations;
+      e.polarRadius = ARENA.spawnRadius - (ARENA.spawnRadius - ARENA.innerHazardRadius) * Math.min(1.0, progress);
 
-      // Convert polar coordinates to Cartesian
+      // Convert polar coordinates to Cartesian (100% matches drawn highway track)
       e.x = ARENA.center.x + Math.cos(e.polarAngle) * e.polarRadius;
       e.y = ARENA.center.y + Math.sin(e.polarAngle) * e.polarRadius;
       e.angle = e.polarAngle + Math.PI / 2;
@@ -4790,14 +4938,14 @@ export class OrbitGuardGame {
         e.phaseBlinkTimer -= dt;
         if (e.phaseBlinkTimer <= 0) {
           e.phaseBlinkTimer = 4.5;
-          e.polarAngle += (Math.PI / 3);
+          e.polarAngle += (Math.PI / 4);
           this.particles.burst(e.x, e.y, 16, '#C084FC');
           this.audio.playTeslaCrackle();
         }
       }
 
-      // Check Core Breach Collision
-      if (e.polarRadius <= ARENA.innerHazardRadius) {
+      // Check Core Breach Collision (Touching the inner hazard danger ring at 48px)
+      if (progress >= 1.0 || e.polarRadius <= ARENA.innerHazardRadius) {
         this.handleCoreBreach(e);
         this.enemies.splice(i, 1);
       }
@@ -4805,6 +4953,21 @@ export class OrbitGuardGame {
   }
 
   handleCoreBreach(enemy) {
+    if (enemy.isBoss) {
+      // Boss reaching the core triggers instantaneous, catastrophic base destruction
+      if (!this.isGodMode) {
+        this.coreHp = 0;
+      }
+      this.coreDamagedTimer = 1.2;
+      this.audio.playBossRoar();
+      this.juice.screenShake(26);
+      this.juice.screenFlash('#EF4444', 0.8);
+      this.particles.burst(ARENA.center.x, ARENA.center.y, 50, '#EF4444');
+      this.juice.spawnFloatingText('FATAL BOSS BREACH! BASE DESTROYED!', ARENA.center.x, ARENA.center.y - 30, { color: '#EF4444', size: 22 });
+      this.handleGameOver();
+      return;
+    }
+
     if (!this.isGodMode) {
       this.coreHp = Math.max(0, this.coreHp - enemy.coreDmg);
     }
@@ -5017,6 +5180,8 @@ export class OrbitGuardGame {
         btnSurge.classList.add('charging');
       }
     }
+
+    this.updateUnclaimedBadges();
   }
 
   /* ==========================================================================
@@ -5082,19 +5247,61 @@ export class OrbitGuardGame {
       });
     });
 
-    // Layer 30: Burning Plasma Pools, Resonance Links & Shockwaves
+    // Layer 30: Burning Magma Pools, Resonance Links & Shockwaves
     this.layeredRenderer.draw(RenderLayers.EFFECTS, (c) => {
       // Orbital Resonance Synergy Beams between adjacent sentinels
       drawResonanceLinks(c, this.sentinels, this.animTime);
 
       for (const pool of this.burningPools) {
-        c.strokeStyle = 'rgba(239, 68, 68, 0.45)';
-        c.lineWidth = 1.5;
-        c.setLineDash([3, 4]);
+        c.save();
+        const progress = Math.max(0, pool.duration / 3.5);
+        const alpha = Math.min(1.0, progress * 1.3);
+        const pulse = Math.sin(this.animTime * 8 + (pool.seed || 0)) * 2;
+        const currentR = Math.max(8, pool.radius + pulse);
+
+        // 1. Outer scorched glowing aura
+        const grad = c.createRadialGradient(pool.x, pool.y, 2, pool.x, pool.y, currentR);
+        grad.addColorStop(0, `rgba(255, 250, 160, ${0.95 * alpha})`);
+        grad.addColorStop(0.25, `rgba(255, 120, 0, ${0.85 * alpha})`);
+        grad.addColorStop(0.65, `rgba(215, 30, 0, ${0.65 * alpha})`);
+        grad.addColorStop(1, `rgba(120, 10, 0, 0)`);
+
+        c.fillStyle = grad;
         c.beginPath();
-        c.arc(pool.x, pool.y, pool.radius, 0, Math.PI * 2);
+        c.arc(pool.x, pool.y, currentR, 0, Math.PI * 2);
+        c.fill();
+
+        // 2. Molten lava core bubbling cracks
+        c.strokeStyle = `rgba(255, 235, 120, ${0.8 * alpha})`;
+        c.lineWidth = 1.8;
+        c.beginPath();
+        for (let a = 0; a < Math.PI * 2; a += Math.PI / 3) {
+          const cx = pool.x + Math.cos(a + this.animTime * 2.5) * (currentR * 0.45);
+          const cy = pool.y + Math.sin(a + this.animTime * 2.5) * (currentR * 0.45);
+          c.moveTo(pool.x, pool.y);
+          c.lineTo(cx, cy);
+        }
         c.stroke();
-        c.setLineDash([]);
+
+        // 3. Glowing perimeter ring
+        c.strokeStyle = `rgba(255, 100, 0, ${0.5 * alpha})`;
+        c.lineWidth = 1.4;
+        c.beginPath();
+        c.arc(pool.x, pool.y, currentR, 0, Math.PI * 2);
+        c.stroke();
+
+        // 4. Ambient rising fiery embers
+        if (Math.random() < 0.30) {
+          const sparkDist = Math.random() * currentR * 0.7;
+          const sparkAngle = Math.random() * Math.PI * 2;
+          this.particles.burst(
+            pool.x + Math.cos(sparkAngle) * sparkDist,
+            pool.y + Math.sin(sparkAngle) * sparkDist,
+            1,
+            '#FFD166'
+          );
+        }
+        c.restore();
       }
 
       if (this.activeShockwave) {

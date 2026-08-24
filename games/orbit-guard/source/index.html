@@ -165,12 +165,13 @@
               </svg>
               UPGRADES
             </button>
-            <button id="btn-open-achievements-title" class="btn-secondary-action">
+            <button id="btn-open-achievements-title" class="btn-secondary-action btn-with-badge">
               <svg class="ui-icon" style="margin-right: 5px; width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="8" r="6"/>
                 <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
               </svg>
               AWARDS
+              <span id="title-ach-badge" class="unclaimed-badge hidden">0</span>
             </button>
             <button id="btn-open-leaderboard-title" class="btn-secondary-action">
               <svg class="ui-icon" style="margin-right: 5px; width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -185,6 +186,12 @@
               </svg>
               GUIDE
             </button>
+          </div>
+
+          <div class="title-volume-row">
+            <span class="vol-caption">VOLUME</span>
+            <input type="range" id="title-volume-slider" class="volume-range-input" min="0" max="100" value="70" step="5" />
+            <span id="title-volume-val" class="vol-value">70%</span>
           </div>
         </div>
 
@@ -392,6 +399,24 @@
     <div id="pause-modal" class="modal-overlay hidden">
       <div class="modal-card pause-card">
         <h2 class="modal-heading">GAME PAUSED</h2>
+        
+        <div class="pause-volume-deck">
+          <div class="volume-label-row">
+            <span class="vol-caption">AUDIO VOLUME</span>
+            <span id="volume-val" class="vol-value">70%</span>
+          </div>
+          <div class="volume-slider-row">
+            <input type="range" id="volume-slider" class="volume-range-input" min="0" max="100" value="70" step="5" />
+          </div>
+          <div class="volume-preset-row">
+            <button class="btn-vol-preset" data-vol="0">0%</button>
+            <button class="btn-vol-preset" data-vol="25">25%</button>
+            <button class="btn-vol-preset" data-vol="50">50%</button>
+            <button class="btn-vol-preset" data-vol="75">75%</button>
+            <button class="btn-vol-preset" data-vol="100">100%</button>
+          </div>
+        </div>
+
         <div class="pause-button-stack">
           <button id="btn-resume-game" class="btn-modal-primary">
             RESUME GAME
@@ -399,8 +424,9 @@
           <button id="btn-open-workshop-pause" class="btn-modal-secondary">
             PERMANENT UPGRADES
           </button>
-          <button id="btn-open-achievements-pause" class="btn-modal-secondary">
+          <button id="btn-open-achievements-pause" class="btn-modal-secondary btn-with-badge">
             AWARDS & ACHIEVEMENTS
+            <span id="pause-ach-badge" class="unclaimed-badge hidden">0</span>
           </button>
           <button id="btn-open-leaderboard-pause" class="btn-modal-secondary">
             GLOBAL RANKINGS
@@ -453,8 +479,9 @@
           <button id="btn-go-workshop" class="btn-modal-secondary">
             PERMANENT UPGRADES
           </button>
-          <button id="btn-go-achievements" class="btn-modal-secondary">
+          <button id="btn-go-achievements" class="btn-modal-secondary btn-with-badge">
             AWARDS & ACHIEVEMENTS
+            <span id="go-ach-badge" class="unclaimed-badge hidden">0</span>
           </button>
           <button id="btn-go-leaderboard" class="btn-modal-secondary">
             GLOBAL RANKINGS
@@ -463,6 +490,20 @@
             MAIN MENU
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Global Notification Toast for Achievements -->
+    <div id="achievement-toast" class="achievement-toast hidden">
+      <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FFD166" stroke-width="2.2">
+          <circle cx="12" cy="8" r="6"/>
+          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+        </svg>
+      </div>
+      <div class="toast-body">
+        <div class="toast-title">AWARD UNLOCKED!</div>
+        <div id="toast-message" class="toast-desc">Claim Gold in Awards menu</div>
       </div>
     </div>
 

@@ -1,13 +1,13 @@
 # Playgama QA Report: orbit-guard
 
-**Timestamp:** 2026-08-24T10:49:19.415Z  
-**Status:** **PLAYGAMA_READY: YES**
+**Timestamp:** 2026-08-24T20:08:24.507Z  
+**Status:** **PLAYGAMA_READY: NO**
 
 ---
 
 ## SDK Integration
 - Initialization: PASS
-- Game Ready: PASS
+- Game Ready: FAIL
 - Storage: PASS
 - Ads: PASS
 - Language: PASS
@@ -39,10 +39,10 @@
 
 ## Final Verdict
 
-**PLAYGAMA_READY:** **YES**
+**PLAYGAMA_READY:** **NO**
 
 ### Blocking Issues:
-- None (0 blocking issues)
+- ❌ Mandatory game_ready event was not emitted on game startup
 
 ### Warnings:
 - None

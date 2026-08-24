@@ -1393,3 +1393,214 @@ canvas {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ==========================================================================
+ * Volume Slider Controls
+ * ========================================================================== */
+
+.pause-volume-deck {
+  width: 100%;
+  background: #141C2E;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.volume-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vol-caption {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.vol-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: var(--steel);
+}
+
+.volume-slider-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.volume-range-input {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #080C14;
+  outline: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.volume-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--steel);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+
+.volume-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.volume-preset-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.btn-vol-preset {
+  height: 24px;
+  border-radius: 4px;
+  background: #0D1526;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: 'Orbitron', monospace;
+  font-size: 0.60rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.08s ease, color 0.08s ease, border-color 0.08s ease;
+}
+
+.btn-vol-preset:hover {
+  background: var(--steel);
+  color: #FFFFFF;
+  border-color: var(--steel);
+}
+
+.title-volume-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #141C2E;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 6px 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+ * Unclaimed Achievement Notification Badge
+ * ========================================================================== */
+
+.btn-with-badge {
+  position: relative;
+}
+
+.unclaimed-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #EF4444;
+  color: #FFFFFF;
+  border: 1.5px solid #FFFFFF;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.58rem;
+  font-weight: 900;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+  animation: pulseBadge 1.2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes pulseBadge {
+  0% { transform: scale(1); box-shadow: 0 0 4px rgba(239, 68, 68, 0.6); }
+  50% { transform: scale(1.18); box-shadow: 0 0 14px rgba(239, 68, 68, 0.95); }
+  100% { transform: scale(1); box-shadow: 0 0 4px rgba(239, 68, 68, 0.6); }
+}
+
+/* ==========================================================================
+ * Achievement Floating Toast
+ * ========================================================================== */
+
+.achievement-toast {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 380px;
+  background: #0D1526;
+  border: 1.5px solid #FFD166;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 16px rgba(255, 209, 102, 0.35);
+  z-index: 1000;
+  pointer-events: none;
+  animation: slideDownToast 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.achievement-toast.hidden {
+  display: none !important;
+}
+
+.toast-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 209, 102, 0.15);
+  border: 1px solid #FFD166;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.toast-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.toast-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.toast-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #FFD166;
+  letter-spacing: 0.5px;
+}
+
+.toast-desc {
+  font-size: 0.72rem;
+  color: #E2E8F0;
+}
+
+@keyframes slideDownToast {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}

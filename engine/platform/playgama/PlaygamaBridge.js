@@ -145,7 +145,7 @@ export class PlaygamaBridge {
             try {
               const key = `lb_${leaderboardId}`;
               let stored = JSON.parse(localStorage.getItem(key) || 'null');
-              if (!stored || stored.length === 0) {
+              if (!stored || !Array.isArray(stored) || stored.length === 0) {
                 stored = [
                   { id: 'bot_1', name: 'Nova Commander', score: 48500, rank: 1 },
                   { id: 'bot_2', name: 'Aegis Sentinel', score: 36200, rank: 2 },
@@ -155,6 +155,17 @@ export class PlaygamaBridge {
                   { id: 'bot_6', name: 'Star Defender', score: 8400, rank: 6 }
                 ];
               }
+              const hasPlayer = stored.some(e => e.id === 'player_local');
+              if (!hasPlayer) {
+                stored.push({
+                  id: 'player_local',
+                  name: 'Commander (You)',
+                  score: 0,
+                  rank: stored.length + 1
+                });
+              }
+              stored.sort((a, b) => b.score - a.score);
+              stored.forEach((e, idx) => e.rank = idx + 1);
               return stored;
             } catch (e) {
               return [];
