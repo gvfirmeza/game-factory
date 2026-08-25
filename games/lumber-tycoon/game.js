@@ -2872,19 +2872,25 @@ export class LumberTycoonGame {
           continue;
         }
 
-        // STANDARD CASH PADS
+        // STANDARD CASH PADS: Exponential dynamic scaling (always finishes in ~1s regardless of cost)
         const needed = pad.targetCost - pad.deposited;
         if (needed > 0 && this.saveData.cash > 0) {
+          pad.standDuration = (pad.standDuration || 0) + dt;
           pad.tickTimer = (pad.tickTimer || 0) + dt;
 
-          const tickInterval = 0.07;
+          const tickInterval = 0.038;
           if (pad.tickTimer >= tickInterval) {
             pad.tickTimer = 0;
+
+            // Speed multiplier scales up while player stays on pad
+            const acceleration = Math.min(8, 1 + pad.standDuration * 3.2);
+            const basePct = 0.05 * acceleration;
+            const calculatedChunk = Math.max(1, Math.ceil(pad.targetCost * basePct));
 
             const chunk = Math.min(
               this.saveData.cash,
               needed,
-              Math.max(2, Math.min(40, Math.ceil(pad.targetCost * 0.05)))
+              calculatedChunk
             );
 
             this.saveData.cash -= chunk;
@@ -2902,13 +2908,17 @@ export class LumberTycoonGame {
             this.updateHUD();
 
             if (pad.deposited >= pad.targetCost) {
+              pad.standDuration = 0;
               this.completeUpgrade(pad);
             }
           }
+        } else {
+          pad.standDuration = 0;
         }
       } else {
         pad.tickTimer = 0;
         pad.depositTimer = 0;
+        pad.standDuration = 0;
       }
     }
   }
