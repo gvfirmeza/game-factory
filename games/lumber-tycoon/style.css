@@ -807,4 +807,92 @@ canvas {
   background: rgba(20, 12, 8, 0.5);
   padding: 6px 10px;
   border-radius: 8px;
+}
+
+/* ============================================================================
+ * 9. VICTORY / ENDING CELEBRATION MODAL
+ * ============================================================================ */
+.victory-card {
+  max-width: 440px;
+  background: linear-gradient(180deg, rgba(46, 30, 20, 0.98), rgba(28, 16, 10, 0.98));
+  border: 2.5px solid #ffb300;
+  box-shadow: 0 0 40px rgba(255, 179, 0, 0.35), 0 20px 60px rgba(0, 0, 0, 0.9);
+  text-align: center;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.victory-crown-badge {
+  font-size: 2.8rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 12px rgba(255, 179, 0, 0.5));
+  animation: crownBob 2s ease-in-out infinite;
+}
+
+@keyframes crownBob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.08); }
+}
+
+.victory-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ffe082;
+  letter-spacing: 1px;
+  margin: 4px 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.victory-subtitle {
+  font-size: 0.84rem;
+  color: #d7ccc8;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.victory-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.victory-stat-item {
+  background: rgba(20, 12, 8, 0.7);
+  border: 1px solid rgba(255, 179, 0, 0.25);
+  border-radius: 12px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.victory-stat-icon {
+  font-size: 1.3rem;
+}
+
+.victory-stat-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.victory-stat-lbl {
+  font-size: 0.70rem;
+  font-weight: 600;
+  color: #a1887f;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-victory-sandbox {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }

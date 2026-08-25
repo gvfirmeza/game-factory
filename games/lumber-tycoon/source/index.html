@@ -209,6 +209,46 @@
       </div>
     </div>
 
+    <!-- Victory / Empire Conquered Modal -->
+    <div id="victory-modal" class="modal-backdrop hidden">
+      <div class="modal-card victory-card">
+        <div class="victory-header">
+          <div class="victory-crown-badge">👑</div>
+          <h2 class="victory-title">ISLAND CONQUERED!</h2>
+          <p class="victory-subtitle">The Golden Totem is Complete! You have mastered the entire island and forged the ultimate lumberjack dynasty.</p>
+        </div>
+
+        <div class="victory-stats-grid">
+          <div class="victory-stat-item">
+            <span class="victory-stat-icon">🌲</span>
+            <span class="victory-stat-val" id="vic-stat-trees">0</span>
+            <span class="victory-stat-lbl">Trees Felled</span>
+          </div>
+          <div class="victory-stat-item">
+            <span class="victory-stat-icon">💰</span>
+            <span class="victory-stat-val" id="vic-stat-cash">$0</span>
+            <span class="victory-stat-lbl">Total Wealth</span>
+          </div>
+          <div class="victory-stat-item">
+            <span class="victory-stat-icon">🪵</span>
+            <span class="victory-stat-val" id="vic-stat-planks">0</span>
+            <span class="victory-stat-lbl">Planks Refined</span>
+          </div>
+          <div class="victory-stat-item">
+            <span class="victory-stat-icon">⏱️</span>
+            <span class="victory-stat-val" id="vic-stat-time">0m</span>
+            <span class="victory-stat-lbl">Empire Playtime</span>
+          </div>
+        </div>
+
+        <div class="victory-actions">
+          <button id="btn-victory-sandbox" class="btn-primary btn-victory-sandbox">
+            <span>CONTINUE IN SANDBOX</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Title Screen Overlay -->
     <div id="title-overlay" class="title-overlay">
       <canvas id="title-bg-canvas" class="title-bg-canvas"></canvas>

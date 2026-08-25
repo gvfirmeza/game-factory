@@ -79,7 +79,8 @@ export const BUILDINGS = {
   sellZone: { x: 1080, y: 720, w: 130, h: 100, name: 'Wood Market', desc: 'Sell refined planks or raw logs for cash' },
   blacksmith: { x: 680, y: 720, w: 120, h: 95, name: 'Blacksmith Forge', desc: 'Forge powerful cutting axes' },
   storageBarn: { x: 1270, y: 720, w: 120, h: 95, name: 'Backpack Depot', desc: 'Expand backpack carrying capacity' },
-  workerHut: { x: 970, y: 570, w: 140, h: 95, name: 'Worker Barracks', desc: 'Hire automated specialist workers' }
+  workerHut: { x: 970, y: 570, w: 140, h: 95, name: 'Worker Barracks', desc: 'Hire automated specialist workers' },
+  monument: { x: 1040, y: 380, w: 120, h: 100, name: 'Golden Monument', desc: 'Deliver 10 Golden Logs to erect the Island Empire Monument' }
 };
 
 export const WORKER_COLORS = [
@@ -561,6 +562,53 @@ class TycoonAudioSynthesizer {
       osc.stop(t + 0.25);
     });
   }
+
+  playVictoryFanfare() {
+    if (this.isMuted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    // Rich 4-step triumphant fanfare progression (C5 -> F5 -> G5 -> High C6 with brassy harmonics)
+    const steps = [
+      { tOffset: 0.00, notes: [261.63, 329.63, 392.00, 523.25], dur: 0.28, vol: 0.25 }, // C Major
+      { tOffset: 0.30, notes: [349.23, 440.00, 523.25, 698.46], dur: 0.28, vol: 0.28 }, // F Major
+      { tOffset: 0.60, notes: [392.00, 493.88, 587.33, 783.99], dur: 0.32, vol: 0.30 }, // G Major
+      { tOffset: 0.95, notes: [523.25, 659.25, 783.99, 1046.50, 1318.51], dur: 1.20, vol: 0.38 } // Epic High C Grand Triumph
+    ];
+
+    const baseT = this.ctx.currentTime;
+    steps.forEach((st) => {
+      st.notes.forEach((freq) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, baseT + st.tOffset);
+
+        gain.gain.setValueAtTime(st.vol / st.notes.length, baseT + st.tOffset);
+        gain.gain.exponentialRampToValueAtTime(0.001, baseT + st.tOffset + st.dur);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(baseT + st.tOffset);
+        osc.stop(baseT + st.tOffset + st.dur);
+      });
+    });
+
+    // Shimmering golden bell chimes on apex
+    [1046.50, 1318.51, 1567.98, 2093.00].forEach((freq, idx) => {
+      const chimeOsc = this.ctx.createOscillator();
+      const chimeGain = this.ctx.createGain();
+      const chimeTime = baseT + 0.95 + idx * 0.08;
+      chimeOsc.type = 'sine';
+      chimeOsc.frequency.setValueAtTime(freq, chimeTime);
+      chimeGain.gain.setValueAtTime(0.08, chimeTime);
+      chimeGain.gain.exponentialRampToValueAtTime(0.001, chimeTime + 0.6);
+      chimeOsc.connect(chimeGain);
+      chimeGain.connect(this.ctx.destination);
+      chimeOsc.start(chimeTime);
+      chimeOsc.stop(chimeTime + 0.6);
+    });
+  }
 }
 
 /* ============================================================================
@@ -625,6 +673,10 @@ class SaveManager {
       treesCutByType: { oak: 0, birch: 0, pine: 0, sakura: 0, redwood: 0, golden: 0 },
       totalPlanksProcessed: 0,
       totalCashEarned: 0,
+      monumentProgress: 0,
+      victoryAchieved: false,
+      gameStartTime: Date.now(),
+      totalPlaytimeSeconds: 0,
       settings: { isMuted: false }
     };
   }
@@ -669,7 +721,7 @@ function drawTopDownTerrain(ctx, width, height, animTime) {
   ctx.restore();
 }
 
-function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlocked, sawmillLevel = 1) {
+function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlocked, sawmillLevel = 1, monumentProgress = 0) {
   const { x, y, w, h, name } = building;
   const centerX = x + w / 2;
   const centerY = y + h / 2;
@@ -1049,6 +1101,123 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(name, centerX, centerY + 18);
+  } else if (bKey === 'monument') {
+    // 5. Golden Totem Monument (Evolving Stone & Gilded Double-Axe Monument)
+    const progress = Math.min(10, Math.max(0, monumentProgress || 0));
+    const isComplete = progress >= 10;
+
+    // A. Carved Ancient Stone Pedestal
+    ctx.fillStyle = '#455A64';
+    ctx.beginPath();
+    ctx.roundRect(centerX - 36, centerY - 2, 72, 28, 6);
+    ctx.fill();
+    ctx.strokeStyle = '#263238';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.fillStyle = '#607D8B';
+    ctx.beginPath();
+    ctx.roundRect(centerX - 30, centerY - 14, 60, 16, 4);
+    ctx.fill();
+
+    // Runic carvings
+    ctx.strokeStyle = isComplete ? '#FFD54F' : 'rgba(255, 213, 79, 0.4)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(centerX - 22, centerY + 8); ctx.lineTo(centerX + 22, centerY + 8);
+    ctx.stroke();
+
+    // B. Visual Staging (Pillars & Timber)
+    if (progress >= 4) {
+      // Redwood & Timber Foundation Columns
+      ctx.fillStyle = '#8D6E63';
+      ctx.fillRect(centerX - 24, centerY - 38, 8, 26);
+      ctx.fillRect(centerX + 16, centerY - 38, 8, 26);
+      ctx.fillStyle = '#5D4037';
+      ctx.fillRect(centerX - 26, centerY - 40, 52, 6);
+    }
+
+    if (progress >= 8) {
+      // Gilded Timber Apex & Golden Socket
+      ctx.fillStyle = '#FFB300';
+      ctx.beginPath();
+      ctx.roundRect(centerX - 18, centerY - 52, 36, 14, 4);
+      ctx.fill();
+      ctx.strokeStyle = '#FFA000';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
+
+    // C. The Radiant Golden Totem (Complete at 10)
+    if (isComplete) {
+      // Golden Ambient Aura
+      const auraPulse = Math.sin(animTime * 3) * 4;
+      ctx.fillStyle = 'rgba(255, 215, 0, 0.22)';
+      ctx.beginPath();
+      ctx.arc(centerX, centerY - 44, 28 + auraPulse, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Double Gilded Broadaxe / Totem Crown
+      ctx.fillStyle = '#FFD54F';
+      // Handle
+      ctx.fillRect(centerX - 3, centerY - 62, 6, 42);
+      // Left Golden Blade
+      ctx.beginPath();
+      ctx.moveTo(centerX - 3, centerY - 58);
+      ctx.lineTo(centerX - 24, centerY - 65);
+      ctx.lineTo(centerX - 24, centerY - 48);
+      ctx.lineTo(centerX - 3, centerY - 44);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#FFA000';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Right Golden Blade
+      ctx.beginPath();
+      ctx.moveTo(centerX + 3, centerY - 58);
+      ctx.lineTo(centerX + 24, centerY - 65);
+      ctx.lineTo(centerX + 24, centerY - 48);
+      ctx.lineTo(centerX + 3, centerY - 44);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Center Radiant Gem
+      ctx.fillStyle = '#00E676';
+      ctx.beginPath();
+      ctx.arc(centerX, centerY - 52, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    } else {
+      // In-Progress: Stacked Delivered Golden Logs
+      for (let li = 0; li < Math.min(progress, 7); li++) {
+        ctx.fillStyle = '#FFB300';
+        ctx.beginPath();
+        ctx.roundRect(centerX - 16 + (li % 3) * 11, centerY - 22 - Math.floor(li / 3) * 8, 12, 6, 2);
+        ctx.fill();
+        ctx.strokeStyle = '#FF8F00';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
+    // Bottom label banner
+    ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
+    ctx.beginPath();
+    ctx.roundRect(centerX - (w - 20) / 2, centerY + 8, w - 20, 20, 6);
+    ctx.fill();
+    ctx.strokeStyle = isComplete ? '#00E676' : '#FFB300';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = isComplete ? '#00E676' : '#FFE082';
+    ctx.font = 'bold 11px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(isComplete ? 'EMPIRE COMPLETE 👑' : `MONUMENT (${progress}/10)`, centerX, centerY + 18);
   } else {
     // Generic Building fallback
     ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
@@ -1070,17 +1239,18 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
 }
 
 function drawUpgradePad(ctx, pad, animTime) {
-  const { x, y, radius, label, deposited, targetCost } = pad;
+  const { x, y, radius, label, deposited, targetCost, type } = pad;
   const isComplete = targetCost <= 0 || deposited >= targetCost;
+  const isMonument = type === 'MONUMENT';
 
   ctx.save();
   const pulse = Math.sin(animTime * 4) * 4;
-  ctx.fillStyle = isComplete ? 'rgba(76, 175, 80, 0.25)' : 'rgba(255, 179, 0, 0.25)';
+  ctx.fillStyle = isComplete ? 'rgba(76, 175, 80, 0.25)' : isMonument ? 'rgba(255, 215, 0, 0.28)' : 'rgba(255, 179, 0, 0.25)';
   ctx.beginPath();
   ctx.arc(x, y, radius + pulse, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.strokeStyle = isComplete ? '#00e676' : '#ffb300';
+  ctx.strokeStyle = isComplete ? '#00e676' : isMonument ? '#ffd54f' : '#ffb300';
   ctx.lineWidth = 3;
   ctx.setLineDash([8, 6]);
   ctx.lineDashOffset = -animTime * 20;
@@ -1091,7 +1261,7 @@ function drawUpgradePad(ctx, pad, animTime) {
 
   if (!isComplete && targetCost > 0) {
     const progress = Math.min(1, deposited / targetCost);
-    ctx.strokeStyle = '#00e676';
+    ctx.strokeStyle = isMonument ? '#ffd54f' : '#00e676';
     ctx.lineWidth = 6;
     ctx.beginPath();
     ctx.arc(x, y, radius - 4, -Math.PI / 2, -Math.PI / 2 + progress * Math.PI * 2);
@@ -1100,9 +1270,9 @@ function drawUpgradePad(ctx, pad, animTime) {
 
   ctx.fillStyle = 'rgba(25, 15, 10, 0.88)';
   ctx.beginPath();
-  ctx.roundRect(x - 70, y - 26, 140, 52, 10);
+  ctx.roundRect(x - 72, y - 26, 144, 52, 10);
   ctx.fill();
-  ctx.strokeStyle = isComplete ? '#00e676' : '#ffb300';
+  ctx.strokeStyle = isComplete ? '#00e676' : isMonument ? '#ffd54f' : '#ffb300';
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
@@ -1114,7 +1284,10 @@ function drawUpgradePad(ctx, pad, animTime) {
   ctx.font = 'bold 13px Fredoka, sans-serif';
   if (isComplete) {
     ctx.fillStyle = '#00e676';
-    ctx.fillText(label.includes('MAX') ? 'MAX LEVEL' : 'UNLOCKED', x, y + 10);
+    ctx.fillText(isMonument ? 'VICTORY COMPLETE 👑' : label.includes('MAX') ? 'MAX LEVEL' : 'UNLOCKED', x, y + 10);
+  } else if (isMonument) {
+    ctx.fillStyle = '#ffd54f';
+    ctx.fillText(`${deposited} / ${targetCost} GOLD LOGS`, x, y + 10);
   } else {
     ctx.fillStyle = '#ffd54f';
     ctx.fillText(`$${Math.floor(deposited)} / $${targetCost}`, x, y + 10);
@@ -1996,6 +2169,16 @@ export class LumberTycoonGame {
         label: 'GOLDEN FOREST',
         deposited: 0,
         targetCost: this.unlockedZones.has('golden') ? 0 : 60000
+      },
+      {
+        id: 'pad_monument',
+        type: 'MONUMENT',
+        x: 1100,
+        y: 440,
+        radius: 54,
+        label: 'GOLDEN MONUMENT',
+        deposited: this.saveData.monumentProgress || 0,
+        targetCost: 10
       }
     ];
   }
@@ -2108,6 +2291,9 @@ export class LumberTycoonGame {
     });
 
     document.getElementById('btn-airdrop')?.addEventListener('click', () => this.showRewardedCashGrant());
+    document.getElementById('btn-victory-sandbox')?.addEventListener('click', () => {
+      document.getElementById('victory-modal')?.classList.add('hidden');
+    });
 
     this.updateHUD();
   }
@@ -2576,6 +2762,38 @@ export class LumberTycoonGame {
 
       const d = Math.hypot(p.x - pad.x, p.y - pad.y);
       if (d < pad.radius) {
+        // MONUMENT PAD: Consumes Golden Logs from player backpack
+        if (pad.type === 'MONUMENT') {
+          const goldenLogIdx = p.inventory.findIndex((i) => !i.isPlank && i.type === 'golden');
+          if (goldenLogIdx >= 0 && pad.deposited < pad.targetCost) {
+            pad.depositTimer = (pad.depositTimer || 0) + dt;
+            if (pad.depositTimer >= 0.22) {
+              pad.depositTimer = 0;
+              p.inventory.splice(goldenLogIdx, 1);
+              this.saveData.monumentProgress = (this.saveData.monumentProgress || 0) + 1;
+              pad.deposited = this.saveData.monumentProgress;
+              this.audio.playCollectLog();
+              this.particles.burst(p.x, p.y - 15, 14, '#FFD54F');
+              this.juice.spawnFloatingText(`+1 GOLDEN LOG (${pad.deposited}/10)`, pad.x, pad.y - 45, { color: '#FFD54F', size: 18 });
+              this.updateHUD();
+              SaveManager.save(this.playgama, this.saveData);
+
+              if (pad.deposited >= pad.targetCost) {
+                this.completeUpgrade(pad);
+              }
+            }
+          } else if (goldenLogIdx < 0 && pad.deposited < pad.targetCost) {
+            // Hint debounce
+            pad.hintTimer = (pad.hintTimer || 0) + dt;
+            if (pad.hintTimer >= 2.5) {
+              pad.hintTimer = 0;
+              this.juice.spawnFloatingText('Bring Golden Logs from Golden Forest! 🌲✨', pad.x, pad.y - 45, { color: '#FFE082', size: 16 });
+            }
+          }
+          continue;
+        }
+
+        // STANDARD CASH PADS
         const needed = pad.targetCost - pad.deposited;
         if (needed > 0 && this.saveData.cash > 0) {
           pad.tickTimer = (pad.tickTimer || 0) + dt;
@@ -2611,6 +2829,7 @@ export class LumberTycoonGame {
         }
       } else {
         pad.tickTimer = 0;
+        pad.depositTimer = 0;
       }
     }
   }
@@ -2670,6 +2889,10 @@ export class LumberTycoonGame {
       this.saveData.unlockedZones = Array.from(this.unlockedZones);
       pad.targetCost = 0;
       this.triggerInterstitial('zone_unlock');
+    } else if (pad.type === 'MONUMENT') {
+      this.saveData.victoryAchieved = true;
+      pad.targetCost = 0;
+      this.triggerVictorySequence();
     }
 
     if (this.tutorialStep === 2) {
@@ -3125,6 +3348,39 @@ export class LumberTycoonGame {
     });
   }
 
+  triggerVictorySequence() {
+    this.audio.playVictoryFanfare();
+    this.juice.screenShake(14);
+    this.particles.burst(this.player.x, this.player.y, 60, '#FFD54F');
+    this.particles.burst(BUILDINGS.monument.x + 60, BUILDINGS.monument.y + 40, 60, '#00E676');
+
+    // Calculate Playtime
+    const now = Date.now();
+    const elapsedSeconds = Math.floor((now - (this.saveData.gameStartTime || now)) / 1000) + (this.saveData.totalPlaytimeSeconds || 0);
+    const mins = Math.floor(elapsedSeconds / 60);
+    const secs = elapsedSeconds % 60;
+    const timeStr = `${mins}m ${secs}s`;
+
+    // Populate Victory Modal Stats
+    const elTrees = document.getElementById('vic-stat-trees');
+    const elCash = document.getElementById('vic-stat-cash');
+    const elPlanks = document.getElementById('vic-stat-planks');
+    const elTime = document.getElementById('vic-stat-time');
+
+    if (elTrees) elTrees.textContent = (this.saveData.totalTreesCut || 0).toLocaleString();
+    if (elCash) elCash.textContent = `$${Math.floor(this.saveData.totalCashEarned || this.saveData.cash).toLocaleString()}`;
+    if (elPlanks) elPlanks.textContent = (this.saveData.totalPlanksProcessed || 0).toLocaleString();
+    if (elTime) elTime.textContent = timeStr;
+
+    // Show Victory Modal
+    const modal = document.getElementById('victory-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+    }
+
+    SaveManager.save(this.playgama, this.saveData);
+  }
+
   updateHUD() {
     const cash = document.getElementById('hud-cash-val');
     const logs = document.getElementById('hud-logs-val');
@@ -3316,7 +3572,7 @@ export class LumberTycoonGame {
     for (const [key, b] of Object.entries(BUILDINGS)) {
       renderQueue.push({
         y: b.y + b.h - 10,
-        draw: () => drawBuilding(ctx, key, b, this.animTime, this.sawmillState, this.saveData.sawmillUnlocked, this.saveData.sawmillLevel || 1)
+        draw: () => drawBuilding(ctx, key, b, this.animTime, this.sawmillState, this.saveData.sawmillUnlocked, this.saveData.sawmillLevel || 1, this.saveData.monumentProgress || 0)
       });
     }
 
