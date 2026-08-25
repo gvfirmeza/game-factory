@@ -690,7 +690,8 @@ canvas {
 
 .wardrobe-card:hover:not(.locked) {
   border-color: var(--gold-primary);
-  transform: scale(1.03);
+  background: rgba(255, 179, 0, 0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .wardrobe-card.active {
