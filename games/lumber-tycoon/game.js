@@ -28,12 +28,12 @@ export const WORLD = {
 
 export const AXE_TIERS = [
   { name: 'Camp Hatchet', power: 1, speed: 0.46, cost: 0, headColor: '#E53935', bevel: '#B71C1C', edge: '#ECEFF1' },
-  { name: 'Forged Bronze Axe', power: 2, speed: 0.38, cost: 180, headColor: '#CD7F32', bevel: '#8D5524', edge: '#FFE082' },
-  { name: 'Tempered Steel Axe', power: 4, speed: 0.30, cost: 650, headColor: '#607D8B', bevel: '#37474F', edge: '#FFFFFF' },
-  { name: 'Gold Broadaxe', power: 8, speed: 0.25, cost: 2200, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
-  { name: 'Diamond Core Axe', power: 16, speed: 0.20, cost: 7500, headColor: '#00E5FF', bevel: '#0097A7', edge: '#E0F7FA' },
-  { name: 'Plasma Laser Cutter', power: 35, speed: 0.16, cost: 24000, headColor: '#00E676', bevel: '#00A152', edge: '#B9F6CA' },
-  { name: 'Mythic Celestial Greataxe', power: 85, speed: 0.12, cost: 75000, headColor: '#E040FB', bevel: '#AA00FF', edge: '#FFFFFF' }
+  { name: 'Forged Bronze Axe', power: 2, speed: 0.40, cost: 180, headColor: '#CD7F32', bevel: '#8D5524', edge: '#FFE082' },
+  { name: 'Tempered Steel Axe', power: 3, speed: 0.34, cost: 650, headColor: '#607D8B', bevel: '#37474F', edge: '#FFFFFF' },
+  { name: 'Gold Broadaxe', power: 5, speed: 0.28, cost: 2200, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
+  { name: 'Diamond Core Axe', power: 9, speed: 0.23, cost: 7500, headColor: '#00E5FF', bevel: '#0097A7', edge: '#E0F7FA' },
+  { name: 'Plasma Laser Cutter', power: 16, speed: 0.18, cost: 24000, headColor: '#00E676', bevel: '#00A152', edge: '#B9F6CA' },
+  { name: 'Mythic Celestial Greataxe', power: 28, speed: 0.14, cost: 75000, headColor: '#E040FB', bevel: '#AA00FF', edge: '#FFFFFF' }
 ];
 
 export const CAPACITY_TIERS = [
@@ -67,11 +67,11 @@ export const WOOD_PROPERTIES = {
 
 export const ZONES = [
   { id: 'oak', name: 'Oak Meadow', cost: 0, treeType: 'oak', logValue: 20, maxHp: 5, logsPerTree: 3, respawnTime: 22, unlocked: true, bounds: { x: 60, y: 1080, w: 900, h: 760 } },
-  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 8, logsPerTree: 4, respawnTime: 28, unlocked: false, bounds: { x: 1050, y: 1080, w: 1280, h: 760 } },
-  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 14, logsPerTree: 4, respawnTime: 35, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
-  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 22, logsPerTree: 5, respawnTime: 42, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
-  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 35, logsPerTree: 6, respawnTime: 52, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
-  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 60, logsPerTree: 8, respawnTime: 68, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
+  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 10, logsPerTree: 4, respawnTime: 28, unlocked: false, bounds: { x: 1050, y: 1080, w: 1280, h: 760 } },
+  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 18, logsPerTree: 4, respawnTime: 35, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
+  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 32, logsPerTree: 5, respawnTime: 42, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
+  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 55, logsPerTree: 6, respawnTime: 52, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
+  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 90, logsPerTree: 8, respawnTime: 68, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
 ];
 
 export const BUILDINGS = {
@@ -2121,8 +2121,8 @@ export class LumberTycoonGame {
         y,
         type: isPine ? 'pine' : 'oak',
         zoneId: isPine ? 'pine' : 'oak',
-        maxHp: isPine ? 14 : 5,
-        hp: isPine ? 14 : 5,
+        maxHp: isPine ? 18 : 5,
+        hp: isPine ? 18 : 5,
         logValue: isPine ? 130 : 20,
         logsPerTree: isPine ? 4 : 3,
         trunkR: 12,
