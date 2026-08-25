@@ -705,17 +705,13 @@ canvas {
   text-align: center;
 }
 
-.title-logo-icon {
-  margin-bottom: 6px;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-}
-
 .title-headline {
-  font-size: 2.3rem;
+  font-size: 2.4rem;
   font-weight: 900;
   color: #ffe082;
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 179, 0, 0.5);
   letter-spacing: 1px;
+  margin-top: 4px;
 }
 
 .title-subhead {

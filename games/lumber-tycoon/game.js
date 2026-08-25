@@ -2230,6 +2230,12 @@ export class LumberTycoonGame {
       this.triggerInterstitial('zone_unlock');
     }
 
+    if (this.tutorialStep === 2) {
+      this.tutorialStep = 3;
+      this.saveData.tutorialStep = 3;
+      this.juice.spawnFloatingText('TUTORIAL COMPLETE!', pad.x, pad.y - 60, { color: '#00E676', size: 22 });
+    }
+
     SaveManager.save(this.playgama, this.saveData);
     this.updateHUD();
   }
@@ -2298,9 +2304,9 @@ export class LumberTycoonGame {
         this.updateHUD();
         SaveManager.save(this.playgama, this.saveData);
 
-        if (this.tutorialStep === 2) {
-          this.tutorialStep = 3;
-          this.saveData.tutorialStep = 3;
+        if (this.tutorialStep === 1) {
+          this.tutorialStep = 2;
+          this.saveData.tutorialStep = 2;
           SaveManager.save(this.playgama, this.saveData);
         }
       }
@@ -2782,20 +2788,12 @@ export class LumberTycoonGame {
         drawTutorialArrow(ctx, nearestOak.x, nearestOak.y, '1. Stand near tree to auto-chop logs!', this.animTime);
       }
     } else if (this.tutorialStep === 1) {
-      if (this.saveData.sawmillUnlocked) {
-        const mill = BUILDINGS.sawmill;
-        drawTutorialArrow(ctx, mill.x + mill.w / 2, mill.y + mill.h / 2, '2. Feed logs into Sawmill!', this.animTime);
-      } else {
-        const market = BUILDINGS.sellZone;
-        drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '2. Deliver raw logs to Wood Market!', this.animTime);
-      }
-    } else if (this.tutorialStep === 2) {
       const market = BUILDINGS.sellZone;
-      drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '3. Sell planks for 3x Profit!', this.animTime);
-    } else if (this.tutorialStep === 3) {
-      const forgePad = this.upgradePads.find((p) => p.type === 'AXE');
-      if (forgePad) {
-        drawTutorialArrow(ctx, forgePad.x, forgePad.y, '4. Stand on Forge Pad to upgrade Axe!', this.animTime);
+      drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '2. Deliver raw logs to Wood Market!', this.animTime);
+    } else if (this.tutorialStep === 2) {
+      const targetPad = this.upgradePads.find((p) => p.type === 'CAPACITY') || this.upgradePads.find((p) => p.type === 'AXE');
+      if (targetPad) {
+        drawTutorialArrow(ctx, targetPad.x, targetPad.y, '3. Stand in circle to upgrade Backpack!', this.animTime);
       }
     }
 
