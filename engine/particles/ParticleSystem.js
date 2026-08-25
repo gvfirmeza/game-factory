@@ -165,21 +165,26 @@ export class ParticleSystem {
     });
   }
 
-  leafBurst(x, y, count = 14) {
+  leafBurst(x, y, colors = ['#4CAF50', '#2E7D32', '#81C784'], count = 10) {
+    if (typeof colors === 'number') {
+      const tmp = count;
+      count = colors;
+      colors = Array.isArray(tmp) ? tmp : ['#4CAF50', '#2E7D32', '#81C784'];
+    }
     this.emit({
       x,
       y,
       count,
-      colors: ['#80D842', '#52B788', '#2EC4B6', '#C68B59', '#FFE66D', '#FF758F'],
-      speedMin: 50,
-      speedMax: 160,
-      radiusMin: 2.5,
-      radiusMax: 5,
-      lifeMin: 0.4,
-      lifeMax: 0.8,
-      gravity: 140,
+      colors: Array.isArray(colors) ? colors : [colors],
+      speedMin: 40,
+      speedMax: 140,
+      radiusMin: 3.5,
+      radiusMax: 6.5,
+      lifeMin: 0.45,
+      lifeMax: 0.9,
+      gravity: 110,
       drag: 0.95,
-      shape: 'circle'
+      shape: 'leaf'
     });
   }
 
@@ -227,6 +232,20 @@ export class ParticleSystem {
           }
           ctx.closePath();
           ctx.fill();
+          ctx.restore();
+        } else if (p.shape === 'leaf') {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+          ctx.beginPath();
+          // Natural pointed leaf/petal shape
+          const rx = p.radius * 1.5;
+          const ry = p.radius * 0.75;
+          ctx.ellipse(0, 0, Math.max(1, rx * p.alpha), Math.max(0.5, ry * p.alpha), 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(0, 0, 0, 0.25)';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
           ctx.restore();
         } else if (p.shape === 'spark') {
           ctx.save();

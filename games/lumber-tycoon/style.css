@@ -143,16 +143,17 @@ canvas {
 }
 
 .airdrop-badge {
-  background: linear-gradient(135deg, rgba(123, 31, 162, 0.4), rgba(255, 179, 0, 0.35));
+  background: rgba(46, 30, 20, 0.92);
   border: 1.5px solid var(--gold-primary);
   color: var(--gold-bright);
   cursor: pointer;
-  animation: pulseAirdrop 2.2s infinite ease-in-out;
-  transition: transform 0.12s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.12s ease, background 0.12s ease;
 }
 
 .airdrop-badge:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+  background: rgba(62, 39, 35, 0.98);
 }
 
 .hud-btn {
@@ -203,11 +204,6 @@ canvas {
 @keyframes bounceBadge {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.2); }
-}
-
-@keyframes pulseAirdrop {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 6px rgba(255, 179, 0, 0.3); }
-  50% { transform: scale(1.06); box-shadow: 0 0 16px rgba(255, 179, 0, 0.7); }
 }
 
 /* ============================================================================
@@ -721,61 +717,71 @@ canvas {
 .title-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(35, 22, 14, 0.92) 0%, rgba(15, 10, 6, 0.98) 100%);
+  background: rgba(15, 10, 6, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 16px;
   z-index: 120;
 }
 
 .title-plaque {
-  background: rgba(46, 30, 20, 0.96);
-  border: 3px solid var(--gold-primary);
-  border-radius: 24px;
-  padding: 28px 32px;
-  max-width: 440px;
+  background: #2e1e14;
+  border: 2.5px solid #8d6e63;
+  border-radius: 20px;
+  padding: 18px 24px;
+  max-width: 410px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 179, 0, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
   text-align: center;
 }
 
+.title-scene-canvas {
+  width: 100%;
+  max-width: 360px;
+  height: 125px;
+  border-radius: 12px;
+  border: 1.5px solid #5d4037;
+  margin-bottom: 10px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
 .title-headline {
-  font-size: 2.4rem;
+  font-size: 2.1rem;
   font-weight: 900;
-  color: #ffe082;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 179, 0, 0.5);
+  color: #fff8e1;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
   letter-spacing: 1px;
-  margin-top: 4px;
+  margin: 0;
 }
 
 .title-subhead {
-  font-size: 0.95rem;
-  color: #d7ccc8;
-  margin-bottom: 20px;
+  font-size: 0.88rem;
+  color: #bcaaa4;
+  margin-top: 4px;
+  margin-bottom: 14px;
 }
 
 .btn-title-play {
-  width: 220px;
-  height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #ffb300 0%, #ff6f00 100%);
-  border: 2px solid #ffffff;
-  color: #1a0f00;
+  width: 210px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffb300 0%, #e65100 100%);
+  border: 2px solid #ffe082;
+  color: #ffffff;
   font-family: inherit;
   font-weight: 900;
-  font-size: 1.20rem;
+  font-size: 1.15rem;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(255, 111, 0, 0.5);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  transition: transform 0.12s ease;
 }
 
 .btn-title-play:hover {
-  transform: scale(1.06);
-  box-shadow: 0 10px 32px rgba(255, 111, 0, 0.7);
+  transform: scale(1.04);
 }
 
 .title-guide {

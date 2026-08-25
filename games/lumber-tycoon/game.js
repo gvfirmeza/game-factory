@@ -27,13 +27,13 @@ export const WORLD = {
 };
 
 export const AXE_TIERS = [
-  { name: 'Camp Hatchet', power: 1, speed: 0.35, cost: 0, headColor: '#E53935', bevel: '#B71C1C', edge: '#ECEFF1' },
-  { name: 'Forged Bronze Axe', power: 2, speed: 0.30, cost: 180, headColor: '#CD7F32', bevel: '#8D5524', edge: '#FFE082' },
-  { name: 'Tempered Steel Axe', power: 4, speed: 0.25, cost: 650, headColor: '#607D8B', bevel: '#37474F', edge: '#FFFFFF' },
-  { name: 'Gold Broadaxe', power: 8, speed: 0.22, cost: 2200, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
-  { name: 'Diamond Core Axe', power: 16, speed: 0.18, cost: 7500, headColor: '#00E5FF', bevel: '#0097A7', edge: '#E0F7FA' },
-  { name: 'Plasma Laser Cutter', power: 35, speed: 0.15, cost: 24000, headColor: '#00E676', bevel: '#00A152', edge: '#B9F6CA' },
-  { name: 'Mythic Celestial Greataxe', power: 85, speed: 0.10, cost: 75000, headColor: '#E040FB', bevel: '#AA00FF', edge: '#FFFFFF' }
+  { name: 'Camp Hatchet', power: 1, speed: 0.46, cost: 0, headColor: '#E53935', bevel: '#B71C1C', edge: '#ECEFF1' },
+  { name: 'Forged Bronze Axe', power: 2, speed: 0.38, cost: 180, headColor: '#CD7F32', bevel: '#8D5524', edge: '#FFE082' },
+  { name: 'Tempered Steel Axe', power: 4, speed: 0.30, cost: 650, headColor: '#607D8B', bevel: '#37474F', edge: '#FFFFFF' },
+  { name: 'Gold Broadaxe', power: 8, speed: 0.25, cost: 2200, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
+  { name: 'Diamond Core Axe', power: 16, speed: 0.20, cost: 7500, headColor: '#00E5FF', bevel: '#0097A7', edge: '#E0F7FA' },
+  { name: 'Plasma Laser Cutter', power: 35, speed: 0.16, cost: 24000, headColor: '#00E676', bevel: '#00A152', edge: '#B9F6CA' },
+  { name: 'Mythic Celestial Greataxe', power: 85, speed: 0.12, cost: 75000, headColor: '#E040FB', bevel: '#AA00FF', edge: '#FFFFFF' }
 ];
 
 export const CAPACITY_TIERS = [
@@ -49,21 +49,21 @@ export const CAPACITY_TIERS = [
 ];
 
 export const WOOD_PROPERTIES = {
-  oak: { name: 'Oak', logColor: '#8D6E63', outline: '#4E342E', plankColor: '#D7CCC8', plankBorder: '#8D6E63' },
-  birch: { name: 'Birch', logColor: '#ECEFF1', outline: '#37474F', plankColor: '#FFF9C4', plankBorder: '#C0CA33' },
-  pine: { name: 'Pine', logColor: '#4E342E', outline: '#271B17', plankColor: '#BCAAA4', plankBorder: '#5D4037' },
-  sakura: { name: 'Sakura', logColor: '#E91E63', outline: '#880E4F', plankColor: '#F8BBD0', plankBorder: '#C2185B' },
-  redwood: { name: 'Redwood', logColor: '#B71C1C', outline: '#5C0000', plankColor: '#FFCDD2', plankBorder: '#B71C1C' },
-  golden: { name: 'Golden', logColor: '#FFB300', outline: '#FF8F00', plankColor: '#FFF59D', plankBorder: '#FFB300' }
+  oak: { name: 'Oak', logColor: '#8D6E63', outline: '#4E342E', plankColor: '#D7CCC8', plankBorder: '#8D6E63', leafColors: ['#43A047', '#2E7D32', '#66BB6A', '#388E3C', '#8D6E63'] },
+  birch: { name: 'Birch', logColor: '#ECEFF1', outline: '#37474F', plankColor: '#FFF9C4', plankBorder: '#C0CA33', leafColors: ['#C0CA33', '#DCE775', '#9E9D24', '#8BC34A', '#ECEFF1'] },
+  pine: { name: 'Pine', logColor: '#4E342E', outline: '#271B17', plankColor: '#BCAAA4', plankBorder: '#5D4037', leafColors: ['#1B5E20', '#2E7D32', '#33691E', '#4E342E', '#0D5302'] },
+  sakura: { name: 'Sakura', logColor: '#E91E63', outline: '#880E4F', plankColor: '#F8BBD0', plankBorder: '#C2185B', leafColors: ['#F48FB1', '#EC407A', '#FF80AB', '#F06292', '#880E4F'] },
+  redwood: { name: 'Redwood', logColor: '#B71C1C', outline: '#5C0000', plankColor: '#FFCDD2', plankBorder: '#B71C1C', leafColors: ['#C62828', '#E53935', '#B71C1C', '#8E0000', '#D32F2F'] },
+  golden: { name: 'Golden', logColor: '#FFB300', outline: '#FF8F00', plankColor: '#FFF59D', plankBorder: '#FFB300', leafColors: ['#FFD54F', '#FFC107', '#FFA000', '#FFB300', '#FFF59D'] }
 };
 
 export const ZONES = [
-  { id: 'oak', name: 'Oak Meadow', cost: 0, treeType: 'oak', logValue: 20, maxHp: 3, logsPerTree: 3, unlocked: true, bounds: { x: 60, y: 1080, w: 900, h: 760 } },
-  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 5, logsPerTree: 4, unlocked: false, bounds: { x: 1050, y: 1080, w: 1280, h: 760 } },
-  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 8, logsPerTree: 4, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
-  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 12, logsPerTree: 5, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
-  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 20, logsPerTree: 6, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
-  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 35, logsPerTree: 8, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
+  { id: 'oak', name: 'Oak Meadow', cost: 0, treeType: 'oak', logValue: 20, maxHp: 5, logsPerTree: 3, respawnTime: 22, unlocked: true, bounds: { x: 60, y: 1080, w: 900, h: 760 } },
+  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 8, logsPerTree: 4, respawnTime: 28, unlocked: false, bounds: { x: 1050, y: 1080, w: 1280, h: 760 } },
+  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 14, logsPerTree: 4, respawnTime: 35, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
+  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 22, logsPerTree: 5, respawnTime: 42, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
+  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 35, logsPerTree: 6, respawnTime: 52, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
+  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 60, logsPerTree: 8, respawnTime: 68, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
 ];
 
 export const BUILDINGS = {
@@ -450,68 +450,38 @@ class TycoonAudioSynthesizer {
 
     const t = this.ctx.currentTime;
 
-    // 1. Mechanical Cash Register "Ka-Ching" Lever Latch
-    if (this.ctx.createBuffer) {
-      try {
-        const snapBuffer = this.ctx.createBuffer(1, Math.floor(this.ctx.sampleRate * 0.035), this.ctx.sampleRate);
-        const snapData = snapBuffer.getChannelData(0);
-        for (let i = 0; i < snapData.length; i++) {
-          snapData[i] = Math.random() * 2 - 1;
-        }
-        const snapSource = this.ctx.createBufferSource();
-        snapSource.buffer = snapBuffer;
-
-        const snapFilter = this.ctx.createBiquadFilter();
-        snapFilter.type = 'bandpass';
-        snapFilter.frequency.setValueAtTime(3200, t);
-        snapFilter.Q.setValueAtTime(5.0, t);
-
-        const snapGain = this.ctx.createGain();
-        snapGain.gain.setValueAtTime(0.35, t);
-        snapGain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
-
-        snapSource.connect(snapFilter);
-        snapFilter.connect(snapGain);
-        snapGain.connect(this.ctx.destination);
-        snapSource.start(t);
-        snapSource.stop(t + 0.035);
-      } catch (e) {}
-    }
-
-    // 2. High Shimmering Gold Bell Chimes (A6 & E7 Harmonic Pair)
-    const bellNotes = [1760.00, 2637.02];
-    bellNotes.forEach((freq, idx) => {
-      const noteTime = t + 0.015 + idx * 0.02;
+    // Rich, warm 4-note ascending coin cascade (C-Major pentatonic chord)
+    // Warm triangle/sine tones with gentle decay, no harsh noise
+    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+    notes.forEach((freq, idx) => {
+      const noteTime = t + idx * 0.042;
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
-      osc.type = 'sine';
+
+      osc.type = idx === notes.length - 1 ? 'sine' : 'triangle';
       osc.frequency.setValueAtTime(freq, noteTime);
 
-      gain.gain.setValueAtTime(0.28, noteTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.28);
+      gain.gain.setValueAtTime(0.20, noteTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.22);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start(noteTime);
-      osc.stop(noteTime + 0.28);
+      osc.stop(noteTime + 0.22);
     });
 
-    // 3. Fast Cascade of 3 Gold Coin Clinks
-    const coinClinks = [3300, 4200, 3800];
-    coinClinks.forEach((freq, idx) => {
-      const clinkTime = t + 0.05 + idx * 0.04;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, clinkTime);
-      gain.gain.setValueAtTime(0.18, clinkTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, clinkTime + 0.05);
+    // Subtle sweet coin shimmer ping on the top note (gentle and satisfying)
+    const pingOsc = this.ctx.createOscillator();
+    const pingGain = this.ctx.createGain();
+    pingOsc.type = 'sine';
+    pingOsc.frequency.setValueAtTime(2093.00, t + 0.126); // C7 gentle crystal ring
+    pingGain.gain.setValueAtTime(0.08, t + 0.126);
+    pingGain.gain.exponentialRampToValueAtTime(0.001, t + 0.32);
 
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(clinkTime);
-      osc.stop(clinkTime + 0.05);
-    });
+    pingOsc.connect(pingGain);
+    pingGain.connect(this.ctx.destination);
+    pingOsc.start(t + 0.126);
+    pingOsc.stop(t + 0.32);
   }
 
   playUpgrade() {
@@ -1769,7 +1739,7 @@ export class LumberTycoonGame {
           isCut: false,
           shakeTimer: 0,
           respawnTimer: 0,
-          respawnMax: isGolden ? 25 : 12
+          respawnMax: zone.respawnTime || 22
         });
       }
     });
@@ -2166,7 +2136,9 @@ export class LumberTycoonGame {
     const zoneName = zone ? zone.name : 'new zone';
     this.juice.spawnFloatingText(`Unlock ${zoneName} to chop! 🔒`, tree.x, tree.y - 45, {
       color: '#FFB300',
-      size: 16
+      size: 16,
+      life: 2.6,
+      vy: -15
     });
   }
 
@@ -2177,13 +2149,14 @@ export class LumberTycoonGame {
     this.juice.screenShake(2);
 
     const prop = WOOD_PROPERTIES[tree.type] || WOOD_PROPERTIES.oak;
-    this.particles.burst(tree.x, tree.y - (tree.trunkHeight || 42), 8, prop.logColor);
+    this.particles.leafBurst(tree.x, tree.y - (tree.trunkHeight || 42), prop.leafColors, 8);
 
     if (tree.hp <= 0) {
       tree.isCut = true;
       tree.respawnTimer = tree.respawnMax;
       this.audio.playTreeFall();
       this.juice.screenShake(6);
+      this.particles.leafBurst(tree.x, tree.y - (tree.trunkHeight || 42), prop.leafColors, 20);
 
       this.saveData.totalTreesCut = (this.saveData.totalTreesCut || 0) + 1;
 
@@ -2297,7 +2270,7 @@ export class LumberTycoonGame {
             w.isWalking = false;
             w.isChopping = true;
             w.chopTimer += dt;
-            if (w.chopTimer >= 0.35) {
+            if (w.chopTimer >= 0.45) {
               w.chopTimer = 0;
               this.chopTree(t, w.axePower || 2, w);
             }
@@ -2321,7 +2294,7 @@ export class LumberTycoonGame {
           tree.isCut = false;
           tree.hp = tree.maxHp;
           const prop = WOOD_PROPERTIES[tree.type] || WOOD_PROPERTIES.oak;
-          this.particles.burst(tree.x, tree.y, 10, prop.logColor);
+          this.particles.leafBurst(tree.x, tree.y - (tree.trunkHeight || 42), prop.leafColors, 10);
         }
       }
     }
@@ -2991,6 +2964,159 @@ export class LumberTycoonGame {
    * 10. 2.5D DEPTH-SORTED RENDERING LOOP & TUTORIAL OVERLAY
    * ========================================================================== */
 
+  drawTitleDiorama() {
+    const canvas = document.getElementById('title-scene-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const t = this.animTime;
+
+    // 1. Sky & Soft Warm Sunset / Forest Glow Backplate
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+    bgGrad.addColorStop(0, '#243321');
+    bgGrad.addColorStop(1, '#162214');
+    ctx.fillStyle = bgGrad;
+    ctx.beginPath();
+    ctx.roundRect(0, 0, w, h, 12);
+    ctx.fill();
+
+    // 2. Rolling Green Grassy Hill
+    ctx.fillStyle = '#2E7D32';
+    ctx.beginPath();
+    ctx.ellipse(w / 2, h + 24, w * 0.58, 60, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#388E3C';
+    ctx.beginPath();
+    ctx.ellipse(w / 2, h + 18, w * 0.52, 50, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#4CAF50';
+    ctx.beginPath();
+    ctx.ellipse(w / 2, h + 12, w * 0.46, 42, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 3. Left Oak Tree (Lush Foliage)
+    const oakX = 58;
+    const oakY = 82;
+    // Trunk
+    ctx.fillStyle = '#5D4037';
+    ctx.fillRect(oakX - 5, oakY, 10, 36);
+    // Leaves
+    ctx.fillStyle = '#2E7D32';
+    ctx.beginPath();
+    ctx.arc(oakX, oakY - 12, 24, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#43A047';
+    ctx.beginPath();
+    ctx.arc(oakX - 8, oakY - 16, 17, 0, Math.PI * 2);
+    ctx.arc(oakX + 8, oakY - 16, 17, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#66BB6A';
+    ctx.beginPath();
+    ctx.arc(oakX, oakY - 22, 15, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 4. Right Pine Tree (Crisp Nordic Pine)
+    const pineX = 302;
+    const pineY = 84;
+    // Trunk
+    ctx.fillStyle = '#3E2723';
+    ctx.fillRect(pineX - 4, pineY + 6, 8, 30);
+    // Pine needle tiers
+    const drawPineTier = (tierY, tierW, tierH, col) => {
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.moveTo(pineX, tierY - tierH);
+      ctx.lineTo(pineX - tierW / 2, tierY);
+      ctx.lineTo(pineX + tierW / 2, tierY);
+      ctx.closePath();
+      ctx.fill();
+    };
+    drawPineTier(pineY + 10, 38, 20, '#1B5E20');
+    drawPineTier(pineY - 4, 30, 18, '#2E7D32');
+    drawPineTier(pineY - 16, 22, 16, '#388E3C');
+
+    // 5. Central Handcrafted Tree Stump
+    const stumpX = 180;
+    const stumpY = 104;
+    // Stump body
+    ctx.fillStyle = '#5D4037';
+    ctx.beginPath();
+    ctx.roundRect(stumpX - 18, stumpY - 10, 36, 22, 4);
+    ctx.fill();
+    // Stump top growth rings
+    ctx.fillStyle = '#D7CCC8';
+    ctx.beginPath();
+    ctx.ellipse(stumpX, stumpY - 10, 18, 7, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#A1887F';
+    ctx.lineWidth = 1.0;
+    ctx.stroke();
+
+    // 6. Iconic Red & Steel Hatchet Embedded in Stump
+    ctx.save();
+    ctx.translate(stumpX - 3, stumpY - 10);
+    ctx.rotate(0.35); // 20 degree embedded tilt
+
+    // Wooden handle
+    ctx.fillStyle = '#8D6E63';
+    ctx.beginPath();
+    ctx.roundRect(-3, -36, 6, 38, 2);
+    ctx.fill();
+    ctx.fillStyle = '#5D4037';
+    ctx.fillRect(-3, -36, 6, 6);
+
+    // Axe head (Crimson red)
+    ctx.fillStyle = '#D32F2F';
+    ctx.beginPath();
+    ctx.moveTo(-13, -32);
+    ctx.lineTo(12, -29);
+    ctx.lineTo(12, -20);
+    ctx.lineTo(-11, -18);
+    ctx.closePath();
+    ctx.fill();
+
+    // Axe bevel
+    ctx.fillStyle = '#B71C1C';
+    ctx.beginPath();
+    ctx.moveTo(-13, -32);
+    ctx.lineTo(-3, -30);
+    ctx.lineTo(-3, -20);
+    ctx.lineTo(-11, -18);
+    ctx.closePath();
+    ctx.fill();
+
+    // Steel Blade Edge
+    ctx.fillStyle = '#ECEFF1';
+    ctx.beginPath();
+    ctx.moveTo(12, -30);
+    ctx.lineTo(16, -25);
+    ctx.lineTo(12, -20);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    // 7. Gentle Animated Drifting Leaves
+    const leafColors = ['#81C784', '#FFD54F', '#4CAF50', '#A5D6A7'];
+    for (let i = 0; i < 5; i++) {
+      const lx = ((t * 26 + i * 75) % (w + 30)) - 15;
+      const ly = 25 + Math.sin(t * 2 + i * 1.5) * 18 + (i % 3) * 16;
+      const rot = t * 1.6 + i;
+      ctx.save();
+      ctx.translate(lx, ly);
+      ctx.rotate(rot);
+      ctx.fillStyle = leafColors[i % leafColors.length];
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 4.5, 2.2, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
   render() {
     const ctx = this.renderer.ctx;
     this.renderer.beginFrame(this.camera);
@@ -3096,6 +3222,11 @@ export class LumberTycoonGame {
     // 8. Screen HUD Juice
     this.juice.renderScreen(ctx, this.renderer.virtualWidth, this.renderer.virtualHeight);
     this.renderer.endFrame();
+
+    // 9. Title Screen Diorama Rendering
+    if (this.state === 'TITLE') {
+      this.drawTitleDiorama();
+    }
   }
 }
 
