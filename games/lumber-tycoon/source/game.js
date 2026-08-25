@@ -80,7 +80,7 @@ export const BUILDINGS = {
   blacksmith: { x: 680, y: 720, w: 120, h: 95, name: 'Blacksmith Forge', desc: 'Forge powerful cutting axes' },
   storageBarn: { x: 1270, y: 720, w: 120, h: 95, name: 'Backpack Depot', desc: 'Expand backpack carrying capacity' },
   workerHut: { x: 970, y: 570, w: 140, h: 95, name: 'Worker Barracks', desc: 'Hire automated specialist workers' },
-  monument: { x: 1040, y: 380, w: 120, h: 100, name: 'Golden Monument', desc: 'Deliver 10 Golden Logs to erect the Island Empire Monument' }
+  monument: { x: 1950, y: 280, w: 140, h: 110, name: 'Golden Shrine', desc: 'Deliver 10 Golden Logs to awaken the Ancient Totem and conquer the Island' }
 };
 
 export const WORKER_COLORS = [
@@ -1217,7 +1217,7 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
     ctx.font = 'bold 11px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(isComplete ? 'EMPIRE COMPLETE 👑' : `MONUMENT (${progress}/10)`, centerX, centerY + 18);
+    ctx.fillText(isComplete ? 'EMPIRE COMPLETE 👑' : `GOLDEN SHRINE (${progress}/10)`, centerX, centerY + 18);
   } else {
     // Generic Building fallback
     ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
@@ -2022,6 +2022,11 @@ export class LumberTycoonGame {
           continue;
         }
 
+        // Keep clearing around the Ancient Golden Shrine open and pristine
+        if (x > 1850 && x < 2180 && y > 180 && y < 500) {
+          continue;
+        }
+
         const isRedwood = zone.id === 'redwood';
         const isGolden = zone.id === 'golden';
 
@@ -2173,10 +2178,10 @@ export class LumberTycoonGame {
       {
         id: 'pad_monument',
         type: 'MONUMENT',
-        x: 1100,
+        x: 2020,
         y: 440,
         radius: 54,
-        label: 'GOLDEN MONUMENT',
+        label: 'GOLDEN SHRINE',
         deposited: this.saveData.monumentProgress || 0,
         targetCost: 10
       }
