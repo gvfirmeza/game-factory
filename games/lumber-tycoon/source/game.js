@@ -2872,20 +2872,21 @@ export class LumberTycoonGame {
           continue;
         }
 
-        // STANDARD CASH PADS: Exponential dynamic scaling (always finishes in ~1s regardless of cost)
+        // STANDARD CASH PADS: Graduated scaling (cheap upgrades feel tactile ~1.5s, large upgrades ramp up smoothly)
         const needed = pad.targetCost - pad.deposited;
         if (needed > 0 && this.saveData.cash > 0) {
           pad.standDuration = (pad.standDuration || 0) + dt;
           pad.tickTimer = (pad.tickTimer || 0) + dt;
 
-          const tickInterval = 0.038;
+          const tickInterval = 0.05;
           if (pad.tickTimer >= tickInterval) {
             pad.tickTimer = 0;
 
-            // Speed multiplier scales up while player stays on pad
-            const acceleration = Math.min(8, 1 + pad.standDuration * 3.2);
-            const basePct = 0.05 * acceleration;
-            const calculatedChunk = Math.max(1, Math.ceil(pad.targetCost * basePct));
+            const cost = pad.targetCost;
+            const baseRate = cost < 1000 ? 0.024 : cost < 10000 ? 0.032 : 0.045;
+            const maxAccel = cost < 1000 ? 2.2 : cost < 10000 ? 4.2 : 7.0;
+            const acceleration = Math.min(maxAccel, 1 + pad.standDuration * 1.8);
+            const calculatedChunk = Math.max(1, Math.ceil(cost * baseRate * acceleration));
 
             const chunk = Math.min(
               this.saveData.cash,
