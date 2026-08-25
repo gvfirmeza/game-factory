@@ -19,34 +19,34 @@
     <header class="top-hud">
       <div class="hud-group">
         <button id="btn-mute" class="hud-btn" aria-label="Toggle Audio" title="Mute / Unmute">
-          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <path d="M11 5L6 9H2v6h4l5 4V5z" fill="#ECEFF1" stroke="#455A64" stroke-width="1.8"/>
-            <path id="audio-waves" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="#00E676" stroke-width="2" stroke-linecap="round"/>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#FFE082" stroke="#FFB300"/>
+            <path id="audio-waves" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke="#00E676"/>
           </svg>
         </button>
 
         <div class="hud-badge cash-badge" title="Treasury Gold">
           <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <circle cx="12" cy="12" r="9" fill="#FFB300" stroke="#FF8F00" stroke-width="1.8"/>
-            <path d="M12 7v10M9.5 9.5a2.5 2.5 0 0 1 5 0c0 2-5 2-5 4a2.5 2.5 0 0 0 5 0" stroke="#FFF8E1" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="9" fill="#FFB300" stroke="#FFA000" stroke-width="2"/>
+            <path d="M12 6v12M15 9.5a2.5 2.5 0 0 0-5 0c0 2 5 2 5 4.5a2.5 2.5 0 0 1-5 0" stroke="#FFF8E1" stroke-width="2" stroke-linecap="round"/>
           </svg>
           <span id="hud-cash-val">$0</span>
         </div>
 
         <div class="hud-badge log-badge" title="Raw Wood Logs in Backpack">
           <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <rect x="3" y="6" width="14" height="12" rx="2" fill="#8D6E63" stroke="#4E342E" stroke-width="1.8"/>
-            <ellipse cx="17" cy="12" rx="4" ry="6" fill="#D7CCC8" stroke="#4E342E" stroke-width="1.8"/>
-            <circle cx="17" cy="12" r="2" fill="#8D6E63"/>
+            <path d="M4 7h12a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3v-4a3 3 0 0 1 3-3z" fill="#8D6E63" stroke="#4E342E" stroke-width="1.8"/>
+            <ellipse cx="16" cy="12" rx="3.5" ry="5" fill="#D7CCC8" stroke="#4E342E" stroke-width="1.8"/>
+            <circle cx="16" cy="12" r="1.5" fill="#8D6E63"/>
           </svg>
           <span id="hud-logs-val">0 / 3</span>
         </div>
 
         <div class="hud-badge plank-badge" title="Refined Wood Planks in Backpack">
           <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <rect x="2" y="7" width="20" height="10" rx="2" fill="#FFE082" stroke="#FFB300" stroke-width="1.8"/>
-            <line x1="6" y1="10" x2="18" y2="10" stroke="#FFA000" stroke-width="1.2" stroke-linecap="round"/>
-            <line x1="4" y1="14" x2="16" y2="14" stroke="#FFA000" stroke-width="1.2" stroke-linecap="round"/>
+            <rect x="2" y="7" width="20" height="10" rx="2.5" fill="#FFE082" stroke="#FFB300" stroke-width="2"/>
+            <line x1="5" y1="10.5" x2="19" y2="10.5" stroke="#FFA000" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="4" y1="13.5" x2="16" y2="13.5" stroke="#FFA000" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
           <span id="hud-planks-val">0 / 3</span>
         </div>
@@ -54,50 +54,48 @@
 
       <div class="hud-group">
         <button id="btn-airdrop" class="hud-badge airdrop-badge" title="Watch short ad to receive +$500 Cash Airdrop">
-          <svg class="ui-icon" viewBox="0 0 24 24" width="18" height="18" fill="none">
-            <rect x="3" y="8" width="18" height="13" rx="2" fill="#7B1FA2" stroke="#4A148C" stroke-width="1.8"/>
-            <rect x="2" y="5" width="20" height="4" rx="1.5" fill="#9C27B0" stroke="#4A148C" stroke-width="1.5"/>
-            <line x1="12" y1="5" x2="12" y2="21" stroke="#FFD54F" stroke-width="2.5"/>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="8" width="18" height="12" rx="2" fill="rgba(123, 31, 162, 0.5)" stroke="#FFD54F"/>
+            <path d="M12 8v12M19 12H5" stroke="#FFD54F"/>
+            <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 4.8 0 0 1 12 8a4.8 4.8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" stroke="#FFD54F" fill="#9C27B0"/>
           </svg>
           <span>Free +$500</span>
         </button>
 
         <!-- Forge & Depot Shop -->
         <button id="btn-open-shop" class="hud-btn" title="Blacksmith Forge & Backpack Depot">
-          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <path d="M18 4l-4 4 2 2 4-4a2 2 0 0 0-2-2z" fill="#90A4AE" stroke="#37474F" stroke-width="1.5"/>
-            <path d="M14 8l-9 9a1.5 1.5 0 0 0 2 2l9-9" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M16 3c2-1 5 0 5 2s-1 4-3 5l-2-2 1-4" fill="#B0BEC5" stroke="#37474F" stroke-width="1.5"/>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="#FFE082" fill="rgba(255, 179, 0, 0.25)"/>
           </svg>
         </button>
 
         <!-- Workers Management Hub -->
         <button id="btn-open-workers" class="hud-btn" title="Worker Management & Individual Upgrades">
-          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <circle cx="9" cy="8" r="4" fill="#FFE0B2" stroke="#5D4037" stroke-width="1.5"/>
-            <path d="M4 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" fill="#FF9800" stroke="#E65100" stroke-width="1.8"/>
-            <path d="M5 8c0-2.5 1.8-4 4-4s4 1.5 4 4" stroke="#FBC02D" stroke-width="2" stroke-linecap="round"/>
-            <path d="M16 11a3 3 0 0 0 3-3c0-1.5-1-2.8-2.5-3" stroke="#5D4037" stroke-width="1.5"/>
-            <path d="M17 16a3.5 3.5 0 0 1 3 3.5V20" stroke="#1976D2" stroke-width="1.8"/>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="#FFE082"/>
+            <circle cx="9" cy="7" r="4" stroke="#FFE082" fill="rgba(255, 179, 0, 0.25)"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" stroke="#FFE082"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#FFE082"/>
           </svg>
         </button>
 
         <!-- Achievements Hub with Unclaimed Badge -->
         <button id="btn-open-achievements" class="hud-btn btn-with-badge" title="Achievements & Milestones">
-          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="#FFD54F" stroke="#FFB300" stroke-width="1.8"/>
-            <path d="M4 6h3v3a3 3 0 0 1-3-3zM20 6h-3v3a3 3 0 0 0 3-3z" fill="#FFE082" stroke="#FFB300" stroke-width="1.5"/>
-            <path d="M12 15v4M8 19h8" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round"/>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" stroke="#FFB300"/>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" stroke="#FFB300"/>
+            <path d="M4 22h16" stroke="#FFB300"/>
+            <path d="M10 14.66V17c0 .55-.45.98-.97 1.21C7.85 18.75 7 20.24 7 22" stroke="#FFB300"/>
+            <path d="M14 14.66V17c0 .55.45.98.97 1.21C16.15 18.75 17 20.24 17 22" stroke="#FFB300"/>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#FFB300" stroke="#FF8F00"/>
           </svg>
           <span id="ach-badge" class="hud-badge-counter hidden">0</span>
         </button>
 
         <!-- Player Wardrobe / Skin Customization -->
         <button id="btn-open-wardrobe" class="hud-btn" title="Player Wardrobe & Skin Customization">
-          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <path d="M6 7l6-3 6 3 2 4-4 2v7H8v-7L4 11l2-4z" fill="#D32F2F" stroke="#B71C1C" stroke-width="1.8"/>
-            <path d="M10 4a2 2 0 0 1 4 0" stroke="#FFD54F" stroke-width="2"/>
-            <line x1="12" y1="7" x2="12" y2="19" stroke="#B71C1C" stroke-width="1.5"/>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" fill="#D32F2F" stroke="#B71C1C"/>
           </svg>
         </button>
       </div>
@@ -118,9 +116,8 @@
         <div class="modal-header">
           <div class="modal-title-stack">
             <h2>
-              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
-                <path d="M18 4l-4 4 2 2 4-4a2 2 0 0 0-2-2z" fill="#90A4AE" stroke="#37474F" stroke-width="1.5"/>
-                <path d="M14 8l-9 9a1.5 1.5 0 0 0 2 2l9-9" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round"/>
+              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="#FFE082" fill="rgba(255, 179, 0, 0.25)"/>
               </svg>
               FORGE & DEPOT
             </h2>
@@ -140,9 +137,11 @@
         <div class="modal-header">
           <div class="modal-title-stack">
             <h2>
-              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
-                <circle cx="9" cy="8" r="4" fill="#FFE0B2" stroke="#5D4037" stroke-width="1.5"/>
-                <path d="M4 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" fill="#FF9800" stroke="#E65100" stroke-width="1.8"/>
+              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="#FFE082"/>
+                <circle cx="9" cy="7" r="4" stroke="#FFE082" fill="rgba(255, 179, 0, 0.25)"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" stroke="#FFE082"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#FFE082"/>
               </svg>
               WORKER MANAGEMENT
             </h2>
@@ -165,9 +164,13 @@
         <div class="modal-header">
           <div class="modal-title-stack">
             <h2>
-              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
-                <path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="#FFD54F" stroke="#FFB300" stroke-width="1.8"/>
-                <path d="M12 15v4M8 19h8" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round"/>
+              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" stroke="#FFB300"/>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" stroke="#FFB300"/>
+                <path d="M4 22h16" stroke="#FFB300"/>
+                <path d="M10 14.66V17c0 .55-.45.98-.97 1.21C7.85 18.75 7 20.24 7 22" stroke="#FFB300"/>
+                <path d="M14 14.66V17c0 .55.45.98.97 1.21C16.15 18.75 17 20.24 17 22" stroke="#FFB300"/>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#FFB300" stroke="#FF8F00"/>
               </svg>
               ACHIEVEMENTS & TROPHIES
             </h2>
@@ -187,8 +190,8 @@
         <div class="modal-header">
           <div class="modal-title-stack">
             <h2>
-              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
-                <path d="M6 7l6-3 6 3 2 4-4 2v7H8v-7L4 11l2-4z" fill="#D32F2F" stroke="#B71C1C" stroke-width="1.8"/>
+              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" fill="#D32F2F" stroke="#B71C1C"/>
               </svg>
               LUMBERJACK WARDROBE
             </h2>
@@ -212,10 +215,25 @@
     <div id="title-overlay" class="title-overlay">
       <div class="title-plaque">
         <div class="title-logo-icon">
-          <svg viewBox="0 0 48 48" width="64" height="64" fill="none">
-            <path d="M24 4l-12 18h8l-6 10h8l-6 10h20l-6-10h8l-6-10h8L24 4z" fill="#2E7D32" stroke="#1B5E20" stroke-width="2.5"/>
-            <path d="M38 12l-8 8 4 4 8-8a4 4 0 0 0-4-4z" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
-            <path d="M30 20l-16 16a3 3 0 0 0 4 4l16-16" stroke="#8D6E63" stroke-width="4.5" stroke-linecap="round"/>
+          <svg viewBox="0 0 64 64" width="76" height="76" fill="none">
+            <!-- Heraldic Shield Backplate -->
+            <path d="M32 4L54 12V32C54 46 32 58 32 58C32 58 10 46 10 32V12L32 4Z" fill="#2C1A11" stroke="#FFB300" stroke-width="3"/>
+            <path d="M32 8L49 14.5V31C49 42.5 32 52 32 52C32 52 15 42.5 15 31V14.5L32 8Z" fill="#3E2723"/>
+
+            <!-- Crossed Axe Left -->
+            <g transform="translate(32, 28) rotate(-38) translate(-32, -28)">
+              <line x1="32" y1="10" x2="32" y2="44" stroke="#8D6E63" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M32 12C39 10 45 15 43 22C41 24 35 23 32 20Z" fill="#ECEFF1" stroke="#37474F" stroke-width="1.8"/>
+            </g>
+
+            <!-- Crossed Axe Right -->
+            <g transform="translate(32, 28) rotate(38) translate(-32, -28)">
+              <line x1="32" y1="10" x2="32" y2="44" stroke="#8D6E63" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M32 12C25 10 19 15 21 22C23 24 29 23 32 20Z" fill="#ECEFF1" stroke="#37474F" stroke-width="1.8"/>
+            </g>
+
+            <!-- Center Gold Star Crest -->
+            <polygon points="32,22 34,26 38,27 35,30 36,34 32,32 28,34 29,30 26,27 30,26" fill="#FFD54F" stroke="#FFB300" stroke-width="1.2"/>
           </svg>
         </div>
         <h1 class="title-headline">LUMBER TYCOON</h1>
@@ -227,19 +245,30 @@
 
         <div class="title-guide">
           <div class="guide-item">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M18 4l-4 4 2 2 4-4a2 2 0 0 0-2-2z" fill="#90A4AE"/><path d="M14 8l-9 9a1.5 1.5 0 0 0 2 2l9-9" stroke="#8D6E63" stroke-width="2"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FFE082" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
             <span>Stand near trees to auto-chop raw logs</span>
           </div>
           <div class="guide-item">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="8" fill="#CFD8DC"/><circle cx="12" cy="12" r="3" fill="#37474F"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+              <circle cx="12" cy="12" r="8" fill="#ECEFF1" stroke="#78909C" stroke-width="2"/>
+              <circle cx="12" cy="12" r="3" fill="#37474F"/>
+            </svg>
             <span>Unlock the Sawmill to refine logs into high-value planks</span>
           </div>
           <div class="guide-item">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="9" fill="#FFB300"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+              <circle cx="12" cy="12" r="9" fill="#FFB300" stroke="#FFA000" stroke-width="1.8"/>
+              <path d="M12 6v12M15 9.5a2.5 2.5 0 0 0-5 0c0 2 5 2 5 4.5a2.5 2.5 0 0 1-5 0" stroke="#FFF8E1" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
             <span>Deliver timber to the Wood Market for huge cash returns</span>
           </div>
           <div class="guide-item">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="9" cy="8" r="4" fill="#FFE0B2"/><path d="M4 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" fill="#FF9800"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FFE082" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+            </svg>
             <span>Hire and upgrade individual automated lumberjack workers</span>
           </div>
         </div>

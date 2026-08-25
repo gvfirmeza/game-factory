@@ -366,13 +366,17 @@ function drawTopDownTerrain(ctx, width, height, animTime) {
 
 function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlocked) {
   const { x, y, w, h, name } = building;
+  const centerX = x + w / 2;
+  const centerY = y + h / 2;
 
   ctx.save();
+  // Soft Ground Shadow
   ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
   ctx.beginPath();
-  ctx.ellipse(x + w / 2, y + h / 2 + 15, w / 2 + 10, h / 2 + 8, 0, 0, Math.PI * 2);
+  ctx.ellipse(centerX, centerY + 15, w / 2 + 10, h / 2 + 8, 0, 0, Math.PI * 2);
   ctx.fill();
 
+  // Building Timber Base Foundation
   ctx.fillStyle = '#3e2723';
   ctx.beginPath();
   ctx.roundRect(x, y + 10, w, h - 10, 14);
@@ -389,38 +393,38 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
 
   if (bKey === 'sawmill') {
     if (!sawmillUnlocked) {
-      // Locked Construction Blueprint Site
-      ctx.fillStyle = 'rgba(13, 71, 161, 0.6)';
-      ctx.fillRect(x + 10, y + 10, w - 20, h - 30);
+      // Locked Construction Blueprint Site (Clean blueprint grid with wooden scaffolding)
+      ctx.fillStyle = 'rgba(13, 71, 161, 0.55)';
+      ctx.fillRect(x + 10, y + 8, w - 20, h - 30);
 
       ctx.strokeStyle = '#64B5F6';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.2;
       ctx.setLineDash([4, 4]);
-      ctx.strokeRect(x + 12, y + 12, w - 24, h - 34);
+      ctx.strokeRect(x + 12, y + 10, w - 24, h - 34);
       ctx.setLineDash([]);
 
-      // Construction timber scaffolding
+      // Scaffolding diagonal crossbars
       ctx.strokeStyle = '#FFB300';
       ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.moveTo(x + 15, y + 15); ctx.lineTo(x + w - 15, y + h - 25);
-      ctx.moveTo(x + w - 15, y + 15); ctx.lineTo(x + 15, y + h - 25);
+      ctx.moveTo(x + 16, y + 14); ctx.lineTo(x + w - 16, y + h - 26);
+      ctx.moveTo(x + w - 16, y + 14); ctx.lineTo(x + 16, y + h - 26);
       ctx.stroke();
 
-      // Locked Banner
-      ctx.fillStyle = 'rgba(15, 10, 5, 0.94)';
+      // Padlock Icon in Center
+      ctx.fillStyle = '#FFD54F';
       ctx.beginPath();
-      ctx.roundRect(x + 6, y + h / 2 - 12, w - 12, 24, 6);
+      ctx.roundRect(centerX - 10, centerY - 14, 20, 16, 4);
       ctx.fill();
-      ctx.strokeStyle = '#FFB300';
+      ctx.strokeStyle = '#FF8F00';
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      ctx.fillStyle = '#FFE082';
-      ctx.font = 'bold 10px Fredoka, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('LOCKED SAWMILL', x + w / 2, y + h / 2);
+      ctx.strokeStyle = '#ECEFF1';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY - 14, 6, Math.PI, Math.PI * 2);
+      ctx.stroke();
     } else {
       // Heavy Steel Industrial Conveyor Table
       ctx.fillStyle = '#263238';
@@ -560,7 +564,34 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
       }
     }
 
-    // Bottom label banner for sawmill
+    // Single clean bottom label banner for sawmill
+    ctx.fillStyle = 'rgba(15, 10, 5, 0.90)';
+    ctx.beginPath();
+    ctx.roundRect(x + 8, y + h - 22, w - 16, 20, 6);
+    ctx.fill();
+
+    ctx.fillStyle = sawmillUnlocked ? '#ffe082' : '#ffb74d';
+    ctx.font = 'bold 11px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(sawmillUnlocked ? 'SAWMILL' : 'LOCKED SAWMILL', x + w / 2, y + h - 12);
+  } else if (bKey === 'sellZone') {
+    // 1. Wood Market Vector Icon (Golden Coin Pouch / Emblem)
+    ctx.fillStyle = '#FFB300';
+    ctx.beginPath();
+    ctx.arc(centerX, centerY - 8, 17, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#FF8F00';
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#FFF8E1';
+    ctx.font = 'bold 20px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('$', centerX, centerY - 7);
+
+    // Bottom label banner
     ctx.fillStyle = 'rgba(15, 10, 5, 0.90)';
     ctx.beginPath();
     ctx.roundRect(x + 8, y + h - 22, w - 16, 20, 6);
@@ -570,35 +601,149 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
     ctx.font = 'bold 11px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(sawmillUnlocked ? 'SAWMILL' : 'UNBUILT SAWMILL', x + w / 2, y + h - 12);
-  } else if (bKey === 'sellZone') {
-    ctx.fillStyle = '#ffd54f';
+    ctx.fillText('WOOD MARKET', centerX, y + h - 12);
+  } else if (bKey === 'blacksmith') {
+    // 2. Blacksmith Vector Icon (Forged Anvil & Hammer)
+    // Anvil
+    ctx.fillStyle = '#455A64';
     ctx.beginPath();
-    ctx.roundRect(x + 14, y + 10, w - 28, h - 28, 8);
+    ctx.moveTo(centerX - 18, centerY - 12);
+    ctx.lineTo(centerX + 18, centerY - 12);
+    ctx.lineTo(centerX + 13, centerY - 6);
+    ctx.lineTo(centerX + 6, centerY);
+    ctx.lineTo(centerX + 10, centerY + 6);
+    ctx.lineTo(centerX - 10, centerY + 6);
+    ctx.lineTo(centerX - 6, centerY);
+    ctx.lineTo(centerX - 13, centerY - 6);
+    ctx.closePath();
     ctx.fill();
-    ctx.strokeStyle = '#ffb300';
-    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = '#263238';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Forging Hammer
+    ctx.save();
+    ctx.translate(centerX + 2, centerY - 14);
+    ctx.rotate(-0.35);
+    ctx.fillStyle = '#8D6E63';
+    ctx.fillRect(-2, 0, 4, 16);
+    ctx.fillStyle = '#CFD8DC';
+    ctx.beginPath();
+    ctx.roundRect(-6, -6, 12, 7, 2);
+    ctx.fill();
+    ctx.strokeStyle = '#37474F';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+    ctx.restore();
+
+    // Bottom label banner
+    ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
+    ctx.beginPath();
+    ctx.roundRect(centerX - (w - 20) / 2, centerY + 8, w - 20, 20, 6);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 179, 0, 0.35)';
+    ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.fillStyle = '#ffe082';
+    ctx.font = 'bold 11px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(name, centerX, centerY + 18);
+  } else if (bKey === 'storageBarn') {
+    // 3. Backpack Depot Vector Icon (Leather Explorer Backpack)
+    // Backpack Body
+    ctx.fillStyle = '#6D4C41';
     ctx.beginPath();
-    ctx.arc(x + w / 2, y + h / 2 - 4, 16, 0, Math.PI * 2);
+    ctx.roundRect(centerX - 15, centerY - 18, 30, 24, 6);
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-    ctx.fillStyle = 'rgba(15, 10, 5, 0.90)';
+    // Front Pocket
+    ctx.fillStyle = '#8D6E63';
     ctx.beginPath();
-    ctx.roundRect(x + 8, y + h - 22, w - 16, 20, 6);
+    ctx.roundRect(centerX - 10, centerY - 10, 20, 13, 3.5);
     ctx.fill();
+    ctx.strokeStyle = '#3E2723';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // Top Bedroll
+    ctx.fillStyle = '#A1887F';
+    ctx.beginPath();
+    ctx.roundRect(centerX - 16, centerY - 25, 32, 8, 4);
+    ctx.fill();
+    ctx.strokeStyle = '#4E342E';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // Brass Buckles
+    ctx.fillStyle = '#FFD54F';
+    ctx.fillRect(centerX - 7, centerY - 8, 3, 3.5);
+    ctx.fillRect(centerX + 4, centerY - 8, 3, 3.5);
+
+    // Bottom label banner
+    ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
+    ctx.beginPath();
+    ctx.roundRect(centerX - (w - 20) / 2, centerY + 8, w - 20, 20, 6);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 179, 0, 0.35)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
     ctx.fillStyle = '#ffe082';
     ctx.font = 'bold 11px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('WOOD MARKET', x + w / 2, y + h - 12);
-  } else {
-    const centerX = x + w / 2;
-    const centerY = y + h / 2;
+    ctx.fillText(name, centerX, centerY + 18);
+  } else if (bKey === 'workerHut') {
+    // 4. Worker Barracks Vector Icon (Safety Hardhat & Crossed Tool)
+    // Safety Helmet Dome
+    ctx.fillStyle = '#FFA000';
+    ctx.beginPath();
+    ctx.arc(centerX, centerY - 12, 14, Math.PI, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#E65100';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
+    // Center Ridge
+    ctx.fillStyle = '#FF8F00';
+    ctx.fillRect(centerX - 2.5, centerY - 25, 5, 13);
+
+    // Safety Helmet Brim
+    ctx.fillStyle = '#FFA000';
+    ctx.beginPath();
+    ctx.roundRect(centerX - 16, centerY - 12, 32, 5, 2);
+    ctx.fill();
+    ctx.strokeStyle = '#E65100';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // Crossed Tool Bar
+    ctx.fillStyle = '#CFD8DC';
+    ctx.beginPath();
+    ctx.roundRect(centerX - 12, centerY - 4, 24, 3.5, 1.5);
+    ctx.fill();
+
+    // Bottom label banner
+    ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
+    ctx.beginPath();
+    ctx.roundRect(centerX - (w - 20) / 2, centerY + 8, w - 20, 20, 6);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 179, 0, 0.35)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = '#ffe082';
+    ctx.font = 'bold 11px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(name, centerX, centerY + 18);
+  } else {
+    // Generic Building fallback
     ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
     ctx.beginPath();
     ctx.roundRect(centerX - (w - 20) / 2, centerY + 8, w - 20, 20, 6);
@@ -2046,7 +2191,7 @@ export class LumberTycoonGame {
     this.audio.playUpgrade();
     this.juice.screenShake(8);
     this.particles.burst(pad.x, pad.y, 30, '#FFD54F');
-    this.juice.spawnFloatingText('LEVEL UP! ✨', pad.x, pad.y - 40, { color: '#00E676', size: 22 });
+    this.juice.spawnFloatingText('LEVEL UP!', pad.x, pad.y - 40, { color: '#00E676', size: 22 });
 
     pad.cooldown = 0.35;
     pad.deposited = 0;
