@@ -2260,6 +2260,7 @@ export class LumberTycoonGame {
         speedLvl: sw.speedLvl || 1,
         powerLvl: sw.powerLvl || 1,
         capacityLvl: sw.capacityLvl || 1,
+        deliveryTarget: sw.deliveryTarget || (this.saveData.sawmillUnlocked ? 'sawmill' : 'market'),
         x: BUILDINGS.workerHut.x + 30 + (i % 3) * 35,
         y: BUILDINGS.workerHut.y + 35 + Math.floor(i / 3) * 30,
         radius: 12,
@@ -2290,6 +2291,7 @@ export class LumberTycoonGame {
       speedLvl: 1,
       powerLvl: 1,
       capacityLvl: 1,
+      deliveryTarget: this.saveData.sawmillUnlocked ? 'sawmill' : 'market',
       x: BUILDINGS.workerHut.x + 30 + (idx % 3) * 35,
       y: BUILDINGS.workerHut.y + 35 + Math.floor(idx / 3) * 30,
       radius: 12,
@@ -2311,7 +2313,8 @@ export class LumberTycoonGame {
       id: newWorker.id,
       speedLvl: 1,
       powerLvl: 1,
-      capacityLvl: 1
+      capacityLvl: 1,
+      deliveryTarget: newWorker.deliveryTarget
     });
     this.saveData.workerCount = this.workers.length;
     SaveManager.save(this.playgama, this.saveData);
@@ -2643,14 +2646,15 @@ export class LumberTycoonGame {
           w.y += (dy / dist) * w.speed * dt;
         }
       } else if (carriedLogs.length >= w.maxCarry) {
-        // If sawmill is unlocked, go refine them; otherwise sell directly at market!
-        const target = isSawmillOpen ? BUILDINGS.sawmill : BUILDINGS.sellZone;
+        // Individual Delivery Mode: 'sawmill' (if unlocked) OR 'market' (direct cash)
+        const targetMode = w.deliveryTarget || (isSawmillOpen ? 'sawmill' : 'market');
+        const target = (targetMode === 'sawmill' && isSawmillOpen) ? BUILDINGS.sawmill : BUILDINGS.sellZone;
         const dx = target.x + target.w / 2 - w.x;
         const dy = target.y + target.h / 2 - w.y;
         const dist = Math.hypot(dx, dy);
 
         if (dist < 45) {
-          if (isSawmillOpen) {
+          if (targetMode === 'sawmill' && isSawmillOpen) {
             for (const log of carriedLogs) {
               this.sawmillState.queue.push(log);
             }
@@ -2665,6 +2669,7 @@ export class LumberTycoonGame {
             this.spawnCoinBursts(w.x, w.y, cashEarned, 'Raw Logs');
             w.inventory = [];
           }
+          w.targetTree = null;
           this.updateHUD();
         } else {
           w.isWalking = true;
@@ -3189,6 +3194,7 @@ export class LumberTycoonGame {
         const powerCost = Math.floor(150 * Math.pow(1.7, w.powerLvl - 1));
         const capCost = Math.floor(180 * Math.pow(1.75, w.capacityLvl - 1));
 
+        const isSawmillTarget = w.deliveryTarget === 'sawmill';
         const card = document.createElement('div');
         card.className = 'worker-card';
         card.innerHTML = `
@@ -3224,8 +3230,34 @@ export class LumberTycoonGame {
               </button>
             </div>
           </div>
+          <div class="worker-mode-row">
+            <div class="worker-mode-info">
+              <span class="stat-label">TIMBER DESTINATION</span>
+              <span class="mode-desc">${isSawmillTarget ? '⚙️ Feeding Sawmill (Refine Planks 3x-5x)' : '🏪 Direct Sale at Market (Instant Cash)'}</span>
+            </div>
+            <button class="btn-mode-toggle ${isSawmillTarget ? 'mode-sawmill' : 'mode-market'}" data-idx="${idx}" title="Click to toggle destination between Sawmill and Market">
+              ${isSawmillTarget ? '⚙️ SAWMILL' : '🏪 MARKET'}
+            </button>
+          </div>
         `;
         roster.appendChild(card);
+      });
+
+      roster.querySelectorAll('.btn-mode-toggle').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.currentTarget.dataset.idx, 10);
+          const w = this.workers[idx];
+          if (!w) return;
+
+          const nextMode = w.deliveryTarget === 'sawmill' ? 'market' : 'sawmill';
+          w.deliveryTarget = nextMode;
+          if (this.saveData.workers && this.saveData.workers[idx]) {
+            this.saveData.workers[idx].deliveryTarget = nextMode;
+          }
+          this.audio.playCollect();
+          SaveManager.save(this.playgama, this.saveData);
+          this.openWorkerModal();
+        });
       });
 
       roster.querySelectorAll('.btn-stat-upgrade').forEach((btn) => {
