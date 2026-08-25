@@ -375,19 +375,53 @@ class TycoonAudioSynthesizer {
     if (!this.ctx) return;
 
     const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(540 + Math.random() * 80, t);
-    osc.frequency.exponentialRampToValueAtTime(920, t + 0.09);
 
-    gain.gain.setValueAtTime(0.2, t);
-    gain.gain.exponentialRampToValueAtTime(0.01, t + 0.09);
+    // Layer 1: Solid Timber Knock / Wood Block Thump
+    const woodOsc = this.ctx.createOscillator();
+    const woodGain = this.ctx.createGain();
+    woodOsc.type = 'triangle';
+    const pitch = 220 + Math.random() * 40;
+    woodOsc.frequency.setValueAtTime(pitch, t);
+    woodOsc.frequency.exponentialRampToValueAtTime(80, t + 0.06);
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start(t);
-    osc.stop(t + 0.09);
+    woodGain.gain.setValueAtTime(0.35, t);
+    woodGain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+
+    woodOsc.connect(woodGain);
+    woodGain.connect(this.ctx.destination);
+    woodOsc.start(t);
+    woodOsc.stop(t + 0.06);
+
+    // Layer 2: Tactile Wood Click Transient
+    if (this.ctx.createBuffer) {
+      try {
+        const bufferSize = Math.floor(this.ctx.sampleRate * 0.025);
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+        }
+
+        const noiseSource = this.ctx.createBufferSource();
+        noiseSource.buffer = noiseBuffer;
+
+        const bandpass = this.ctx.createBiquadFilter();
+        bandpass.type = 'bandpass';
+        bandpass.frequency.setValueAtTime(1400 + Math.random() * 300, t);
+        bandpass.Q.setValueAtTime(4.0, t);
+
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.28, t);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.025);
+
+        noiseSource.connect(bandpass);
+        bandpass.connect(noiseGain);
+        noiseGain.connect(this.ctx.destination);
+
+        noiseSource.start(t);
+        noiseSource.stop(t + 0.025);
+      } catch (e) {}
+    }
   }
 
   playCoinTick() {
@@ -399,9 +433,10 @@ class TycoonAudioSynthesizer {
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(1100 + Math.random() * 200, t);
-    gain.gain.setValueAtTime(0.12, t);
-    gain.gain.exponentialRampToValueAtTime(0.01, t + 0.04);
+    const freq = 2400 + (Math.random() - 0.5) * 200;
+    osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(0.16, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start(t);
@@ -413,19 +448,69 @@ class TycoonAudioSynthesizer {
     this.init();
     if (!this.ctx) return;
 
-    const notes = [987.77, 1318.51];
-    notes.forEach((freq, idx) => {
-      const t = this.ctx.currentTime + idx * 0.07;
+    const t = this.ctx.currentTime;
+
+    // 1. Mechanical Cash Register "Ka-Ching" Lever Latch
+    if (this.ctx.createBuffer) {
+      try {
+        const snapBuffer = this.ctx.createBuffer(1, Math.floor(this.ctx.sampleRate * 0.035), this.ctx.sampleRate);
+        const snapData = snapBuffer.getChannelData(0);
+        for (let i = 0; i < snapData.length; i++) {
+          snapData[i] = Math.random() * 2 - 1;
+        }
+        const snapSource = this.ctx.createBufferSource();
+        snapSource.buffer = snapBuffer;
+
+        const snapFilter = this.ctx.createBiquadFilter();
+        snapFilter.type = 'bandpass';
+        snapFilter.frequency.setValueAtTime(3200, t);
+        snapFilter.Q.setValueAtTime(5.0, t);
+
+        const snapGain = this.ctx.createGain();
+        snapGain.gain.setValueAtTime(0.35, t);
+        snapGain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+
+        snapSource.connect(snapFilter);
+        snapFilter.connect(snapGain);
+        snapGain.connect(this.ctx.destination);
+        snapSource.start(t);
+        snapSource.stop(t + 0.035);
+      } catch (e) {}
+    }
+
+    // 2. High Shimmering Gold Bell Chimes (A6 & E7 Harmonic Pair)
+    const bellNotes = [1760.00, 2637.02];
+    bellNotes.forEach((freq, idx) => {
+      const noteTime = t + 0.015 + idx * 0.02;
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, t);
-      gain.gain.setValueAtTime(0.25, t);
-      gain.gain.exponentialRampToValueAtTime(0.01, t + 0.14);
+      osc.frequency.setValueAtTime(freq, noteTime);
+
+      gain.gain.setValueAtTime(0.28, noteTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.28);
+
       osc.connect(gain);
       gain.connect(this.ctx.destination);
-      osc.start(t);
-      osc.stop(t + 0.14);
+      osc.start(noteTime);
+      osc.stop(noteTime + 0.28);
+    });
+
+    // 3. Fast Cascade of 3 Gold Coin Clinks
+    const coinClinks = [3300, 4200, 3800];
+    coinClinks.forEach((freq, idx) => {
+      const clinkTime = t + 0.05 + idx * 0.04;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, clinkTime);
+      gain.gain.setValueAtTime(0.18, clinkTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, clinkTime + 0.05);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(clinkTime);
+      osc.stop(clinkTime + 0.05);
     });
   }
 
