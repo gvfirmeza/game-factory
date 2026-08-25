@@ -114,6 +114,9 @@ class TycoonAudioSynthesizer {
   constructor() {
     this.ctx = null;
     this.isMuted = false;
+    this.bgMusic = null;
+    this.bgMusicVolume = 0.15; // Gentle, comfortable ambient volume (never overpowering)
+    this.bgMusicStarted = false;
   }
 
   init() {
@@ -124,10 +127,65 @@ class TycoonAudioSynthesizer {
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume();
     }
+    this.startBackgroundMusic();
+  }
+
+  startBackgroundMusic() {
+    if (this.bgMusicStarted || typeof window === 'undefined' || typeof Audio === 'undefined') return;
+    this.bgMusicStarted = true;
+
+    // Search for background music in asset locations
+    const candidatePaths = [
+      './assets/music.mp3',
+      './assets/bgm.mp3',
+      './assets/audio.mp3',
+      './assets/soundtrack.mp3',
+      './assets/timber.mp3',
+      './assets/forest.mp3',
+      '../../assets/music.mp3',
+      '../../assets/bgm.mp3',
+      '../../assets/audio.mp3',
+      './music.mp3',
+      './bgm.mp3',
+      './audio.mp3'
+    ];
+
+    const tryNext = (index) => {
+      if (index >= candidatePaths.length) return;
+      const audio = new Audio();
+      audio.src = candidatePaths[index];
+      audio.loop = true;
+      audio.volume = this.isMuted ? 0 : this.bgMusicVolume;
+      audio.preload = 'auto';
+
+      audio.addEventListener('canplaythrough', () => {
+        this.bgMusic = audio;
+        if (!this.isMuted) {
+          audio.play().catch(() => {});
+        }
+      }, { once: true });
+
+      audio.addEventListener('error', () => {
+        tryNext(index + 1);
+      }, { once: true });
+
+      audio.load();
+    };
+
+    tryNext(0);
   }
 
   setMuted(muted) {
     this.isMuted = !!muted;
+    if (this.bgMusic) {
+      this.bgMusic.muted = this.isMuted;
+      if (!this.isMuted) {
+        this.bgMusic.volume = this.bgMusicVolume;
+        this.bgMusic.play().catch(() => {});
+      } else {
+        this.bgMusic.pause();
+      }
+    }
   }
 
   playChop() {
