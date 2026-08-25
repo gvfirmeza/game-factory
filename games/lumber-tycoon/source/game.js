@@ -482,6 +482,10 @@ class TycoonAudioSynthesizer {
     }
   }
 
+  playCollectLog() {
+    this.playCollect();
+  }
+
   playCoinTick() {
     if (this.isMuted) return;
     this.init();
