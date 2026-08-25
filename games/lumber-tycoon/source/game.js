@@ -194,19 +194,68 @@ class TycoonAudioSynthesizer {
     if (!this.ctx) return;
 
     const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(160 + Math.random() * 80, t);
-    osc.frequency.exponentialRampToValueAtTime(45, t + 0.08);
 
-    gain.gain.setValueAtTime(0.35, t);
-    gain.gain.exponentialRampToValueAtTime(0.01, t + 0.08);
+    // Layer 1: Woody Low-End Thud (Weight & Impact)
+    const thudOsc = this.ctx.createOscillator();
+    const thudGain = this.ctx.createGain();
+    thudOsc.type = 'triangle';
+    const pitchVariation = (Math.random() - 0.5) * 20;
+    thudOsc.frequency.setValueAtTime(125 + pitchVariation, t);
+    thudOsc.frequency.exponentialRampToValueAtTime(38, t + 0.07);
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start(t);
-    osc.stop(t + 0.08);
+    thudGain.gain.setValueAtTime(0.40, t);
+    thudGain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+
+    thudOsc.connect(thudGain);
+    thudGain.connect(this.ctx.destination);
+    thudOsc.start(t);
+    thudOsc.stop(t + 0.07);
+
+    // Layer 2: Sharp Wood Fibre Splinter Crack (Noise Burst + Bandpass Filter)
+    if (this.ctx.createBuffer) {
+      try {
+        const bufferSize = Math.floor(this.ctx.sampleRate * 0.04);
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        const noiseSource = this.ctx.createBufferSource();
+        noiseSource.buffer = noiseBuffer;
+
+        const bandpass = this.ctx.createBiquadFilter();
+        bandpass.type = 'bandpass';
+        bandpass.frequency.setValueAtTime(1100 + Math.random() * 300, t);
+        bandpass.Q.setValueAtTime(3.5, t);
+
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.38, t);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+
+        noiseSource.connect(bandpass);
+        bandpass.connect(noiseGain);
+        noiseGain.connect(this.ctx.destination);
+
+        noiseSource.start(t);
+        noiseSource.stop(t + 0.04);
+      } catch (e) {}
+    }
+
+    // Layer 3: Steel Axe Blade "Bite" Transient
+    const biteOsc = this.ctx.createOscillator();
+    const biteGain = this.ctx.createGain();
+    biteOsc.type = 'sine';
+    biteOsc.frequency.setValueAtTime(480 + Math.random() * 60, t);
+    biteOsc.frequency.exponentialRampToValueAtTime(160, t + 0.035);
+
+    biteGain.gain.setValueAtTime(0.18, t);
+    biteGain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+
+    biteOsc.connect(biteGain);
+    biteGain.connect(this.ctx.destination);
+    biteOsc.start(t);
+    biteOsc.stop(t + 0.035);
   }
 
   playTreeFall() {
@@ -215,19 +264,80 @@ class TycoonAudioSynthesizer {
     if (!this.ctx) return;
 
     const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(160, t);
-    osc.frequency.exponentialRampToValueAtTime(30, t + 0.45);
 
-    gain.gain.setValueAtTime(0.4, t);
-    gain.gain.exponentialRampToValueAtTime(0.01, t + 0.45);
+    // 1. Timber Crack Creak
+    if (this.ctx.createBuffer) {
+      try {
+        const creakBuffer = this.ctx.createBuffer(1, Math.floor(this.ctx.sampleRate * 0.22), this.ctx.sampleRate);
+        const creakData = creakBuffer.getChannelData(0);
+        for (let i = 0; i < creakData.length; i++) {
+          creakData[i] = (Math.random() * 2 - 1) * (1 - i / creakData.length);
+        }
+        const creakSource = this.ctx.createBufferSource();
+        creakSource.buffer = creakBuffer;
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start(t);
-    osc.stop(t + 0.45);
+        const creakFilter = this.ctx.createBiquadFilter();
+        creakFilter.type = 'bandpass';
+        creakFilter.frequency.setValueAtTime(650, t);
+        creakFilter.frequency.exponentialRampToValueAtTime(200, t + 0.22);
+        creakFilter.Q.setValueAtTime(3.5, t);
+
+        const creakGain = this.ctx.createGain();
+        creakGain.gain.setValueAtTime(0.35, t);
+        creakGain.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+
+        creakSource.connect(creakFilter);
+        creakFilter.connect(creakGain);
+        creakGain.connect(this.ctx.destination);
+        creakSource.start(t);
+        creakSource.stop(t + 0.22);
+      } catch (e) {}
+    }
+
+    // 2. Heavy Ground Crash / Trunk Thud Impact
+    const thudOsc = this.ctx.createOscillator();
+    const thudGain = this.ctx.createGain();
+    thudOsc.type = 'triangle';
+    thudOsc.frequency.setValueAtTime(115, t + 0.12);
+    thudOsc.frequency.exponentialRampToValueAtTime(26, t + 0.42);
+
+    thudGain.gain.setValueAtTime(0.001, t);
+    thudGain.gain.setValueAtTime(0.48, t + 0.12);
+    thudGain.gain.exponentialRampToValueAtTime(0.001, t + 0.42);
+
+    thudOsc.connect(thudGain);
+    thudGain.connect(this.ctx.destination);
+    thudOsc.start(t + 0.12);
+    thudOsc.stop(t + 0.42);
+
+    // 3. Foliage & Leaves Rustle Impact
+    if (this.ctx.createBuffer) {
+      try {
+        const leavesBuffer = this.ctx.createBuffer(1, Math.floor(this.ctx.sampleRate * 0.30), this.ctx.sampleRate);
+        const leavesData = leavesBuffer.getChannelData(0);
+        for (let i = 0; i < leavesData.length; i++) {
+          leavesData[i] = (Math.random() * 2 - 1) * (1 - i / leavesData.length);
+        }
+        const leavesSource = this.ctx.createBufferSource();
+        leavesSource.buffer = leavesBuffer;
+
+        const leavesFilter = this.ctx.createBiquadFilter();
+        leavesFilter.type = 'lowpass';
+        leavesFilter.frequency.setValueAtTime(1200, t + 0.15);
+        leavesFilter.frequency.exponentialRampToValueAtTime(280, t + 0.45);
+
+        const leavesGain = this.ctx.createGain();
+        leavesGain.gain.setValueAtTime(0.001, t);
+        leavesGain.gain.setValueAtTime(0.25, t + 0.15);
+        leavesGain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+
+        leavesSource.connect(leavesFilter);
+        leavesFilter.connect(leavesGain);
+        leavesGain.connect(this.ctx.destination);
+        leavesSource.start(t + 0.15);
+        leavesSource.stop(t + 0.45);
+      } catch (e) {}
+    }
   }
 
   playSawBuzz() {
