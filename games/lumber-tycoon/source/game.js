@@ -49,11 +49,11 @@ export const CAPACITY_TIERS = [
 ];
 
 export const SAWMILL_TIERS = [
-  { level: 1, name: 'Basic Sawmill', speed: 2.2, multiplier: 3.0, queueCap: 10, cost: 1200 },
-  { level: 2, name: 'Twin Blade Mill', speed: 1.6, multiplier: 3.5, queueCap: 18, cost: 2500 },
-  { level: 3, name: 'Steam Timber Works', speed: 1.1, multiplier: 4.0, queueCap: 30, cost: 7000 },
-  { level: 4, name: 'Hydraulic Industrial Saw', speed: 0.75, multiplier: 4.5, queueCap: 50, cost: 20000 },
-  { level: 5, name: 'Diamond Core Automation', speed: 0.45, multiplier: 5.0, queueCap: 80, cost: 60000 }
+  { level: 1, name: 'Basic Sawmill', speed: 3.5, multiplier: 3.0, queueCap: 10, cost: 1200 },
+  { level: 2, name: 'Twin Blade Mill', speed: 2.6, multiplier: 3.5, queueCap: 18, cost: 2500 },
+  { level: 3, name: 'Steam Timber Works', speed: 1.8, multiplier: 4.0, queueCap: 30, cost: 7000 },
+  { level: 4, name: 'Hydraulic Industrial Saw', speed: 1.1, multiplier: 4.5, queueCap: 50, cost: 20000 },
+  { level: 5, name: 'Diamond Core Automation', speed: 0.55, multiplier: 5.0, queueCap: 80, cost: 60000 }
 ];
 
 export const WOOD_PROPERTIES = {
@@ -66,12 +66,12 @@ export const WOOD_PROPERTIES = {
 };
 
 export const ZONES = [
-  { id: 'oak', name: 'Oak Meadow', cost: 0, treeType: 'oak', logValue: 20, maxHp: 5, logsPerTree: 3, respawnTime: 22, unlocked: true, bounds: { x: 60, y: 1080, w: 720, h: 760 } },
-  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 8, logsPerTree: 4, respawnTime: 28, unlocked: false, bounds: { x: 820, y: 1080, w: 760, h: 760 } },
-  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 14, logsPerTree: 4, respawnTime: 35, unlocked: false, bounds: { x: 1490, y: 80, w: 850, h: 480 } },
-  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 22, logsPerTree: 5, respawnTime: 42, unlocked: false, bounds: { x: 60, y: 80, w: 550, h: 480 } },
-  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 35, logsPerTree: 6, respawnTime: 52, unlocked: false, bounds: { x: 1620, y: 1080, w: 720, h: 760 } },
-  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 60, logsPerTree: 8, respawnTime: 68, unlocked: false, bounds: { x: 650, y: 80, w: 800, h: 440 } }
+  { id: 'oak', name: 'Oak Meadow', cost: 0, treeType: 'oak', logValue: 20, maxHp: 5, logsPerTree: 3, respawnTime: 22, unlocked: true, bounds: { x: 60, y: 1080, w: 900, h: 760 } },
+  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 8, logsPerTree: 4, respawnTime: 28, unlocked: false, bounds: { x: 1050, y: 1080, w: 1280, h: 760 } },
+  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 14, logsPerTree: 4, respawnTime: 35, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
+  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 22, logsPerTree: 5, respawnTime: 42, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
+  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 35, logsPerTree: 6, respawnTime: 52, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
+  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 60, logsPerTree: 8, respawnTime: 68, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
 ];
 
 export const BUILDINGS = {
@@ -93,6 +93,7 @@ export const WORKER_COLORS = [
 
 export const ACHIEVEMENTS = [
   // 1. SKIN REWARDS (rewardCash: 0, rewardSkin: '...')
+  { id: 'skin_oak', name: 'Oak Conqueror', desc: 'Chop down 120 Oak Trees', target: 120, type: 'trees_oak', rewardCash: 0, rewardSkin: 'viking_chieftain' },
   { id: 'skin_birch', name: 'Birch Collector', desc: 'Chop down 60 Birch Trees', target: 60, type: 'trees_birch', rewardCash: 0, rewardSkin: 'forest_guardian' },
   { id: 'skin_pine', name: 'Taiga Ranger', desc: 'Chop down 100 Pine Trees', target: 100, type: 'trees_pine', rewardCash: 0, rewardSkin: 'flame_lumber' },
   { id: 'skin_sakura', name: 'Blossom Harvester', desc: 'Chop down 75 Sakura Trees', target: 75, type: 'trees_sakura', rewardCash: 0, rewardSkin: 'arctic_explorer' },
@@ -123,6 +124,7 @@ export const PLAYER_SKINS = {
   classic: { id: 'classic', name: 'Classic Red Plaid', desc: 'Traditional red flannel shirt and blue jeans', shirt: '#D32F2F', pants: '#1976D2', hat: '#FBC02D', hatRidge: '#F57F17' },
   forest_guardian: { id: 'forest_guardian', name: 'Moss Guardian', desc: 'Forest green hunter camo vest and cargo pants', shirt: '#2E7D32', pants: '#1B5E20', hat: '#81C784', hatRidge: '#4CAF50' },
   flame_lumber: { id: 'flame_lumber', name: 'Blaze Lumberjack', desc: 'High-visibility orange jacket and charcoal work pants', shirt: '#E65100', pants: '#212121', hat: '#FFD54F', hatRidge: '#FF9800' },
+  viking_chieftain: { id: 'viking_chieftain', name: 'Viking Warlord', desc: 'Ancient Nordic warrior armor with horn-trimmed steel helmet and fur mantle', shirt: '#4E342E', pants: '#263238', hat: '#90A4AE', hatRidge: '#546E7A' },
   arctic_explorer: { id: 'arctic_explorer', name: 'Arctic Explorer', desc: 'Glacial blue parka and insulated thermal trousers', shirt: '#0288D1', pants: '#ECEFF1', hat: '#81D4FA', hatRidge: '#0288D1' },
   shadow_lumber: { id: 'shadow_lumber', name: 'Night Logger', desc: 'Tactical covert black tunic with crimson helmet', shirt: '#212121', pants: '#37474F', hat: '#E53935', hatRidge: '#B71C1C' },
   steampunk_engineer: { id: 'steampunk_engineer', name: 'Craftsman Engineer', desc: 'Brass gear worker vest and leather workshop apron', shirt: '#A0522D', pants: '#3E2723', hat: '#CD7F32', hatRidge: '#8D5524' },
@@ -597,11 +599,10 @@ class SaveManager {
  * ============================================================================ */
 
 function drawTopDownTerrain(ctx, width, height, animTime) {
-  ctx.fillStyle = '#22381c';
+  ctx.fillStyle = '#24381e';
   ctx.fillRect(0, 0, width, height);
 
-  // Subtle checkering pattern
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.020)';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.022)';
   const tileSize = 64;
   for (let x = 0; x < width; x += tileSize) {
     for (let y = 0; y < height; y += tileSize) {
@@ -611,32 +612,8 @@ function drawTopDownTerrain(ctx, width, height, animTime) {
     }
   }
 
-  // Branching Timber Roads / Cobblestone Walkways
-  ctx.save();
-  ctx.fillStyle = '#4e3b2b';
-
-  // 1. North Path to Golden Forest
-  ctx.beginPath();
-  ctx.roundRect(1010, 80, 80, 500, 16);
-  ctx.fill();
-
-  // 2. North-West Path to Sakura Haven
-  ctx.beginPath();
-  ctx.roundRect(380, 360, 300, 80, 16);
-  ctx.fill();
-
-  // 3. North-East Path to Pine Taiga
-  ctx.beginPath();
-  ctx.roundRect(1420, 360, 320, 80, 16);
-  ctx.fill();
-
-  // 4. South Path to Oak, Birch & Redwood
-  ctx.beginPath();
-  ctx.roundRect(500, 1000, 1400, 90, 20);
-  ctx.fill();
-
-  // Central Courtyard Base Plaza
   const b = WORLD.baseZone;
+  ctx.save();
   ctx.fillStyle = '#4e3b2b';
   ctx.beginPath();
   ctx.roundRect(b.x - 30, b.y - 30, b.w + 60, b.h + 60, 36);
@@ -1777,7 +1754,7 @@ export class LumberTycoonGame {
   generateForest() {
     this.trees = [];
     ZONES.forEach((zone) => {
-      const count = zone.id === 'oak' ? 26 : zone.id === 'birch' ? 24 : zone.id === 'pine' ? 24 : zone.id === 'sakura' ? 20 : zone.id === 'redwood' ? 20 : 18;
+      const count = zone.id === 'oak' ? 28 : zone.id === 'birch' ? 26 : zone.id === 'pine' ? 32 : zone.id === 'sakura' ? 26 : zone.id === 'redwood' ? 22 : 20;
       for (let i = 0; i < count; i++) {
         const x = zone.bounds.x + 50 + Math.random() * (zone.bounds.w - 100);
         const y = zone.bounds.y + 50 + Math.random() * (zone.bounds.h - 100);
@@ -1810,6 +1787,32 @@ export class LumberTycoonGame {
         });
       }
     });
+
+    // Upper Northern Forest Grove (Lush pine & birch tree line spanning the top)
+    for (let i = 0; i < 18; i++) {
+      const x = 580 + Math.random() * 880;
+      const y = 80 + Math.random() * 400;
+      if (y > 440 && x > 850 && x < 1250) continue; // Keep space above worker barracks clear
+      const isPine = i % 2 === 0;
+      this.trees.push({
+        id: `tree_north_${i}`,
+        x,
+        y,
+        type: isPine ? 'pine' : 'oak',
+        zoneId: isPine ? 'pine' : 'oak',
+        maxHp: isPine ? 14 : 5,
+        hp: isPine ? 14 : 5,
+        logValue: isPine ? 130 : 20,
+        logsPerTree: isPine ? 4 : 3,
+        trunkR: 12,
+        trunkHeight: 45,
+        canopyR: 32,
+        isCut: false,
+        shakeTimer: 0,
+        respawnTimer: 0,
+        respawnMax: isPine ? 35 : 22
+      });
+    }
   }
 
   initUpgradePads() {
@@ -1872,8 +1875,8 @@ export class LumberTycoonGame {
       {
         id: 'pad_pine',
         type: 'ZONE_PINE',
-        x: 1560,
-        y: 460,
+        x: 1520,
+        y: 560,
         radius: 52,
         label: 'PINE TAIGA',
         deposited: 0,
@@ -1892,8 +1895,8 @@ export class LumberTycoonGame {
       {
         id: 'pad_redwood',
         type: 'ZONE_REDWOOD',
-        x: 1720,
-        y: 1040,
+        x: 600,
+        y: 1400,
         radius: 52,
         label: 'REDWOOD GIANTS',
         deposited: 0,
@@ -1902,8 +1905,8 @@ export class LumberTycoonGame {
       {
         id: 'pad_golden',
         type: 'ZONE_GOLDEN',
-        x: 1050,
-        y: 460,
+        x: 1800,
+        y: 1000,
         radius: 52,
         label: 'GOLDEN FOREST',
         deposited: 0,
@@ -1931,12 +1934,12 @@ export class LumberTycoonGame {
         radius: 12,
         vx: 0,
         vy: 0,
-        speed: 130 + (sw.speedLvl || 1 - 1) * 30,
+        speed: 75 + ((sw.speedLvl || 1) - 1) * 22,
         isWalking: false,
         isChopping: false,
         inventory: [],
-        maxCarry: 3 + (sw.capacityLvl || 1 - 1) * 3,
-        axePower: (sw.powerLvl || 1) * 2,
+        maxCarry: 2 + ((sw.capacityLvl || 1) - 1) * 2,
+        axePower: 1 + ((sw.powerLvl || 1) - 1) * 1,
         axeTier: Math.min(6, (sw.powerLvl || 1) - 1),
         targetTree: null,
         chopTimer: 0
@@ -1961,12 +1964,12 @@ export class LumberTycoonGame {
       radius: 12,
       vx: 0,
       vy: 0,
-      speed: 130,
+      speed: 75,
       isWalking: false,
       isChopping: false,
       inventory: [],
-      maxCarry: 3,
-      axePower: 2,
+      maxCarry: 2,
+      axePower: 1,
       axeTier: 0,
       targetTree: null,
       chopTimer: 0
@@ -2346,9 +2349,10 @@ export class LumberTycoonGame {
             w.isWalking = false;
             w.isChopping = true;
             w.chopTimer += dt;
-            if (w.chopTimer >= 0.45) {
+            const chopCadence = Math.max(0.38, 0.85 - (w.powerLvl - 1) * 0.10);
+            if (w.chopTimer >= chopCadence) {
               w.chopTimer = 0;
-              this.chopTree(t, w.axePower || 2, w);
+              this.chopTree(t, w.axePower || 1, w);
             }
           } else {
             w.isWalking = true;
@@ -2834,7 +2838,7 @@ export class LumberTycoonGame {
             if (this.saveData.cash >= cost && w.speedLvl < 5) {
               this.saveData.cash -= cost;
               w.speedLvl++;
-              w.speed = 130 + (w.speedLvl - 1) * 30;
+              w.speed = 75 + (w.speedLvl - 1) * 22;
               this.saveData.workers[idx].speedLvl = w.speedLvl;
               this.audio.playUpgrade();
             }
@@ -2843,7 +2847,7 @@ export class LumberTycoonGame {
             if (this.saveData.cash >= cost && w.powerLvl < 5) {
               this.saveData.cash -= cost;
               w.powerLvl++;
-              w.axePower = w.powerLvl * 2;
+              w.axePower = 1 + (w.powerLvl - 1) * 1;
               w.axeTier = Math.min(6, w.powerLvl - 1);
               this.saveData.workers[idx].powerLvl = w.powerLvl;
               this.audio.playUpgrade();
@@ -2853,7 +2857,7 @@ export class LumberTycoonGame {
             if (this.saveData.cash >= cost && w.capacityLvl < 5) {
               this.saveData.cash -= cost;
               w.capacityLvl++;
-              w.maxCarry = 3 + (w.capacityLvl - 1) * 3;
+              w.maxCarry = 2 + (w.capacityLvl - 1) * 2;
               this.saveData.workers[idx].capacityLvl = w.capacityLvl;
               this.audio.playUpgrade();
             }
