@@ -48,6 +48,14 @@ export const CAPACITY_TIERS = [
   { capacity: 80, cost: 45000 }
 ];
 
+export const SAWMILL_TIERS = [
+  { level: 1, name: 'Basic Sawmill', speed: 2.2, multiplier: 3.0, queueCap: 10, cost: 1200 },
+  { level: 2, name: 'Twin Blade Mill', speed: 1.6, multiplier: 3.5, queueCap: 18, cost: 2500 },
+  { level: 3, name: 'Steam Timber Works', speed: 1.1, multiplier: 4.0, queueCap: 30, cost: 7000 },
+  { level: 4, name: 'Hydraulic Industrial Saw', speed: 0.75, multiplier: 4.5, queueCap: 50, cost: 20000 },
+  { level: 5, name: 'Diamond Core Automation', speed: 0.45, multiplier: 5.0, queueCap: 80, cost: 60000 }
+];
+
 export const WOOD_PROPERTIES = {
   oak: { name: 'Oak', logColor: '#8D6E63', outline: '#4E342E', plankColor: '#D7CCC8', plankBorder: '#8D6E63', leafColors: ['#43A047', '#2E7D32', '#66BB6A', '#388E3C', '#8D6E63'] },
   birch: { name: 'Birch', logColor: '#ECEFF1', outline: '#37474F', plankColor: '#FFF9C4', plankBorder: '#C0CA33', leafColors: ['#C0CA33', '#DCE775', '#9E9D24', '#8BC34A', '#ECEFF1'] },
@@ -354,19 +362,60 @@ class TycoonAudioSynthesizer {
     if (!this.ctx) return;
 
     const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(280, t);
-    osc.frequency.linearRampToValueAtTime(420, t + 0.12);
 
-    gain.gain.setValueAtTime(0.25, t);
-    gain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+    // Layer 1: Smooth rotating mechanical motor / blade whir (warm filtered triangle with lowpass)
+    const motorOsc = this.ctx.createOscillator();
+    const motorGain = this.ctx.createGain();
+    const motorFilter = this.ctx.createBiquadFilter();
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start(t);
-    osc.stop(t + 0.15);
+    motorOsc.type = 'triangle';
+    motorOsc.frequency.setValueAtTime(160, t);
+    motorOsc.frequency.linearRampToValueAtTime(220, t + 0.08);
+    motorOsc.frequency.linearRampToValueAtTime(150, t + 0.16);
+
+    motorFilter.type = 'lowpass';
+    motorFilter.frequency.setValueAtTime(550, t);
+
+    motorGain.gain.setValueAtTime(0.24, t);
+    motorGain.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
+
+    motorOsc.connect(motorFilter);
+    motorFilter.connect(motorGain);
+    motorGain.connect(this.ctx.destination);
+
+    motorOsc.start(t);
+    motorOsc.stop(t + 0.16);
+
+    // Layer 2: Tactile wood cut friction / timber glide (soft bandpassed friction transient)
+    if (this.ctx.createBuffer) {
+      try {
+        const bufferSize = Math.floor(this.ctx.sampleRate * 0.12);
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * Math.sin((i / bufferSize) * Math.PI);
+        }
+
+        const noiseSource = this.ctx.createBufferSource();
+        noiseSource.buffer = noiseBuffer;
+
+        const frictionFilter = this.ctx.createBiquadFilter();
+        frictionFilter.type = 'bandpass';
+        frictionFilter.frequency.setValueAtTime(750, t);
+        frictionFilter.Q.setValueAtTime(2.2, t);
+
+        const frictionGain = this.ctx.createGain();
+        frictionGain.gain.setValueAtTime(0.18, t);
+        frictionGain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+
+        noiseSource.connect(frictionFilter);
+        frictionFilter.connect(frictionGain);
+        frictionGain.connect(this.ctx.destination);
+
+        noiseSource.start(t);
+        noiseSource.stop(t + 0.12);
+      } catch (e) {}
+    }
   }
 
   playCollect() {
@@ -543,6 +592,7 @@ class SaveManager {
       workerCount: 0,
       workers: [], // Array of individual worker upgrade states
       sawmillUnlocked: false,
+      sawmillLevel: 0,
       playerSkin: 'classic',
       unlockedSkins: ['classic'],
       claimedAchievements: [],
@@ -595,7 +645,7 @@ function drawTopDownTerrain(ctx, width, height, animTime) {
   ctx.restore();
 }
 
-function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlocked) {
+function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlocked, sawmillLevel = 1) {
   const { x, y, w, h, name } = building;
   const centerX = x + w / 2;
   const centerY = y + h / 2;
@@ -610,12 +660,12 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
   // Building Timber Base Foundation
   ctx.fillStyle = '#3e2723';
   ctx.beginPath();
-  ctx.roundRect(x, y + 10, w, h - 10, 14);
+  ctx.roundRect(x, y, w, h, 14);
   ctx.fill();
 
   ctx.fillStyle = '#5d4037';
   ctx.beginPath();
-  ctx.roundRect(x + 4, y, w - 8, h - 16, 12);
+  ctx.roundRect(x + 4, y + 4, w - 8, h - 8, 10);
   ctx.fill();
 
   ctx.strokeStyle = '#8d6e63';
@@ -738,7 +788,8 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
 
       // Slicing Progress Radial Indicator
       if (sawmillState && sawmillState.queue.length > 0) {
-        const prog = sawmillState.timer / 0.35;
+        const maxTime = sawmillState.speed || 2.2;
+        const prog = Math.min(1, sawmillState.timer / maxTime);
         ctx.strokeStyle = '#00E676';
         ctx.lineWidth = 4.5;
         ctx.beginPath();
@@ -795,17 +846,18 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
       }
     }
 
-    // Single clean bottom label banner for sawmill
+    // Single clean bottom label banner for sawmill with current Level
     ctx.fillStyle = 'rgba(15, 10, 5, 0.90)';
     ctx.beginPath();
-    ctx.roundRect(x + 8, y + h - 22, w - 16, 20, 6);
+    ctx.roundRect(x + 6, y + h - 22, w - 12, 20, 6);
     ctx.fill();
 
     ctx.fillStyle = sawmillUnlocked ? '#ffe082' : '#ffb74d';
     ctx.font = 'bold 11px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(sawmillUnlocked ? 'SAWMILL' : 'LOCKED SAWMILL', x + w / 2, y + h - 12);
+    const sawmillBannerText = sawmillUnlocked ? (sawmillLevel > 1 ? `SAWMILL (LVL ${sawmillLevel})` : 'SAWMILL') : 'LOCKED SAWMILL';
+    ctx.fillText(sawmillBannerText, x + w / 2, y + h - 12);
   } else if (bKey === 'sellZone') {
     // 1. Wood Market Vector Icon (Golden Coin Pouch / Emblem)
     ctx.fillStyle = '#FFB300';
@@ -1038,7 +1090,7 @@ function drawUpgradePad(ctx, pad, animTime) {
   ctx.font = 'bold 13px Fredoka, sans-serif';
   if (isComplete) {
     ctx.fillStyle = '#00e676';
-    ctx.fillText('MAX / UNLOCKED', x, y + 10);
+    ctx.fillText(label.includes('MAX') ? 'MAX LEVEL' : 'UNLOCKED', x, y + 10);
   } else {
     ctx.fillStyle = '#ffd54f';
     ctx.fillText(`$${Math.floor(deposited)} / $${targetCost}`, x, y + 10);
@@ -1746,6 +1798,11 @@ export class LumberTycoonGame {
   }
 
   initUpgradePads() {
+    const curSawmillLvl = this.saveData.sawmillLevel || (this.saveData.sawmillUnlocked ? 1 : 0);
+    const nextSawmillTier = SAWMILL_TIERS[curSawmillLvl]; // next tier to purchase
+    const sawmillCost = nextSawmillTier ? nextSawmillTier.cost : 0;
+    const sawmillLabel = curSawmillLvl === 0 ? 'UNLOCK SAWMILL' : nextSawmillTier ? `SAWMILL LVL ${curSawmillLvl + 1}` : 'SAWMILL MAX';
+
     this.upgradePads = [
       {
         id: 'pad_blacksmith',
@@ -1769,13 +1826,13 @@ export class LumberTycoonGame {
       },
       {
         id: 'pad_sawmill',
-        type: 'SAWMILL_UNLOCK',
-        x: 930,
-        y: 840,
-        radius: 48,
-        label: 'UNLOCK SAWMILL',
+        type: 'SAWMILL_UPGRADE',
+        x: 820,
+        y: 640,
+        radius: 44,
+        label: sawmillLabel,
         deposited: 0,
-        targetCost: this.saveData.sawmillUnlocked ? 0 : 1200
+        targetCost: sawmillCost
       },
       {
         id: 'pad_workers',
@@ -2345,23 +2402,23 @@ export class LumberTycoonGame {
     }
   }
 
-  /**
-   * Sawmill Gradual Log-by-Log Cutting Machine with 3x Value Multiplier!
-   */
   updateSawmillProcess(dt) {
     if (!this.saveData.sawmillUnlocked) return;
 
     const s = this.sawmillState;
+    const curLevel = this.saveData.sawmillLevel || 1;
+    const tier = SAWMILL_TIERS[curLevel - 1] || SAWMILL_TIERS[0];
+    s.speed = tier.speed;
+
     if (s.queue.length > 0) {
       s.timer += dt;
-      const sliceInterval = 0.35;
 
-      if (s.timer >= sliceInterval) {
+      if (s.timer >= tier.speed) {
         s.timer = 0;
         const nextLog = s.queue.shift();
         if (nextLog) {
-          // Plank value is 3.0x of the raw log value!
-          const plankValue = Math.round(nextLog.value * 3.0);
+          // Plank value is multiplied by the current Sawmill tier multiplier!
+          const plankValue = Math.round(nextLog.value * tier.multiplier);
           s.ready.push({
             type: nextLog.type,
             value: plankValue,
@@ -2371,7 +2428,7 @@ export class LumberTycoonGame {
           this.audio.playSawBuzz();
           const mill = BUILDINGS.sawmill;
           const prop = WOOD_PROPERTIES[nextLog.type] || WOOD_PROPERTIES.oak;
-          this.particles.burst(mill.x + mill.w / 2 + 10, mill.y + mill.h / 2, 8, prop.plankColor);
+          this.particles.leafBurst(mill.x + mill.w / 2 + 10, mill.y + mill.h / 2, prop.leafColors, 6);
           SaveManager.save(this.playgama, this.saveData);
           this.updateHUD();
         }
@@ -2474,11 +2531,25 @@ export class LumberTycoonGame {
       if (this.player.capacityIndex >= 3) {
         this.triggerInterstitial('major_upgrade');
       }
-    } else if (pad.type === 'SAWMILL_UNLOCK') {
+    } else if (pad.type === 'SAWMILL_UPGRADE') {
+      const curLevel = this.saveData.sawmillLevel || (this.saveData.sawmillUnlocked ? 1 : 0);
+      const nextLevel = curLevel + 1;
+      this.saveData.sawmillLevel = nextLevel;
       this.saveData.sawmillUnlocked = true;
-      pad.targetCost = 0;
-      this.juice.spawnFloatingText('SAWMILL UNLOCKED! 3X PROFITS!', pad.x, pad.y - 55, { color: '#FFD54F', size: 24 });
-      this.triggerInterstitial('sawmill_unlock');
+
+      const nextTier = SAWMILL_TIERS[nextLevel - 1] || SAWMILL_TIERS[0];
+      const futureTier = SAWMILL_TIERS[nextLevel];
+
+      pad.targetCost = futureTier ? futureTier.cost : 0;
+      pad.label = futureTier ? `SAWMILL LVL ${nextLevel + 1}` : 'SAWMILL MAX';
+
+      if (nextLevel === 1) {
+        this.juice.spawnFloatingText('SAWMILL UNLOCKED! 3X PROFITS!', pad.x, pad.y - 55, { color: '#FFD54F', size: 24 });
+        this.triggerInterstitial('sawmill_unlock');
+      } else {
+        this.juice.spawnFloatingText(`SAWMILL LVL ${nextLevel}! (${nextTier.multiplier}x VALUE)`, pad.x, pad.y - 55, { color: '#00E676', size: 22 });
+        this.triggerInterstitial('major_upgrade');
+      }
     } else if (pad.type === 'WORKER') {
       this.hireNewWorker();
       pad.targetCost = Math.floor(250 * Math.pow(1.8, this.workers.length));
@@ -3136,7 +3207,7 @@ export class LumberTycoonGame {
     for (const [key, b] of Object.entries(BUILDINGS)) {
       renderQueue.push({
         y: b.y + b.h - 10,
-        draw: () => drawBuilding(ctx, key, b, this.animTime, this.sawmillState, this.saveData.sawmillUnlocked)
+        draw: () => drawBuilding(ctx, key, b, this.animTime, this.sawmillState, this.saveData.sawmillUnlocked, this.saveData.sawmillLevel || 1)
       });
     }
 
