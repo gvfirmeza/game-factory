@@ -1886,7 +1886,61 @@ export class LumberTycoonGame {
     if (typeof window !== 'undefined') {
       window.__gameInstance = this;
       window.__lumberTycoonInstance = this;
+      window.cheatMoney = (amt = 500000) => this.cheatMoney(amt);
+      window.addCash = (amt = 500000) => this.cheatMoney(amt);
+      window.money = (amt = 500000) => this.cheatMoney(amt);
+      window.giveGoldenLogs = (cnt = 10) => this.cheatGoldenLogs(cnt);
+      window.unlockAll = () => this.cheatUnlockAll();
     }
+  }
+
+  cheatMoney(amount = 500000) {
+    this.saveData.cash = (this.saveData.cash || 0) + amount;
+    this.saveData.totalCashEarned = (this.saveData.totalCashEarned || 0) + amount;
+    this.audio.playCash();
+    this.juice.screenShake(8);
+    this.particles.burst(this.player.x, this.player.y, 40, '#FFD54F');
+    this.juice.spawnFloatingText(`CHEAT: +$${amount.toLocaleString()} 💰`, this.player.x, this.player.y - 50, { color: '#00E676', size: 24 });
+    SaveManager.save(this.playgama, this.saveData);
+    this.updateHUD();
+    console.log(`%c[DEV CHEAT] Added $${amount.toLocaleString()} cash! Balance: $${Math.floor(this.saveData.cash).toLocaleString()}`, 'color: #00E676; font-weight: bold;');
+  }
+
+  cheatGoldenLogs(count = 10) {
+    for (let i = 0; i < count; i++) {
+      this.player.inventory.push({
+        id: `golden_cheat_${Date.now()}_${i}`,
+        type: 'golden',
+        value: 2500,
+        color: '#FFB300',
+        outline: '#FF8F00',
+        isPlank: false
+      });
+    }
+    this.audio.playCollectLog();
+    this.particles.burst(this.player.x, this.player.y, 30, '#FFD54F');
+    this.juice.spawnFloatingText(`CHEAT: +${count} GOLDEN LOGS 🌲✨`, this.player.x, this.player.y - 50, { color: '#FFD54F', size: 22 });
+    this.updateHUD();
+    console.log(`%c[DEV CHEAT] Added ${count} Golden Logs to inventory!`, 'color: #FFD54F; font-weight: bold;');
+  }
+
+  cheatUnlockAll() {
+    ZONES.forEach((z) => this.unlockedZones.add(z.id));
+    this.saveData.unlockedZones = Array.from(this.unlockedZones);
+    this.saveData.sawmillUnlocked = true;
+    this.saveData.sawmillLevel = 5;
+    this.player.axeTier = AXE_TIERS.length - 1;
+    this.saveData.axeTier = this.player.axeTier;
+    this.player.capacityIndex = CAPACITY_TIERS.length - 1;
+    this.saveData.capacityIndex = this.player.capacityIndex;
+    this.initUpgradePads();
+    this.audio.playUpgrade();
+    this.juice.screenShake(10);
+    this.particles.burst(this.player.x, this.player.y, 50, '#00E676');
+    this.juice.spawnFloatingText('CHEAT: UNLOCKED EVERYTHING! 🌟', this.player.x, this.player.y - 50, { color: '#00E676', size: 24 });
+    SaveManager.save(this.playgama, this.saveData);
+    this.updateHUD();
+    console.log('%c[DEV CHEAT] Unlocked all zones, axes, backpacks, and sawmill tiers!', 'color: #00E676; font-weight: bold;');
   }
 
   async triggerInterstitial(placement = 'general') {
@@ -2300,12 +2354,32 @@ export class LumberTycoonGame {
       document.getElementById('victory-modal')?.classList.add('hidden');
     });
 
+    // Quick testing dev cheat: Click on Cash HUD for +$100,000
+    document.getElementById('hud-cash-val')?.addEventListener('click', () => {
+      this.cheatMoney(100000);
+    });
+    if (typeof document.querySelector === 'function') {
+      document.querySelector('.cash-badge')?.addEventListener('click', () => {
+        this.cheatMoney(100000);
+      });
+    }
+
     this.updateHUD();
   }
 
   setupEvents() {
     window.addEventListener('keydown', (e) => {
-      this.keys[e.key.toLowerCase()] = true;
+      const key = e.key.toLowerCase();
+      this.keys[key] = true;
+
+      // Developer Testing Hotkeys
+      if (key === 'm' || e.key === 'F2') {
+        this.cheatMoney(500000);
+      } else if (key === 'g') {
+        this.cheatGoldenLogs(10);
+      } else if (key === 'u') {
+        this.cheatUnlockAll();
+      }
     });
 
     window.addEventListener('keyup', (e) => {
