@@ -66,12 +66,12 @@ export const WOOD_PROPERTIES = {
 };
 
 export const ZONES = [
-  { id: 'oak', name: 'Oak Meadow', cost: 0, treeType: 'oak', logValue: 20, maxHp: 5, logsPerTree: 3, respawnTime: 22, unlocked: true, bounds: { x: 60, y: 1080, w: 900, h: 760 } },
-  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 8, logsPerTree: 4, respawnTime: 28, unlocked: false, bounds: { x: 1050, y: 1080, w: 1280, h: 760 } },
-  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 14, logsPerTree: 4, respawnTime: 35, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
-  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 22, logsPerTree: 5, respawnTime: 42, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
-  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 35, logsPerTree: 6, respawnTime: 52, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
-  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 60, logsPerTree: 8, respawnTime: 68, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
+  { id: 'oak', name: 'Oak Meadow', cost: 0, treeType: 'oak', logValue: 20, maxHp: 5, logsPerTree: 3, respawnTime: 22, unlocked: true, bounds: { x: 60, y: 1080, w: 720, h: 760 } },
+  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 8, logsPerTree: 4, respawnTime: 28, unlocked: false, bounds: { x: 820, y: 1080, w: 760, h: 760 } },
+  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 14, logsPerTree: 4, respawnTime: 35, unlocked: false, bounds: { x: 1490, y: 80, w: 850, h: 480 } },
+  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 22, logsPerTree: 5, respawnTime: 42, unlocked: false, bounds: { x: 60, y: 80, w: 550, h: 480 } },
+  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 35, logsPerTree: 6, respawnTime: 52, unlocked: false, bounds: { x: 1620, y: 1080, w: 720, h: 760 } },
+  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 60, logsPerTree: 8, respawnTime: 68, unlocked: false, bounds: { x: 650, y: 80, w: 800, h: 440 } }
 ];
 
 export const BUILDINGS = {
@@ -92,25 +92,42 @@ export const WORKER_COLORS = [
 ];
 
 export const ACHIEVEMENTS = [
-  { id: 'first_tree', name: 'First Chop', desc: 'Chop down your 1st tree', target: 1, type: 'trees', rewardCash: 100, rewardSkin: 'forest_guardian' },
-  { id: 'chop_50', name: 'Seasoned Lumberjack', desc: 'Chop down 50 trees', target: 50, type: 'trees', rewardCash: 500, rewardSkin: 'flame_lumber' },
-  { id: 'chop_250', name: 'Forest Master', desc: 'Chop down 250 trees', target: 250, type: 'trees', rewardCash: 2500, rewardSkin: 'arctic_explorer' },
-  { id: 'chop_1000', name: 'Legend of the Woods', desc: 'Chop down 1,000 trees', target: 1000, type: 'trees', rewardCash: 10000, rewardSkin: 'celestial_mythic' },
-  { id: 'sawmill_unlock', name: 'Industrial Sawmill', desc: 'Unlock the Timber Sawmill', target: 1, type: 'sawmill', rewardCash: 1000, rewardSkin: 'shadow_lumber' },
-  { id: 'planks_50', name: 'Master Carpenter', desc: 'Process 50 refined planks', target: 50, type: 'planks', rewardCash: 3000, rewardSkin: null },
-  { id: 'hire_1', name: 'First Helper', desc: 'Hire 1 automated worker', target: 1, type: 'workers', rewardCash: 300, rewardSkin: null },
-  { id: 'hire_4', name: 'Lumberjack Crew', desc: 'Hire 4 workers for your team', target: 4, type: 'workers', rewardCash: 4000, rewardSkin: 'royal_tycoon' },
-  { id: 'cash_10k', name: 'Forest Tycoon', desc: 'Accumulate $10,000 in cash', target: 10000, type: 'cash', rewardCash: 2000, rewardSkin: null },
-  { id: 'zones_3', name: 'Island Explorer', desc: 'Unlock 3 Forest Zones', target: 3, type: 'zones', rewardCash: 5000, rewardSkin: null }
+  // 1. SKIN REWARDS (rewardCash: 0, rewardSkin: '...')
+  { id: 'skin_birch', name: 'Birch Collector', desc: 'Chop down 60 Birch Trees', target: 60, type: 'trees_birch', rewardCash: 0, rewardSkin: 'forest_guardian' },
+  { id: 'skin_pine', name: 'Taiga Ranger', desc: 'Chop down 100 Pine Trees', target: 100, type: 'trees_pine', rewardCash: 0, rewardSkin: 'flame_lumber' },
+  { id: 'skin_sakura', name: 'Blossom Harvester', desc: 'Chop down 75 Sakura Trees', target: 75, type: 'trees_sakura', rewardCash: 0, rewardSkin: 'arctic_explorer' },
+  { id: 'skin_redwood', name: 'Giant Feller', desc: 'Chop down 50 Redwood Trees', target: 50, type: 'trees_redwood', rewardCash: 0, rewardSkin: 'shadow_lumber' },
+  { id: 'skin_golden', name: 'Golden Sovereign', desc: 'Chop down 30 Golden Trees', target: 30, type: 'trees_golden', rewardCash: 0, rewardSkin: 'celestial_mythic' },
+  { id: 'skin_sawmill', name: 'Master Engineer', desc: 'Upgrade Sawmill to Level 4', target: 4, type: 'sawmill_level', rewardCash: 0, rewardSkin: 'steampunk_engineer' },
+  { id: 'skin_workers', name: 'Lumber Crew Chief', desc: 'Assemble a team of 4 Workers', target: 4, type: 'workers', rewardCash: 0, rewardSkin: 'royal_tycoon' },
+  { id: 'skin_master', name: 'Master of the Woods', desc: 'Chop down 400 total Trees', target: 400, type: 'trees', rewardCash: 0, rewardSkin: 'emerald_titan' },
+
+  // 2. CASH REWARDS (rewardCash: > 0, rewardSkin: null)
+  { id: 'cash_first', name: 'First Steps', desc: 'Chop down 10 Trees', target: 10, type: 'trees', rewardCash: 250, rewardSkin: null },
+  { id: 'cash_oak', name: 'Oak Specialist', desc: 'Chop down 100 Oak Trees', target: 100, type: 'trees_oak', rewardCash: 800, rewardSkin: null },
+  { id: 'cash_pine', name: 'Pine Connoisseur', desc: 'Chop down 50 Pine Trees', target: 50, type: 'trees_pine', rewardCash: 1500, rewardSkin: null },
+  { id: 'cash_sakura', name: 'Cherry Whisperer', desc: 'Chop down 40 Sakura Trees', target: 40, type: 'trees_sakura', rewardCash: 3500, rewardSkin: null },
+  { id: 'cash_redwood', name: 'Redwood Colossus', desc: 'Chop down 30 Redwood Trees', target: 30, type: 'trees_redwood', rewardCash: 8000, rewardSkin: null },
+  { id: 'cash_golden', name: 'Midas Touch', desc: 'Chop down 15 Golden Trees', target: 15, type: 'trees_golden', rewardCash: 25000, rewardSkin: null },
+  { id: 'cash_planks_25', name: 'Plank Apprentice', desc: 'Process 25 refined planks', target: 25, type: 'planks', rewardCash: 600, rewardSkin: null },
+  { id: 'cash_planks_150', name: 'Industrial Carpenter', desc: 'Process 150 refined planks', target: 150, type: 'planks', rewardCash: 4500, rewardSkin: null },
+  { id: 'cash_sawmill_2', name: 'Steam Overhaul', desc: 'Upgrade Sawmill to Level 2', target: 2, type: 'sawmill_level', rewardCash: 1200, rewardSkin: null },
+  { id: 'cash_worker_1', name: 'First Employee', desc: 'Hire 1 automated worker', target: 1, type: 'workers', rewardCash: 400, rewardSkin: null },
+  { id: 'cash_zones_3', name: 'Pioneer Explorer', desc: 'Unlock 3 Forest Zones', target: 3, type: 'zones', rewardCash: 3000, rewardSkin: null },
+  { id: 'cash_zones_6', name: 'Island Dominion', desc: 'Unlock all 6 Forest Zones', target: 6, type: 'zones', rewardCash: 15000, rewardSkin: null },
+  { id: 'cash_5k', name: 'Thriving Business', desc: 'Earn $5,000 total cash', target: 5000, type: 'cash', rewardCash: 1000, rewardSkin: null },
+  { id: 'cash_50k', name: 'Timber Magnate', desc: 'Earn $50,000 total cash', target: 50000, type: 'cash', rewardCash: 10000, rewardSkin: null }
 ];
 
 export const PLAYER_SKINS = {
   classic: { id: 'classic', name: 'Classic Red Plaid', desc: 'Traditional red flannel shirt and blue jeans', shirt: '#D32F2F', pants: '#1976D2', hat: '#FBC02D', hatRidge: '#F57F17' },
-  forest_guardian: { id: 'forest_guardian', name: 'Moss Guardian', desc: 'Forest green camo hunter vest and cargo pants', shirt: '#2E7D32', pants: '#1B5E20', hat: '#81C784', hatRidge: '#4CAF50' },
+  forest_guardian: { id: 'forest_guardian', name: 'Moss Guardian', desc: 'Forest green hunter camo vest and cargo pants', shirt: '#2E7D32', pants: '#1B5E20', hat: '#81C784', hatRidge: '#4CAF50' },
   flame_lumber: { id: 'flame_lumber', name: 'Blaze Lumberjack', desc: 'High-visibility orange jacket and charcoal work pants', shirt: '#E65100', pants: '#212121', hat: '#FFD54F', hatRidge: '#FF9800' },
   arctic_explorer: { id: 'arctic_explorer', name: 'Arctic Explorer', desc: 'Glacial blue parka and insulated thermal trousers', shirt: '#0288D1', pants: '#ECEFF1', hat: '#81D4FA', hatRidge: '#0288D1' },
-  royal_tycoon: { id: 'royal_tycoon', name: 'Royal Tycoon', desc: 'Regal purple blazer with gold trimmed trousers', shirt: '#7B1FA2', pants: '#FFD54F', hat: '#FFC107', hatRidge: '#FFA000' },
   shadow_lumber: { id: 'shadow_lumber', name: 'Night Logger', desc: 'Tactical covert black tunic with crimson helmet', shirt: '#212121', pants: '#37474F', hat: '#E53935', hatRidge: '#B71C1C' },
+  steampunk_engineer: { id: 'steampunk_engineer', name: 'Craftsman Engineer', desc: 'Brass gear worker vest and leather workshop apron', shirt: '#A0522D', pants: '#3E2723', hat: '#CD7F32', hatRidge: '#8D5524' },
+  royal_tycoon: { id: 'royal_tycoon', name: 'Royal Tycoon', desc: 'Regal purple blazer with gold trimmed trousers', shirt: '#7B1FA2', pants: '#FFD54F', hat: '#FFC107', hatRidge: '#FFA000' },
+  emerald_titan: { id: 'emerald_titan', name: 'Emerald Forester', desc: 'Master forester emerald cloak and gilded helm', shirt: '#00796B', pants: '#004D40', hat: '#00E676', hatRidge: '#00BFA5' },
   celestial_mythic: { id: 'celestial_mythic', name: 'Celestial Mythic', desc: 'Cosmic purple neon fabric and electric cyan boots', shirt: '#8E24AA', pants: '#00E5FF', hat: '#E040FB', hatRidge: '#AA00FF' }
 };
 
@@ -363,59 +380,27 @@ class TycoonAudioSynthesizer {
 
     const t = this.ctx.currentTime;
 
-    // Layer 1: Smooth rotating mechanical motor / blade whir (warm filtered triangle with lowpass)
-    const motorOsc = this.ctx.createOscillator();
-    const motorGain = this.ctx.createGain();
-    const motorFilter = this.ctx.createBiquadFilter();
+    // Ultra-soft, warm wooden watermill ratchet click / gentle timber glide (never grating or loud)
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    const filter = this.ctx.createBiquadFilter();
 
-    motorOsc.type = 'triangle';
-    motorOsc.frequency.setValueAtTime(160, t);
-    motorOsc.frequency.linearRampToValueAtTime(220, t + 0.08);
-    motorOsc.frequency.linearRampToValueAtTime(150, t + 0.16);
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(130, t);
+    osc.frequency.exponentialRampToValueAtTime(65, t + 0.08);
 
-    motorFilter.type = 'lowpass';
-    motorFilter.frequency.setValueAtTime(550, t);
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(320, t);
 
-    motorGain.gain.setValueAtTime(0.24, t);
-    motorGain.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
+    gain.gain.setValueAtTime(0.10, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
 
-    motorOsc.connect(motorFilter);
-    motorFilter.connect(motorGain);
-    motorGain.connect(this.ctx.destination);
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
 
-    motorOsc.start(t);
-    motorOsc.stop(t + 0.16);
-
-    // Layer 2: Tactile wood cut friction / timber glide (soft bandpassed friction transient)
-    if (this.ctx.createBuffer) {
-      try {
-        const bufferSize = Math.floor(this.ctx.sampleRate * 0.12);
-        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = (Math.random() * 2 - 1) * Math.sin((i / bufferSize) * Math.PI);
-        }
-
-        const noiseSource = this.ctx.createBufferSource();
-        noiseSource.buffer = noiseBuffer;
-
-        const frictionFilter = this.ctx.createBiquadFilter();
-        frictionFilter.type = 'bandpass';
-        frictionFilter.frequency.setValueAtTime(750, t);
-        frictionFilter.Q.setValueAtTime(2.2, t);
-
-        const frictionGain = this.ctx.createGain();
-        frictionGain.gain.setValueAtTime(0.18, t);
-        frictionGain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
-
-        noiseSource.connect(frictionFilter);
-        frictionFilter.connect(frictionGain);
-        frictionGain.connect(this.ctx.destination);
-
-        noiseSource.start(t);
-        noiseSource.stop(t + 0.12);
-      } catch (e) {}
-    }
+    osc.start(t);
+    osc.stop(t + 0.08);
   }
 
   playCollect() {
@@ -599,6 +584,7 @@ class SaveManager {
       tutorialStep: 0,
       unlockedZones: ['oak'],
       totalTreesCut: 0,
+      treesCutByType: { oak: 0, birch: 0, pine: 0, sakura: 0, redwood: 0, golden: 0 },
       totalPlanksProcessed: 0,
       totalCashEarned: 0,
       settings: { isMuted: false }
@@ -611,10 +597,11 @@ class SaveManager {
  * ============================================================================ */
 
 function drawTopDownTerrain(ctx, width, height, animTime) {
-  ctx.fillStyle = '#24381e';
+  ctx.fillStyle = '#22381c';
   ctx.fillRect(0, 0, width, height);
 
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.022)';
+  // Subtle checkering pattern
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.020)';
   const tileSize = 64;
   for (let x = 0; x < width; x += tileSize) {
     for (let y = 0; y < height; y += tileSize) {
@@ -624,8 +611,32 @@ function drawTopDownTerrain(ctx, width, height, animTime) {
     }
   }
 
-  const b = WORLD.baseZone;
+  // Branching Timber Roads / Cobblestone Walkways
   ctx.save();
+  ctx.fillStyle = '#4e3b2b';
+
+  // 1. North Path to Golden Forest
+  ctx.beginPath();
+  ctx.roundRect(1010, 80, 80, 500, 16);
+  ctx.fill();
+
+  // 2. North-West Path to Sakura Haven
+  ctx.beginPath();
+  ctx.roundRect(380, 360, 300, 80, 16);
+  ctx.fill();
+
+  // 3. North-East Path to Pine Taiga
+  ctx.beginPath();
+  ctx.roundRect(1420, 360, 320, 80, 16);
+  ctx.fill();
+
+  // 4. South Path to Oak, Birch & Redwood
+  ctx.beginPath();
+  ctx.roundRect(500, 1000, 1400, 90, 20);
+  ctx.fill();
+
+  // Central Courtyard Base Plaza
+  const b = WORLD.baseZone;
   ctx.fillStyle = '#4e3b2b';
   ctx.beginPath();
   ctx.roundRect(b.x - 30, b.y - 30, b.w + 60, b.h + 60, 36);
@@ -1721,8 +1732,12 @@ export class LumberTycoonGame {
       if (claimed.has(ach.id)) continue;
       let current = 0;
       if (ach.type === 'trees') current = this.saveData.totalTreesCut || 0;
+      else if (ach.type.startsWith('trees_')) {
+        const treeType = ach.type.replace('trees_', '');
+        current = (this.saveData.treesCutByType && this.saveData.treesCutByType[treeType]) || 0;
+      }
       else if (ach.type === 'planks') current = this.saveData.totalPlanksProcessed || 0;
-      else if (ach.type === 'sawmill') current = this.saveData.sawmillUnlocked ? 1 : 0;
+      else if (ach.type === 'sawmill_level') current = this.saveData.sawmillLevel || (this.saveData.sawmillUnlocked ? 1 : 0);
       else if (ach.type === 'workers') current = this.workers.length;
       else if (ach.type === 'cash') current = this.saveData.totalCashEarned || this.saveData.cash;
       else if (ach.type === 'zones') current = this.unlockedZones.size;
@@ -1762,13 +1777,13 @@ export class LumberTycoonGame {
   generateForest() {
     this.trees = [];
     ZONES.forEach((zone) => {
-      const count = zone.id === 'oak' ? 28 : zone.id === 'birch' ? 24 : zone.id === 'pine' ? 22 : 18;
+      const count = zone.id === 'oak' ? 26 : zone.id === 'birch' ? 24 : zone.id === 'pine' ? 24 : zone.id === 'sakura' ? 20 : zone.id === 'redwood' ? 20 : 18;
       for (let i = 0; i < count; i++) {
-        const x = zone.bounds.x + 60 + Math.random() * (zone.bounds.w - 120);
-        const y = zone.bounds.y + 60 + Math.random() * (zone.bounds.h - 120);
+        const x = zone.bounds.x + 50 + Math.random() * (zone.bounds.w - 100);
+        const y = zone.bounds.y + 50 + Math.random() * (zone.bounds.h - 100);
 
-        if (x > WORLD.baseZone.x - 50 && x < WORLD.baseZone.x + WORLD.baseZone.w + 50 &&
-            y > WORLD.baseZone.y - 50 && y < WORLD.baseZone.y + WORLD.baseZone.h + 50) {
+        if (x > WORLD.baseZone.x - 40 && x < WORLD.baseZone.x + WORLD.baseZone.w + 40 &&
+            y > WORLD.baseZone.y - 40 && y < WORLD.baseZone.y + WORLD.baseZone.h + 40) {
           continue;
         }
 
@@ -1857,8 +1872,8 @@ export class LumberTycoonGame {
       {
         id: 'pad_pine',
         type: 'ZONE_PINE',
-        x: 1520,
-        y: 560,
+        x: 1560,
+        y: 460,
         radius: 52,
         label: 'PINE TAIGA',
         deposited: 0,
@@ -1877,8 +1892,8 @@ export class LumberTycoonGame {
       {
         id: 'pad_redwood',
         type: 'ZONE_REDWOOD',
-        x: 600,
-        y: 1400,
+        x: 1720,
+        y: 1040,
         radius: 52,
         label: 'REDWOOD GIANTS',
         deposited: 0,
@@ -1887,8 +1902,8 @@ export class LumberTycoonGame {
       {
         id: 'pad_golden',
         type: 'ZONE_GOLDEN',
-        x: 1800,
-        y: 1000,
+        x: 1050,
+        y: 460,
         radius: 52,
         label: 'GOLDEN FOREST',
         deposited: 0,
@@ -2216,6 +2231,10 @@ export class LumberTycoonGame {
       this.particles.leafBurst(tree.x, tree.y - (tree.trunkHeight || 42), prop.leafColors, 20);
 
       this.saveData.totalTreesCut = (this.saveData.totalTreesCut || 0) + 1;
+      if (!this.saveData.treesCutByType) {
+        this.saveData.treesCutByType = { oak: 0, birch: 0, pine: 0, sakura: 0, redwood: 0, golden: 0 };
+      }
+      this.saveData.treesCutByType[tree.type] = (this.saveData.treesCutByType[tree.type] || 0) + 1;
 
       for (let i = 0; i < tree.logsPerTree; i++) {
         const offsetAng = Math.random() * Math.PI * 2;
@@ -2860,8 +2879,12 @@ export class LumberTycoonGame {
     ACHIEVEMENTS.forEach((ach) => {
       let current = 0;
       if (ach.type === 'trees') current = this.saveData.totalTreesCut || 0;
+      else if (ach.type.startsWith('trees_')) {
+        const treeType = ach.type.replace('trees_', '');
+        current = (this.saveData.treesCutByType && this.saveData.treesCutByType[treeType]) || 0;
+      }
       else if (ach.type === 'planks') current = this.saveData.totalPlanksProcessed || 0;
-      else if (ach.type === 'sawmill') current = this.saveData.sawmillUnlocked ? 1 : 0;
+      else if (ach.type === 'sawmill_level') current = this.saveData.sawmillLevel || (this.saveData.sawmillUnlocked ? 1 : 0);
       else if (ach.type === 'workers') current = this.workers.length;
       else if (ach.type === 'cash') current = this.saveData.totalCashEarned || this.saveData.cash;
       else if (ach.type === 'zones') current = this.unlockedZones.size;
@@ -2869,6 +2892,10 @@ export class LumberTycoonGame {
       const isCompleted = current >= ach.target;
       const isClaimed = claimedSet.has(ach.id);
       const pct = Math.min(100, Math.round((current / ach.target) * 100));
+
+      const rewardLabel = ach.rewardSkin
+        ? `⭐ Unlocks Skin: "${PLAYER_SKINS[ach.rewardSkin]?.name || ach.rewardSkin}"`
+        : `💰 Reward: +$${ach.rewardCash.toLocaleString()}`;
 
       const card = document.createElement('div');
       card.className = `achievement-card ${isClaimed ? 'completed' : ''}`;
@@ -2879,8 +2906,8 @@ export class LumberTycoonGame {
           <div class="achievement-progress-bar">
             <div class="achievement-progress-fill" style="width: ${pct}%;"></div>
           </div>
-          <span style="font-size: 0.70rem; color: #ffe082; margin-top: 3px;">
-            Reward: +$${ach.rewardCash.toLocaleString()} ${ach.rewardSkin ? `+ Skin "${PLAYER_SKINS[ach.rewardSkin]?.name || ach.rewardSkin}"` : ''}
+          <span style="font-size: 0.72rem; font-weight: 700; color: ${ach.rewardSkin ? '#a5d6a7' : '#ffe082'}; margin-top: 3px;">
+            ${rewardLabel}
           </span>
         </div>
         <div>
@@ -3035,154 +3062,147 @@ export class LumberTycoonGame {
    * 10. 2.5D DEPTH-SORTED RENDERING LOOP & TUTORIAL OVERLAY
    * ========================================================================== */
 
-  drawTitleDiorama() {
-    const canvas = document.getElementById('title-scene-canvas');
+  drawTitleFullscreenBackground() {
+    const canvas = document.getElementById('title-bg-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const w = canvas.width;
-    const h = canvas.height;
-    ctx.clearRect(0, 0, w, h);
 
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width || window.innerWidth || 800;
+    const h = rect.height || window.innerHeight || 600;
+
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+    }
+
+    ctx.clearRect(0, 0, w, h);
     const t = this.animTime;
 
-    // 1. Sky & Soft Warm Sunset / Forest Glow Backplate
+    // 1. Forest Canopy Twilight / Horizon Sky Gradient
     const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
-    bgGrad.addColorStop(0, '#243321');
-    bgGrad.addColorStop(1, '#162214');
+    bgGrad.addColorStop(0, '#152414');
+    bgGrad.addColorStop(0.5, '#22381e');
+    bgGrad.addColorStop(1, '#182b17');
     ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    // 2. Distant Forest Mountain Ridges
+    ctx.fillStyle = 'rgba(18, 32, 18, 0.65)';
     ctx.beginPath();
-    ctx.roundRect(0, 0, w, h, 12);
+    ctx.moveTo(0, h * 0.58);
+    ctx.lineTo(w * 0.2, h * 0.44);
+    ctx.lineTo(w * 0.45, h * 0.52);
+    ctx.lineTo(w * 0.72, h * 0.40);
+    ctx.lineTo(w, h * 0.54);
+    ctx.lineTo(w, h);
+    ctx.lineTo(0, h);
+    ctx.closePath();
     ctx.fill();
 
-    // 2. Rolling Green Grassy Hill
-    ctx.fillStyle = '#2E7D32';
+    // 3. Midground Rolling Hill Mounds
+    ctx.fillStyle = '#233d20';
     ctx.beginPath();
-    ctx.ellipse(w / 2, h + 24, w * 0.58, 60, 0, 0, Math.PI * 2);
+    ctx.ellipse(w * 0.25, h * 0.82, w * 0.45, h * 0.32, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = '#388E3C';
+    ctx.fillStyle = '#1e341b';
     ctx.beginPath();
-    ctx.ellipse(w / 2, h + 18, w * 0.52, 50, 0, 0, Math.PI * 2);
+    ctx.ellipse(w * 0.78, h * 0.84, w * 0.48, h * 0.35, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = '#4CAF50';
+    // 4. Foreground Vibrant Green Hills
+    ctx.fillStyle = '#2e5828';
     ctx.beginPath();
-    ctx.ellipse(w / 2, h + 12, w * 0.46, 42, 0, 0, Math.PI * 2);
+    ctx.ellipse(w * 0.5, h + 30, w * 0.65, h * 0.35, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // 3. Left Oak Tree (Lush Foliage)
-    const oakX = 58;
-    const oakY = 82;
-    // Trunk
-    ctx.fillStyle = '#5D4037';
-    ctx.fillRect(oakX - 5, oakY, 10, 36);
-    // Leaves
-    ctx.fillStyle = '#2E7D32';
-    ctx.beginPath();
-    ctx.arc(oakX, oakY - 12, 24, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#43A047';
-    ctx.beginPath();
-    ctx.arc(oakX - 8, oakY - 16, 17, 0, Math.PI * 2);
-    ctx.arc(oakX + 8, oakY - 16, 17, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#66BB6A';
-    ctx.beginPath();
-    ctx.arc(oakX, oakY - 22, 15, 0, Math.PI * 2);
-    ctx.fill();
-
-    // 4. Right Pine Tree (Crisp Nordic Pine)
-    const pineX = 302;
-    const pineY = 84;
-    // Trunk
-    ctx.fillStyle = '#3E2723';
-    ctx.fillRect(pineX - 4, pineY + 6, 8, 30);
-    // Pine needle tiers
-    const drawPineTier = (tierY, tierW, tierH, col) => {
-      ctx.fillStyle = col;
-      ctx.beginPath();
-      ctx.moveTo(pineX, tierY - tierH);
-      ctx.lineTo(pineX - tierW / 2, tierY);
-      ctx.lineTo(pineX + tierW / 2, tierY);
-      ctx.closePath();
-      ctx.fill();
+    // 5. Left Grand Oak Tree
+    const drawOak = (ox, oy, s) => {
+      ctx.save();
+      ctx.translate(ox, oy);
+      ctx.scale(s, s);
+      ctx.fillStyle = '#4E342E';
+      ctx.fillRect(-10, 0, 20, 100);
+      ctx.fillStyle = '#2E7D32';
+      ctx.beginPath(); ctx.arc(0, -25, 60, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#388E3C';
+      ctx.beginPath(); ctx.arc(-24, -40, 45, 0, Math.PI * 2); ctx.arc(24, -40, 45, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#4CAF50';
+      ctx.beginPath(); ctx.arc(0, -55, 38, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
     };
-    drawPineTier(pineY + 10, 38, 20, '#1B5E20');
-    drawPineTier(pineY - 4, 30, 18, '#2E7D32');
-    drawPineTier(pineY - 16, 22, 16, '#388E3C');
 
-    // 5. Central Handcrafted Tree Stump
-    const stumpX = 180;
-    const stumpY = 104;
-    // Stump body
-    ctx.fillStyle = '#5D4037';
-    ctx.beginPath();
-    ctx.roundRect(stumpX - 18, stumpY - 10, 36, 22, 4);
-    ctx.fill();
-    // Stump top growth rings
-    ctx.fillStyle = '#D7CCC8';
-    ctx.beginPath();
-    ctx.ellipse(stumpX, stumpY - 10, 18, 7, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = '#A1887F';
-    ctx.lineWidth = 1.0;
-    ctx.stroke();
+    // 6. Right Crisp Taiga Pine Tree
+    const drawPine = (px, py, s) => {
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.scale(s, s);
+      ctx.fillStyle = '#3E2723';
+      ctx.fillRect(-8, 0, 16, 90);
+      const drawPineTier = (tierY, tierW, tierH, col) => {
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.moveTo(0, tierY - tierH);
+        ctx.lineTo(-tierW / 2, tierY);
+        ctx.lineTo(tierW / 2, tierY);
+        ctx.closePath();
+        ctx.fill();
+      };
+      drawPineTier(25, 95, 50, '#1B5E20');
+      drawPineTier(-10, 80, 45, '#2E7D32');
+      drawPineTier(-45, 60, 40, '#388E3C');
+      ctx.restore();
+    };
 
-    // 6. Iconic Red & Steel Hatchet Embedded in Stump
+    const treeScale = Math.max(0.7, Math.min(1.3, w / 700));
+    drawOak(Math.max(50, w * 0.12), h * 0.76, treeScale);
+    drawPine(Math.min(w - 50, w * 0.88), h * 0.74, treeScale);
+
+    // 7. Handcrafted Tree Stump with Red & Steel Hatchet in Foreground
+    const stumpX = Math.min(w * 0.82, w - 100);
+    const stumpY = h * 0.88;
     ctx.save();
-    ctx.translate(stumpX - 3, stumpY - 10);
-    ctx.rotate(0.35); // 20 degree embedded tilt
-
-    // Wooden handle
-    ctx.fillStyle = '#8D6E63';
-    ctx.beginPath();
-    ctx.roundRect(-3, -36, 6, 38, 2);
-    ctx.fill();
+    ctx.translate(stumpX, stumpY);
+    ctx.scale(treeScale, treeScale);
     ctx.fillStyle = '#5D4037';
-    ctx.fillRect(-3, -36, 6, 6);
+    ctx.beginPath(); ctx.roundRect(-24, -14, 48, 28, 4); ctx.fill();
+    ctx.fillStyle = '#D7CCC8';
+    ctx.beginPath(); ctx.ellipse(0, -14, 24, 9, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#A1887F'; ctx.lineWidth = 1.2; ctx.stroke();
 
-    // Axe head (Crimson red)
+    // Embedded Hatchet
+    ctx.translate(-4, -14);
+    ctx.rotate(0.32);
+    ctx.fillStyle = '#8D6E63';
+    ctx.beginPath(); ctx.roundRect(-4, -46, 8, 50, 3); ctx.fill();
     ctx.fillStyle = '#D32F2F';
     ctx.beginPath();
-    ctx.moveTo(-13, -32);
-    ctx.lineTo(12, -29);
-    ctx.lineTo(12, -20);
-    ctx.lineTo(-11, -18);
-    ctx.closePath();
-    ctx.fill();
-
-    // Axe bevel
+    ctx.moveTo(-18, -42); ctx.lineTo(16, -38); ctx.lineTo(16, -26); ctx.lineTo(-15, -24);
+    ctx.closePath(); ctx.fill();
     ctx.fillStyle = '#B71C1C';
     ctx.beginPath();
-    ctx.moveTo(-13, -32);
-    ctx.lineTo(-3, -30);
-    ctx.lineTo(-3, -20);
-    ctx.lineTo(-11, -18);
-    ctx.closePath();
-    ctx.fill();
-
-    // Steel Blade Edge
+    ctx.moveTo(-18, -42); ctx.lineTo(-4, -39); ctx.lineTo(-4, -25); ctx.lineTo(-15, -24);
+    ctx.closePath(); ctx.fill();
     ctx.fillStyle = '#ECEFF1';
     ctx.beginPath();
-    ctx.moveTo(12, -30);
-    ctx.lineTo(16, -25);
-    ctx.lineTo(12, -20);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(16, -40); ctx.lineTo(21, -32); ctx.lineTo(16, -24);
+    ctx.closePath(); ctx.fill();
     ctx.restore();
 
-    // 7. Gentle Animated Drifting Leaves
-    const leafColors = ['#81C784', '#FFD54F', '#4CAF50', '#A5D6A7'];
-    for (let i = 0; i < 5; i++) {
-      const lx = ((t * 26 + i * 75) % (w + 30)) - 15;
-      const ly = 25 + Math.sin(t * 2 + i * 1.5) * 18 + (i % 3) * 16;
-      const rot = t * 1.6 + i;
+    // 8. Fullscreen Swirling Drifting Leaves across entire screen
+    const leafColors = ['#81C784', '#FFD54F', '#4CAF50', '#A5D6A7', '#FFB74D', '#F48FB1'];
+    for (let i = 0; i < 24; i++) {
+      const speed = 30 + (i % 6) * 12;
+      const lx = ((t * speed + i * 120) % (w + 80)) - 40;
+      const ly = ((t * 18 + i * 65 + Math.sin(t * 1.8 + i) * 25) % (h + 60)) - 30;
+      const rot = t * (1.2 + (i % 3) * 0.4) + i;
       ctx.save();
       ctx.translate(lx, ly);
       ctx.rotate(rot);
       ctx.fillStyle = leafColors[i % leafColors.length];
       ctx.beginPath();
-      ctx.ellipse(0, 0, 4.5, 2.2, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, 5.5, 2.8, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     }
@@ -3294,9 +3314,9 @@ export class LumberTycoonGame {
     this.juice.renderScreen(ctx, this.renderer.virtualWidth, this.renderer.virtualHeight);
     this.renderer.endFrame();
 
-    // 9. Title Screen Diorama Rendering
+    // 9. Fullscreen Title Screen Background Rendering
     if (this.state === 'TITLE') {
-      this.drawTitleDiorama();
+      this.drawTitleFullscreenBackground();
     }
   }
 }
