@@ -223,6 +223,27 @@ class TycoonAudioSynthesizer {
     }
   }
 
+  pause() {
+    if (this.ctx && this.ctx.state === 'running') {
+      this.ctx.suspend().catch(() => {});
+    }
+    if (this.bgMusic) {
+      this.bgMusic.pause();
+    }
+  }
+
+  resume() {
+    if (!this.isMuted) {
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume().catch(() => {});
+      }
+      if (this.bgMusic) {
+        this.bgMusic.volume = this.bgMusicVolume;
+        this.bgMusic.play().catch(() => {});
+      }
+    }
+  }
+
   playChop() {
     if (this.isMuted) return;
     this.init();
@@ -550,21 +571,36 @@ class SaveManager {
   static KEY = 'lumber_tycoon_save_v1';
 
   static async load(playgama) {
-    let raw = null;
-    try {
-      raw = localStorage.getItem(SaveManager.KEY);
-    } catch (e) {}
-
-    let data = SaveManager.getDefault();
-    if (raw) {
+    let data = null;
+    if (playgama) {
       try {
-        data = Object.assign(data, JSON.parse(raw));
+        data = await playgama.getData(SaveManager.KEY, null);
       } catch (e) {}
     }
-    return data;
+
+    if (!data) {
+      try {
+        const raw = localStorage.getItem(SaveManager.KEY);
+        if (raw) data = JSON.parse(raw);
+      } catch (e) {}
+    }
+
+    let def = SaveManager.getDefault();
+    if (data && typeof data === 'object') {
+      def = Object.assign(def, data);
+    }
+    return def;
   }
 
   static async save(playgama, data) {
+    // 1. Persist directly to Playgama Cloud Storage
+    if (playgama) {
+      try {
+        await playgama.setData(SaveManager.KEY, data);
+      } catch (e) {}
+    }
+
+    // 2. Local fallback sync
     try {
       localStorage.setItem(SaveManager.KEY, JSON.stringify(data));
     } catch (e) {}
@@ -1735,8 +1771,9 @@ export class LumberTycoonGame {
       this.saveData.unlockedZones.forEach((z) => this.unlockedZones.add(z));
     }
 
-    const audioEnabled = this.playgama.isAudioEnabled();
-    this.audio.setMuted(!audioEnabled || (this.saveData.settings?.isMuted));
+    const platformAudioEnabled = this.playgama.isAudioEnabled();
+    const userMuted = this.saveData.settings?.isMuted ?? false;
+    this.audio.setMuted(!platformAudioEnabled || userMuted);
 
     this.generateForest();
     this.initUpgradePads();
@@ -1744,11 +1781,59 @@ export class LumberTycoonGame {
 
     this.setupDOM();
     this.setupEvents();
-
-    this.playgama.sendGameReady();
+    this.setupPlaygamaLifecycle();
 
     this.loop = new GameLoop(this.update, this.render, 1 / 60, 0.1);
     this.loop.start();
+
+    this.playgama.sendGameReady();
+  }
+
+  setupPlaygamaLifecycle() {
+    // 1. Tab / Window Visibility Change (Pause/Resume game loop and audio)
+    this.playgama.onVisibilityChange((isVisible) => {
+      if (!isVisible) {
+        this.audio.pause();
+        if (this.loop && typeof this.loop.stop === 'function') {
+          this.loop.stop();
+        }
+      } else {
+        if (this.loop && typeof this.loop.start === 'function') {
+          this.loop.start();
+        }
+        const userMuted = this.saveData.settings?.isMuted ?? false;
+        if (!userMuted && this.playgama.isAudioEnabled()) {
+          this.audio.resume();
+        }
+      }
+    });
+
+    // 2. Platform Host Audio State Change (e.g. host tab mute signal)
+    this.playgama.onAudioStateChange((isEnabled) => {
+      const userMuted = this.saveData.settings?.isMuted ?? false;
+      const shouldMute = !isEnabled || userMuted;
+      this.audio.setMuted(shouldMute);
+      const wave = document.getElementById('audio-waves');
+      if (wave) wave.style.display = shouldMute ? 'none' : 'block';
+    });
+
+    // 3. Platform Host Pause State Change (e.g. platform overlay / external ad pause)
+    this.playgama.onPauseStateChange((isPaused) => {
+      if (isPaused) {
+        this.audio.pause();
+        if (this.loop && typeof this.loop.stop === 'function') {
+          this.loop.stop();
+        }
+      } else {
+        if (this.loop && typeof this.loop.start === 'function') {
+          this.loop.start();
+        }
+        const userMuted = this.saveData.settings?.isMuted ?? false;
+        if (!userMuted && this.playgama.isAudioEnabled()) {
+          this.audio.resume();
+        }
+      }
+    });
   }
 
   generateForest() {
