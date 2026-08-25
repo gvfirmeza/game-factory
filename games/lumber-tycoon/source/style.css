@@ -2,7 +2,9 @@
  * LUMBER TYCOON — RUSTIC TIMBER & FORESTRY STYLING (100% SVG UI)
  * ============================================================================ */
 
-* {
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&display=swap');
+
+*, button, input, select, textarea, div, span, p, h1, h2, h3, h4, h5, h6, a, label {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -10,6 +12,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 179, 0, 0.45) rgba(20, 12, 8, 0.6);
 }
@@ -64,7 +67,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   background-color: #141f12;
-  font-family: 'Fredoka', 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   color: var(--text-white);
   display: flex;
   align-items: center;
