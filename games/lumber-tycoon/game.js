@@ -27,13 +27,13 @@ export const WORLD = {
 };
 
 export const AXE_TIERS = [
-  { name: 'Machadinha Rústica', power: 1, speed: 0.35, cost: 0, headColor: '#E53935', bevel: '#B71C1C', edge: '#ECEFF1' },
-  { name: 'Machado de Bronze Forjado', power: 2, speed: 0.30, cost: 180, headColor: '#CD7F32', bevel: '#8D5524', edge: '#FFE082' },
-  { name: 'Machado de Aço Temperado', power: 4, speed: 0.25, cost: 650, headColor: '#607D8B', bevel: '#37474F', edge: '#FFFFFF' },
-  { name: 'Machado Dourado Pesado', power: 8, speed: 0.22, cost: 2200, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
-  { name: 'Machado de Diamante Puro', power: 16, speed: 0.18, cost: 7500, headColor: '#00E5FF', bevel: '#0097A7', edge: '#E0F7FA' },
-  { name: 'Cortador Laser de Plasma', power: 35, speed: 0.15, cost: 24000, headColor: '#00E676', bevel: '#00A152', edge: '#B9F6CA' },
-  { name: 'Machado Mítico Celestial', power: 85, speed: 0.10, cost: 75000, headColor: '#E040FB', bevel: '#AA00FF', edge: '#FFFFFF' }
+  { name: 'Camp Hatchet', power: 1, speed: 0.35, cost: 0, headColor: '#E53935', bevel: '#B71C1C', edge: '#ECEFF1' },
+  { name: 'Forged Bronze Axe', power: 2, speed: 0.30, cost: 180, headColor: '#CD7F32', bevel: '#8D5524', edge: '#FFE082' },
+  { name: 'Tempered Steel Axe', power: 4, speed: 0.25, cost: 650, headColor: '#607D8B', bevel: '#37474F', edge: '#FFFFFF' },
+  { name: 'Gold Broadaxe', power: 8, speed: 0.22, cost: 2200, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
+  { name: 'Diamond Core Axe', power: 16, speed: 0.18, cost: 7500, headColor: '#00E5FF', bevel: '#0097A7', edge: '#E0F7FA' },
+  { name: 'Plasma Laser Cutter', power: 35, speed: 0.15, cost: 24000, headColor: '#00E676', bevel: '#00A152', edge: '#B9F6CA' },
+  { name: 'Mythic Celestial Greataxe', power: 85, speed: 0.10, cost: 75000, headColor: '#E040FB', bevel: '#AA00FF', edge: '#FFFFFF' }
 ];
 
 export const CAPACITY_TIERS = [
@@ -49,61 +49,61 @@ export const CAPACITY_TIERS = [
 ];
 
 export const WOOD_PROPERTIES = {
-  oak: { name: 'Carvalho', logColor: '#8D6E63', outline: '#4E342E', plankColor: '#D7CCC8', plankBorder: '#8D6E63' },
-  birch: { name: 'Bétula', logColor: '#ECEFF1', outline: '#37474F', plankColor: '#FFF9C4', plankBorder: '#C0CA33' },
-  pine: { name: 'Pinheiro', logColor: '#4E342E', outline: '#271B17', plankColor: '#BCAAA4', plankBorder: '#5D4037' },
+  oak: { name: 'Oak', logColor: '#8D6E63', outline: '#4E342E', plankColor: '#D7CCC8', plankBorder: '#8D6E63' },
+  birch: { name: 'Birch', logColor: '#ECEFF1', outline: '#37474F', plankColor: '#FFF9C4', plankBorder: '#C0CA33' },
+  pine: { name: 'Pine', logColor: '#4E342E', outline: '#271B17', plankColor: '#BCAAA4', plankBorder: '#5D4037' },
   sakura: { name: 'Sakura', logColor: '#E91E63', outline: '#880E4F', plankColor: '#F8BBD0', plankBorder: '#C2185B' },
-  redwood: { name: 'Secóia', logColor: '#B71C1C', outline: '#5C0000', plankColor: '#FFCDD2', plankBorder: '#B71C1C' },
-  golden: { name: 'Dourada', logColor: '#FFB300', outline: '#FF8F00', plankColor: '#FFF59D', plankBorder: '#FFB300' }
+  redwood: { name: 'Redwood', logColor: '#B71C1C', outline: '#5C0000', plankColor: '#FFCDD2', plankBorder: '#B71C1C' },
+  golden: { name: 'Golden', logColor: '#FFB300', outline: '#FF8F00', plankColor: '#FFF59D', plankBorder: '#FFB300' }
 };
 
 export const ZONES = [
-  { id: 'oak', name: 'Floresta de Carvalho', cost: 0, treeType: 'oak', logValue: 20, maxHp: 3, logsPerTree: 3, unlocked: true, bounds: { x: 60, y: 1080, w: 900, h: 760 } },
-  { id: 'birch', name: 'Bosque de Bétula', cost: 350, treeType: 'birch', logValue: 55, maxHp: 5, logsPerTree: 4, unlocked: false, bounds: { x: 1050, y: 1080, w: 1280, h: 760 } },
-  { id: 'pine', name: 'Pinheiral Nórdico', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 8, logsPerTree: 4, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
-  { id: 'sakura', name: 'Refúgio Sakura', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 12, logsPerTree: 5, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
-  { id: 'redwood', name: 'Secóias Gigantes', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 20, logsPerTree: 6, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
-  { id: 'golden', name: 'Floresta Dourada', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 35, logsPerTree: 8, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
+  { id: 'oak', name: 'Oak Meadow', cost: 0, treeType: 'oak', logValue: 20, maxHp: 3, logsPerTree: 3, unlocked: true, bounds: { x: 60, y: 1080, w: 900, h: 760 } },
+  { id: 'birch', name: 'Birch Grove', cost: 350, treeType: 'birch', logValue: 55, maxHp: 5, logsPerTree: 4, unlocked: false, bounds: { x: 1050, y: 1080, w: 1280, h: 760 } },
+  { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 8, logsPerTree: 4, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
+  { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 12, logsPerTree: 5, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
+  { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 20, logsPerTree: 6, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
+  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 35, logsPerTree: 8, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
 ];
 
 export const BUILDINGS = {
-  sawmill: { x: 860, y: 720, w: 140, h: 100, name: 'Serraria', desc: 'Processa toras brutas em tábuas refinadas (3x valor)' },
-  sellZone: { x: 1080, y: 720, w: 130, h: 100, name: 'Mercado de Madeira', desc: 'Venda tábuas refinadas ou toras brutas por dinheiro' },
-  blacksmith: { x: 680, y: 720, w: 120, h: 95, name: 'Ferraria', desc: 'Forje machados de corte poderosos' },
-  storageBarn: { x: 1270, y: 720, w: 120, h: 95, name: 'Depósito de Mochilas', desc: 'Expanda a capacidade de carga da sua mochila' },
-  workerHut: { x: 970, y: 570, w: 140, h: 95, name: 'Alojamento', desc: 'Contrate ajudantes especializados' }
+  sawmill: { x: 860, y: 720, w: 140, h: 100, name: 'Sawmill', desc: 'Processes raw logs into refined planks (3x profit)' },
+  sellZone: { x: 1080, y: 720, w: 130, h: 100, name: 'Wood Market', desc: 'Sell refined planks or raw logs for cash' },
+  blacksmith: { x: 680, y: 720, w: 120, h: 95, name: 'Blacksmith Forge', desc: 'Forge powerful cutting axes' },
+  storageBarn: { x: 1270, y: 720, w: 120, h: 95, name: 'Backpack Depot', desc: 'Expand backpack carrying capacity' },
+  workerHut: { x: 970, y: 570, w: 140, h: 95, name: 'Worker Barracks', desc: 'Hire automated specialist workers' }
 };
 
 export const WORKER_COLORS = [
-  { name: 'Rusty', shirt: '#E65100', overalls: '#1565C0', hat: '#FFA000', badge: '1', title: 'O Aprendiz' },
-  { name: 'Cobalt', shirt: '#1976D2', overalls: '#0D47A1', hat: '#64B5F6', badge: '2', title: 'O Construtor' },
-  { name: 'Moss', shirt: '#2E7D32', overalls: '#1B5E20', hat: '#81C784', badge: '3', title: 'O Naturalista' },
-  { name: 'Violet', shirt: '#7B1FA2', overalls: '#4A148C', hat: '#BA68C8', badge: '4', title: 'O Veterano' },
-  { name: 'Teal', shirt: '#00838F', overalls: '#006064', hat: '#4DD0E1', badge: '5', title: 'O Veloz' },
-  { name: 'Crimson', shirt: '#C2185B', overalls: '#880E4F', hat: '#F48FB1', badge: '6', title: 'O Mestre' }
+  { name: 'Rusty', shirt: '#E65100', overalls: '#1565C0', hat: '#FFA000', badge: '1', title: 'The Pioneer' },
+  { name: 'Cobalt', shirt: '#1976D2', overalls: '#0D47A1', hat: '#64B5F6', badge: '2', title: 'The Builder' },
+  { name: 'Moss', shirt: '#2E7D32', overalls: '#1B5E20', hat: '#81C784', badge: '3', title: 'The Naturalist' },
+  { name: 'Violet', shirt: '#7B1FA2', overalls: '#4A148C', hat: '#BA68C8', badge: '4', title: 'The Veteran' },
+  { name: 'Teal', shirt: '#00838F', overalls: '#006064', hat: '#4DD0E1', badge: '5', title: 'The Swift' },
+  { name: 'Crimson', shirt: '#C2185B', overalls: '#880E4F', hat: '#F48FB1', badge: '6', title: 'The Master' }
 ];
 
 export const ACHIEVEMENTS = [
-  { id: 'first_tree', name: 'Primeiro Corte', desc: 'Derrube sua 1ª árvore', target: 1, type: 'trees', rewardCash: 100, rewardSkin: 'forest_guardian' },
-  { id: 'chop_50', name: 'Lenhador Experiente', desc: 'Derrube 50 árvores', target: 50, type: 'trees', rewardCash: 500, rewardSkin: 'flame_lumber' },
-  { id: 'chop_250', name: 'Mestre da Mata', desc: 'Derrube 250 árvores', target: 250, type: 'trees', rewardCash: 2500, rewardSkin: 'arctic_explorer' },
-  { id: 'chop_1000', name: 'Lenda da Floresta', desc: 'Derrube 1.000 árvores', target: 1000, type: 'trees', rewardCash: 10000, rewardSkin: 'celestial_mythic' },
-  { id: 'sawmill_unlock', name: 'Serraria Industrial', desc: 'Desbloqueie a Serraria de Madeira', target: 1, type: 'sawmill', rewardCash: 1000, rewardSkin: 'shadow_lumber' },
-  { id: 'planks_50', name: 'Carpintaria de Elite', desc: 'Processe 50 tábuas refinadas', target: 50, type: 'planks', rewardCash: 3000, rewardSkin: null },
-  { id: 'hire_1', name: 'Primeiro Ajudante', desc: 'Contrate 1 ajudante automatizado', target: 1, type: 'workers', rewardCash: 300, rewardSkin: null },
-  { id: 'hire_4', name: 'Equipe de Lenhadores', desc: 'Contrate 4 ajudantes para sua equipe', target: 4, type: 'workers', rewardCash: 4000, rewardSkin: 'royal_tycoon' },
-  { id: 'cash_10k', name: 'Magnata Florestal', desc: 'Acumule $10.000 em dinheiro', target: 10000, type: 'cash', rewardCash: 2000, rewardSkin: null },
-  { id: 'zones_3', name: 'Explorador da Ilha', desc: 'Desbloqueie 3 Zonas da floresta', target: 3, type: 'zones', rewardCash: 5000, rewardSkin: null }
+  { id: 'first_tree', name: 'First Chop', desc: 'Chop down your 1st tree', target: 1, type: 'trees', rewardCash: 100, rewardSkin: 'forest_guardian' },
+  { id: 'chop_50', name: 'Seasoned Lumberjack', desc: 'Chop down 50 trees', target: 50, type: 'trees', rewardCash: 500, rewardSkin: 'flame_lumber' },
+  { id: 'chop_250', name: 'Forest Master', desc: 'Chop down 250 trees', target: 250, type: 'trees', rewardCash: 2500, rewardSkin: 'arctic_explorer' },
+  { id: 'chop_1000', name: 'Legend of the Woods', desc: 'Chop down 1,000 trees', target: 1000, type: 'trees', rewardCash: 10000, rewardSkin: 'celestial_mythic' },
+  { id: 'sawmill_unlock', name: 'Industrial Sawmill', desc: 'Unlock the Timber Sawmill', target: 1, type: 'sawmill', rewardCash: 1000, rewardSkin: 'shadow_lumber' },
+  { id: 'planks_50', name: 'Master Carpenter', desc: 'Process 50 refined planks', target: 50, type: 'planks', rewardCash: 3000, rewardSkin: null },
+  { id: 'hire_1', name: 'First Helper', desc: 'Hire 1 automated worker', target: 1, type: 'workers', rewardCash: 300, rewardSkin: null },
+  { id: 'hire_4', name: 'Lumberjack Crew', desc: 'Hire 4 workers for your team', target: 4, type: 'workers', rewardCash: 4000, rewardSkin: 'royal_tycoon' },
+  { id: 'cash_10k', name: 'Forest Tycoon', desc: 'Accumulate $10,000 in cash', target: 10000, type: 'cash', rewardCash: 2000, rewardSkin: null },
+  { id: 'zones_3', name: 'Island Explorer', desc: 'Unlock 3 Forest Zones', target: 3, type: 'zones', rewardCash: 5000, rewardSkin: null }
 ];
 
 export const PLAYER_SKINS = {
-  classic: { id: 'classic', name: 'Xadrez Vermelho Clássico', desc: 'Tradicional camisa xadrez vermelha e jeans azul', shirt: '#D32F2F', pants: '#1976D2', hat: '#FBC02D', hatRidge: '#F57F17' },
-  forest_guardian: { id: 'forest_guardian', name: 'Guardião Musgo', desc: 'Tecido camuflado verde floresta', shirt: '#2E7D32', pants: '#1B5E20', hat: '#81C784', hatRidge: '#4CAF50' },
-  flame_lumber: { id: 'flame_lumber', name: 'Lenhador Flamejante', desc: 'Uniforme laranja de alta visibilidade e calça preta', shirt: '#E65100', pants: '#212121', hat: '#FFD54F', hatRidge: '#FF9800' },
-  arctic_explorer: { id: 'arctic_explorer', name: 'Explorador Ártico', desc: 'Camisa azul glacial e calça térmica', shirt: '#0288D1', pants: '#ECEFF1', hat: '#81D4FA', hatRidge: '#0288D1' },
-  royal_tycoon: { id: 'royal_tycoon', name: 'Magnata Real', desc: 'Traje nobre roxo com detalhes dourados', shirt: '#7B1FA2', pants: '#FFD54F', hat: '#FFC107', hatRidge: '#FFA000' },
-  shadow_lumber: { id: 'shadow_lumber', name: 'Lenhador Noturno', desc: 'Camisa preta tática e capacete rubro', shirt: '#212121', pants: '#37474F', hat: '#E53935', hatRidge: '#B71C1C' },
-  celestial_mythic: { id: 'celestial_mythic', name: 'Mítico Celestial', desc: 'Tecido cósmico roxo neon e azul elétrico', shirt: '#8E24AA', pants: '#00E5FF', hat: '#E040FB', hatRidge: '#AA00FF' }
+  classic: { id: 'classic', name: 'Classic Red Plaid', desc: 'Traditional red flannel shirt and blue jeans', shirt: '#D32F2F', pants: '#1976D2', hat: '#FBC02D', hatRidge: '#F57F17' },
+  forest_guardian: { id: 'forest_guardian', name: 'Moss Guardian', desc: 'Forest green camo hunter vest and cargo pants', shirt: '#2E7D32', pants: '#1B5E20', hat: '#81C784', hatRidge: '#4CAF50' },
+  flame_lumber: { id: 'flame_lumber', name: 'Blaze Lumberjack', desc: 'High-visibility orange jacket and charcoal work pants', shirt: '#E65100', pants: '#212121', hat: '#FFD54F', hatRidge: '#FF9800' },
+  arctic_explorer: { id: 'arctic_explorer', name: 'Arctic Explorer', desc: 'Glacial blue parka and insulated thermal trousers', shirt: '#0288D1', pants: '#ECEFF1', hat: '#81D4FA', hatRidge: '#0288D1' },
+  royal_tycoon: { id: 'royal_tycoon', name: 'Royal Tycoon', desc: 'Regal purple blazer with gold trimmed trousers', shirt: '#7B1FA2', pants: '#FFD54F', hat: '#FFC107', hatRidge: '#FFA000' },
+  shadow_lumber: { id: 'shadow_lumber', name: 'Night Logger', desc: 'Tactical covert black tunic with crimson helmet', shirt: '#212121', pants: '#37474F', hat: '#E53935', hatRidge: '#B71C1C' },
+  celestial_mythic: { id: 'celestial_mythic', name: 'Celestial Mythic', desc: 'Cosmic purple neon fabric and electric cyan boots', shirt: '#8E24AA', pants: '#00E5FF', hat: '#E040FB', hatRidge: '#AA00FF' }
 };
 
 /* ============================================================================
@@ -814,7 +814,7 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
         ctx.font = 'bold 12px Fredoka, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(`${sawmillState.ready.length} TÁBUAS PRONTAS!`, 0, 0);
+        ctx.fillText(`${sawmillState.ready.length} PLANKS READY!`, 0, 0);
 
         ctx.fillStyle = '#00E676';
         ctx.beginPath();
@@ -835,7 +835,7 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
     ctx.font = 'bold 11px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(sawmillUnlocked ? 'SERRARIA' : 'SERRARIA BLOQUEADA', x + w / 2, y + h - 12);
+    ctx.fillText(sawmillUnlocked ? 'SAWMILL' : 'LOCKED SAWMILL', x + w / 2, y + h - 12);
   } else if (bKey === 'sellZone') {
     // 1. Wood Market Vector Icon (Golden Coin Pouch / Emblem)
     ctx.fillStyle = '#FFB300';
@@ -862,7 +862,7 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlock
     ctx.font = 'bold 11px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('MERCADO DE MADEIRA', centerX, y + h - 12);
+    ctx.fillText('WOOD MARKET', centerX, y + h - 12);
   } else if (bKey === 'blacksmith') {
     // 2. Blacksmith Vector Icon (Forged Anvil & Hammer)
     // Anvil
@@ -1783,7 +1783,7 @@ export class LumberTycoonGame {
         x: 740,
         y: 840,
         radius: 46,
-        label: 'FORJAR MACHADO',
+        label: 'FORGE AXE',
         deposited: 0,
         targetCost: AXE_TIERS[this.player.axeTier + 1]?.cost || 0
       },
@@ -1793,7 +1793,7 @@ export class LumberTycoonGame {
         x: 1330,
         y: 840,
         radius: 46,
-        label: 'EXPANDIR MOCHILA',
+        label: 'BACKPACK',
         deposited: 0,
         targetCost: CAPACITY_TIERS[this.player.capacityIndex + 1]?.cost || 0
       },
@@ -1803,7 +1803,7 @@ export class LumberTycoonGame {
         x: 930,
         y: 840,
         radius: 48,
-        label: 'LIBERAR SERRARIA',
+        label: 'UNLOCK SAWMILL',
         deposited: 0,
         targetCost: this.saveData.sawmillUnlocked ? 0 : 1200
       },
@@ -1813,7 +1813,7 @@ export class LumberTycoonGame {
         x: 1040,
         y: 520,
         radius: 46,
-        label: 'CONTRATAR AJUDANTE',
+        label: 'HIRE WORKER',
         deposited: 0,
         targetCost: Math.floor(250 * Math.pow(1.8, (this.saveData.workers || []).length))
       },
@@ -1823,7 +1823,7 @@ export class LumberTycoonGame {
         x: 1050,
         y: 1040,
         radius: 52,
-        label: 'BOSQUE DE BÉTULA',
+        label: 'BIRCH GROVE',
         deposited: 0,
         targetCost: this.unlockedZones.has('birch') ? 0 : 350
       },
@@ -1833,7 +1833,7 @@ export class LumberTycoonGame {
         x: 1520,
         y: 560,
         radius: 52,
-        label: 'PINHEIRAL NÓRDICO',
+        label: 'PINE TAIGA',
         deposited: 0,
         targetCost: this.unlockedZones.has('pine') ? 0 : 1400
       },
@@ -1843,7 +1843,7 @@ export class LumberTycoonGame {
         x: 520,
         y: 420,
         radius: 52,
-        label: 'REFÚGIO SAKURA',
+        label: 'SAKURA HAVEN',
         deposited: 0,
         targetCost: this.unlockedZones.has('sakura') ? 0 : 5000
       },
@@ -1853,7 +1853,7 @@ export class LumberTycoonGame {
         x: 600,
         y: 1400,
         radius: 52,
-        label: 'SECÓIAS GIGANTES',
+        label: 'REDWOOD GIANTS',
         deposited: 0,
         targetCost: this.unlockedZones.has('redwood') ? 0 : 18000
       },
@@ -1863,7 +1863,7 @@ export class LumberTycoonGame {
         x: 1800,
         y: 1000,
         radius: 52,
-        label: 'FLORESTA DOURADA',
+        label: 'GOLDEN FOREST',
         deposited: 0,
         targetCost: this.unlockedZones.has('golden') ? 0 : 60000
       }
@@ -2163,8 +2163,8 @@ export class LumberTycoonGame {
     this.lastLockedTreeWarnTime = now;
 
     const zone = ZONES.find((z) => z.id === tree.zoneId);
-    const zoneName = zone ? zone.name : 'nova área';
-    this.juice.spawnFloatingText(`Desbloqueie ${zoneName} para cortar! 🔒`, tree.x, tree.y - 45, {
+    const zoneName = zone ? zone.name : 'new zone';
+    this.juice.spawnFloatingText(`Unlock ${zoneName} to chop! 🔒`, tree.x, tree.y - 45, {
       color: '#FFB300',
       size: 16
     });
@@ -2481,7 +2481,7 @@ export class LumberTycoonGame {
     this.audio.playUpgrade();
     this.juice.screenShake(8);
     this.particles.burst(pad.x, pad.y, 30, '#FFD54F');
-    this.juice.spawnFloatingText('NÍVEL ACIMA!', pad.x, pad.y - 40, { color: '#00E676', size: 22 });
+    this.juice.spawnFloatingText('LEVEL UP!', pad.x, pad.y - 40, { color: '#00E676', size: 22 });
 
     pad.cooldown = 0.35;
     pad.deposited = 0;
@@ -2504,7 +2504,7 @@ export class LumberTycoonGame {
     } else if (pad.type === 'SAWMILL_UNLOCK') {
       this.saveData.sawmillUnlocked = true;
       pad.targetCost = 0;
-      this.juice.spawnFloatingText('SERRARIA DESBLOQUEADA! LUCRO 3X!', pad.x, pad.y - 55, { color: '#FFD54F', size: 24 });
+      this.juice.spawnFloatingText('SAWMILL UNLOCKED! 3X PROFITS!', pad.x, pad.y - 55, { color: '#FFD54F', size: 24 });
       this.triggerInterstitial('sawmill_unlock');
     } else if (pad.type === 'WORKER') {
       this.hireNewWorker();
@@ -2523,7 +2523,7 @@ export class LumberTycoonGame {
     if (this.tutorialStep === 2) {
       this.tutorialStep = 3;
       this.saveData.tutorialStep = 3;
-      this.juice.spawnFloatingText('TUTORIAL CONCLUÍDO!', pad.x, pad.y - 60, { color: '#00E676', size: 22 });
+      this.juice.spawnFloatingText('TUTORIAL COMPLETE!', pad.x, pad.y - 60, { color: '#00E676', size: 22 });
     }
 
     SaveManager.save(this.playgama, this.saveData);
@@ -2549,7 +2549,7 @@ export class LumberTycoonGame {
           }
           p.inventory = p.inventory.filter((i) => i.isPlank);
           this.audio.playSawBuzz();
-          this.juice.spawnFloatingText(`+${rawLogs.length} Troncos na Fila!`, p.x, p.y - 30, { color: '#FFE082', size: 16 });
+          this.juice.spawnFloatingText(`+${rawLogs.length} Logs Queued!`, p.x, p.y - 30, { color: '#FFE082', size: 16 });
           this.updateHUD();
         }
 
@@ -2559,7 +2559,7 @@ export class LumberTycoonGame {
           const taken = this.sawmillState.ready.splice(0, takeCount);
           p.inventory.push(...taken);
           this.audio.playCollect();
-          this.juice.spawnFloatingText(`+${takeCount} Tábuas Coletadas!`, p.x, p.y - 25, { color: '#00E676', size: 16 });
+          this.juice.spawnFloatingText(`+${takeCount} Planks Collected!`, p.x, p.y - 25, { color: '#00E676', size: 16 });
           this.updateHUD();
 
           if (this.tutorialStep === 1) {
@@ -2576,7 +2576,7 @@ export class LumberTycoonGame {
     if (p.x > sell.x && p.x < sell.x + sell.w && p.y > sell.y && p.y < sell.y + sell.h) {
       if (p.inventory.length > 0) {
         let totalEarned = 0;
-        let highestType = 'Carvalho';
+        let highestType = 'Oak';
         let hadPlanks = false;
 
         for (const item of p.inventory) {
@@ -2589,7 +2589,7 @@ export class LumberTycoonGame {
         p.inventory = [];
         this.saveData.cash += totalEarned;
         this.saveData.totalCashEarned = (this.saveData.totalCashEarned || 0) + totalEarned;
-        this.spawnCoinBursts(p.x, p.y, totalEarned, hadPlanks ? `${highestType} (3x Tábuas)` : highestType);
+        this.spawnCoinBursts(p.x, p.y, totalEarned, hadPlanks ? `${highestType} (3x Planks)` : highestType);
         this.audio.playCash();
         this.updateHUD();
         SaveManager.save(this.playgama, this.saveData);
@@ -2625,12 +2625,12 @@ export class LumberTycoonGame {
     axeCard.className = 'shop-item';
     axeCard.innerHTML = `
       <div class="shop-item-info">
-        <span class="shop-item-title">${AXE_TIERS[this.player.axeTier]?.name || 'Machado'}</span>
-        <span class="shop-item-desc">Força: ${AXE_TIERS[this.player.axeTier]?.power}x | Velocidade: ${AXE_TIERS[this.player.axeTier]?.speed}s</span>
-        <span class="shop-item-level">Nível ${this.player.axeTier + 1} / ${AXE_TIERS.length}</span>
+        <span class="shop-item-title">${AXE_TIERS[this.player.axeTier]?.name || 'Axe'}</span>
+        <span class="shop-item-desc">Power: ${AXE_TIERS[this.player.axeTier]?.power}x | Speed: ${AXE_TIERS[this.player.axeTier]?.speed}s</span>
+        <span class="shop-item-level">Tier ${this.player.axeTier + 1} / ${AXE_TIERS.length}</span>
       </div>
       <button class="btn-upgrade" id="btn-buy-axe" ${!nextAxe || this.saveData.cash < nextAxe.cost ? 'disabled' : ''}>
-        ${nextAxe ? `Melhorar ($${nextAxe.cost})` : 'MÁXIMO'}
+        ${nextAxe ? `Upgrade ($${nextAxe.cost})` : 'MAX'}
       </button>
     `;
     list.appendChild(axeCard);
@@ -2642,12 +2642,12 @@ export class LumberTycoonGame {
     capCard.className = 'shop-item';
     capCard.innerHTML = `
       <div class="shop-item-info">
-        <span class="shop-item-title">Mochila de Madeira</span>
-        <span class="shop-item-desc">Capacidade: ${CAPACITY_TIERS[this.player.capacityIndex]?.capacity} Itens</span>
-        <span class="shop-item-level">Nível ${this.player.capacityIndex + 1} / ${CAPACITY_TIERS.length}</span>
+        <span class="shop-item-title">Log Backpack</span>
+        <span class="shop-item-desc">Max Carry: ${CAPACITY_TIERS[this.player.capacityIndex]?.capacity} Items</span>
+        <span class="shop-item-level">Tier ${this.player.capacityIndex + 1} / ${CAPACITY_TIERS.length}</span>
       </div>
       <button class="btn-upgrade" id="btn-buy-cap" ${!nextCap || this.saveData.cash < nextCap.cost ? 'disabled' : ''}>
-        ${nextCap ? `Melhorar ($${nextCap.cost})` : 'MÁXIMO'}
+        ${nextCap ? `Upgrade ($${nextCap.cost})` : 'MAX'}
       </button>
     `;
     list.appendChild(capCard);
@@ -2691,11 +2691,11 @@ export class LumberTycoonGame {
 
     hireBanner.innerHTML = `
       <div>
-        <h3 style="font-size: 0.95rem; color: #ffffff;">Contratar Novo Ajudante</h3>
-        <p style="font-size: 0.76rem; color: #cfd8dc;">Corta e transporta madeira automaticamente (${this.workers.length}/${WORKER_COLORS.length})</p>
+        <h3 style="font-size: 0.95rem; color: #ffffff;">Hire New Specialist</h3>
+        <p style="font-size: 0.76rem; color: #cfd8dc;">Auto-harvests and hauls timber (${this.workers.length}/${WORKER_COLORS.length})</p>
       </div>
       <button class="btn-upgrade" id="btn-hire-modal" ${!canHireMore || this.saveData.cash < hireCost ? 'disabled' : ''}>
-        ${canHireMore ? `Contratar ($${hireCost})` : 'EQUIPE COMPLETA'}
+        ${canHireMore ? `Hire ($${hireCost})` : 'MAX HIRED'}
       </button>
     `;
 
@@ -2712,7 +2712,7 @@ export class LumberTycoonGame {
     if (this.workers.length === 0) {
       const emptyMsg = document.createElement('div');
       emptyMsg.style.cssText = 'text-align: center; padding: 20px; color: #a1887f; font-size: 0.85rem;';
-      emptyMsg.textContent = 'Nenhum ajudante contratado ainda. Contrate seu primeiro ajudante acima!';
+      emptyMsg.textContent = 'No workers hired yet. Hire your first specialist above!';
       roster.appendChild(emptyMsg);
     } else {
       this.workers.forEach((w, idx) => {
@@ -2729,29 +2729,29 @@ export class LumberTycoonGame {
             </div>
             <div class="worker-info-header">
               <h3>${w.name} — <span style="color: ${w.colorProfile.shirt};">${w.colorProfile.title}</span></h3>
-              <span>Uniforme: ${w.colorProfile.name}</span>
+              <span>Uniform: ${w.colorProfile.name} Color ID</span>
             </div>
           </div>
           <div class="worker-stat-grid">
             <div class="worker-stat-box">
-              <span class="stat-label">VELOCIDADE</span>
+              <span class="stat-label">SPEED</span>
               <span class="stat-value">${w.speed} px/s</span>
               <button class="btn-stat-upgrade" data-stat="speed" data-idx="${idx}" ${w.speedLvl >= 5 || this.saveData.cash < speedCost ? 'disabled' : ''}>
-                ${w.speedLvl >= 5 ? 'MÁXIMO' : `Nível ${w.speedLvl + 1} ($${speedCost})`}
+                ${w.speedLvl >= 5 ? 'MAX' : `Lvl ${w.speedLvl + 1} ($${speedCost})`}
               </button>
             </div>
             <div class="worker-stat-box">
-              <span class="stat-label">FORÇA DE CORTE</span>
-              <span class="stat-value">${w.axePower} Dano</span>
+              <span class="stat-label">AXE POWER</span>
+              <span class="stat-value">${w.axePower} Dmg</span>
               <button class="btn-stat-upgrade" data-stat="power" data-idx="${idx}" ${w.powerLvl >= 5 || this.saveData.cash < powerCost ? 'disabled' : ''}>
-                ${w.powerLvl >= 5 ? 'MÁXIMO' : `Nível ${w.powerLvl + 1} ($${powerCost})`}
+                ${w.powerLvl >= 5 ? 'MAX' : `Lvl ${w.powerLvl + 1} ($${powerCost})`}
               </button>
             </div>
             <div class="worker-stat-box">
-              <span class="stat-label">CAPACIDADE</span>
-              <span class="stat-value">${w.maxCarry} Troncos</span>
+              <span class="stat-label">CARRY & TREES</span>
+              <span class="stat-value">${w.maxCarry} Logs</span>
               <button class="btn-stat-upgrade" data-stat="capacity" data-idx="${idx}" ${w.capacityLvl >= 5 || this.saveData.cash < capCost ? 'disabled' : ''}>
-                ${w.capacityLvl >= 5 ? 'MÁXIMO' : `Nível ${w.capacityLvl + 1} ($${capCost})`}
+                ${w.capacityLvl >= 5 ? 'MAX' : `Lvl ${w.capacityLvl + 1} ($${capCost})`}
               </button>
             </div>
           </div>
@@ -2836,15 +2836,15 @@ export class LumberTycoonGame {
             <div class="achievement-progress-fill" style="width: ${pct}%;"></div>
           </div>
           <span style="font-size: 0.70rem; color: #ffe082; margin-top: 3px;">
-            Recompensa: +$${ach.rewardCash.toLocaleString()} ${ach.rewardSkin ? `+ Skin "${PLAYER_SKINS[ach.rewardSkin]?.name || ach.rewardSkin}"` : ''}
+            Reward: +$${ach.rewardCash.toLocaleString()} ${ach.rewardSkin ? `+ Skin "${PLAYER_SKINS[ach.rewardSkin]?.name || ach.rewardSkin}"` : ''}
           </span>
         </div>
         <div>
           ${
             isClaimed
-              ? '<span class="claimed-badge">RESGATADO</span>'
+              ? '<span class="claimed-badge">CLAIMED</span>'
               : isCompleted
-              ? `<button class="btn-claim" data-ach="${ach.id}">RESGATAR</button>`
+              ? `<button class="btn-claim" data-ach="${ach.id}">CLAIM</button>`
               : `<span style="font-size: 0.74rem; color: #8d6e63; font-weight: 700;">${pct}%</span>`
           }
         </div>
@@ -2905,7 +2905,7 @@ export class LumberTycoonGame {
           <div style="width: 14px; height: 14px; border-radius: 50%; background: ${skin.hat}; border: 1px solid #ffffff;"></div>
         </div>
         <span style="font-size: 0.72rem; font-weight: 700; margin-top: 4px; color: ${isActive ? '#00e676' : isUnlocked ? '#ffe082' : '#8d6e63'};">
-          ${isActive ? 'EM USO' : isUnlocked ? 'EQUIPAR' : 'BLOQUEADO EM CONQUISTAS'}
+          ${isActive ? 'ACTIVE' : isUnlocked ? 'EQUIP' : 'LOCKED IN ACHIEVEMENTS'}
         </span>
       `;
 
@@ -3075,15 +3075,15 @@ export class LumberTycoonGame {
         }
       }
       if (nearestOak) {
-        drawTutorialArrow(ctx, nearestOak.x, nearestOak.y, '1. Aproxime-se da árvore para cortar!', this.animTime);
+        drawTutorialArrow(ctx, nearestOak.x, nearestOak.y, '1. Stand near tree to auto-chop logs!', this.animTime);
       }
     } else if (this.tutorialStep === 1) {
       const market = BUILDINGS.sellZone;
-      drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '2. Entregue os troncos no Mercado!', this.animTime);
+      drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '2. Deliver raw logs to Wood Market!', this.animTime);
     } else if (this.tutorialStep === 2) {
       const targetPad = this.upgradePads.find((p) => p.type === 'CAPACITY') || this.upgradePads.find((p) => p.type === 'AXE');
       if (targetPad) {
-        drawTutorialArrow(ctx, targetPad.x, targetPad.y, '3. Fique no círculo para aprimorar a Mochila!', this.animTime);
+        drawTutorialArrow(ctx, targetPad.x, targetPad.y, '3. Stand in circle to upgrade Backpack!', this.animTime);
       }
     }
 
