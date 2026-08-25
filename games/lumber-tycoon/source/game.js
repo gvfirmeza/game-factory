@@ -134,45 +134,53 @@ class TycoonAudioSynthesizer {
     if (this.bgMusicStarted || typeof window === 'undefined' || typeof Audio === 'undefined') return;
     this.bgMusicStarted = true;
 
-    // Search for background music in asset locations
     const candidatePaths = [
+      'assets/music.mp3',
       './assets/music.mp3',
-      './assets/bgm.mp3',
-      './assets/audio.mp3',
-      './assets/soundtrack.mp3',
-      './assets/timber.mp3',
-      './assets/forest.mp3',
       '../../assets/music.mp3',
-      '../../assets/bgm.mp3',
-      '../../assets/audio.mp3',
-      './music.mp3',
-      './bgm.mp3',
-      './audio.mp3'
+      'assets/bgm.mp3',
+      './assets/bgm.mp3',
+      'assets/audio.mp3',
+      'music.mp3'
     ];
 
-    const tryNext = (index) => {
-      if (index >= candidatePaths.length) return;
+    const loadTrack = (idx) => {
+      if (idx >= candidatePaths.length) return;
       const audio = new Audio();
-      audio.src = candidatePaths[index];
+      audio.src = candidatePaths[idx];
       audio.loop = true;
       audio.volume = this.isMuted ? 0 : this.bgMusicVolume;
       audio.preload = 'auto';
 
-      audio.addEventListener('canplaythrough', () => {
-        this.bgMusic = audio;
-        if (!this.isMuted) {
-          audio.play().catch(() => {});
-        }
-      }, { once: true });
-
       audio.addEventListener('error', () => {
-        tryNext(index + 1);
+        loadTrack(idx + 1);
       }, { once: true });
 
-      audio.load();
+      this.bgMusic = audio;
+
+      // Attempt immediate play (works when triggered by user interaction)
+      if (!this.isMuted) {
+        const p = audio.play();
+        if (p && typeof p.catch === 'function') {
+          p.catch(() => {
+            // Autoplay policy prevented immediate playback, bind unlock listeners
+            const unlock = () => {
+              if (this.bgMusic && !this.isMuted) {
+                this.bgMusic.play().catch(() => {});
+              }
+              window.removeEventListener('pointerdown', unlock);
+              window.removeEventListener('keydown', unlock);
+              window.removeEventListener('click', unlock);
+            };
+            window.addEventListener('pointerdown', unlock, { once: true });
+            window.addEventListener('keydown', unlock, { once: true });
+            window.addEventListener('click', unlock, { once: true });
+          });
+        }
+      }
     };
 
-    tryNext(0);
+    loadTrack(0);
   }
 
   setMuted(muted) {
