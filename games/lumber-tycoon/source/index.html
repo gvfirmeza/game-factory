@@ -6,410 +6,100 @@
   <title>Lumber Tycoon — Cozy Island Wood Empire</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
   <!-- Playgama Bridge SDK v2 -->
   <script src="https://bridge.playgama.com/v2/stable/playgama-bridge.js"></script>
   <link rel="stylesheet" href="style.css">
-  <style>
-/* Inlined styles for immediate iframe formatting */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.hidden {
-  display: none !important;
-}
-
-:root {
-  --wood-dark: #3e2723;
-  --wood-mid: #5d4037;
-  --wood-light: #8d6e63;
-  --gold-primary: #ffb300;
-  --gold-bright: #ffe082;
-  --forest-green: #2e7d32;
-  --emerald-accent: #00e676;
-  --text-white: #ffffff;
-  --text-dim: #cfd8dc;
-  --ui-bg: rgba(30, 20, 15, 0.94);
-  --ui-border: rgba(255, 179, 0, 0.4);
-  --glass-card: rgba(45, 30, 22, 0.90);
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: #1b2618;
-  font-family: 'Fredoka', 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: var(--text-white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#game-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #141f12;
-}
-
-canvas {
-  display: block;
-  background-color: #24381e;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
-}
-
-.top-hud {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 10px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 50;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(15, 10, 5, 0.88) 0%, rgba(15, 10, 5, 0) 100%);
-}
-
-.hud-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  pointer-events: auto;
-}
-
-.hud-badge {
-  background: var(--glass-card);
-  border: 1.5px solid var(--ui-border);
-  border-radius: 12px;
-  padding: 6px 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.cash-badge {
-  border-color: var(--gold-primary);
-  color: var(--gold-bright);
-}
-
-.log-badge {
-  border-color: #a1887f;
-  color: #d7ccc8;
-}
-
-.plank-badge {
-  border-color: #ffb74d;
-  color: #ffe0b2;
-}
-
-.airdrop-badge {
-  background: linear-gradient(135deg, rgba(171, 71, 188, 0.35), rgba(255, 179, 0, 0.35));
-  border: 1.5px solid var(--gold-primary);
-  color: var(--gold-bright);
-  cursor: pointer;
-  animation: pulseAirdrop 2.2s infinite ease-in-out;
-}
-
-.hud-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: var(--glass-card);
-  border: 1.5px solid var(--ui-border);
-  color: var(--text-white);
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  transition: transform 0.12s ease;
-  pointer-events: auto;
-}
-
-.hud-btn:hover {
-  transform: scale(1.08);
-}
-
-@keyframes pulseAirdrop {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 6px rgba(255, 179, 0, 0.3); }
-  50% { transform: scale(1.06); box-shadow: 0 0 16px rgba(255, 179, 0, 0.7); }
-}
-
-.bottom-controls {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  z-index: 50;
-  pointer-events: none;
-}
-
-.joystick-container {
-  display: none;
-}
-
-@media (hover: none) and (pointer: coarse), (max-width: 768px) {
-  .joystick-container {
-    display: block;
-    width: 120px;
-    height: 120px;
-    position: relative;
-    pointer-events: auto;
-  }
-}
-
-.joystick-base {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(6px);
-  position: relative;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-
-.joystick-stick {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ffe082, #ff8f00);
-  border: 2px solid #ffffff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-}
-
-.modal-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 8, 5, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  z-index: 100;
-  animation: fadeIn 0.2s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal-window {
-  width: 100%;
-  max-width: 440px;
-  max-height: 85vh;
-  background: var(--ui-bg);
-  border: 2px solid var(--ui-border);
-  border-radius: 22px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 179, 0, 0.2);
-  overflow: hidden;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 10px;
-}
-
-.modal-title-stack h2 {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--gold-bright);
-}
-
-.modal-title-stack p {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-}
-
-.btn-close {
-  background: transparent;
-  border: none;
-  color: var(--text-dim);
-  font-size: 1.6rem;
-  cursor: pointer;
-  line-height: 1;
-  padding: 4px;
-}
-
-.modal-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  overflow-y: auto;
-  padding-right: 4px;
-  max-height: 380px;
-}
-
-.shop-item {
-  background: var(--glass-card);
-  border: 1.5px solid var(--ui-border);
-  border-radius: 14px;
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.shop-item-info {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.shop-item-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-white);
-}
-
-.shop-item-desc {
-  font-size: 0.78rem;
-  color: var(--text-dim);
-}
-
-.shop-item-level {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--emerald-accent);
-}
-
-.btn-upgrade {
-  padding: 8px 14px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #ffb300, #ff8f00);
-  border: none;
-  color: #211508;
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.btn-upgrade:disabled {
-  background: #54433a;
-  color: #9e8e85;
-  cursor: not-allowed;
-}
-
-.title-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(30, 20, 12, 0.88) 0%, rgba(10, 8, 5, 0.97) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  z-index: 120;
-  text-align: center;
-}
-
-.title-logo-icon {
-  font-size: 3.5rem;
-  margin-bottom: 8px;
-}
-
-.title-headline {
-  font-size: 2.4rem;
-  font-weight: 900;
-  color: #ffe082;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 179, 0, 0.5);
-  letter-spacing: 1px;
-}
-
-.title-subhead {
-  font-size: 1rem;
-  color: #cfd8dc;
-  margin-bottom: 24px;
-}
-
-.btn-title-play {
-  width: 220px;
-  height: 54px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #ffb300 0%, #ff6f00 100%);
-  border: 2px solid #ffffff;
-  color: #1a0f00;
-  font-family: inherit;
-  font-weight: 900;
-  font-size: 1.25rem;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(255, 111, 0, 0.5);
-}
-
-.title-guide {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: #b0bec5;
-}
-  </style>
 </head>
 <body>
   <div id="game-container">
     <canvas id="game-canvas"></canvas>
 
-    <!-- Top Master HUD -->
+    <!-- Top Rustic HUD -->
     <header class="top-hud">
       <div class="hud-group">
-        <button id="btn-mute" class="hud-btn" aria-label="Toggle Audio" title="Mute / Unmute">🔊</button>
-        <div class="hud-badge cash-badge">
-          <span>💰</span>
+        <button id="btn-mute" class="hud-btn" aria-label="Toggle Audio" title="Mute / Unmute">
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <path d="M11 5L6 9H2v6h4l5 4V5z" fill="#ECEFF1" stroke="#455A64" stroke-width="1.8"/>
+            <path id="audio-waves" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="#00E676" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <div class="hud-badge cash-badge" title="Treasury Gold">
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <circle cx="12" cy="12" r="9" fill="#FFB300" stroke="#FF8F00" stroke-width="1.8"/>
+            <path d="M12 7v10M9.5 9.5a2.5 2.5 0 0 1 5 0c0 2-5 2-5 4a2.5 2.5 0 0 0 5 0" stroke="#FFF8E1" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
           <span id="hud-cash-val">$0</span>
         </div>
+
         <div class="hud-badge log-badge" title="Raw Wood Logs in Backpack">
-          <span>🪵</span>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <rect x="3" y="6" width="14" height="12" rx="2" fill="#8D6E63" stroke="#4E342E" stroke-width="1.8"/>
+            <ellipse cx="17" cy="12" rx="4" ry="6" fill="#D7CCC8" stroke="#4E342E" stroke-width="1.8"/>
+            <circle cx="17" cy="12" r="2" fill="#8D6E63"/>
+          </svg>
           <span id="hud-logs-val">0 / 3</span>
         </div>
+
         <div class="hud-badge plank-badge" title="Refined Wood Planks in Backpack">
-          <span>🪚</span>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <rect x="2" y="7" width="20" height="10" rx="2" fill="#FFE082" stroke="#FFB300" stroke-width="1.8"/>
+            <line x1="6" y1="10" x2="18" y2="10" stroke="#FFA000" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="4" y1="14" x2="16" y2="14" stroke="#FFA000" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
           <span id="hud-planks-val">0 / 3</span>
         </div>
       </div>
 
       <div class="hud-group">
         <button id="btn-airdrop" class="hud-badge airdrop-badge" title="Watch short ad to receive +$500 Cash Airdrop">
-          <span>🎁 Free +$500</span>
+          <svg class="ui-icon" viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <rect x="3" y="8" width="18" height="13" rx="2" fill="#7B1FA2" stroke="#4A148C" stroke-width="1.8"/>
+            <rect x="2" y="5" width="20" height="4" rx="1.5" fill="#9C27B0" stroke="#4A148C" stroke-width="1.5"/>
+            <line x1="12" y1="5" x2="12" y2="21" stroke="#FFD54F" stroke-width="2.5"/>
+          </svg>
+          <span>Free +$500</span>
         </button>
-        <button id="btn-open-shop" class="hud-btn" title="Blacksmith Forge & Backpack Depot">🛒</button>
-        <button id="btn-open-workers" class="hud-btn" title="Hire Automated Lumberjacks">👷</button>
+
+        <!-- Forge & Depot Shop -->
+        <button id="btn-open-shop" class="hud-btn" title="Blacksmith Forge & Backpack Depot">
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <path d="M18 4l-4 4 2 2 4-4a2 2 0 0 0-2-2z" fill="#90A4AE" stroke="#37474F" stroke-width="1.5"/>
+            <path d="M14 8l-9 9a1.5 1.5 0 0 0 2 2l9-9" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M16 3c2-1 5 0 5 2s-1 4-3 5l-2-2 1-4" fill="#B0BEC5" stroke="#37474F" stroke-width="1.5"/>
+          </svg>
+        </button>
+
+        <!-- Workers Management Hub -->
+        <button id="btn-open-workers" class="hud-btn" title="Worker Management & Individual Upgrades">
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <circle cx="9" cy="8" r="4" fill="#FFE0B2" stroke="#5D4037" stroke-width="1.5"/>
+            <path d="M4 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" fill="#FF9800" stroke="#E65100" stroke-width="1.8"/>
+            <path d="M5 8c0-2.5 1.8-4 4-4s4 1.5 4 4" stroke="#FBC02D" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 11a3 3 0 0 0 3-3c0-1.5-1-2.8-2.5-3" stroke="#5D4037" stroke-width="1.5"/>
+            <path d="M17 16a3.5 3.5 0 0 1 3 3.5V20" stroke="#1976D2" stroke-width="1.8"/>
+          </svg>
+        </button>
+
+        <!-- Achievements Hub with Unclaimed Badge -->
+        <button id="btn-open-achievements" class="hud-btn btn-with-badge" title="Achievements & Milestones">
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="#FFD54F" stroke="#FFB300" stroke-width="1.8"/>
+            <path d="M4 6h3v3a3 3 0 0 1-3-3zM20 6h-3v3a3 3 0 0 0 3-3z" fill="#FFE082" stroke="#FFB300" stroke-width="1.5"/>
+            <path d="M12 15v4M8 19h8" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          <span id="ach-badge" class="hud-badge-counter hidden">0</span>
+        </button>
+
+        <!-- Player Wardrobe / Skin Customization -->
+        <button id="btn-open-wardrobe" class="hud-btn" title="Player Wardrobe & Skin Customization">
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <path d="M6 7l6-3 6 3 2 4-4 2v7H8v-7L4 11l2-4z" fill="#D32F2F" stroke="#B71C1C" stroke-width="1.8"/>
+            <path d="M10 4a2 2 0 0 1 4 0" stroke="#FFD54F" stroke-width="2"/>
+            <line x1="12" y1="7" x2="12" y2="19" stroke="#B71C1C" stroke-width="1.5"/>
+          </svg>
+        </button>
       </div>
     </header>
 
@@ -422,12 +112,18 @@ canvas {
       </div>
     </div>
 
-    <!-- Upgrade Shop Modal -->
+    <!-- Upgrade Shop Modal (Blacksmith Forge & Backpack) -->
     <div id="shop-modal" class="modal-overlay hidden">
       <div class="modal-window">
         <div class="modal-header">
           <div class="modal-title-stack">
-            <h2>🛒 BLACKSMITH & DEPOT</h2>
+            <h2>
+              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
+                <path d="M18 4l-4 4 2 2 4-4a2 2 0 0 0-2-2z" fill="#90A4AE" stroke="#37474F" stroke-width="1.5"/>
+                <path d="M14 8l-9 9a1.5 1.5 0 0 0 2 2l9-9" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+              FORGE & DEPOT
+            </h2>
             <p>Upgrade your cutting axes and backpack capacity</p>
           </div>
           <button id="btn-close-shop" class="btn-close">&times;</button>
@@ -438,38 +134,115 @@ canvas {
       </div>
     </div>
 
-    <!-- Workers Station Modal -->
+    <!-- Workers Management Hub (Individual Upgrades & Colors) -->
     <div id="workers-modal" class="modal-overlay hidden">
-      <div class="modal-window">
+      <div class="modal-window modal-wide">
         <div class="modal-header">
           <div class="modal-title-stack">
-            <h2>👷 LUMBERJACK BARRACKS</h2>
-            <p>Hire automated workers to harvest & deliver timber</p>
+            <h2>
+              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
+                <circle cx="9" cy="8" r="4" fill="#FFE0B2" stroke="#5D4037" stroke-width="1.5"/>
+                <path d="M4 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" fill="#FF9800" stroke="#E65100" stroke-width="1.8"/>
+              </svg>
+              WORKER MANAGEMENT
+            </h2>
+            <p>Hire specialized lumberjacks and upgrade their individual stats</p>
           </div>
           <button id="btn-close-workers" class="btn-close">&times;</button>
         </div>
-        <div id="workers-list" class="modal-list">
+        <div class="workers-hire-banner" id="workers-hire-banner">
+          <!-- Populated dynamically -->
+        </div>
+        <div id="workers-roster-list" class="modal-list">
+          <!-- Populated dynamically with individual worker cards -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements & Milestones Modal -->
+    <div id="achievements-modal" class="modal-overlay hidden">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title-stack">
+            <h2>
+              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
+                <path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="#FFD54F" stroke="#FFB300" stroke-width="1.8"/>
+                <path d="M12 15v4M8 19h8" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+              ACHIEVEMENTS & TROPHIES
+            </h2>
+            <p>Reach forestry milestones to unlock bonus cash and exclusive skins</p>
+          </div>
+          <button id="btn-close-achievements" class="btn-close">&times;</button>
+        </div>
+        <div id="achievements-list" class="modal-list">
           <!-- Populated dynamically by game.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Player Wardrobe & Customization Modal (Player Only) -->
+    <div id="wardrobe-modal" class="modal-overlay hidden">
+      <div class="modal-window modal-wide">
+        <div class="modal-header">
+          <div class="modal-title-stack">
+            <h2>
+              <svg class="modal-title-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
+                <path d="M6 7l6-3 6 3 2 4-4 2v7H8v-7L4 11l2-4z" fill="#D32F2F" stroke="#B71C1C" stroke-width="1.8"/>
+              </svg>
+              LUMBERJACK WARDROBE
+            </h2>
+            <p>Customize your player hero attire and hat style</p>
+          </div>
+          <button id="btn-close-wardrobe" class="btn-close">&times;</button>
+        </div>
+        <div class="wardrobe-content">
+          <div class="wardrobe-preview-box">
+            <canvas id="wardrobe-preview-canvas" width="160" height="180"></canvas>
+            <div id="wardrobe-active-name" class="wardrobe-skin-name">Classic Red Plaid</div>
+          </div>
+          <div id="wardrobe-skin-list" class="wardrobe-skin-grid">
+            <!-- Populated dynamically by game.js -->
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Title Screen Overlay -->
     <div id="title-overlay" class="title-overlay">
-      <div class="title-logo-icon">🌲🪓</div>
-      <h1 class="title-headline">LUMBER TYCOON</h1>
-      <p class="title-subhead">Build Your Automated Timber Empire</p>
+      <div class="title-plaque">
+        <div class="title-logo-icon">
+          <svg viewBox="0 0 48 48" width="64" height="64" fill="none">
+            <path d="M24 4l-12 18h8l-6 10h8l-6 10h20l-6-10h8l-6-10h8L24 4z" fill="#2E7D32" stroke="#1B5E20" stroke-width="2.5"/>
+            <path d="M38 12l-8 8 4 4 8-8a4 4 0 0 0-4-4z" fill="#ECEFF1" stroke="#37474F" stroke-width="2"/>
+            <path d="M30 20l-16 16a3 3 0 0 0 4 4l16-16" stroke="#8D6E63" stroke-width="4.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h1 class="title-headline">LUMBER TYCOON</h1>
+        <p class="title-subhead">Build Your Automated Timber Empire</p>
 
-      <button id="btn-title-play" class="btn-title-play">
-        ▶ START CHOPPING
-      </button>
+        <button id="btn-title-play" class="btn-title-play">
+          <span>START CHOPPING</span>
+        </button>
 
-      <div class="title-guide">
-        <span>🎮 WASD / Touch Joystick to Move</span>
-        <span>🪓 Stand near trees to auto-chop raw logs</span>
-        <span>⚙️ Feed raw logs into Sawmill to slice into planks</span>
-        <span>💰 Deliver planks to Wood Market for +50% bonus cash</span>
-        <span>👷 Step on glowing ground pads to upgrade and automate</span>
+        <div class="title-guide">
+          <div class="guide-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M18 4l-4 4 2 2 4-4a2 2 0 0 0-2-2z" fill="#90A4AE"/><path d="M14 8l-9 9a1.5 1.5 0 0 0 2 2l9-9" stroke="#8D6E63" stroke-width="2"/></svg>
+            <span>Stand near trees to auto-chop raw logs</span>
+          </div>
+          <div class="guide-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="8" fill="#CFD8DC"/><circle cx="12" cy="12" r="3" fill="#37474F"/></svg>
+            <span>Unlock the Sawmill to refine logs into high-value planks</span>
+          </div>
+          <div class="guide-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="9" fill="#FFB300"/></svg>
+            <span>Deliver timber to the Wood Market for huge cash returns</span>
+          </div>
+          <div class="guide-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="9" cy="8" r="4" fill="#FFE0B2"/><path d="M4 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" fill="#FF9800"/></svg>
+            <span>Hire and upgrade individual automated lumberjack workers</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

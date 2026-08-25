@@ -1,5 +1,5 @@
 /* ============================================================================
- * LUMBER TYCOON — TOP-DOWN VECTOR COZY ARCADE STYLING
+ * LUMBER TYCOON — RUSTIC TIMBER & FORESTRY STYLING (100% SVG UI)
  * ============================================================================ */
 
 * {
@@ -17,28 +17,32 @@
 }
 
 :root {
-  --wood-dark: #3e2723;
+  --wood-darkest: #1e120c;
+  --wood-dark: #2c1a11;
+  --wood-base: #3e2723;
   --wood-mid: #5d4037;
   --wood-light: #8d6e63;
   --wood-plank: #d7ccc8;
+  --wood-bark: #4e342e;
   --gold-primary: #ffb300;
   --gold-bright: #ffe082;
   --forest-green: #2e7d32;
-  --forest-light: #4caf50;
+  --forest-deep: #1b5e20;
   --emerald-accent: #00e676;
-  --water-cyan: #00e5ff;
   --text-white: #ffffff;
   --text-dim: #cfd8dc;
-  --ui-bg: rgba(30, 20, 15, 0.94);
-  --ui-border: rgba(255, 179, 0, 0.4);
-  --glass-card: rgba(45, 30, 22, 0.90);
+  --text-muted: #a1887f;
+  --ui-bg: rgba(36, 22, 15, 0.96);
+  --ui-border: #8d6e63;
+  --ui-border-gold: #ffb300;
+  --glass-card: rgba(46, 30, 20, 0.92);
 }
 
 html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: #1b2618;
+  background-color: #141f12;
   font-family: 'Fredoka', 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: var(--text-white);
   display: flex;
@@ -60,7 +64,7 @@ html, body {
 canvas {
   display: block;
   background-color: #24381e;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.85);
 }
 
 /* ============================================================================
@@ -77,7 +81,7 @@ canvas {
   align-items: center;
   z-index: 50;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(15, 10, 5, 0.88) 0%, rgba(15, 10, 5, 0) 100%);
+  background: linear-gradient(180deg, rgba(20, 12, 8, 0.92) 0%, rgba(20, 12, 8, 0) 100%);
 }
 
 .hud-group {
@@ -94,12 +98,12 @@ canvas {
   padding: 6px 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   font-size: 0.95rem;
   font-weight: 700;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .cash-badge {
@@ -108,17 +112,17 @@ canvas {
 }
 
 .log-badge {
-  border-color: #a1887f;
-  color: #d7ccc8;
+  border-color: var(--wood-light);
+  color: #efebe9;
 }
 
 .plank-badge {
   border-color: #ffb74d;
-  color: #ffe0b2;
+  color: #fff3e0;
 }
 
 .airdrop-badge {
-  background: linear-gradient(135deg, rgba(171, 71, 188, 0.35), rgba(255, 179, 0, 0.35));
+  background: linear-gradient(135deg, rgba(123, 31, 162, 0.4), rgba(255, 179, 0, 0.35));
   border: 1.5px solid var(--gold-primary);
   color: var(--gold-bright);
   cursor: pointer;
@@ -131,29 +135,53 @@ canvas {
 }
 
 .hud-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   background: var(--glass-card);
   border: 1.5px solid var(--ui-border);
   color: var(--text-white);
-  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  transition: transform 0.12s ease, border-color 0.12s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
   pointer-events: auto;
 }
 
 .hud-btn:hover {
   transform: scale(1.08);
   border-color: var(--gold-primary);
+  background: rgba(78, 52, 46, 0.95);
 }
 
 .hud-btn:active {
   transform: scale(0.94);
+}
+
+.hud-badge-counter {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #e53935;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #ffffff;
+  animation: bounceBadge 1.2s infinite ease-in-out;
+}
+
+@keyframes bounceBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 
 @keyframes pulseAirdrop {
@@ -162,7 +190,7 @@ canvas {
 }
 
 /* ============================================================================
- * 2. RESPONSIVE TOUCH JOYSTICK (HIDDEN ON DESKTOP)
+ * 2. RESPONSIVE TOUCH JOYSTICK
  * ============================================================================ */
 .bottom-controls {
   position: absolute;
@@ -172,12 +200,10 @@ canvas {
   pointer-events: none;
 }
 
-/* Hidden by default on desktop/mouse */
 .joystick-container {
   display: none;
 }
 
-/* Visible ONLY on touch screens / mobile */
 @media (hover: none) and (pointer: coarse), (max-width: 768px) {
   .joystick-container {
     display: block;
@@ -192,11 +218,11 @@ canvas {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(46, 30, 20, 0.5);
   border: 2px solid rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(6px);
   position: relative;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .joystick-stick {
@@ -214,12 +240,12 @@ canvas {
 }
 
 /* ============================================================================
- * 3. MODALS & UPGRADE SHOP
+ * 3. MODALS & RUSTIC WINDOWS
  * ============================================================================ */
 .modal-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10, 8, 5, 0.85);
+  background: rgba(15, 10, 6, 0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -231,59 +257,74 @@ canvas {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .modal-window {
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   max-height: 85vh;
   background: var(--ui-bg);
   border: 2px solid var(--ui-border);
-  border-radius: 22px;
-  padding: 20px;
+  border-radius: 20px;
+  padding: 18px 20px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 179, 0, 0.2);
+  gap: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   overflow: hidden;
+}
+
+.modal-wide {
+  max-width: 540px;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1.5px solid rgba(141, 110, 99, 0.35);
   padding-bottom: 10px;
 }
 
 .modal-title-stack h2 {
-  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--gold-bright);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.5px;
 }
 
 .modal-title-stack p {
-  font-size: 0.82rem;
+  font-size: 0.80rem;
   color: var(--text-dim);
+  margin-top: 2px;
 }
 
 .btn-close {
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-dim);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   cursor: pointer;
   line-height: 1;
-  padding: 4px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
-  transition: color 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
 }
 
 .btn-close:hover {
-  color: #ff5252;
+  background: rgba(229, 57, 53, 0.3);
+  border-color: #e53935;
+  color: #ffffff;
 }
 
 .modal-list {
@@ -292,18 +333,35 @@ canvas {
   gap: 10px;
   overflow-y: auto;
   padding-right: 4px;
-  max-height: 380px;
+  max-height: 400px;
 }
 
+.modal-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-list::-webkit-scrollbar-track {
+  background: rgba(30, 18, 12, 0.6);
+  border-radius: 3px;
+}
+
+.modal-list::-webkit-scrollbar-thumb {
+  background: var(--wood-light);
+  border-radius: 3px;
+}
+
+/* ============================================================================
+ * 4. SHOP & WORKERS CARDS
+ * ============================================================================ */
 .shop-item {
   background: var(--glass-card);
-  border: 1.5px solid var(--ui-border);
+  border: 1.5px solid rgba(141, 110, 99, 0.4);
   border-radius: 14px;
-  padding: 12px;
+  padding: 12px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .shop-item-info {
@@ -313,6 +371,9 @@ canvas {
 }
 
 .shop-item-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-white);
@@ -339,7 +400,7 @@ canvas {
   font-weight: 800;
   font-size: 0.85rem;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(255, 143, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(255, 143, 0, 0.35);
   transition: transform 0.1s ease, filter 0.1s ease;
   white-space: nowrap;
 }
@@ -350,36 +411,307 @@ canvas {
 }
 
 .btn-upgrade:disabled {
-  background: #54433a;
-  color: #9e8e85;
+  background: #4e342e;
+  color: #8d6e63;
   box-shadow: none;
   cursor: not-allowed;
 }
 
+/* Workers Roster */
+.workers-hire-banner {
+  background: linear-gradient(135deg, rgba(230, 81, 0, 0.25), rgba(78, 52, 46, 0.6));
+  border: 1.5px solid #ff9800;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.worker-card {
+  background: var(--glass-card);
+  border: 1.5px solid rgba(141, 110, 99, 0.4);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.worker-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.worker-avatar-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  border: 2px solid #ffffff;
+}
+
+.worker-info-header h3 {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.worker-info-header span {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+}
+
+.worker-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.worker-stat-box {
+  background: rgba(20, 12, 8, 0.6);
+  border: 1px solid rgba(141, 110, 99, 0.3);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 0.70rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+}
+
+.btn-stat-upgrade {
+  width: 100%;
+  padding: 5px 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  background: #ffb300;
+  color: #1e120c;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: transform 0.08s ease;
+}
+
+.btn-stat-upgrade:hover:not(:disabled) {
+  transform: scale(1.04);
+}
+
+.btn-stat-upgrade:disabled {
+  background: #4e342e;
+  color: #8d6e63;
+  cursor: not-allowed;
+}
+
 /* ============================================================================
- * 4. TITLE OVERLAY
+ * 5. ACHIEVEMENTS & TROPHIES
+ * ============================================================================ */
+.achievement-card {
+  background: var(--glass-card);
+  border: 1.5px solid rgba(141, 110, 99, 0.4);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.achievement-card.completed {
+  border-color: #ffd54f;
+  background: linear-gradient(135deg, rgba(78, 52, 46, 0.95), rgba(255, 179, 0, 0.15));
+}
+
+.achievement-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.achievement-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-white);
+}
+
+.achievement-desc {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.achievement-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(20, 12, 8, 0.8);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.achievement-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffb300, #00e676);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.btn-claim {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00e676, #00c853);
+  border: none;
+  color: #0d3813;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.80rem;
+  cursor: pointer;
+  animation: pulseClaim 1.5s infinite ease-in-out;
+  white-space: nowrap;
+}
+
+@keyframes pulseClaim {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); box-shadow: 0 0 12px rgba(0, 230, 118, 0.6); }
+}
+
+.claimed-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--emerald-accent);
+}
+
+/* ============================================================================
+ * 6. PLAYER WARDROBE
+ * ============================================================================ */
+.wardrobe-content {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.wardrobe-preview-box {
+  width: 160px;
+  background: rgba(20, 12, 8, 0.7);
+  border: 1.5px solid var(--ui-border);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.wardrobe-skin-name {
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  text-align: center;
+}
+
+.wardrobe-skin-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.wardrobe-card {
+  background: var(--glass-card);
+  border: 1.5px solid rgba(141, 110, 99, 0.4);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.wardrobe-card:hover:not(.locked) {
+  border-color: var(--gold-primary);
+  transform: scale(1.03);
+}
+
+.wardrobe-card.active {
+  border-color: #00e676;
+  background: rgba(0, 230, 118, 0.12);
+}
+
+.wardrobe-card.locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.wardrobe-card-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.wardrobe-card-desc {
+  font-size: 0.70rem;
+  color: var(--text-dim);
+}
+
+/* ============================================================================
+ * 7. TITLE SCREEN OVERLAY
  * ============================================================================ */
 .title-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(30, 20, 12, 0.88) 0%, rgba(10, 8, 5, 0.97) 100%);
+  background: radial-gradient(circle at center, rgba(35, 22, 14, 0.92) 0%, rgba(15, 10, 6, 0.98) 100%);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 24px;
   z-index: 120;
+}
+
+.title-plaque {
+  background: rgba(46, 30, 20, 0.96);
+  border: 3px solid var(--gold-primary);
+  border-radius: 24px;
+  padding: 28px 32px;
+  max-width: 440px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 179, 0, 0.25);
   text-align: center;
 }
 
 .title-logo-icon {
-  font-size: 3.5rem;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 0 20px rgba(255, 179, 0, 0.6));
+  margin-bottom: 6px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
 }
 
 .title-headline {
-  font-size: 2.4rem;
+  font-size: 2.3rem;
   font-weight: 900;
   color: #ffe082;
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 179, 0, 0.5);
@@ -387,21 +719,21 @@ canvas {
 }
 
 .title-subhead {
-  font-size: 1rem;
-  color: #cfd8dc;
-  margin-bottom: 24px;
+  font-size: 0.95rem;
+  color: #d7ccc8;
+  margin-bottom: 20px;
 }
 
 .btn-title-play {
   width: 220px;
-  height: 54px;
-  border-radius: 16px;
+  height: 52px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #ffb300 0%, #ff6f00 100%);
   border: 2px solid #ffffff;
   color: #1a0f00;
   font-family: inherit;
   font-weight: 900;
-  font-size: 1.25rem;
+  font-size: 1.20rem;
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(255, 111, 0, 0.5);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
@@ -413,10 +745,21 @@ canvas {
 }
 
 .title-guide {
-  margin-top: 24px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: #b0bec5;
+  gap: 8px;
+  width: 100%;
 }
+
+.guide-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: #d7ccc8;
+  text-align: left;
+  background: rgba(20, 12, 8, 0.5);
+  padding: 6px 10px;
+  border-radius: 8px;
+}

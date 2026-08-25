@@ -27,10 +27,10 @@ export const WORLD = {
 };
 
 export const AXE_TIERS = [
-  { name: 'Red Camp Hatchet', power: 1, speed: 0.35, cost: 0, headColor: '#E53935', bevel: '#B71C1C', edge: '#ECEFF1' },
+  { name: 'Camp Hatchet', power: 1, speed: 0.35, cost: 0, headColor: '#E53935', bevel: '#B71C1C', edge: '#ECEFF1' },
   { name: 'Forged Bronze Axe', power: 2, speed: 0.30, cost: 180, headColor: '#CD7F32', bevel: '#8D5524', edge: '#FFE082' },
   { name: 'Tempered Steel Axe', power: 4, speed: 0.25, cost: 650, headColor: '#607D8B', bevel: '#37474F', edge: '#FFFFFF' },
-  { name: 'Gold-Plated Broadaxe', power: 8, speed: 0.22, cost: 2200, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
+  { name: 'Gold Broadaxe', power: 8, speed: 0.22, cost: 2200, headColor: '#FFB300', bevel: '#FF8F00', edge: '#FFF9C4' },
   { name: 'Diamond Core Axe', power: 16, speed: 0.18, cost: 7500, headColor: '#00E5FF', bevel: '#0097A7', edge: '#E0F7FA' },
   { name: 'Plasma Laser Cutter', power: 35, speed: 0.15, cost: 24000, headColor: '#00E676', bevel: '#00A152', edge: '#B9F6CA' },
   { name: 'Mythic Celestial Greataxe', power: 85, speed: 0.10, cost: 75000, headColor: '#E040FB', bevel: '#AA00FF', edge: '#FFFFFF' }
@@ -63,15 +63,47 @@ export const ZONES = [
   { id: 'pine', name: 'Pine Taiga', cost: 1400, treeType: 'pine', logValue: 130, maxHp: 8, logsPerTree: 4, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 900 } },
   { id: 'sakura', name: 'Sakura Haven', cost: 5000, treeType: 'sakura', logValue: 350, maxHp: 12, logsPerTree: 5, unlocked: false, bounds: { x: 60, y: 100, w: 520, h: 900 } },
   { id: 'redwood', name: 'Redwood Sanctuary', cost: 18000, treeType: 'redwood', logValue: 900, maxHp: 20, logsPerTree: 6, unlocked: false, bounds: { x: 60, y: 1080, w: 2280, h: 760 } },
-  { id: 'golden', name: 'Golden Mythic Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 35, logsPerTree: 8, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
+  { id: 'golden', name: 'Golden Forest', cost: 60000, treeType: 'golden', logValue: 2500, maxHp: 35, logsPerTree: 8, unlocked: false, bounds: { x: 1520, y: 100, w: 820, h: 1740 } }
 ];
 
 export const BUILDINGS = {
-  sawmill: { x: 860, y: 720, w: 140, h: 100, name: 'Sawmill', icon: '⚙️', desc: 'Processes raw logs into refined planks (+50% profit)' },
-  sellZone: { x: 1080, y: 720, w: 130, h: 100, name: 'Wood Market', icon: '💰', desc: 'Sell refined planks (+50% bonus) or raw logs' },
-  blacksmith: { x: 680, y: 720, w: 120, h: 95, name: 'Blacksmith', icon: '🪓', desc: 'Forge Mighty Axes' },
-  storageBarn: { x: 1270, y: 720, w: 120, h: 95, name: 'Backpack Depot', icon: '🎒', desc: 'Expand Backpack Capacity' },
-  workerHut: { x: 970, y: 570, w: 140, h: 95, name: 'Worker Barracks', icon: '👷', desc: 'Hire Automated Bots' }
+  sawmill: { x: 860, y: 720, w: 140, h: 100, name: 'Sawmill', desc: 'Processes raw logs into refined planks (3x profit)' },
+  sellZone: { x: 1080, y: 720, w: 130, h: 100, name: 'Wood Market', desc: 'Sell refined planks or raw logs for gold' },
+  blacksmith: { x: 680, y: 720, w: 120, h: 95, name: 'Blacksmith', desc: 'Forge Mighty Cutting Axes' },
+  storageBarn: { x: 1270, y: 720, w: 120, h: 95, name: 'Backpack Depot', desc: 'Expand Backpack Capacity' },
+  workerHut: { x: 970, y: 570, w: 140, h: 95, name: 'Worker Barracks', desc: 'Hire Automated Specialists' }
+};
+
+export const WORKER_COLORS = [
+  { name: 'Rusty', shirt: '#E65100', overalls: '#1565C0', hat: '#FFA000', badge: '1', title: 'The Pioneer' },
+  { name: 'Cobalt', shirt: '#1976D2', overalls: '#0D47A1', hat: '#64B5F6', badge: '2', title: 'The Hauler' },
+  { name: 'Moss', shirt: '#2E7D32', overalls: '#1B5E20', hat: '#81C784', badge: '3', title: 'The Naturalist' },
+  { name: 'Violet', shirt: '#7B1FA2', overalls: '#4A148C', hat: '#BA68C8', badge: '4', title: 'The Veteran' },
+  { name: 'Teal', shirt: '#00838F', overalls: '#006064', hat: '#4DD0E1', badge: '5', title: 'The Swift' },
+  { name: 'Crimson', shirt: '#C2185B', overalls: '#880E4F', hat: '#F48FB1', badge: '6', title: 'The Master' }
+];
+
+export const ACHIEVEMENTS = [
+  { id: 'first_tree', name: 'Primeiro Corte', desc: 'Derrube sua 1ª árvore', target: 1, type: 'trees', rewardCash: 100, rewardSkin: 'forest_guardian' },
+  { id: 'chop_50', name: 'Lenhador Experiente', desc: 'Derrube 50 árvores', target: 50, type: 'trees', rewardCash: 500, rewardSkin: 'flame_lumber' },
+  { id: 'chop_250', name: 'Mestre da Mata', desc: 'Derrube 250 árvores', target: 250, type: 'trees', rewardCash: 2500, rewardSkin: 'arctic_explorer' },
+  { id: 'chop_1000', name: 'Lenda da Floresta', desc: 'Derrube 1.000 árvores', target: 1000, type: 'trees', rewardCash: 10000, rewardSkin: 'celestial_mythic' },
+  { id: 'sawmill_unlock', name: 'Serraria Industrial', desc: 'Desbloqueie a Serraria de Madeira', target: 1, type: 'sawmill', rewardCash: 1000, rewardSkin: 'shadow_lumber' },
+  { id: 'planks_50', name: 'Carpintaria de Elite', desc: 'Processe 50 tábuas refinadas', target: 50, type: 'planks', rewardCash: 3000, rewardSkin: null },
+  { id: 'hire_1', name: 'Primeiro Ajudante', desc: 'Contrate 1 ajudante automatizado', target: 1, type: 'workers', rewardCash: 300, rewardSkin: null },
+  { id: 'hire_4', name: 'Equipe de Lenhadores', desc: 'Contrate 4 ajudantes para sua equipe', target: 4, type: 'workers', rewardCash: 4000, rewardSkin: 'royal_tycoon' },
+  { id: 'cash_10k', name: 'Magnata Florestal', desc: 'Acumule $10.000 em dinheiro', target: 10000, type: 'cash', rewardCash: 2000, rewardSkin: null },
+  { id: 'zones_3', name: 'Explorador da Ilha', desc: 'Desbloqueie 3 Zonas da floresta', target: 3, type: 'zones', rewardCash: 5000, rewardSkin: null }
+];
+
+export const PLAYER_SKINS = {
+  classic: { id: 'classic', name: 'Classic Red Plaid', desc: 'Tradicional camisa xadrez vermelha e jeans azul', shirt: '#D32F2F', pants: '#1976D2', hat: '#FBC02D', hatRidge: '#F57F17' },
+  forest_guardian: { id: 'forest_guardian', name: 'Guardião Musgo', desc: 'Tecido camuflado verde floresta', shirt: '#2E7D32', pants: '#1B5E20', hat: '#81C784', hatRidge: '#4CAF50' },
+  flame_lumber: { id: 'flame_lumber', name: 'Lenhador Flamejante', desc: 'Uniforme laranja de alta visibilidade e calça preta', shirt: '#E65100', pants: '#212121', hat: '#FFD54F', hatRidge: '#FF9800' },
+  arctic_explorer: { id: 'arctic_explorer', name: 'Explorador Ártico', desc: 'Camisa azul glacial e calça térmica', shirt: '#0288D1', pants: '#ECEFF1', hat: '#81D4FA', hatRidge: '#0288D1' },
+  royal_tycoon: { id: 'royal_tycoon', name: 'Magnata Real', desc: 'Traje nobre roxo com detalhes dourados', shirt: '#7B1FA2', pants: '#FFD54F', hat: '#FFC107', hatRidge: '#FFA000' },
+  shadow_lumber: { id: 'shadow_lumber', name: 'Lenhador Noturno', desc: 'Camisa preta tática e capacete rubro', shirt: '#212121', pants: '#37474F', hat: '#E53935', hatRidge: '#B71C1C' },
+  celestial_mythic: { id: 'celestial_mythic', name: 'Mítico Celestial', desc: 'Tecido cósmico roxo neon e azul elétrico', shirt: '#8E24AA', pants: '#00E5FF', hat: '#E040FB', hatRidge: '#AA00FF' }
 };
 
 /* ============================================================================
@@ -273,14 +305,20 @@ class SaveManager {
 
   static getDefault() {
     return {
-      version: 1,
+      version: 2,
       cash: 0,
       axeTier: 0,
       capacityIndex: 0,
       workerCount: 0,
+      workers: [], // Array of individual worker upgrade states
+      sawmillUnlocked: false,
+      playerSkin: 'classic',
+      unlockedSkins: ['classic'],
+      claimedAchievements: [],
       tutorialStep: 0,
       unlockedZones: ['oak'],
       totalTreesCut: 0,
+      totalPlanksProcessed: 0,
       totalCashEarned: 0,
       settings: { isMuted: false }
     };
@@ -292,7 +330,7 @@ class SaveManager {
  * ============================================================================ */
 
 function drawTopDownTerrain(ctx, width, height, animTime) {
-  ctx.fillStyle = '#2c4722';
+  ctx.fillStyle = '#24381e';
   ctx.fillRect(0, 0, width, height);
 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.022)';
@@ -326,8 +364,8 @@ function drawTopDownTerrain(ctx, width, height, animTime) {
   ctx.restore();
 }
 
-function drawBuilding(ctx, bKey, building, animTime, sawmillState) {
-  const { x, y, w, h, name, icon } = building;
+function drawBuilding(ctx, bKey, building, animTime, sawmillState, sawmillUnlocked) {
+  const { x, y, w, h, name } = building;
 
   ctx.save();
   ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
@@ -350,144 +388,176 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState) {
   ctx.stroke();
 
   if (bKey === 'sawmill') {
-    // Heavy Steel Industrial Conveyor Table
-    ctx.fillStyle = '#263238';
-    ctx.fillRect(x + 10, y + h / 2 - 12, w - 20, 24);
-    ctx.fillStyle = '#37474F';
-    ctx.fillRect(x + 12, y + h / 2 - 10, w - 24, 20);
+    if (!sawmillUnlocked) {
+      // Locked Construction Blueprint Site
+      ctx.fillStyle = 'rgba(13, 71, 161, 0.6)';
+      ctx.fillRect(x + 10, y + 10, w - 20, h - 30);
 
-    // Hazard Stripes on Conveyor edge
-    ctx.fillStyle = '#FFD600';
-    for (let hx = x + 16; hx < x + w - 20; hx += 18) {
-      ctx.fillRect(hx, y + h / 2 + 8, 8, 4);
-    }
+      ctx.strokeStyle = '#64B5F6';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.strokeRect(x + 12, y + 12, w - 24, h - 34);
+      ctx.setLineDash([]);
 
-    // Authentic High-Speed Carbide Circular Saw Blade
-    const isCutting = sawmillState && sawmillState.queue.length > 0;
-    const sawX = x + w / 2 - 15;
-    const sawY = y + h / 2;
-    const sawRadius = 22;
-
-    ctx.save();
-    ctx.translate(sawX, sawY);
-    ctx.rotate(animTime * (isCutting ? 28 : 8));
-
-    // Outer Silver Blade Disk
-    ctx.fillStyle = '#ECEFF1';
-    ctx.beginPath();
-    ctx.arc(0, 0, sawRadius, 0, Math.PI * 2);
-    ctx.fill();
-
-    // 16 Sharp Angled Carbide Saw Teeth (Tooth Rake)
-    const teeth = 16;
-    ctx.fillStyle = '#CFD8DC';
-    ctx.beginPath();
-    for (let i = 0; i < teeth; i++) {
-      const a = (i / teeth) * Math.PI * 2;
-      const nextA = ((i + 1) / teeth) * Math.PI * 2;
-      const rInner = sawRadius - 3;
-      const rTip = sawRadius + 5;
-      const rBack = sawRadius - 1;
-
-      const p1x = Math.cos(a) * rInner;
-      const p1y = Math.sin(a) * rInner;
-      const p2x = Math.cos(a + 0.12) * rTip;
-      const p2y = Math.sin(a + 0.12) * rTip;
-      const p3x = Math.cos(nextA) * rBack;
-      const p3y = Math.sin(nextA) * rBack;
-
-      if (i === 0) ctx.moveTo(p1x, p1y);
-      ctx.lineTo(p2x, p2y);
-      ctx.lineTo(p3x, p3y);
-    }
-    ctx.closePath();
-    ctx.fill();
-    ctx.strokeStyle = '#90A4AE';
-    ctx.lineWidth = 1.2;
-    ctx.stroke();
-
-    // Center Arbor Flange & Nut
-    ctx.fillStyle = '#455A64';
-    ctx.beginPath();
-    ctx.arc(0, 0, 8, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = '#263238';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    ctx.fillStyle = '#FFD54F';
-    ctx.beginPath();
-    ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    // Protective Orange/Yellow Saw Safety Hood Guard
-    ctx.fillStyle = '#F57F17';
-    ctx.beginPath();
-    ctx.arc(sawX, sawY, sawRadius + 6, -Math.PI * 0.95, -Math.PI * 0.05);
-    ctx.lineWidth = 3.5;
-    ctx.strokeStyle = '#F57F17';
-    ctx.stroke();
-
-    // Slicing Progress Radial Indicator
-    if (sawmillState && sawmillState.queue.length > 0) {
-      const prog = sawmillState.timer / 0.35;
-      ctx.strokeStyle = '#00E676';
-      ctx.lineWidth = 4.5;
+      // Construction timber scaffolding
+      ctx.strokeStyle = '#FFB300';
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.arc(sawX, sawY, sawRadius + 8, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2);
+      ctx.moveTo(x + 15, y + 15); ctx.lineTo(x + w - 15, y + h - 25);
+      ctx.moveTo(x + w - 15, y + 15); ctx.lineTo(x + 15, y + h - 25);
       ctx.stroke();
-    }
 
-    // Cut Planks Stack on Output Side
-    if (sawmillState && sawmillState.ready.length > 0) {
-      const stackX = x + w - 36;
-      const readyCount = Math.min(5, sawmillState.ready.length);
-      for (let i = 0; i < readyCount; i++) {
-        const item = sawmillState.ready[i];
-        const prop = WOOD_PROPERTIES[item.type] || WOOD_PROPERTIES.oak;
-        ctx.fillStyle = prop.plankColor;
+      // Locked Banner
+      ctx.fillStyle = 'rgba(15, 10, 5, 0.94)';
+      ctx.beginPath();
+      ctx.roundRect(x + 6, y + h / 2 - 12, w - 12, 24, 6);
+      ctx.fill();
+      ctx.strokeStyle = '#FFB300';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#FFE082';
+      ctx.font = 'bold 10px Fredoka, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('LOCKED SAWMILL', x + w / 2, y + h / 2);
+    } else {
+      // Heavy Steel Industrial Conveyor Table
+      ctx.fillStyle = '#263238';
+      ctx.fillRect(x + 10, y + h / 2 - 12, w - 20, 24);
+      ctx.fillStyle = '#37474F';
+      ctx.fillRect(x + 12, y + h / 2 - 10, w - 24, 20);
+
+      // Hazard Stripes on Conveyor edge
+      ctx.fillStyle = '#FFD600';
+      for (let hx = x + 16; hx < x + w - 20; hx += 18) {
+        ctx.fillRect(hx, y + h / 2 + 8, 8, 4);
+      }
+
+      // Authentic High-Speed Carbide Circular Saw Blade
+      const isCutting = sawmillState && sawmillState.queue.length > 0;
+      const sawX = x + w / 2 - 15;
+      const sawY = y + h / 2;
+      const sawRadius = 22;
+
+      ctx.save();
+      ctx.translate(sawX, sawY);
+      ctx.rotate(animTime * (isCutting ? 28 : 8));
+
+      // Outer Silver Blade Disk
+      ctx.fillStyle = '#ECEFF1';
+      ctx.beginPath();
+      ctx.arc(0, 0, sawRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 16 Sharp Angled Carbide Saw Teeth
+      const teeth = 16;
+      ctx.fillStyle = '#CFD8DC';
+      ctx.beginPath();
+      for (let i = 0; i < teeth; i++) {
+        const a = (i / teeth) * Math.PI * 2;
+        const nextA = ((i + 1) / teeth) * Math.PI * 2;
+        const rInner = sawRadius - 3;
+        const rTip = sawRadius + 5;
+        const rBack = sawRadius - 1;
+
+        const p1x = Math.cos(a) * rInner;
+        const p1y = Math.sin(a) * rInner;
+        const p2x = Math.cos(a + 0.12) * rTip;
+        const p2y = Math.sin(a + 0.12) * rTip;
+        const p3x = Math.cos(nextA) * rBack;
+        const p3y = Math.sin(nextA) * rBack;
+
+        if (i === 0) ctx.moveTo(p1x, p1y);
+        ctx.lineTo(p2x, p2y);
+        ctx.lineTo(p3x, p3y);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#90A4AE';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      // Center Arbor Flange & Nut
+      ctx.fillStyle = '#455A64';
+      ctx.beginPath();
+      ctx.arc(0, 0, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#263238';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#FFD54F';
+      ctx.beginPath();
+      ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // Protective Orange/Yellow Saw Safety Hood Guard
+      ctx.fillStyle = '#F57F17';
+      ctx.beginPath();
+      ctx.arc(sawX, sawY, sawRadius + 6, -Math.PI * 0.95, -Math.PI * 0.05);
+      ctx.lineWidth = 3.5;
+      ctx.strokeStyle = '#F57F17';
+      ctx.stroke();
+
+      // Slicing Progress Radial Indicator
+      if (sawmillState && sawmillState.queue.length > 0) {
+        const prog = sawmillState.timer / 0.35;
+        ctx.strokeStyle = '#00E676';
+        ctx.lineWidth = 4.5;
         ctx.beginPath();
-        ctx.roundRect(stackX - 12, y + h / 2 - 5 - i * 4, 24, 5.5, 2);
-        ctx.fill();
-        ctx.strokeStyle = prop.plankBorder;
-        ctx.lineWidth = 1;
+        ctx.arc(sawX, sawY, sawRadius + 8, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2);
         ctx.stroke();
       }
 
-      // High-Contrast Floating Alert Tag
-      const bounce = Math.sin(animTime * 5) * 6;
-      ctx.save();
-      ctx.translate(x + w / 2, y - 28 + bounce);
+      // Cut Planks Stack on Output Side
+      if (sawmillState && sawmillState.ready.length > 0) {
+        const stackX = x + w - 36;
+        const readyCount = Math.min(5, sawmillState.ready.length);
+        for (let i = 0; i < readyCount; i++) {
+          const item = sawmillState.ready[i];
+          const prop = WOOD_PROPERTIES[item.type] || WOOD_PROPERTIES.oak;
+          ctx.fillStyle = prop.plankColor;
+          ctx.beginPath();
+          ctx.roundRect(stackX - 12, y + h / 2 - 5 - i * 4, 24, 5.5, 2);
+          ctx.fill();
+          ctx.strokeStyle = prop.plankBorder;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
 
-      ctx.fillStyle = 'rgba(10, 30, 15, 0.95)';
-      ctx.beginPath();
-      ctx.roundRect(-80, -14, 160, 28, 8);
-      ctx.fill();
-      ctx.strokeStyle = '#00E676';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
+        // High-Contrast Floating Alert Tag
+        const bounce = Math.sin(animTime * 5) * 6;
+        ctx.save();
+        ctx.translate(x + w / 2, y - 28 + bounce);
 
-      ctx.fillStyle = 'rgba(0, 230, 118, 0.25)';
-      ctx.beginPath();
-      ctx.roundRect(-83, -17, 166, 34, 10);
-      ctx.fill();
+        ctx.fillStyle = 'rgba(10, 30, 15, 0.95)';
+        ctx.beginPath();
+        ctx.roundRect(-75, -14, 150, 28, 8);
+        ctx.fill();
+        ctx.strokeStyle = '#00E676';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
 
-      ctx.fillStyle = '#69F0AE';
-      ctx.font = 'bold 12px Fredoka, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(`🪚 ${sawmillState.ready.length} PLANKS READY!`, 0, 0);
+        ctx.fillStyle = 'rgba(0, 230, 118, 0.25)';
+        ctx.beginPath();
+        ctx.roundRect(-78, -17, 156, 34, 10);
+        ctx.fill();
 
-      // Downward Arrow
-      ctx.fillStyle = '#00E676';
-      ctx.beginPath();
-      ctx.moveTo(-6, 14);
-      ctx.lineTo(6, 14);
-      ctx.lineTo(0, 20);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
+        ctx.fillStyle = '#69F0AE';
+        ctx.font = 'bold 12px Fredoka, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`${sawmillState.ready.length} PLANKS READY!`, 0, 0);
+
+        ctx.fillStyle = '#00E676';
+        ctx.beginPath();
+        ctx.moveTo(-6, 14); ctx.lineTo(6, 14); ctx.lineTo(0, 20);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
     }
 
     // Bottom label banner for sawmill
@@ -497,10 +567,10 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState) {
     ctx.fill();
 
     ctx.fillStyle = '#ffe082';
-    ctx.font = 'bold 12px Fredoka, sans-serif';
+    ctx.font = 'bold 11px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`${icon} ${name}`, x + w / 2, y + h - 12);
+    ctx.fillText(sawmillUnlocked ? 'SAWMILL' : 'UNBUILT SAWMILL', x + w / 2, y + h - 12);
   } else if (bKey === 'sellZone') {
     ctx.fillStyle = '#ffd54f';
     ctx.beginPath();
@@ -515,26 +585,19 @@ function drawBuilding(ctx, bKey, building, animTime, sawmillState) {
     ctx.arc(x + w / 2, y + h / 2 - 4, 16, 0, Math.PI * 2);
     ctx.fill();
 
-    // Bottom label banner for sell zone
     ctx.fillStyle = 'rgba(15, 10, 5, 0.90)';
     ctx.beginPath();
     ctx.roundRect(x + 8, y + h - 22, w - 16, 20, 6);
     ctx.fill();
 
     ctx.fillStyle = '#ffe082';
-    ctx.font = 'bold 12px Fredoka, sans-serif';
+    ctx.font = 'bold 11px Fredoka, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`${icon} ${name}`, x + w / 2, y + h - 12);
+    ctx.fillText('WOOD MARKET', x + w / 2, y + h - 12);
   } else {
-    // Blacksmith, Backpack Depot, Worker Barracks: Label & Icon centered in wooden square
     const centerX = x + w / 2;
     const centerY = y + h / 2;
-
-    ctx.font = '26px Fredoka, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(icon, centerX, centerY - 10);
 
     ctx.fillStyle = 'rgba(15, 10, 5, 0.88)';
     ctx.beginPath();
@@ -585,7 +648,7 @@ function drawUpgradePad(ctx, pad, animTime) {
 
   ctx.fillStyle = 'rgba(25, 15, 10, 0.88)';
   ctx.beginPath();
-  ctx.roundRect(x - 65, y - 26, 130, 52, 10);
+  ctx.roundRect(x - 70, y - 26, 140, 52, 10);
   ctx.fill();
   ctx.strokeStyle = isComplete ? '#00e676' : '#ffb300';
   ctx.lineWidth = 1.5;
@@ -599,7 +662,7 @@ function drawUpgradePad(ctx, pad, animTime) {
   ctx.font = 'bold 13px Fredoka, sans-serif';
   if (isComplete) {
     ctx.fillStyle = '#00e676';
-    ctx.fillText('✓ MAX / UNLOCKED', x, y + 10);
+    ctx.fillText('MAX / UNLOCKED', x, y + 10);
   } else {
     ctx.fillStyle = '#ffd54f';
     ctx.fillText(`$${Math.floor(deposited)} / $${targetCost}`, x, y + 10);
@@ -691,7 +754,6 @@ function drawTiltedTree(ctx, tree, animTime) {
       ctx.closePath();
       ctx.fill();
 
-      // Needle detail
       ctx.fillStyle = t.c1;
       ctx.beginPath();
       ctx.moveTo(-t.w + 4, t.y - 4);
@@ -708,34 +770,20 @@ function drawTiltedTree(ctx, tree, animTime) {
     let cHighlight = '#81C784';
 
     if (tree.type === 'birch') {
-      cBase = '#558B2F';
-      cMid = '#7CB342';
-      cTop = '#9CCC65';
-      cHighlight = '#DCE775';
+      cBase = '#558B2F'; cMid = '#7CB342'; cTop = '#9CCC65'; cHighlight = '#DCE775';
     } else if (tree.type === 'sakura') {
-      cBase = '#880E4F';
-      cMid = '#C2185B';
-      cTop = '#E91E63';
-      cHighlight = '#F48FB1';
+      cBase = '#880E4F'; cMid = '#C2185B'; cTop = '#E91E63'; cHighlight = '#F48FB1';
     } else if (tree.type === 'redwood') {
-      cBase = '#3E2723';
-      cMid = '#5D4037';
-      cTop = '#8D6E63';
-      cHighlight = '#B71C1C';
+      cBase = '#3E2723'; cMid = '#5D4037'; cTop = '#8D6E63'; cHighlight = '#B71C1C';
     } else if (tree.type === 'golden') {
-      cBase = '#FF8F00';
-      cMid = '#FFB300';
-      cTop = '#FFD54F';
-      cHighlight = '#FFF9C4';
+      cBase = '#FF8F00'; cMid = '#FFB300'; cTop = '#FFD54F'; cHighlight = '#FFF9C4';
     }
 
-    // 1. Base Shadow Canopy
     ctx.fillStyle = cBase;
     ctx.beginPath();
     ctx.ellipse(0, -6, tree.canopyR * 1.05, tree.canopyR * 0.85, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // 2. Mid Foliage Lobes (Organic Cloud Tufts)
     ctx.fillStyle = cMid;
     const lobes = 6;
     for (let i = 0; i < lobes; i++) {
@@ -748,36 +796,16 @@ function drawTiltedTree(ctx, tree, animTime) {
       ctx.fill();
     }
 
-    // 3. Top Volume Canopy
     ctx.fillStyle = cTop;
     ctx.beginPath();
     ctx.ellipse(-tree.canopyR * 0.15, -20, tree.canopyR * 0.65, tree.canopyR * 0.55, -0.1, 0, Math.PI * 2);
     ctx.fill();
 
-    // 4. Stylized Sunlight Highlight Leaf Puffs
     ctx.fillStyle = cHighlight;
     ctx.beginPath();
     ctx.arc(-tree.canopyR * 0.35, -28, tree.canopyR * 0.28, 0, Math.PI * 2);
     ctx.arc(tree.canopyR * 0.15, -26, tree.canopyR * 0.24, 0, Math.PI * 2);
     ctx.fill();
-
-    // Golden Sparkles / Sakura Petals
-    if (tree.type === 'golden') {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.globalAlpha = 0.55 + Math.sin(animTime * 6) * 0.35;
-      ctx.beginPath();
-      ctx.arc(-tree.canopyR * 0.2, -30, 3.5, 0, Math.PI * 2);
-      ctx.arc(tree.canopyR * 0.3, -18, 2.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.globalAlpha = 1.0;
-    } else if (tree.type === 'sakura') {
-      ctx.fillStyle = '#F8BBD0';
-      const petalY = (animTime * 15) % 30;
-      ctx.beginPath();
-      ctx.arc(-tree.canopyR * 0.4, -10 + petalY, 2, 0, Math.PI * 2);
-      ctx.arc(tree.canopyR * 0.35, -20 + petalY * 0.7, 2, 0, Math.PI * 2);
-      ctx.fill();
-    }
   }
 
   if (tree.hp < tree.maxHp) {
@@ -816,7 +844,6 @@ function drawDroppedLog(ctx, log) {
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
-  // Log End Ring
   ctx.fillStyle = prop.plankColor;
   ctx.beginPath();
   ctx.ellipse(10, 0, 3.5, 6, 0, 0, Math.PI * 2);
@@ -831,14 +858,12 @@ function drawDroppedLog(ctx, log) {
  */
 function drawHandHeldAxe(ctx, axe, isChopping, animTime) {
   ctx.save();
-  // Pivot placed cleanly to the right side of the character!
   ctx.translate(16, -1);
 
   if (isChopping) {
     const chopAngle = Math.sin(animTime * 15) * 0.85 + 0.15;
     ctx.rotate(chopAngle);
   } else {
-    // Tilted slightly outward, pointing away from the face!
     ctx.rotate(0.18);
   }
 
@@ -867,7 +892,6 @@ function drawHandHeldAxe(ctx, axe, isChopping, animTime) {
   ctx.quadraticCurveTo(1.5, 0, 0.5, -14);
   ctx.stroke();
 
-  // Wedge top
   ctx.fillStyle = '#A16828';
   ctx.beginPath();
   ctx.roundRect(-1.5, -20, 3.5, 5, 1.5);
@@ -928,7 +952,6 @@ function drawHandHeldAxe(ctx, axe, isChopping, animTime) {
 
   ctx.restore();
 
-  // Hand Glove holding Handle
   ctx.fillStyle = '#FFCC80';
   ctx.beginPath();
   ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
@@ -940,8 +963,8 @@ function drawHandHeldAxe(ctx, axe, isChopping, animTime) {
   ctx.restore();
 }
 
-function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
-  const { x, y, isWalking, isChopping, inventory, axeTier } = actor;
+function drawLumberjackHero(ctx, actor, isPlayer, animTime, skinData) {
+  const { x, y, isWalking, isChopping, inventory, axeTier, colorProfile } = actor;
 
   ctx.save();
   ctx.translate(x, y);
@@ -957,7 +980,7 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   ctx.translate(0, walkBob);
   ctx.rotate(walkSway);
 
-  // Stacked Items on Back with True Wood Colors
+  // Stacked Items on Back
   if (inventory && inventory.length > 0) {
     const stackCount = Math.min(8, inventory.length);
     for (let i = 0; i < stackCount; i++) {
@@ -987,20 +1010,40 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
     }
   }
 
-  // Torso (Red Flannel Plaid Shirt)
-  ctx.fillStyle = isPlayer ? '#D32F2F' : '#F57C00';
+  // Torso / Shirt Color
+  let shirtColor = '#D32F2F';
+  let pantsColor = '#1976D2';
+  let helmetColor = '#FBC02D';
+  let helmetRidge = '#F57F17';
+
+  if (isPlayer) {
+    if (skinData) {
+      shirtColor = skinData.shirt;
+      pantsColor = skinData.pants;
+      helmetColor = skinData.hat;
+      helmetRidge = skinData.hatRidge;
+    }
+  } else if (colorProfile) {
+    shirtColor = colorProfile.shirt;
+    pantsColor = colorProfile.overalls;
+    helmetColor = colorProfile.hat;
+    helmetRidge = colorProfile.shirt;
+  }
+
+  // Torso
+  ctx.fillStyle = shirtColor;
   ctx.beginPath();
   ctx.roundRect(-13, -14, 26, 22, 8);
   ctx.fill();
 
-  // Denim Dungarees / Overalls
-  ctx.fillStyle = '#1976D2';
+  // Pants / Dungarees
+  ctx.fillStyle = pantsColor;
   ctx.beginPath();
   ctx.roundRect(-11, -4, 22, 14, 4);
   ctx.fill();
 
-  // Denim Straps & Golden Buckles
-  ctx.fillStyle = '#1565C0';
+  // Straps & Buckles
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
   ctx.fillRect(-9, -14, 4, 14);
   ctx.fillRect(5, -14, 4, 14);
 
@@ -1019,7 +1062,7 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   ctx.lineWidth = 1.2;
   ctx.stroke();
 
-  // Fluffy Hair Tufts Peeking Out
+  // Hair Tufts
   ctx.fillStyle = '#5D4037';
   ctx.beginPath();
   ctx.arc(-10, -23, 3.2, 0, Math.PI * 2);
@@ -1031,57 +1074,37 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   ctx.globalAlpha = 0.65;
   ctx.beginPath();
   ctx.arc(-6, -18.5, 2.5, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
   ctx.arc(6, -18.5, 2.5, 0, Math.PI * 2);
   ctx.fill();
   ctx.globalAlpha = 1.0;
 
-  // Left Eye Pupil
+  // Eyes
   ctx.fillStyle = '#212121';
   ctx.beginPath();
   ctx.arc(-4.5, -21, 2.6, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Right Eye Pupil
-  ctx.beginPath();
   ctx.arc(4.5, -21, 2.6, 0, Math.PI * 2);
   ctx.fill();
 
-  // Left Eye Sparkles (Separate paths to prevent connecting line)
+  // Eye Sparkles
   ctx.fillStyle = '#FFFFFF';
   ctx.beginPath();
   ctx.arc(-5.2, -21.8, 0.9, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(-3.8, -20.2, 0.5, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Right Eye Sparkles (Separate paths to prevent connecting line)
-  ctx.beginPath();
   ctx.arc(3.8, -21.8, 0.9, 0, Math.PI * 2);
   ctx.fill();
-  ctx.beginPath();
-  ctx.arc(5.2, -20.2, 0.5, 0, Math.PI * 2);
-  ctx.fill();
 
-  // Cute Little Smile
+  // Smile
   ctx.strokeStyle = '#5D4037';
   ctx.lineWidth = 1.2;
   ctx.beginPath();
   ctx.arc(0, -16.5, 2.5, 0.2, Math.PI - 0.2);
   ctx.stroke();
 
-  // Safety Helmet Raised Above Forehead
-  const helmetColor = isPlayer ? '#FBC02D' : '#FFE082';
-  const helmetRidge = isPlayer ? '#F57F17' : '#FFD54F';
-
-  // Cap Dome
+  // Safety Cap Dome
   ctx.fillStyle = helmetColor;
   ctx.beginPath();
   ctx.arc(0, -30, 12, Math.PI, Math.PI * 2);
   ctx.fill();
-  ctx.strokeStyle = '#E65100';
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
   ctx.lineWidth = 1.2;
   ctx.stroke();
 
@@ -1096,13 +1119,30 @@ function drawLumberjackHero(ctx, actor, isPlayer, animTime) {
   ctx.beginPath();
   ctx.roundRect(-14, -31, 28, 4.5, 2);
   ctx.fill();
-  ctx.strokeStyle = '#E65100';
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
   ctx.lineWidth = 1;
   ctx.stroke();
 
   // Axe on the side
   const axe = AXE_TIERS[axeTier || 0] || AXE_TIERS[0];
   drawHandHeldAxe(ctx, axe, isChopping, animTime);
+
+  // Floating Worker Number Badge
+  if (!isPlayer && colorProfile) {
+    ctx.fillStyle = colorProfile.shirt;
+    ctx.beginPath();
+    ctx.roundRect(-10, -56, 20, 14, 4);
+    ctx.fill();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 9px Fredoka, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(colorProfile.badge, 0, -49);
+  }
 
   ctx.restore();
 }
@@ -1182,7 +1222,7 @@ export class LumberTycoonGame {
       radius: 14,
       isWalking: false,
       isChopping: false,
-      inventory: [],        // [{ type: 'oak'|'birch'|'pine'|'sakura'|'redwood'|'golden', value: number, isPlank: boolean }]
+      inventory: [],
       axeTier: 0,
       capacityIndex: 0,
       chopTimer: 0
@@ -1190,9 +1230,9 @@ export class LumberTycoonGame {
 
     // Sawmill Machine Queue State
     this.sawmillState = {
-      queue: [],            // Array of log objects waiting in line [{ type, value }]
-      timer: 0,             // Cutting timer per log (0.35s)
-      ready: []             // Array of finished plank objects [{ type, value, isPlank: true }]
+      queue: [],
+      timer: 0,
+      ready: []
     };
 
     this.joystick = {
@@ -1212,7 +1252,6 @@ export class LumberTycoonGame {
     this.unlockedZones = new Set(['oak']);
     this.tutorialStep = 0;
 
-    // Playgama Interstitial Ad Cooldown (60s minimum interval)
     this.lastInterstitialTime = Date.now();
     this.interstitialCooldown = 60000;
 
@@ -1231,12 +1270,10 @@ export class LumberTycoonGame {
       return false;
     }
     this.lastInterstitialTime = now;
-    console.log(`[Playgama] Triggering Interstitial Ad: placement=${placement}`);
     try {
       await this.playgama.showInterstitial();
       return true;
     } catch (err) {
-      console.warn('[Playgama] Interstitial ad error:', err);
       return false;
     }
   }
@@ -1247,6 +1284,24 @@ export class LumberTycoonGame {
 
   get carriedPlanks() {
     return this.player.inventory.filter((i) => i.isPlank).length;
+  }
+
+  get unclaimedAchievementsCount() {
+    let count = 0;
+    const claimed = new Set(this.saveData.claimedAchievements || []);
+    for (const ach of ACHIEVEMENTS) {
+      if (claimed.has(ach.id)) continue;
+      let current = 0;
+      if (ach.type === 'trees') current = this.saveData.totalTreesCut || 0;
+      else if (ach.type === 'planks') current = this.saveData.totalPlanksProcessed || 0;
+      else if (ach.type === 'sawmill') current = this.saveData.sawmillUnlocked ? 1 : 0;
+      else if (ach.type === 'workers') current = this.workers.length;
+      else if (ach.type === 'cash') current = this.saveData.totalCashEarned || this.saveData.cash;
+      else if (ach.type === 'zones') current = this.unlockedZones.size;
+
+      if (current >= ach.target) count++;
+    }
+    return count;
   }
 
   async init() {
@@ -1265,7 +1320,7 @@ export class LumberTycoonGame {
 
     this.generateForest();
     this.initUpgradePads();
-    this.spawnWorkers(this.saveData.workerCount || 0);
+    this.loadWorkersFromSave();
 
     this.setupDOM();
     this.setupEvents();
@@ -1322,7 +1377,7 @@ export class LumberTycoonGame {
         x: 740,
         y: 840,
         radius: 46,
-        label: '🪓 FORGE AXE',
+        label: 'FORGE AXE',
         deposited: 0,
         targetCost: AXE_TIERS[this.player.axeTier + 1]?.cost || 0
       },
@@ -1332,9 +1387,19 @@ export class LumberTycoonGame {
         x: 1330,
         y: 840,
         radius: 46,
-        label: '🎒 BACKPACK',
+        label: 'BACKPACK',
         deposited: 0,
         targetCost: CAPACITY_TIERS[this.player.capacityIndex + 1]?.cost || 0
+      },
+      {
+        id: 'pad_sawmill',
+        type: 'SAWMILL_UNLOCK',
+        x: 930,
+        y: 840,
+        radius: 48,
+        label: 'UNLOCK SAWMILL',
+        deposited: 0,
+        targetCost: this.saveData.sawmillUnlocked ? 0 : 1200
       },
       {
         id: 'pad_workers',
@@ -1342,9 +1407,9 @@ export class LumberTycoonGame {
         x: 1040,
         y: 520,
         radius: 46,
-        label: '👷 HIRE WORKER',
+        label: 'HIRE WORKER',
         deposited: 0,
-        targetCost: Math.floor(250 * Math.pow(1.8, this.workers.length))
+        targetCost: Math.floor(250 * Math.pow(1.8, (this.saveData.workers || []).length))
       },
       {
         id: 'pad_birch',
@@ -1352,7 +1417,7 @@ export class LumberTycoonGame {
         x: 1050,
         y: 1040,
         radius: 52,
-        label: '🌿 BIRCH GROVE',
+        label: 'BIRCH GROVE',
         deposited: 0,
         targetCost: this.unlockedZones.has('birch') ? 0 : 350
       },
@@ -1362,7 +1427,7 @@ export class LumberTycoonGame {
         x: 1520,
         y: 560,
         radius: 52,
-        label: '🌲 PINE TAIGA',
+        label: 'PINE TAIGA',
         deposited: 0,
         targetCost: this.unlockedZones.has('pine') ? 0 : 1400
       },
@@ -1372,7 +1437,7 @@ export class LumberTycoonGame {
         x: 520,
         y: 420,
         radius: 52,
-        label: '🌸 SAKURA HAVEN',
+        label: 'SAKURA HAVEN',
         deposited: 0,
         targetCost: this.unlockedZones.has('sakura') ? 0 : 5000
       },
@@ -1382,7 +1447,7 @@ export class LumberTycoonGame {
         x: 600,
         y: 1400,
         radius: 52,
-        label: '🪵 REDWOOD GIANTS',
+        label: 'REDWOOD GIANTS',
         deposited: 0,
         targetCost: this.unlockedZones.has('redwood') ? 0 : 18000
       },
@@ -1392,33 +1457,83 @@ export class LumberTycoonGame {
         x: 1800,
         y: 1000,
         radius: 52,
-        label: '✨ GOLDEN FOREST',
+        label: 'GOLDEN FOREST',
         deposited: 0,
         targetCost: this.unlockedZones.has('golden') ? 0 : 60000
       }
     ];
   }
 
-  spawnWorkers(count) {
+  loadWorkersFromSave() {
     this.workers = [];
-    for (let i = 0; i < count; i++) {
+    const savedWorkers = this.saveData.workers || [];
+    for (let i = 0; i < savedWorkers.length; i++) {
+      const sw = savedWorkers[i];
+      const colorProfile = WORKER_COLORS[i % WORKER_COLORS.length];
       this.workers.push({
-        id: `worker_${i}`,
-        x: BUILDINGS.workerHut.x + 40 + (i % 3) * 25,
-        y: BUILDINGS.workerHut.y + 40 + Math.floor(i / 3) * 25,
+        id: sw.id || `worker_${i}`,
+        name: colorProfile.name,
+        colorIndex: i % WORKER_COLORS.length,
+        colorProfile,
+        speedLvl: sw.speedLvl || 1,
+        powerLvl: sw.powerLvl || 1,
+        capacityLvl: sw.capacityLvl || 1,
+        x: BUILDINGS.workerHut.x + 30 + (i % 3) * 35,
+        y: BUILDINGS.workerHut.y + 35 + Math.floor(i / 3) * 30,
         radius: 12,
         vx: 0,
         vy: 0,
-        speed: 135,
+        speed: 130 + (sw.speedLvl || 1 - 1) * 30,
         isWalking: false,
         isChopping: false,
         inventory: [],
-        maxCarry: 6,
-        axeTier: 1,
+        maxCarry: 3 + (sw.capacityLvl || 1 - 1) * 3,
+        axePower: (sw.powerLvl || 1) * 2,
+        axeTier: Math.min(6, (sw.powerLvl || 1) - 1),
         targetTree: null,
         chopTimer: 0
       });
     }
+  }
+
+  hireNewWorker() {
+    if (this.workers.length >= WORKER_COLORS.length) return false;
+    const idx = this.workers.length;
+    const colorProfile = WORKER_COLORS[idx];
+    const newWorker = {
+      id: `worker_${idx}`,
+      name: colorProfile.name,
+      colorIndex: idx,
+      colorProfile,
+      speedLvl: 1,
+      powerLvl: 1,
+      capacityLvl: 1,
+      x: BUILDINGS.workerHut.x + 30 + (idx % 3) * 35,
+      y: BUILDINGS.workerHut.y + 35 + Math.floor(idx / 3) * 30,
+      radius: 12,
+      vx: 0,
+      vy: 0,
+      speed: 130,
+      isWalking: false,
+      isChopping: false,
+      inventory: [],
+      maxCarry: 3,
+      axePower: 2,
+      axeTier: 0,
+      targetTree: null,
+      chopTimer: 0
+    };
+    this.workers.push(newWorker);
+    if (!this.saveData.workers) this.saveData.workers = [];
+    this.saveData.workers.push({
+      id: newWorker.id,
+      speedLvl: 1,
+      powerLvl: 1,
+      capacityLvl: 1
+    });
+    this.saveData.workerCount = this.workers.length;
+    SaveManager.save(this.playgama, this.saveData);
+    return true;
   }
 
   setupDOM() {
@@ -1430,12 +1545,15 @@ export class LumberTycoonGame {
 
     document.getElementById('btn-mute')?.addEventListener('click', () => {
       this.audio.setMuted(!this.audio.isMuted);
-      const btn = document.getElementById('btn-mute');
-      if (btn) btn.textContent = this.audio.isMuted ? '🔇' : '🔊';
+      const wave = document.getElementById('audio-waves');
+      if (wave) wave.style.display = this.audio.isMuted ? 'none' : 'block';
     });
 
     document.getElementById('btn-open-shop')?.addEventListener('click', () => this.openShopModal());
     document.getElementById('btn-open-workers')?.addEventListener('click', () => this.openWorkerModal());
+    document.getElementById('btn-open-achievements')?.addEventListener('click', () => this.openAchievementsModal());
+    document.getElementById('btn-open-wardrobe')?.addEventListener('click', () => this.openWardrobeModal());
+
     document.getElementById('btn-close-shop')?.addEventListener('click', () => {
       document.getElementById('shop-modal')?.classList.add('hidden');
       this.triggerInterstitial('shop_exit');
@@ -1443,6 +1561,14 @@ export class LumberTycoonGame {
     document.getElementById('btn-close-workers')?.addEventListener('click', () => {
       document.getElementById('workers-modal')?.classList.add('hidden');
       this.triggerInterstitial('workers_exit');
+    });
+    document.getElementById('btn-close-achievements')?.addEventListener('click', () => {
+      document.getElementById('achievements-modal')?.classList.add('hidden');
+      this.triggerInterstitial('achievements_exit');
+    });
+    document.getElementById('btn-close-wardrobe')?.addEventListener('click', () => {
+      document.getElementById('wardrobe-modal')?.classList.add('hidden');
+      this.triggerInterstitial('wardrobe_exit');
     });
 
     document.getElementById('btn-airdrop')?.addEventListener('click', () => this.showRewardedCashGrant());
@@ -1641,12 +1767,15 @@ export class LumberTycoonGame {
       if (this.tutorialStep === 0) {
         this.tutorialStep = 1;
         this.saveData.tutorialStep = 1;
-        SaveManager.save(this.playgama, this.saveData);
       }
+      SaveManager.save(this.playgama, this.saveData);
+      this.updateHUD();
     }
   }
 
   updateWorkers(dt) {
+    const isSawmillOpen = !!this.saveData.sawmillUnlocked;
+
     for (const w of this.workers) {
       const carriedPlanks = w.inventory.filter((i) => i.isPlank);
       const carriedLogs = w.inventory.filter((i) => !i.isPlank);
@@ -1661,38 +1790,59 @@ export class LumberTycoonGame {
           let cashEarned = 0;
           for (const item of carriedPlanks) cashEarned += item.value;
           this.saveData.cash += cashEarned;
+          this.saveData.totalCashEarned = (this.saveData.totalCashEarned || 0) + cashEarned;
           this.audio.playCash();
           this.spawnCoinBursts(w.x, w.y, cashEarned, 'Planks');
           w.inventory = w.inventory.filter((i) => !i.isPlank);
           w.targetTree = null;
+          this.updateHUD();
         } else {
           w.isWalking = true;
           w.x += (dx / dist) * w.speed * dt;
           w.y += (dy / dist) * w.speed * dt;
         }
       } else if (carriedLogs.length >= w.maxCarry) {
-        const target = BUILDINGS.sawmill;
+        // If sawmill is unlocked, go refine them; otherwise sell directly at market!
+        const target = isSawmillOpen ? BUILDINGS.sawmill : BUILDINGS.sellZone;
         const dx = target.x + target.w / 2 - w.x;
         const dy = target.y + target.h / 2 - w.y;
         const dist = Math.hypot(dx, dy);
 
         if (dist < 45) {
-          for (const log of carriedLogs) {
-            this.sawmillState.queue.push(log);
+          if (isSawmillOpen) {
+            for (const log of carriedLogs) {
+              this.sawmillState.queue.push(log);
+            }
+            w.inventory = [];
+            this.audio.playSawBuzz();
+          } else {
+            let cashEarned = 0;
+            for (const item of carriedLogs) cashEarned += item.value;
+            this.saveData.cash += cashEarned;
+            this.saveData.totalCashEarned = (this.saveData.totalCashEarned || 0) + cashEarned;
+            this.audio.playCash();
+            this.spawnCoinBursts(w.x, w.y, cashEarned, 'Raw Logs');
+            w.inventory = [];
           }
-          w.inventory = [];
-          this.audio.playSawBuzz();
+          this.updateHUD();
         } else {
           w.isWalking = true;
           w.x += (dx / dist) * w.speed * dt;
           w.y += (dy / dist) * w.speed * dt;
         }
       } else {
+        // Find permissible tree based on worker's capacityLvl / permission level
+        const allowedTypes = ['oak', 'birch'];
+        if (w.capacityLvl >= 2) allowedTypes.push('pine');
+        if (w.capacityLvl >= 3) allowedTypes.push('sakura');
+        if (w.capacityLvl >= 4) allowedTypes.push('redwood');
+        if (w.capacityLvl >= 5) allowedTypes.push('golden');
+
         if (!w.targetTree || w.targetTree.isCut) {
           let best = null;
           let bestD = Infinity;
           for (const t of this.trees) {
-            if (t.isCut || !this.unlockedZones.has(t.zoneId)) continue;
+            if (t.isCut || !this.unlockedZones.has(t.zoneId) || !allowedTypes.includes(t.type)) continue;
             const d = Math.hypot(w.x - t.x, w.y - t.y);
             if (d < bestD) {
               bestD = d;
@@ -1714,7 +1864,7 @@ export class LumberTycoonGame {
             w.chopTimer += dt;
             if (w.chopTimer >= 0.35) {
               w.chopTimer = 0;
-              this.chopTree(t, 2, w);
+              this.chopTree(t, w.axePower || 2, w);
             }
           } else {
             w.isWalking = true;
@@ -1788,9 +1938,11 @@ export class LumberTycoonGame {
   }
 
   /**
-   * Sawmill Gradual Log-by-Log Cutting Machine with Individual Log Values
+   * Sawmill Gradual Log-by-Log Cutting Machine with 3x Value Multiplier!
    */
   updateSawmillProcess(dt) {
+    if (!this.saveData.sawmillUnlocked) return;
+
     const s = this.sawmillState;
     if (s.queue.length > 0) {
       s.timer += dt;
@@ -1800,17 +1952,20 @@ export class LumberTycoonGame {
         s.timer = 0;
         const nextLog = s.queue.shift();
         if (nextLog) {
-          // Plank value is 1.5x of the log's specific tier value!
-          const plankValue = Math.round(nextLog.value * 1.5);
+          // Plank value is 3.0x of the raw log value!
+          const plankValue = Math.round(nextLog.value * 3.0);
           s.ready.push({
             type: nextLog.type,
             value: plankValue,
             isPlank: true
           });
+          this.saveData.totalPlanksProcessed = (this.saveData.totalPlanksProcessed || 0) + 1;
           this.audio.playSawBuzz();
           const mill = BUILDINGS.sawmill;
           const prop = WOOD_PROPERTIES[nextLog.type] || WOOD_PROPERTIES.oak;
           this.particles.burst(mill.x + mill.w / 2 + 10, mill.y + mill.h / 2, 8, prop.plankColor);
+          SaveManager.save(this.playgama, this.saveData);
+          this.updateHUD();
         }
       }
     } else {
@@ -1832,7 +1987,7 @@ export class LumberTycoonGame {
   }
 
   /* ==========================================================================
-   * 7. STREAMING UPGRADE PADS (CONTROLLED & CONTINUOUS)
+   * 7. STREAMING UPGRADE PADS
    * ========================================================================== */
 
   updateUpgradePads(dt) {
@@ -1901,10 +2056,6 @@ export class LumberTycoonGame {
       this.saveData.axeTier = this.player.axeTier;
       pad.targetCost = AXE_TIERS[this.player.axeTier + 1]?.cost || 0;
 
-      if (this.tutorialStep === 3) {
-        this.tutorialStep = 4;
-        this.saveData.tutorialStep = 4;
-      }
       if (this.player.axeTier >= 3) {
         this.triggerInterstitial('major_upgrade');
       }
@@ -1915,9 +2066,13 @@ export class LumberTycoonGame {
       if (this.player.capacityIndex >= 3) {
         this.triggerInterstitial('major_upgrade');
       }
+    } else if (pad.type === 'SAWMILL_UNLOCK') {
+      this.saveData.sawmillUnlocked = true;
+      pad.targetCost = 0;
+      this.juice.spawnFloatingText('SAWMILL UNLOCKED! 3X PROFITS!', pad.x, pad.y - 55, { color: '#FFD54F', size: 24 });
+      this.triggerInterstitial('sawmill_unlock');
     } else if (pad.type === 'WORKER') {
-      this.saveData.workerCount = this.workers.length + 1;
-      this.spawnWorkers(this.saveData.workerCount);
+      this.hireNewWorker();
       pad.targetCost = Math.floor(250 * Math.pow(1.8, this.workers.length));
       if (this.workers.length >= 2) {
         this.triggerInterstitial('worker_hired');
@@ -1935,7 +2090,7 @@ export class LumberTycoonGame {
   }
 
   /* ==========================================================================
-   * 8. SAWMILL CUTTING & WOOD MARKET SELLING WITH TIER VALUATION
+   * 8. SAWMILL CUTTING & WOOD MARKET SELLING
    * ========================================================================== */
 
   checkBuildingInteractions() {
@@ -1945,30 +2100,32 @@ export class LumberTycoonGame {
     // 1. SAWMILL: Unloads raw logs into queue & collects finished planks
     const mill = BUILDINGS.sawmill;
     if (p.x > mill.x && p.x < mill.x + mill.w && p.y > mill.y && p.y < mill.y + mill.h) {
-      const rawLogs = p.inventory.filter((i) => !i.isPlank);
-      if (rawLogs.length > 0) {
-        for (const item of rawLogs) {
-          this.sawmillState.queue.push(item);
+      if (this.saveData.sawmillUnlocked) {
+        const rawLogs = p.inventory.filter((i) => !i.isPlank);
+        if (rawLogs.length > 0) {
+          for (const item of rawLogs) {
+            this.sawmillState.queue.push(item);
+          }
+          p.inventory = p.inventory.filter((i) => i.isPlank);
+          this.audio.playSawBuzz();
+          this.juice.spawnFloatingText(`+${rawLogs.length} Logs Queued!`, p.x, p.y - 30, { color: '#FFE082', size: 16 });
+          this.updateHUD();
         }
-        p.inventory = p.inventory.filter((i) => i.isPlank);
-        this.audio.playSawBuzz();
-        this.juice.spawnFloatingText(`+${rawLogs.length} Logs Queued ⚙️`, p.x, p.y - 30, { color: '#FFE082', size: 16 });
-        this.updateHUD();
-      }
 
-      const space = maxCap - p.inventory.length;
-      if (this.sawmillState.ready.length > 0 && space > 0) {
-        const takeCount = Math.min(this.sawmillState.ready.length, space);
-        const taken = this.sawmillState.ready.splice(0, takeCount);
-        p.inventory.push(...taken);
-        this.audio.playCollect();
-        this.juice.spawnFloatingText(`+${takeCount} Planks Collected! 🪚`, p.x, p.y - 25, { color: '#00E676', size: 16 });
-        this.updateHUD();
+        const space = maxCap - p.inventory.length;
+        if (this.sawmillState.ready.length > 0 && space > 0) {
+          const takeCount = Math.min(this.sawmillState.ready.length, space);
+          const taken = this.sawmillState.ready.splice(0, takeCount);
+          p.inventory.push(...taken);
+          this.audio.playCollect();
+          this.juice.spawnFloatingText(`+${takeCount} Planks Collected!`, p.x, p.y - 25, { color: '#00E676', size: 16 });
+          this.updateHUD();
 
-        if (this.tutorialStep === 1) {
-          this.tutorialStep = 2;
-          this.saveData.tutorialStep = 2;
-          SaveManager.save(this.playgama, this.saveData);
+          if (this.tutorialStep === 1) {
+            this.tutorialStep = 2;
+            this.saveData.tutorialStep = 2;
+            SaveManager.save(this.playgama, this.saveData);
+          }
         }
       }
     }
@@ -1990,8 +2147,8 @@ export class LumberTycoonGame {
 
         p.inventory = [];
         this.saveData.cash += totalEarned;
-        this.saveData.totalCashEarned += totalEarned;
-        this.spawnCoinBursts(p.x, p.y, totalEarned, hadPlanks ? `${highestType} (+50%)` : highestType);
+        this.saveData.totalCashEarned = (this.saveData.totalCashEarned || 0) + totalEarned;
+        this.spawnCoinBursts(p.x, p.y, totalEarned, hadPlanks ? `${highestType} (3x Plank)` : highestType);
         this.audio.playCash();
         this.updateHUD();
         SaveManager.save(this.playgama, this.saveData);
@@ -2007,12 +2164,12 @@ export class LumberTycoonGame {
 
   spawnCoinBursts(x, y, amount, label = '') {
     this.particles.burst(x, y, 12, '#FFD54F');
-    const txt = label ? `+$${Math.ceil(amount)} (${label}) 💰` : `+$${Math.ceil(amount)} 💰`;
+    const txt = label ? `+$${Math.ceil(amount)} (${label})` : `+$${Math.ceil(amount)}`;
     this.juice.spawnFloatingText(txt, x, y - 25, { color: '#FFE082', size: 18 });
   }
 
   /* ==========================================================================
-   * 9. MODALS & UPGRADES
+   * 9. MODALS & MANAGERS
    * ========================================================================== */
 
   openShopModal() {
@@ -2027,7 +2184,7 @@ export class LumberTycoonGame {
     axeCard.className = 'shop-item';
     axeCard.innerHTML = `
       <div class="shop-item-info">
-        <span class="shop-item-title">🪓 ${AXE_TIERS[this.player.axeTier]?.name || 'Axe'}</span>
+        <span class="shop-item-title">${AXE_TIERS[this.player.axeTier]?.name || 'Axe'}</span>
         <span class="shop-item-desc">Power: ${AXE_TIERS[this.player.axeTier]?.power}x | Speed: ${AXE_TIERS[this.player.axeTier]?.speed}s</span>
         <span class="shop-item-level">Tier ${this.player.axeTier + 1} / ${AXE_TIERS.length}</span>
       </div>
@@ -2044,7 +2201,7 @@ export class LumberTycoonGame {
     capCard.className = 'shop-item';
     capCard.innerHTML = `
       <div class="shop-item-info">
-        <span class="shop-item-title">🎒 Log Backpack</span>
+        <span class="shop-item-title">Log Backpack</span>
         <span class="shop-item-desc">Max Carry: ${CAPACITY_TIERS[this.player.capacityIndex]?.capacity} Items</span>
         <span class="shop-item-level">Tier ${this.player.capacityIndex + 1} / ${CAPACITY_TIERS.length}</span>
       </div>
@@ -2082,44 +2239,282 @@ export class LumberTycoonGame {
   }
 
   openWorkerModal() {
-    const list = document.getElementById('workers-list');
-    if (!list) return;
-    list.innerHTML = '';
+    const roster = document.getElementById('workers-roster-list');
+    const hireBanner = document.getElementById('workers-hire-banner');
+    if (!roster || !hireBanner) return;
 
-    const workerCost = Math.floor(250 * Math.pow(1.8, this.workers.length));
-    const card = document.createElement('div');
-    card.className = 'shop-item';
-    card.innerHTML = `
-      <div class="shop-item-info">
-        <span class="shop-item-title">👷 Hire Lumberjack Bot</span>
-        <span class="shop-item-desc">Auto-chops trees, cuts planks & delivers</span>
-        <span class="shop-item-level">Hired: ${this.workers.length} / 8</span>
+    roster.innerHTML = '';
+    const nextWorkerIdx = this.workers.length;
+    const canHireMore = nextWorkerIdx < WORKER_COLORS.length;
+    const hireCost = Math.floor(250 * Math.pow(1.8, nextWorkerIdx));
+
+    hireBanner.innerHTML = `
+      <div>
+        <h3 style="font-size: 0.95rem; color: #ffffff;">Hire New Specialist</h3>
+        <p style="font-size: 0.76rem; color: #cfd8dc;">Auto-harvests and hauls timber (${this.workers.length}/${WORKER_COLORS.length})</p>
       </div>
-      <button class="btn-upgrade" id="btn-hire-worker" ${this.workers.length >= 8 || this.saveData.cash < workerCost ? 'disabled' : ''}>
-        ${this.workers.length < 8 ? `Hire ($${workerCost})` : 'MAX'}
+      <button class="btn-upgrade" id="btn-hire-modal" ${!canHireMore || this.saveData.cash < hireCost ? 'disabled' : ''}>
+        ${canHireMore ? `Hire ($${hireCost})` : 'MAX HIRED'}
       </button>
     `;
-    list.appendChild(card);
 
-    document.getElementById('btn-hire-worker')?.addEventListener('click', () => {
-      if (this.workers.length < 8 && this.saveData.cash >= workerCost) {
-        this.saveData.cash -= workerCost;
-        this.saveData.workerCount = this.workers.length + 1;
-        this.spawnWorkers(this.saveData.workerCount);
+    document.getElementById('btn-hire-modal')?.addEventListener('click', () => {
+      if (canHireMore && this.saveData.cash >= hireCost) {
+        this.saveData.cash -= hireCost;
+        this.hireNewWorker();
         this.audio.playUpgrade();
-        SaveManager.save(this.playgama, this.saveData);
         this.openWorkerModal();
         this.updateHUD();
       }
     });
 
+    if (this.workers.length === 0) {
+      const emptyMsg = document.createElement('div');
+      emptyMsg.style.cssText = 'text-align: center; padding: 20px; color: #a1887f; font-size: 0.85rem;';
+      emptyMsg.textContent = 'No workers hired yet. Hire your first specialist above!';
+      roster.appendChild(emptyMsg);
+    } else {
+      this.workers.forEach((w, idx) => {
+        const speedCost = Math.floor(120 * Math.pow(1.6, w.speedLvl - 1));
+        const powerCost = Math.floor(150 * Math.pow(1.7, w.powerLvl - 1));
+        const capCost = Math.floor(180 * Math.pow(1.75, w.capacityLvl - 1));
+
+        const card = document.createElement('div');
+        card.className = 'worker-card';
+        card.innerHTML = `
+          <div class="worker-card-header">
+            <div class="worker-avatar-badge" style="background: ${w.colorProfile.shirt};">
+              ${w.colorProfile.badge}
+            </div>
+            <div class="worker-info-header">
+              <h3>${w.name} — <span style="color: ${w.colorProfile.shirt};">${w.colorProfile.title}</span></h3>
+              <span>Uniform: ${w.colorProfile.name} Color ID</span>
+            </div>
+          </div>
+          <div class="worker-stat-grid">
+            <div class="worker-stat-box">
+              <span class="stat-label">SPEED</span>
+              <span class="stat-value">${w.speed} px/s</span>
+              <button class="btn-stat-upgrade" data-stat="speed" data-idx="${idx}" ${w.speedLvl >= 5 || this.saveData.cash < speedCost ? 'disabled' : ''}>
+                ${w.speedLvl >= 5 ? 'MAX' : `Lvl ${w.speedLvl + 1} ($${speedCost})`}
+              </button>
+            </div>
+            <div class="worker-stat-box">
+              <span class="stat-label">AXE POWER</span>
+              <span class="stat-value">${w.axePower} Dmg</span>
+              <button class="btn-stat-upgrade" data-stat="power" data-idx="${idx}" ${w.powerLvl >= 5 || this.saveData.cash < powerCost ? 'disabled' : ''}>
+                ${w.powerLvl >= 5 ? 'MAX' : `Lvl ${w.powerLvl + 1} ($${powerCost})`}
+              </button>
+            </div>
+            <div class="worker-stat-box">
+              <span class="stat-label">CARRY & TREES</span>
+              <span class="stat-value">${w.maxCarry} Logs</span>
+              <button class="btn-stat-upgrade" data-stat="capacity" data-idx="${idx}" ${w.capacityLvl >= 5 || this.saveData.cash < capCost ? 'disabled' : ''}>
+                ${w.capacityLvl >= 5 ? 'MAX' : `Lvl ${w.capacityLvl + 1} ($${capCost})`}
+              </button>
+            </div>
+          </div>
+        `;
+        roster.appendChild(card);
+      });
+
+      roster.querySelectorAll('.btn-stat-upgrade').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const stat = e.currentTarget.dataset.stat;
+          const idx = parseInt(e.currentTarget.dataset.idx, 10);
+          const w = this.workers[idx];
+          if (!w) return;
+
+          if (stat === 'speed') {
+            const cost = Math.floor(120 * Math.pow(1.6, w.speedLvl - 1));
+            if (this.saveData.cash >= cost && w.speedLvl < 5) {
+              this.saveData.cash -= cost;
+              w.speedLvl++;
+              w.speed = 130 + (w.speedLvl - 1) * 30;
+              this.saveData.workers[idx].speedLvl = w.speedLvl;
+              this.audio.playUpgrade();
+            }
+          } else if (stat === 'power') {
+            const cost = Math.floor(150 * Math.pow(1.7, w.powerLvl - 1));
+            if (this.saveData.cash >= cost && w.powerLvl < 5) {
+              this.saveData.cash -= cost;
+              w.powerLvl++;
+              w.axePower = w.powerLvl * 2;
+              w.axeTier = Math.min(6, w.powerLvl - 1);
+              this.saveData.workers[idx].powerLvl = w.powerLvl;
+              this.audio.playUpgrade();
+            }
+          } else if (stat === 'capacity') {
+            const cost = Math.floor(180 * Math.pow(1.75, w.capacityLvl - 1));
+            if (this.saveData.cash >= cost && w.capacityLvl < 5) {
+              this.saveData.cash -= cost;
+              w.capacityLvl++;
+              w.maxCarry = 3 + (w.capacityLvl - 1) * 3;
+              this.saveData.workers[idx].capacityLvl = w.capacityLvl;
+              this.audio.playUpgrade();
+            }
+          }
+
+          SaveManager.save(this.playgama, this.saveData);
+          this.openWorkerModal();
+          this.updateHUD();
+        });
+      });
+    }
+
     document.getElementById('workers-modal')?.classList.remove('hidden');
+  }
+
+  openAchievementsModal() {
+    const list = document.getElementById('achievements-list');
+    if (!list) return;
+    list.innerHTML = '';
+
+    const claimedSet = new Set(this.saveData.claimedAchievements || []);
+
+    ACHIEVEMENTS.forEach((ach) => {
+      let current = 0;
+      if (ach.type === 'trees') current = this.saveData.totalTreesCut || 0;
+      else if (ach.type === 'planks') current = this.saveData.totalPlanksProcessed || 0;
+      else if (ach.type === 'sawmill') current = this.saveData.sawmillUnlocked ? 1 : 0;
+      else if (ach.type === 'workers') current = this.workers.length;
+      else if (ach.type === 'cash') current = this.saveData.totalCashEarned || this.saveData.cash;
+      else if (ach.type === 'zones') current = this.unlockedZones.size;
+
+      const isCompleted = current >= ach.target;
+      const isClaimed = claimedSet.has(ach.id);
+      const pct = Math.min(100, Math.round((current / ach.target) * 100));
+
+      const card = document.createElement('div');
+      card.className = `achievement-card ${isClaimed ? 'completed' : ''}`;
+      card.innerHTML = `
+        <div class="achievement-info">
+          <span class="achievement-title">${ach.name}</span>
+          <span class="achievement-desc">${ach.desc} (${Math.min(current, ach.target)}/${ach.target})</span>
+          <div class="achievement-progress-bar">
+            <div class="achievement-progress-fill" style="width: ${pct}%;"></div>
+          </div>
+          <span style="font-size: 0.70rem; color: #ffe082; margin-top: 3px;">
+            Reward: +$${ach.rewardCash.toLocaleString()} ${ach.rewardSkin ? `+ Skin "${PLAYER_SKINS[ach.rewardSkin]?.name || ach.rewardSkin}"` : ''}
+          </span>
+        </div>
+        <div>
+          ${
+            isClaimed
+              ? '<span class="claimed-badge">CLAIMED</span>'
+              : isCompleted
+              ? `<button class="btn-claim" data-ach="${ach.id}">CLAIM</button>`
+              : `<span style="font-size: 0.74rem; color: #8d6e63; font-weight: 700;">${pct}%</span>`
+          }
+        </div>
+      `;
+      list.appendChild(card);
+    });
+
+    list.querySelectorAll('.btn-claim').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const achId = e.currentTarget.dataset.ach;
+        const ach = ACHIEVEMENTS.find((a) => a.id === achId);
+        if (!ach) return;
+
+        if (!this.saveData.claimedAchievements) this.saveData.claimedAchievements = [];
+        this.saveData.claimedAchievements.push(achId);
+
+        this.saveData.cash += ach.rewardCash;
+        if (ach.rewardSkin) {
+          if (!this.saveData.unlockedSkins) this.saveData.unlockedSkins = ['classic'];
+          if (!this.saveData.unlockedSkins.includes(ach.rewardSkin)) {
+            this.saveData.unlockedSkins.push(ach.rewardSkin);
+          }
+        }
+
+        this.audio.playUpgrade();
+        this.juice.screenShake(6);
+        this.particles.burst(this.player.x, this.player.y, 30, '#00E676');
+
+        SaveManager.save(this.playgama, this.saveData);
+        this.openAchievementsModal();
+        this.updateHUD();
+      });
+    });
+
+    document.getElementById('achievements-modal')?.classList.remove('hidden');
+  }
+
+  openWardrobeModal() {
+    const grid = document.getElementById('wardrobe-skin-list');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const unlocked = new Set(this.saveData.unlockedSkins || ['classic']);
+    const activeSkin = this.saveData.playerSkin || 'classic';
+
+    Object.values(PLAYER_SKINS).forEach((skin) => {
+      const isUnlocked = unlocked.has(skin.id);
+      const isActive = activeSkin === skin.id;
+
+      const card = document.createElement('div');
+      card.className = `wardrobe-card ${isActive ? 'active' : ''} ${!isUnlocked ? 'locked' : ''}`;
+      card.innerHTML = `
+        <span class="wardrobe-card-title">${skin.name}</span>
+        <span class="wardrobe-card-desc">${skin.desc}</span>
+        <div style="display: flex; gap: 4px; margin-top: 4px;">
+          <div style="width: 14px; height: 14px; border-radius: 50%; background: ${skin.shirt}; border: 1px solid #ffffff;"></div>
+          <div style="width: 14px; height: 14px; border-radius: 50%; background: ${skin.pants}; border: 1px solid #ffffff;"></div>
+          <div style="width: 14px; height: 14px; border-radius: 50%; background: ${skin.hat}; border: 1px solid #ffffff;"></div>
+        </div>
+        <span style="font-size: 0.72rem; font-weight: 700; margin-top: 4px; color: ${isActive ? '#00e676' : isUnlocked ? '#ffe082' : '#8d6e63'};">
+          ${isActive ? 'ACTIVE' : isUnlocked ? 'EQUIP' : 'LOCKED IN ACHIEVEMENTS'}
+        </span>
+      `;
+
+      if (isUnlocked) {
+        card.addEventListener('click', () => {
+          this.saveData.playerSkin = skin.id;
+          SaveManager.save(this.playgama, this.saveData);
+          this.renderWardrobePreview(skin);
+          this.openWardrobeModal();
+        });
+      }
+      grid.appendChild(card);
+    });
+
+    const activeSkinObj = PLAYER_SKINS[activeSkin] || PLAYER_SKINS.classic;
+    this.renderWardrobePreview(activeSkinObj);
+
+    document.getElementById('wardrobe-modal')?.classList.remove('hidden');
+  }
+
+  renderWardrobePreview(skin) {
+    const nameEl = document.getElementById('wardrobe-active-name');
+    if (nameEl) nameEl.textContent = skin.name;
+
+    const pCanvas = document.getElementById('wardrobe-preview-canvas');
+    if (!pCanvas) return;
+    const pCtx = pCanvas.getContext('2d');
+    pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+
+    pCtx.save();
+    pCtx.translate(pCanvas.width / 2, pCanvas.height / 2 + 15);
+    pCtx.scale(1.8, 1.8);
+
+    const dummyActor = {
+      x: 0,
+      y: 0,
+      isWalking: false,
+      isChopping: false,
+      inventory: [],
+      axeTier: this.player.axeTier
+    };
+    drawLumberjackHero(pCtx, dummyActor, true, 0, skin);
+    pCtx.restore();
   }
 
   showRewardedCashGrant() {
     this.playgama.showRewarded((rewarded) => {
       if (rewarded) {
         this.saveData.cash += 500;
+        this.saveData.totalCashEarned = (this.saveData.totalCashEarned || 0) + 500;
         this.audio.playCash();
         this.juice.screenShake(6);
         this.particles.burst(this.player.x, this.player.y, 30, '#FFD54F');
@@ -2133,11 +2528,22 @@ export class LumberTycoonGame {
     const cash = document.getElementById('hud-cash-val');
     const logs = document.getElementById('hud-logs-val');
     const planks = document.getElementById('hud-planks-val');
+    const badge = document.getElementById('ach-badge');
     const maxCap = CAPACITY_TIERS[this.player.capacityIndex]?.capacity || 3;
 
     if (cash) cash.textContent = `$${Math.floor(this.saveData.cash).toLocaleString()}`;
     if (logs) logs.textContent = `${this.carriedLogs} / ${maxCap}`;
     if (planks) planks.textContent = `${this.carriedPlanks} / ${maxCap}`;
+
+    if (badge) {
+      const unclaimed = this.unclaimedAchievementsCount;
+      if (unclaimed > 0) {
+        badge.textContent = unclaimed;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
   }
 
   /* ==========================================================================
@@ -2163,7 +2569,7 @@ export class LumberTycoonGame {
     for (const [key, b] of Object.entries(BUILDINGS)) {
       renderQueue.push({
         y: b.y + b.h - 10,
-        draw: () => drawBuilding(ctx, key, b, this.animTime, this.sawmillState)
+        draw: () => drawBuilding(ctx, key, b, this.animTime, this.sawmillState, this.saveData.sawmillUnlocked)
       });
     }
 
@@ -2191,10 +2597,11 @@ export class LumberTycoonGame {
       });
     }
 
-    // Player Hero
+    // Player Hero with Selected Skin
+    const currentSkin = PLAYER_SKINS[this.saveData.playerSkin] || PLAYER_SKINS.classic;
     renderQueue.push({
       y: this.player.y,
-      draw: () => drawLumberjackHero(ctx, this.player, true, this.animTime)
+      draw: () => drawLumberjackHero(ctx, this.player, true, this.animTime, currentSkin)
     });
 
     // 4. SORT BY Y AND DRAW
@@ -2227,18 +2634,23 @@ export class LumberTycoonGame {
         }
       }
       if (nearestOak) {
-        drawTutorialArrow(ctx, nearestOak.x, nearestOak.y, '1. Chop tree for raw logs! 🪓', this.animTime);
+        drawTutorialArrow(ctx, nearestOak.x, nearestOak.y, '1. Stand near tree to auto-chop logs!', this.animTime);
       }
     } else if (this.tutorialStep === 1) {
-      const mill = BUILDINGS.sawmill;
-      drawTutorialArrow(ctx, mill.x + mill.w / 2, mill.y + mill.h / 2, '2. Feed logs into Sawmill! ⚙️', this.animTime);
+      if (this.saveData.sawmillUnlocked) {
+        const mill = BUILDINGS.sawmill;
+        drawTutorialArrow(ctx, mill.x + mill.w / 2, mill.y + mill.h / 2, '2. Feed logs into Sawmill!', this.animTime);
+      } else {
+        const market = BUILDINGS.sellZone;
+        drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '2. Deliver raw logs to Wood Market!', this.animTime);
+      }
     } else if (this.tutorialStep === 2) {
       const market = BUILDINGS.sellZone;
-      drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '3. Sell planks for +50% Bonus! 💰', this.animTime);
+      drawTutorialArrow(ctx, market.x + market.w / 2, market.y + market.h / 2, '3. Sell planks for 3x Profit!', this.animTime);
     } else if (this.tutorialStep === 3) {
       const forgePad = this.upgradePads.find((p) => p.type === 'AXE');
       if (forgePad) {
-        drawTutorialArrow(ctx, forgePad.x, forgePad.y, '4. Stand on Forge Pad to upgrade Axe! 🪓', this.animTime);
+        drawTutorialArrow(ctx, forgePad.x, forgePad.y, '4. Stand on Forge Pad to upgrade Axe!', this.animTime);
       }
     }
 
