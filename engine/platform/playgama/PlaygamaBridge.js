@@ -525,37 +525,53 @@ export class PlaygamaBridge {
   }
 
   async showRewarded(onRewardedCallback) {
-    if (this.bridge?.advertisement?.showRewarded) {
+    const b = (typeof window !== 'undefined' && window.bridge) ? window.bridge : this.bridge;
+
+    if (b?.advertisement?.showRewarded) {
       try {
-        if (typeof onRewardedCallback === 'function') {
-          let rewardedTriggered = false;
-          if (this.bridge.advertisement.on) {
-            const handler = (state) => {
-              if (state === 'rewarded' && !rewardedTriggered) {
-                rewardedTriggered = true;
-                onRewardedCallback();
+        let rewardedTriggered = false;
+
+        if (b.advertisement.on) {
+          const handler = (state) => {
+            if (state === 'rewarded' && !rewardedTriggered) {
+              rewardedTriggered = true;
+              if (typeof onRewardedCallback === 'function') {
+                onRewardedCallback(true);
               }
-            };
-            this.bridge.advertisement.on('rewarded_state_changed', handler);
-          }
-          const res = await this.bridge.advertisement.showRewarded();
-          if (res === true && !rewardedTriggered) {
-            rewardedTriggered = true;
-            onRewardedCallback();
-          }
-          return res;
+            } else if ((state === 'closed' || state === 'failed') && !rewardedTriggered) {
+              // If ad is closed without receiving reward state
+              setTimeout(() => {
+                if (!rewardedTriggered && typeof onRewardedCallback === 'function') {
+                  onRewardedCallback(false);
+                }
+              }, 50);
+            }
+          };
+          try {
+            b.advertisement.on('rewarded_state_changed', handler);
+          } catch (e) {}
         }
-        return await this.bridge.advertisement.showRewarded();
+
+        const res = await b.advertisement.showRewarded();
+        // If the platform bridge returns boolean true directly on completion
+        if (res === true && !rewardedTriggered) {
+          rewardedTriggered = true;
+          if (typeof onRewardedCallback === 'function') {
+            onRewardedCallback(true);
+          }
+        }
+        return res;
       } catch (e) {
-        console.warn('[PlaygamaBridge] Rewarded ad failed, executing callback fallback:', e);
+        console.warn('[PlaygamaBridge] Rewarded ad closed early or failed:', e);
         if (typeof onRewardedCallback === 'function') {
-          onRewardedCallback();
+          onRewardedCallback(false);
         }
+        return false;
       }
     } else {
-      console.log('[PlaygamaBridge] Mock showRewarded: granting reward immediately');
+      console.log('[PlaygamaBridge] Mock showRewarded: ad completed successfully, granting reward');
       if (typeof onRewardedCallback === 'function') {
-        onRewardedCallback();
+        onRewardedCallback(true);
       }
       return true;
     }

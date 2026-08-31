@@ -1883,6 +1883,8 @@ export class LumberTycoonGame {
 
     this.lastInterstitialTime = Date.now();
     this.interstitialCooldown = 60000;
+    this.periodicInterstitialTimer = 0;
+    this.periodicInterstitialInterval = 180; // 3 minutes of active play
 
     this.update = this.update.bind(this);
     this.render = this.render.bind(this);
@@ -1953,11 +1955,17 @@ export class LumberTycoonGame {
       return false;
     }
     this.lastInterstitialTime = now;
+    this.audio.pause();
     try {
       await this.playgama.showInterstitial();
       return true;
     } catch (err) {
       return false;
+    } finally {
+      const userMuted = this.saveData.settings?.isMuted ?? false;
+      if (!userMuted && this.playgama.isAudioEnabled()) {
+        this.audio.resume();
+      }
     }
   }
 
@@ -2454,6 +2462,13 @@ export class LumberTycoonGame {
     this.juice.update(dt);
 
     if (this.state !== 'PLAYING') return;
+
+    // 3-Minute Periodic Interstitial Timer during active gameplay
+    this.periodicInterstitialTimer += dt;
+    if (this.periodicInterstitialTimer >= this.periodicInterstitialInterval) {
+      this.periodicInterstitialTimer = 0;
+      this.triggerInterstitial('periodic_3min');
+    }
 
     this.updatePlayer(dt);
     this.updateWorkers(dt);
@@ -3461,15 +3476,24 @@ export class LumberTycoonGame {
   }
 
   showRewardedCashGrant() {
+    this.audio.pause();
     this.playgama.showRewarded((rewarded) => {
-      if (rewarded) {
+      const userMuted = this.saveData.settings?.isMuted ?? false;
+      if (!userMuted && this.playgama.isAudioEnabled()) {
+        this.audio.resume();
+      }
+
+      if (rewarded === true) {
         this.saveData.cash += 500;
         this.saveData.totalCashEarned = (this.saveData.totalCashEarned || 0) + 500;
         this.audio.playCash();
         this.juice.screenShake(6);
         this.particles.burst(this.player.x, this.player.y, 30, '#FFD54F');
+        this.juice.spawnFloatingText('+$500 REWARD! 💰', this.player.x, this.player.y - 45, { color: '#00E676', size: 22 });
         SaveManager.save(this.playgama, this.saveData);
         this.updateHUD();
+      } else {
+        this.juice.spawnFloatingText('Ad closed without reward', this.player.x, this.player.y - 45, { color: '#FFB300', size: 16 });
       }
     });
   }
